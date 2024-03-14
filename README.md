@@ -1,4 +1,4 @@
-<img src="https://github.com/xregistry/spec/raw/main/docs/artwork/xReg.jpg" width=100 height=100>
+<img src="https://github.com/cncf/artwork/raw/main/projects/xregistry/horizontal/color/xregistry-horizontal-color.svg">
 
 The xRegistry project defines an abstact model for how to manage metadata
 about resources and provide a REST-based interface for creating, modifying,
