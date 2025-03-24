@@ -9,4 +9,8 @@ use cases. By leveraging the same "core" model/APIs, generic tooling and
 comon patterns of Registry access can be developed which help create an
 interopable (and standard) interface.
 
+Quick links:
+- The [Core xRegistry specification](/spec)
+- The [Primer](/primer)
+
 See the main [repo](http://github.com/xregistry/spec) for more information.
