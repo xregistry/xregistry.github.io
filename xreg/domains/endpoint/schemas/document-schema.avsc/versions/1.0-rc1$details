@@ -1,0 +1,10 @@
+{
+  "createdat": "2025-04-08T21:06:42.527572488Z",
+  "epoch": 1,
+  "isdefault": true,
+  "modifiedat": "2025-04-08T21:06:42.527572488Z",
+  "schemaid": "document-schema.avsc",
+  "self": "https://xregistry.io/xreg/domains/endpoint/schemas/document-schema.avsc/versions/1.0-rc1",
+  "versionid": "1.0-rc1",
+  "xid": "/domains/endpoint/schemas/document-schema.avsc/versions/1.0-rc1"
+}

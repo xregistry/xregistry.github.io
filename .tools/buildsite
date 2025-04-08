@@ -1,0 +1,109 @@
+#!/bin/bash
+
+set -e
+
+# export IMAGE=ghcr.io/xregistry/xreg-server-all 
+export IMAGE=xreg-server-all
+export XR_SERVER=localhost:8383
+export FILES=$HOME/work/xreg
+export DIR=xreg
+
+echo Starting xreg server
+docker inspect sitexreg > /dev/null 2>&1 || (
+	docker rm -f sitexreg > /dev/null 2>&1 || true
+	docker run -dti --name sitexreg -p 8383:8080 $IMAGE > /dev/null
+
+	echo Waiting for server to start
+	while ! curl -sq localhost:8383 > /dev/null 2>&1 ; do
+  	sleep 1
+	done
+)
+
+# Erase everything that might already be there
+echo Deleting any old domains that might be there
+xr delete /domains > /dev/null 2>&1 || true
+
+# Create a new model
+echo Defining the model
+echo '
+{
+  "groups": {
+    "domains": {
+	  "singular": "domain",
+	  "resources": {
+	    "specs"  : { "singular": "spec" },
+	    "schemas": { "singular": "schema" },
+	    "samples": { "singular": "sample" }
+	  }
+	}
+  }
+}
+' | xr model update -d @-
+echo
+
+export VER="versions/1.0-rc1"
+ 
+# Cloudevents
+for i in $FILES/cloudevents/*json $FILES/cloudevents/*md ; do
+  xr create /domains/cloudevents/specs/`basename $i`/$VER -d @$i -v
+done
+
+for i in $FILES/cloudevents/schemas/* ; do
+  xr create /domains/cloudevents/schemas/`basename $i`/$VER -d @$i -v
+done
+
+for i in $FILES/cloudevents/samples/scenarios/*.json \
+         $FILES/cloudevents/samples/schemas/*.json ; do
+  xr create /domains/cloudevents/samples/`basename $i`/$VER -d @$i -v
+done
+
+# Core
+for i in model.json primer.md sample-model.json sample.png spec.md \
+         xregbasicmodel.png xregfullmodel.png ; do
+  xr create /domains/core/specs/$i/$VER -d @$FILES/core/$i -v
+done
+
+for i in $FILES/core/samples/*json $FILES/core/samples/*cereg ; do
+  xr create /domains/core/samples/`basename $i`/$VER -d @$i -v
+done
+
+# Endpoint
+for i in $FILES/endpoint/*.json $FILES/endpoint/*md ; do
+  xr create /domains/endpoint/specs/`basename $i`/$VER -d @$i -v
+done
+
+for i in $FILES/endpoint/schemas/* ; do
+  xr create /domains/endpoint/schemas/`basename $i`/$VER -d @$i -v
+done
+
+# Message
+for i in $FILES/message/*.json $FILES/message/*md ; do
+  xr create /domains/message/specs/`basename $i`/$VER -d @$i -v
+done
+
+for i in $FILES/message/schemas/* ; do
+  xr create /domains/message/schemas/`basename $i`/$VER -d @$i -v
+done
+
+# Schema
+for i in $FILES/schema/*.json $FILES/schema/*md ; do
+  xr create /domains/schema/specs/`basename $i`/$VER -d @$i -v
+done
+
+for i in $FILES/schema/schemas/* ; do
+  xr create /domains/schema/schemas/`basename $i`/$VER -d @$i -v
+done
+
+# Pagination
+for i in $FILES/schema/*md ; do
+  xr create /domains/pagination/specs/`basename $i`/$VER -d @$i -v
+done
+
+echo
+echo Now download the registry
+rm -rf ./$DIR/
+mkdir -p ./$DIR
+xr download ./$DIR -v -u https://xregistry.io/xreg
+
+docker rm -f sitexreg > /dev/null
+

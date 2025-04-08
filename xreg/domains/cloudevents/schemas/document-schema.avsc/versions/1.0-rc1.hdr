@@ -1,0 +1,11 @@
+content-disposition=document-schema.avsc
+content-location=https://xregistry.io/xreg/domains/cloudevents/schemas/document-schema.avsc/versions/1.0-rc1
+content-type=text/plain; charset=utf-8
+xregistry-createdat=2025-04-08T21:06:39.488596449Z
+xregistry-epoch=1
+xregistry-isdefault=true
+xregistry-modifiedat=2025-04-08T21:06:39.488596449Z
+xregistry-schemaid=document-schema.avsc
+xregistry-self=https://xregistry.io/xreg/domains/cloudevents/schemas/document-schema.avsc/versions/1.0-rc1
+xregistry-versionid=1.0-rc1
+xregistry-xid=/domains/cloudevents/schemas/document-schema.avsc/versions/1.0-rc1

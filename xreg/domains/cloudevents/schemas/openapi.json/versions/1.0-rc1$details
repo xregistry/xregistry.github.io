@@ -1,0 +1,10 @@
+{
+  "createdat": "2025-04-08T21:06:39.704667351Z",
+  "epoch": 1,
+  "isdefault": true,
+  "modifiedat": "2025-04-08T21:06:39.704667351Z",
+  "schemaid": "openapi.json",
+  "self": "https://xregistry.io/xreg/domains/cloudevents/schemas/openapi.json/versions/1.0-rc1",
+  "versionid": "1.0-rc1",
+  "xid": "/domains/cloudevents/schemas/openapi.json/versions/1.0-rc1"
+}

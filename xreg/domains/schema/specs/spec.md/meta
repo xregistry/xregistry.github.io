@@ -1,0 +1,13 @@
+{
+  "compatibility": "none",
+  "createdat": "2025-04-08T21:06:43.599884113Z",
+  "defaultversionid": "1.0-rc1",
+  "defaultversionsticky": false,
+  "defaultversionurl": "https://xregistry.io/xreg/domains/schema/specs/spec.md/versions/1.0-rc1",
+  "epoch": 1,
+  "modifiedat": "2025-04-08T21:06:43.599884113Z",
+  "readonly": false,
+  "self": "https://xregistry.io/xreg/domains/schema/specs/spec.md/meta",
+  "specid": "spec.md",
+  "xid": "/domains/schema/specs/spec.md/meta"
+}

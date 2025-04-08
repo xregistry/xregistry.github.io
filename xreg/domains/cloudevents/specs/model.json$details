@@ -1,0 +1,13 @@
+{
+  "createdat": "2025-04-08T21:06:39.276420242Z",
+  "epoch": 1,
+  "isdefault": true,
+  "metaurl": "https://xregistry.io/xreg/domains/cloudevents/specs/model.json/meta",
+  "modifiedat": "2025-04-08T21:06:39.276420242Z",
+  "self": "https://xregistry.io/xreg/domains/cloudevents/specs/model.json",
+  "specid": "model.json",
+  "versionid": "1.0-rc1",
+  "versionscount": 1,
+  "versionsurl": "https://xregistry.io/xreg/domains/cloudevents/specs/model.json/versions",
+  "xid": "/domains/cloudevents/specs/model.json"
+}

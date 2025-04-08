@@ -1,0 +1,13 @@
+{
+  "createdat": "2025-04-08T21:06:39.488596449Z",
+  "epoch": 1,
+  "isdefault": true,
+  "metaurl": "https://xregistry.io/xreg/domains/cloudevents/schemas/document-schema.avsc/meta",
+  "modifiedat": "2025-04-08T21:06:39.488596449Z",
+  "schemaid": "document-schema.avsc",
+  "self": "https://xregistry.io/xreg/domains/cloudevents/schemas/document-schema.avsc",
+  "versionid": "1.0-rc1",
+  "versionscount": 1,
+  "versionsurl": "https://xregistry.io/xreg/domains/cloudevents/schemas/document-schema.avsc/versions",
+  "xid": "/domains/cloudevents/schemas/document-schema.avsc"
+}

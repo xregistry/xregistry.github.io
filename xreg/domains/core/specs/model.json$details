@@ -1,0 +1,13 @@
+{
+  "createdat": "2025-04-08T21:06:40.826060912Z",
+  "epoch": 1,
+  "isdefault": true,
+  "metaurl": "https://xregistry.io/xreg/domains/core/specs/model.json/meta",
+  "modifiedat": "2025-04-08T21:06:40.826060912Z",
+  "self": "https://xregistry.io/xreg/domains/core/specs/model.json",
+  "specid": "model.json",
+  "versionid": "1.0-rc1",
+  "versionscount": 1,
+  "versionsurl": "https://xregistry.io/xreg/domains/core/specs/model.json/versions",
+  "xid": "/domains/core/specs/model.json"
+}

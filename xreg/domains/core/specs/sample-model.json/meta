@@ -1,0 +1,13 @@
+{
+  "compatibility": "none",
+  "createdat": "2025-04-08T21:06:41.056553364Z",
+  "defaultversionid": "1.0-rc1",
+  "defaultversionsticky": false,
+  "defaultversionurl": "https://xregistry.io/xreg/domains/core/specs/sample-model.json/versions/1.0-rc1",
+  "epoch": 1,
+  "modifiedat": "2025-04-08T21:06:41.056553364Z",
+  "readonly": false,
+  "self": "https://xregistry.io/xreg/domains/core/specs/sample-model.json/meta",
+  "specid": "sample-model.json",
+  "xid": "/domains/core/specs/sample-model.json/meta"
+}

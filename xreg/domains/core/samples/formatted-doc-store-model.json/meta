@@ -1,0 +1,13 @@
+{
+  "compatibility": "none",
+  "createdat": "2025-04-08T21:06:42.024000935Z",
+  "defaultversionid": "1.0-rc1",
+  "defaultversionsticky": false,
+  "defaultversionurl": "https://xregistry.io/xreg/domains/core/samples/formatted-doc-store-model.json/versions/1.0-rc1",
+  "epoch": 1,
+  "modifiedat": "2025-04-08T21:06:42.024000935Z",
+  "readonly": false,
+  "sampleid": "formatted-doc-store-model.json",
+  "self": "https://xregistry.io/xreg/domains/core/samples/formatted-doc-store-model.json/meta",
+  "xid": "/domains/core/samples/formatted-doc-store-model.json/meta"
+}

@@ -1,0 +1,11 @@
+content-disposition=windgenerator-kafka-avro.xreg.json
+content-location=https://xregistry.io/xreg/domains/cloudevents/samples/windgenerator-kafka-avro.xreg.json/versions/1.0-rc1
+content-type=text/plain; charset=utf-8
+xregistry-createdat=2025-04-08T21:06:40.592757199Z
+xregistry-epoch=1
+xregistry-isdefault=true
+xregistry-modifiedat=2025-04-08T21:06:40.592757199Z
+xregistry-sampleid=windgenerator-kafka-avro.xreg.json
+xregistry-self=https://xregistry.io/xreg/domains/cloudevents/samples/windgenerator-kafka-avro.xreg.json/versions/1.0-rc1
+xregistry-versionid=1.0-rc1
+xregistry-xid=/domains/cloudevents/samples/windgenerator-kafka-avro.xreg.json/versions/1.0-rc1
