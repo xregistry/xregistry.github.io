@@ -1,11 +1,11 @@
 content-disposition=document-schema.json
 content-location=https://xregistry.io/xreg/domains/endpoint/schemas/document-schema.json/versions/1.0-rc1
 content-type=text/plain; charset=utf-8
-xregistry-createdat=2025-04-09T12:26:23.223242137Z
+xregistry-createdat=2025-04-09T12:30:17.464650034Z
 xregistry-epoch=1
 xregistry-isdefault=true
 xregistry-metaurl=https://xregistry.io/xreg/domains/endpoint/schemas/document-schema.json/meta
-xregistry-modifiedat=2025-04-09T12:26:23.223242137Z
+xregistry-modifiedat=2025-04-09T12:30:17.464650034Z
 xregistry-schemaid=document-schema.json
 xregistry-self=https://xregistry.io/xreg/domains/endpoint/schemas/document-schema.json
 xregistry-versionid=1.0-rc1

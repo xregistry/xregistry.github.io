@@ -116,14 +116,17 @@ restriction on the type of content stored in the Resource&rsquo;s document.</p>
 <p>This specification defines a set of common metadata that can appear on both
 Groups and Resources, and allows for domain-specific extensions to be added.</p>
 
-<p>The following 3 diagrams show (from left to right):
-1 - The core concepts of the Registry in its most abstract form.
-2 - A Registry concept model with multiple types of Groups/Resources.
+<p>The following 3 diagrams show (from left to right):<br>
+1 - The core concepts of the Registry in its most abstract form.<br>
+2 - A Registry concept model with multiple types of Groups/Resources.<br>
 3 - A concrete sample usage of Registry that includes the use of an attribute
     on &ldquo;Message Definition&rdquo; that is a reference to a &ldquo;Schema&rdquo; document - all
     within the same Registry instance.</p>
 
-<p>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</p>
+<p><img src="./xregbasicmodel.png"
+ height="300">&amp;nbsp;&amp;nbsp;&amp;nbsp;<img
+ src="./xregfullmodel.png" height="300">&amp;nbsp;&amp;nbsp;&amp;nbsp;<img
+ src="./sample.png" height="300"></p>
 
 <p>For easy reference, the JSON serialization of a Registry adheres to this form:</p>
 
@@ -979,7 +982,7 @@ information.</li>
 
 <ul>
 <li><code>&quot;labels&quot;: { &quot;owner&quot;: &quot;John&quot;, &quot;verified&quot;: &quot;&quot; }</code> when in the HTTP body</li>
-<li><code>xRegistry-labels-owner: John</code> 
+<li><code>xRegistry-labels-owner: John</code> <br>
 <code>xRegistry-labels-verified:</code>  when in HTTP headers</li>
 </ul></li>
 </ul>
@@ -1563,7 +1566,7 @@ be of the form:</li>
   (<a href="#method_not_allowed">method_not_allowed</a>).</p>
 
 <p>The following query parameter SHOULD be supported by servers:
-- <code>epoch</code>
+- <code>epoch</code><br>
   The presence of this query parameter indicates that the server MUST check
   to ensure that the <code>epoch</code> value matches the entity&rsquo;s current <code>epoch</code> value
   and if it differs then an error (<a href="#mismatched_epoch">mismatched_epoch</a>) MUST
@@ -1768,7 +1771,7 @@ MAY be used.</p>
 </code></pre>
 
 <p>The following query parameter SHOULD be supported by servers:
-- <code>specversion</code>
+- <code>specversion</code><br>
   The presence of this OPTIONAL query parameter indicates that the response
   MUST adhere to the xRegistry specification version specified
   (case-insensitive). If the version is not supported, then an error
@@ -2495,7 +2498,7 @@ information on this option.</li>
 <p>The following describes the attributes of Registry model:</p>
 
 <ul>
-<li><p><code>modelversion</code> </p>
+<li><p><code>modelversion</code> <span id="model.modelversion"></span></p>
 
 <ul>
 <li>Type: String.</li>
@@ -2505,7 +2508,7 @@ information on this option.</li>
 <li>Example: <code>1.2</code></li>
 </ul></li>
 
-<li><p><code>compatiblewith</code> </p>
+<li><p><code>compatiblewith</code> <span id="model.compatiblewith"></span></p>
 
 <ul>
 <li>Type: URI.</li>
@@ -2518,7 +2521,7 @@ shared compatible model.</li>
 <li>Example: <code>https://raw.githubusercontent.com/xregistry/spec/refs/heads/main/schema/model.json</code></li>
 </ul></li>
 
-<li><p><code>labels</code> </p>
+<li><p><code>labels</code> <span id="model.labels"></span></p>
 
 <ul>
 <li>Type: Map of string-string.</li>
@@ -2533,7 +2536,7 @@ information.</li>
 <li>Model authors MAY define additional labels.</li>
 </ul></li>
 
-<li><p><code>attributes</code> </p>
+<li><p><code>attributes</code> <span id="model.attributes"></span></p>
 
 <ul>
 <li>Type: Map where each attribute&rsquo;s name MUST match the key of the map.</li>
@@ -2592,7 +2595,7 @@ attribute names.</p></li>
 Extensions</a>.</li>
 </ul></li>
 
-<li><p><code>attributes.&quot;STRING&quot;.target</code> </p>
+<li><p><code>attributes.&quot;STRING&quot;.target</code> <span id="model.target"></span></p>
 
 <ul>
 <li>Type: STRING.</li>
@@ -2630,7 +2633,7 @@ other words, <code>target</code> is not transitive.</li>
 <li>Example: <code>/endpoints/messages</code></li>
 </ul></li>
 
-<li><p><code>attributes.&quot;STRING&quot;.namecharset</code> </p>
+<li><p><code>attributes.&quot;STRING&quot;.namecharset</code> <span id="model.namecharset"></span></p>
 
 <ul>
 <li>Type: String.</li>
@@ -2790,7 +2793,7 @@ MUST NOT be present. It MAY be absent or an empty list if there are no
 defined attributes for the nested <code>object</code>.</li>
 </ul></li>
 
-<li><p><code>attributes.&quot;STRING&quot;.item</code> </p>
+<li><p><code>attributes.&quot;STRING&quot;.item</code> <span id="model.attributes.item"></span></p>
 
 <ul>
 <li>Type: Object.</li>
@@ -3069,11 +3072,11 @@ instance of any character at that position in the string - similar to a
 <li>When a Resource&rsquo;s metadata is serialized in a response and the
 <code>?inline=RESOURCE</code> feature is enabled, the server will attempt to
 serialize the Resource&rsquo;s &ldquo;document&rdquo; under the <code>RESOURCE</code> attribute.
-However, this can only happen under two situations:
+However, this can only happen under two situations:<br>
 1 - The Resource document&rsquo;s bytes are already in the same format as
-the xRegistry metadata - in other words JSON, or
+the xRegistry metadata - in other words JSON, or<br>
 2 - The Resource&rsquo;s document can be considered a &ldquo;string&rdquo; and therefore
-can be serialized as a &ldquo;string&rdquo;, possibly with some escaping.</li>
+can be serialized as a &ldquo;string&rdquo;, possibly with some escaping.<br></li>
 </ul>
 
 <p>For some well-known <code>contenttype</code> values (e.g. <code>application/json</code>) the
@@ -3135,7 +3138,7 @@ by an explicit <code>typemap</code> entry:
  - <code>text/plain</code>: mapped to <code>string</code></p>
 
 <ul>
-<li>Example:</li>
+<li>Example:<br></li>
 </ul>
 
 <pre><code class="language-yaml">&quot;typemap&quot;: {
@@ -3163,7 +3166,7 @@ list of <code>groups.resource.metaattributes</code> names.</li>
 </ul></li>
 
 <li><p><code>groups.&quot;STRING&quot;.resources.&quot;STRING&quot;.metaattributes</code>
-</p>
+<span id="model.metaattributes"></span></p>
 
 <ul>
 <li>See <a href="#model.attributes"><code>attributes</code></a> above.</li>
@@ -4146,12 +4149,12 @@ the Resource.</p>
 1 - It represents the collection for the historical Versions of the data being
     managed. This is true even if the Resource type is defined to not use
     versioning, meaning the number of Versions allowed is just one. The
-    Versions will appear as a nested entity under the <code>versions</code> attribute.
+    Versions will appear as a nested entity under the <code>versions</code> attribute.<br>
 2 - It is an alias for the &ldquo;default&rdquo; Version of the Resource. And most
     operations directed at the URL of the Resource will act upon that Version,
     not the Resource itself. See
     <a href="#default-version-of-a-resource">Default Version of a Resource</a> and
-    <a href="#versions">Versions</a> for more details.
+    <a href="#versions">Versions</a> for more details.<br>
 3 - It has a set of attributes for Resource level metadata - data that is not
     specific to one Version of the Resource but instead applies to the
     Resource in general. These attributes appear under a <code>meta</code>
@@ -5137,42 +5140,42 @@ summarized as:</p>
 <li>Creates or updates one or more collection of Resource types.</li>
 </ul>
 
-<p><strong><code>POST /GROUPS/gID/RESOURCES</code></strong>
+<p><strong><code>POST /GROUPS/gID/RESOURCES</code></strong><br>
 <strong><code>PATCH /GROUPS/gID/RESOURCES</code></strong></p>
 
 <ul>
 <li>Creates or updates one or more Resources.</li>
 </ul>
 
-<p><strong><code>PUT   /GROUPS/gID/RESOURCES/rID[$details]</code></strong>
+<p><strong><code>PUT   /GROUPS/gID/RESOURCES/rID[$details]</code></strong><br>
 <strong><code>PATCH /GROUPS/gID/RESOURCES/rID[$details]</code></strong></p>
 
 <ul>
 <li>Creates a new Resource, or update the default Version of a Resource.</li>
 </ul>
 
-<p><strong><code>POST /GROUPS/gID/RESOURCES/rID[$details]</code></strong>
+<p><strong><code>POST /GROUPS/gID/RESOURCES/rID[$details]</code></strong><br>
 <strong><code>PATCH /GROUPS/gID/RESOURCES/rID[$details]</code></strong></p>
 
 <ul>
 <li>Creates or updates a single Version of a Resource.</li>
 </ul>
 
-<p><strong><code>PUT   /GROUPS/gID/RESOURCES/rID/meta</code></strong>
+<p><strong><code>PUT   /GROUPS/gID/RESOURCES/rID/meta</code></strong><br>
 <strong><code>PATCH /GROUPS/gID/RESOURCES/rID/meta</code></strong></p>
 
 <ul>
 <li>Updates the <code>meta</code> sub-object of a Resource.</li>
 </ul>
 
-<p><strong><code>POST /GROUPS/gID/RESOURCES/rID/versions</code></strong>
+<p><strong><code>POST /GROUPS/gID/RESOURCES/rID/versions</code></strong><br>
 <strong><code>PATCH /GROUPS/gID/RESOURCES/rID/versions</code></strong></p>
 
 <ul>
 <li>Creates or updates one or more Versions of a Resource.</li>
 </ul>
 
-<p><strong><code>PUT   /GROUPS/gID/RESOURCES/rID/versions/vID[$details]</code></strong>
+<p><strong><code>PUT   /GROUPS/gID/RESOURCES/rID/versions/vID[$details]</code></strong><br>
 <strong><code>PATCH /GROUPS/gID/RESOURCES/rID/versions/vID[$details]</code></strong></p>
 
 <ul>
@@ -5347,7 +5350,7 @@ the specified Resources without modifying the Group&rsquo;s attributes.</p>
 <p>The response in this case MUST be a map of the Resource types with just the
 Resources that were processed as part of the request.</p>
 
-<p><code>POST  /GROUPS/gID/RESOURCES</code>
+<p><code>POST  /GROUPS/gID/RESOURCES</code><br>
 <code>PATCH /GROUPS/gID/RESOURCES</code></p>
 
 <p>Where:
@@ -5356,7 +5359,7 @@ Resources that were processed as part of the request.</p>
 - The HTTP body MUST contain a map of Resources to be created or updated,
   serialized as xRegistry metadata.</p>
 
-<p><code>PUT   /GROUPS/gID/RESOURCES/rID[$details]</code>
+<p><code>PUT   /GROUPS/gID/RESOURCES/rID[$details]</code><br>
 <code>PATCH /GROUPS/gID/RESOURCES/rID[$details]</code></p>
 
 <p>Where:
@@ -5366,7 +5369,7 @@ Resources that were processed as part of the request.</p>
 - When <code>$details</code> is absent, the HTTP body MUST contain the Resource&rsquo;s
   document (an empty body means the document is to be empty).</p>
 
-<p><code>POST  /GROUPS/gID/RESOURCES/rID[$details][?setdefaultversionid=vID]</code>
+<p><code>POST  /GROUPS/gID/RESOURCES/rID[$details][?setdefaultversionid=vID]</code><br>
 <code>PATCH /GROUPS/gID/RESOURCES/rID[$details][?setdefaultversionid=vID]</code></p>
 
 <p>Where:
@@ -5383,7 +5386,7 @@ Resources that were processed as part of the request.</p>
   HTTP body MUST be an xRegistry serialization of the Version that is to be
   created or updated.</p>
 
-<p><code>PUT   /GROUPS/gID/RESOURCES/rID/meta</code>
+<p><code>PUT   /GROUPS/gID/RESOURCES/rID/meta</code><br>
 <code>PATCH /GROUPS/gID/RESOURCES/rID/meta</code>
 Where:
 - This API MUST update the <code>meta</code> sub-object of the specified Resource.
@@ -5391,7 +5394,7 @@ Where:
   value that does not match the existing <code>meta</code> <code>epoch</code> value then an
   error (<a href="#mismatched_epoch">mismatched_epoch</a>) MUST be generated.</p>
 
-<p><code>POST  /GROUPS/gID/RESOURCES/rID/versions[?setdefaultversionid=vID]</code>
+<p><code>POST  /GROUPS/gID/RESOURCES/rID/versions[?setdefaultversionid=vID]</code><br>
 <code>PATCH /GROUPS/gID/RESOURCES/rID/versions[?setdefaultversionid=vID]</code></p>
 
 <p>Where:
@@ -5413,7 +5416,7 @@ Where:
 <p>See <a href="#default-version-of-a-resource">Default Version of a Resource</a> for more
 information about the <code>?setdefaultversionid</code> query parameter.</p>
 
-<p><code>PUT   /GROUPS/gID/RESOURCES/rID/versions/vID[$details][?setdefaultversionid=vID]</code>
+<p><code>PUT   /GROUPS/gID/RESOURCES/rID/versions/vID[$details][?setdefaultversionid=vID]</code><br>
 <code>PATCH /GROUPS/gID/RESOURCES/rID/versions/vID[$details][?setdefaultversionid=vID]</code></p>
 
 <p>Where:
@@ -7200,6 +7203,8 @@ specification.</p>
 be as specified. The other field values are recommendations and MAY be modified
 as appropriate, including being specified in a language other than English.</p>
 
+<!-- start-err-def -->
+
 <h4>ancestor_circular_reference</h4>
 
 <ul>
@@ -7547,5 +7552,7 @@ something unexpected happened in the server that caused an error condition.</p>
 <li>Data:  n/a</li>
 <li>Detail: {information specific to the processing details}</li>
 </ul>
+
+<!-- end-err-def -->
 
 <hr>

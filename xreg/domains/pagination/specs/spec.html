@@ -324,13 +324,13 @@ Versions of the Resource MUST be compliant.</li>
 <li><p>Type: Object containing the following properties:</p>
 
 <ul>
-<li><p><code>effective</code>
+<li><p><code>effective</code><br>
 An OPTIONAL property indicating the time when the schema entered, or will
 enter, a deprecated state. The date MAY be in the past or future. If this
 property is not present the schema is already in a deprecated state.
 If present, this MUST be an <a href="https://tools.ietf.org/html/rfc3339">RFC3339</a> timestamp.</p></li>
 
-<li><p><code>removal</code>
+<li><p><code>removal</code><br>
 An OPTIONAL property indicating the time when the schema MAY be removed.
 The schema MUST NOT be removed before this time. If this property is not
 present then client can not make any assumption as to when the schema
@@ -338,14 +338,14 @@ might be removed. Note: as with most properties, this property is mutable.
 If present, this MUST be an <a href="https://tools.ietf.org/html/rfc3339">RFC3339</a> timestamp and MUST NOT be
 sooner than the <code>effective</code> time if present.</p></li>
 
-<li><p><code>alternative</code>
+<li><p><code>alternative</code><br>
 An OPTIONAL property specifying the URL to an alternative schema the
 client can consider as a replacement for this schema. There is no
 guarantee that the referenced schema is an exact replacement, rather the
 client is expected to investigate the schema to determine if it is
 appropriate.</p></li>
 
-<li><p><code>docs</code>
+<li><p><code>docs</code><br>
 An OPTIONAL property specifying the URL to additional information about
 the deprecation of the schema. This specification does not mandate any
 particular format or information, however some possibilities include:

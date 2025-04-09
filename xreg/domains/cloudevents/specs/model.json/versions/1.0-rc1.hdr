@@ -2,10 +2,10 @@ content-disposition=model.json
 content-length=160
 content-location=https://xregistry.io/xreg/domains/cloudevents/specs/model.json/versions/1.0-rc1
 content-type=text/plain; charset=utf-8
-xregistry-createdat=2025-04-09T12:26:19.97898689Z
+xregistry-createdat=2025-04-09T12:30:14.040814113Z
 xregistry-epoch=1
 xregistry-isdefault=true
-xregistry-modifiedat=2025-04-09T12:26:19.97898689Z
+xregistry-modifiedat=2025-04-09T12:30:14.040814113Z
 xregistry-self=https://xregistry.io/xreg/domains/cloudevents/specs/model.json/versions/1.0-rc1
 xregistry-specid=model.json
 xregistry-versionid=1.0-rc1

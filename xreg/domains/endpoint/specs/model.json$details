@@ -1,9 +1,9 @@
 {
-  "createdat": "2025-04-09T12:26:22.856855648Z",
+  "createdat": "2025-04-09T12:30:17.088182806Z",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "https://xregistry.io/xreg/domains/endpoint/specs/model.json/meta",
-  "modifiedat": "2025-04-09T12:26:22.856855648Z",
+  "modifiedat": "2025-04-09T12:30:17.088182806Z",
   "self": "https://xregistry.io/xreg/domains/endpoint/specs/model.json",
   "specid": "model.json",
   "versionid": "1.0-rc1",

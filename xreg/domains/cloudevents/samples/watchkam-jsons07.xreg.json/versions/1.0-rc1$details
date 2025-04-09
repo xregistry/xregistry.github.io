@@ -1,8 +1,8 @@
 {
-  "createdat": "2025-04-09T12:26:21.029466253Z",
+  "createdat": "2025-04-09T12:30:15.219233983Z",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2025-04-09T12:26:21.029466253Z",
+  "modifiedat": "2025-04-09T12:30:15.219233983Z",
   "sampleid": "watchkam-jsons07.xreg.json",
   "self": "https://xregistry.io/xreg/domains/cloudevents/samples/watchkam-jsons07.xreg.json/versions/1.0-rc1",
   "versionid": "1.0-rc1",

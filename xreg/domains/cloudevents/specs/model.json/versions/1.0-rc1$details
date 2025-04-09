@@ -1,8 +1,8 @@
 {
-  "createdat": "2025-04-09T12:26:19.97898689Z",
+  "createdat": "2025-04-09T12:30:14.040814113Z",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2025-04-09T12:26:19.97898689Z",
+  "modifiedat": "2025-04-09T12:30:14.040814113Z",
   "self": "https://xregistry.io/xreg/domains/cloudevents/specs/model.json/versions/1.0-rc1",
   "specid": "model.json",
   "versionid": "1.0-rc1",

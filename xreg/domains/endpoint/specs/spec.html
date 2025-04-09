@@ -340,13 +340,13 @@ relationship.</li>
 <li><p>Type: Object containing the following properties:</p>
 
 <ul>
-<li><p><code>effective</code>
+<li><p><code>effective</code><br>
 An OPTIONAL property indicating the time when the Endpoint entered, or will
 enter, a deprecated state. The date MAY be in the past or future. If this
 property is not present the Endpoint is already in a deprecated state.
 When specified, this MUST be an <a href="https://tools.ietf.org/html/rfc3339">RFC3339</a> timestamp.</p></li>
 
-<li><p><code>removal</code>
+<li><p><code>removal</code><br>
 An OPTIONAL property indicating the time when the Endpoint MAY be removed.
 The Endpoint MUST NOT be removed before this time. If this property is not
 present then client can not make any assumption as to when the Endpoint
@@ -354,14 +354,14 @@ might be removed. Note: as with most properties, this property is mutable.
 When specified, this MUST be an <a href="https://tools.ietf.org/html/rfc3339">RFC3339</a> timestamp and MUST NOT
 be sooner than the <code>effective</code> time.</p></li>
 
-<li><p><code>alternative</code>
+<li><p><code>alternative</code><br>
 An OPTIONAL property specifying the URL to an alternative Endpoint the
 client can consider as a replacement for this Endpoint. There is no
 guarantee that the referenced Endpoint is an exact replacement, rather the
 client is expected to investigate the Endpoint to determine if it is
 appropriate.</p></li>
 
-<li><p><code>docs</code>
+<li><p><code>docs</code><br>
 An OPTIONAL property specifying the URL to additional information about
 the deprecation of the Endpoint. This specification does not mandate any
 particular format or information, however some possibilities include:

@@ -1,11 +1,11 @@
 {
   "compatibility": "none",
-  "createdat": "2025-04-09T12:26:22.038780193Z",
+  "createdat": "2025-04-09T12:30:16.248225643Z",
   "defaultversionid": "1.0-rc1",
   "defaultversionsticky": false,
   "defaultversionurl": "https://xregistry.io/xreg/domains/core/specs/xregbasicmodel.png/versions/1.0-rc1",
   "epoch": 1,
-  "modifiedat": "2025-04-09T12:26:22.038780193Z",
+  "modifiedat": "2025-04-09T12:30:16.248225643Z",
   "readonly": false,
   "self": "https://xregistry.io/xreg/domains/core/specs/xregbasicmodel.png/meta",
   "specid": "xregbasicmodel.png",

@@ -1,11 +1,11 @@
 {
   "compatibility": "none",
-  "createdat": "2025-04-09T12:26:20.920881775Z",
+  "createdat": "2025-04-09T12:30:15.110784951Z",
   "defaultversionid": "1.0-rc1",
   "defaultversionsticky": false,
   "defaultversionurl": "https://xregistry.io/xreg/domains/cloudevents/samples/vacuumcleaner-avro.xreg.json/versions/1.0-rc1",
   "epoch": 1,
-  "modifiedat": "2025-04-09T12:26:20.920881775Z",
+  "modifiedat": "2025-04-09T12:30:15.110784951Z",
   "readonly": false,
   "sampleid": "vacuumcleaner-avro.xreg.json",
   "self": "https://xregistry.io/xreg/domains/cloudevents/samples/vacuumcleaner-avro.xreg.json/meta",
