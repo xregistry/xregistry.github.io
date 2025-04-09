@@ -1,10 +1,10 @@
 content-disposition=document-schema.json
 content-location=https://xregistry.io/xreg/domains/schema/schemas/document-schema.json/versions/1.0-rc1
 content-type=text/plain; charset=utf-8
-xregistry-createdat=2025-04-08T21:06:43.873696824Z
+xregistry-createdat=2025-04-09T12:26:24.381862458Z
 xregistry-epoch=1
 xregistry-isdefault=true
-xregistry-modifiedat=2025-04-08T21:06:43.873696824Z
+xregistry-modifiedat=2025-04-09T12:26:24.381862458Z
 xregistry-schemaid=document-schema.json
 xregistry-self=https://xregistry.io/xreg/domains/schema/schemas/document-schema.json/versions/1.0-rc1
 xregistry-versionid=1.0-rc1

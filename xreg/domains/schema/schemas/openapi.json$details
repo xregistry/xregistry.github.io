@@ -1,9 +1,9 @@
 {
-  "createdat": "2025-04-08T21:06:44.020314883Z",
+  "createdat": "2025-04-09T12:26:24.510248687Z",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "https://xregistry.io/xreg/domains/schema/schemas/openapi.json/meta",
-  "modifiedat": "2025-04-08T21:06:44.020314883Z",
+  "modifiedat": "2025-04-09T12:26:24.510248687Z",
   "schemaid": "openapi.json",
   "self": "https://xregistry.io/xreg/domains/schema/schemas/openapi.json",
   "versionid": "1.0-rc1",

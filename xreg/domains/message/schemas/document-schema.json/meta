@@ -1,11 +1,11 @@
 {
   "compatibility": "none",
-  "createdat": "2025-04-08T21:06:43.194165674Z",
+  "createdat": "2025-04-09T12:26:23.726197913Z",
   "defaultversionid": "1.0-rc1",
   "defaultversionsticky": false,
   "defaultversionurl": "https://xregistry.io/xreg/domains/message/schemas/document-schema.json/versions/1.0-rc1",
   "epoch": 1,
-  "modifiedat": "2025-04-08T21:06:43.194165674Z",
+  "modifiedat": "2025-04-09T12:26:23.726197913Z",
   "readonly": false,
   "schemaid": "document-schema.json",
   "self": "https://xregistry.io/xreg/domains/message/schemas/document-schema.json/meta",

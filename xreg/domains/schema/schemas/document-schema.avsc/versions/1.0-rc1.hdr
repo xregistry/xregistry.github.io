@@ -1,10 +1,10 @@
 content-disposition=document-schema.avsc
 content-location=https://xregistry.io/xreg/domains/schema/schemas/document-schema.avsc/versions/1.0-rc1
 content-type=text/plain; charset=utf-8
-xregistry-createdat=2025-04-08T21:06:43.737928284Z
+xregistry-createdat=2025-04-09T12:26:24.253341562Z
 xregistry-epoch=1
 xregistry-isdefault=true
-xregistry-modifiedat=2025-04-08T21:06:43.737928284Z
+xregistry-modifiedat=2025-04-09T12:26:24.253341562Z
 xregistry-schemaid=document-schema.avsc
 xregistry-self=https://xregistry.io/xreg/domains/schema/schemas/document-schema.avsc/versions/1.0-rc1
 xregistry-versionid=1.0-rc1
