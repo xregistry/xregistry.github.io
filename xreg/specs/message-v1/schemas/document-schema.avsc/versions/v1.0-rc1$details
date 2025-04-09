@@ -1,8 +1,8 @@
 {
-  "createdat": "2025-04-09T19:44:35.312294842Z",
+  "createdat": "2025-04-09T20:27:57.179193531Z",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2025-04-09T19:44:35.312294842Z",
+  "modifiedat": "2025-04-09T20:27:57.179193531Z",
   "schemaid": "document-schema.avsc",
   "self": "https://xregistry.io/xreg/specs/message-v1/schemas/document-schema.avsc/versions/v1.0-rc1",
   "versionid": "v1.0-rc1",

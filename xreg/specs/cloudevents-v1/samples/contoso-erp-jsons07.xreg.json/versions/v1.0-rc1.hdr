@@ -1,10 +1,10 @@
 content-disposition:contoso-erp-jsons07.xreg.json
 content-location:https://xregistry.io/xreg/specs/cloudevents-v1/samples/contoso-erp-jsons07.xreg.json/versions/v1.0-rc1
 content-type:text/plain; charset=utf-8
-xregistry-createdat:2025-04-09T19:44:31.837992254Z
+xregistry-createdat:2025-04-09T20:27:54.04994681Z
 xregistry-epoch:1
 xregistry-isdefault:true
-xregistry-modifiedat:2025-04-09T19:44:31.837992254Z
+xregistry-modifiedat:2025-04-09T20:27:54.04994681Z
 xregistry-sampleid:contoso-erp-jsons07.xreg.json
 xregistry-self:https://xregistry.io/xreg/specs/cloudevents-v1/samples/contoso-erp-jsons07.xreg.json/versions/v1.0-rc1
 xregistry-versionid:v1.0-rc1

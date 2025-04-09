@@ -1,9 +1,9 @@
 {
-  "createdat": "2025-04-09T19:44:35.743134661Z",
+  "createdat": "2025-04-09T20:27:57.559215246Z",
   "docid": "model.json",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2025-04-09T19:44:35.743134661Z",
+  "modifiedat": "2025-04-09T20:27:57.559215246Z",
   "self": "https://xregistry.io/xreg/specs/schema-v1/docs/model.json/versions/v1.0-rc1",
   "versionid": "v1.0-rc1",
   "xid": "/specs/schema-v1/docs/model.json/versions/v1.0-rc1"

@@ -1,8 +1,8 @@
 {
-  "createdat": "2025-04-09T19:44:31.464712871Z",
+  "createdat": "2025-04-09T20:27:53.730448578Z",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2025-04-09T19:44:31.464712871Z",
+  "modifiedat": "2025-04-09T20:27:53.730448578Z",
   "schemaid": "document-schema.avsc",
   "self": "https://xregistry.io/xreg/specs/cloudevents-v1/schemas/document-schema.avsc/versions/v1.0-rc1",
   "versionid": "v1.0-rc1",

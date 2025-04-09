@@ -1,9 +1,9 @@
-<h1 id="xregistry-service---version-10-rc1">xRegistry Service - Version 1.0-rc1 <a class="anchor" href="#xregistry-service---version-10-rc1">☍</a></h1>
-<h2 id="abstract">Abstract <a class="anchor" href="#abstract">☍</a></h2>
+<h1 id="xregistry-service---version-10-rc1"><a class="anchor" href="#xregistry-service---version-10-rc1">☍</a> xRegistry Service - Version 1.0-rc1</h1>
+<h2 id="abstract"><a class="anchor" href="#abstract">☍</a> Abstract</h2>
 <p>A Registry Service exposes Resources and their metadata, for the purpose
 of enabling discovery of those Resources for either end-user consumption or
 automation and tooling.</p>
-<h2 id="table-of-contents">Table of Contents <a class="anchor" href="#table-of-contents">☍</a></h2>
+<h2 id="table-of-contents"><a class="anchor" href="#table-of-contents">☍</a> Table of Contents</h2>
 <ul>
 <li><a href="#overview">Overview</a></li>
 <li><a href="#notations-and-terminology">Notations and Terminology</a>
@@ -72,7 +72,7 @@ Versions</a></li>
 </ul>
 </li>
 </ul>
-<h2 id="overview">Overview <a class="anchor" href="#overview">☍</a></h2>
+<h2 id="overview"><a class="anchor" href="#overview">☍</a> Overview</h2>
 <p>A Registry Service is one that manages metadata about Resources. At its core,
 the management of an individual Resource is simply a REST-based interface for
 creating, modifying, and deleting the Resource. However, many Resource models
@@ -303,8 +303,8 @@ src="./sample.png" height="300"></p>
   } ?
 }
 </code></pre>
-<h2 id="notations-and-terminology">Notations and Terminology <a class="anchor" href="#notations-and-terminology">☍</a></h2>
-<h3 id="notational-conventions">Notational Conventions <a class="anchor" href="#notational-conventions">☍</a></h3>
+<h2 id="notations-and-terminology"><a class="anchor" href="#notations-and-terminology">☍</a> Notations and Terminology</h2>
+<h3 id="notational-conventions"><a class="anchor" href="#notational-conventions">☍</a> Notational Conventions</h3>
 <p>The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;, &quot;SHOULD&quot;,
 &quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;, &quot;MAY&quot;, and &quot;OPTIONAL&quot; in this document are to be
 interpreted as described in <a href="https://tools.ietf.org/html/rfc2119">RFC 2119</a>.</p>
@@ -362,18 +362,18 @@ information about each data type):</p>
 <li><code>TYPE</code> - one of the allowable data type names (MUST be in lower case) listed
 in <a href="#attributes-and-extensions">Attributes and Extensions</a></li>
 </ul>
-<h3 id="terminology">Terminology <a class="anchor" href="#terminology">☍</a></h3>
+<h3 id="terminology"><a class="anchor" href="#terminology">☍</a> Terminology</h3>
 <p>This specification defines the following terms:</p>
-<h4 id="group">Group <a class="anchor" href="#group">☍</a></h4>
+<h4 id="group"><a class="anchor" href="#group">☍</a> Group</h4>
 <p>An entity that acts as a collection of related Resources.</p>
-<h4 id="registry">Registry <a class="anchor" href="#registry">☍</a></h4>
+<h4 id="registry"><a class="anchor" href="#registry">☍</a> Registry</h4>
 <p>An implementation of this specification. Typically, the implementation would
 include model-specific Groups, Resources and extension attributes.</p>
-<h4 id="resource">Resource <a class="anchor" href="#resource">☍</a></h4>
+<h4 id="resource"><a class="anchor" href="#resource">☍</a> Resource</h4>
 <p>A Resource is typically the main entity that is stored within a Registry
 Service. A Resource MUST exist within the scope of a Group and it MAY be
 versioned.</p>
-<h2 id="registry-attributes-and-apis">Registry Attributes and APIs <a class="anchor" href="#registry-attributes-and-apis">☍</a></h2>
+<h2 id="registry-attributes-and-apis"><a class="anchor" href="#registry-attributes-and-apis">☍</a> Registry Attributes and APIs</h2>
 <p>This section defines common Registry metadata attributes and APIs. It is an
 explicit goal for this specification that metadata can be created and managed
 in files in a file system, for instance in a Git repository, and also managed
@@ -414,7 +414,7 @@ differences in &quot;document view&quot; see the <a href="#doc">Doc</a> flag and
 &quot;document view&quot; concept for requests. However, &quot;document view&quot; responses
 are designed such that they can be used in request messages as they still
 convey the same information as an &quot;API view&quot; response.</p>
-<h3 id="implementation-customizations">Implementation Customizations <a class="anchor" href="#implementation-customizations">☍</a></h3>
+<h3 id="implementation-customizations"><a class="anchor" href="#implementation-customizations">☍</a> Implementation Customizations</h3>
 <p>This specification only defines the core APIs, and their semantics, of a
 Registry service. It does not address many of the details that would need to
 be added for a live instance of a service; as often times these aspects are
@@ -438,7 +438,7 @@ violate the specification, rather it is to allow for real-world requirements
 to be met while maintaining the interoperability goals of the specification.</p>
 <p>Implementations are encouraged to contact the xRegistry community if it is
 unclear if certain customizations would violate the specification.</p>
-<h3 id="attributes-and-extensions">Attributes and Extensions <a class="anchor" href="#attributes-and-extensions">☍</a></h3>
+<h3 id="attributes-and-extensions"><a class="anchor" href="#attributes-and-extensions">☍</a> Attributes and Extensions</h3>
 <p>Unless otherwise noted, all attributes and extensions MUST be mutable and MUST
 be one of the following data types:</p>
 <ul>
@@ -578,7 +578,7 @@ potential conflicts with future Registry level attributes. For
 example, use of a model (or domain) specific prefix could be used to help
 avoid possible future conflicts.</li>
 </ul>
-<h4 id="common-attributes">Common Attributes <a class="anchor" href="#common-attributes">☍</a></h4>
+<h4 id="common-attributes"><a class="anchor" href="#common-attributes">☍</a> Common Attributes</h4>
 <p>The following attributes are used by one or more entities defined by this
 specification. They are defined here once rather than repeating them
 throughout the specification.</p>
@@ -598,7 +598,7 @@ form:</p>
 <li><code>&quot;modifiedat&quot;: &quot;TIMESTAMP&quot;</code></li>
 </ul>
 <p>The definition of each attribute is defined below:</p>
-<h5 id="singularid-id-attribute"><code>SINGULARid</code> (<code>id</code>) Attribute <a class="anchor" href="#singularid-id-attribute">☍</a></h5>
+<h5 id="singularid-id-attribute"><a class="anchor" href="#singularid-id-attribute">☍</a> <code>SINGULARid</code> (<code>id</code>) Attribute</h5>
 <ul>
 <li>
 <p>Type: String</p>
@@ -649,7 +649,7 @@ the display name.</p>
 <p>Note, since <code>SINGULARid</code> is immutable, in order to change its value, a new
 entity would need to be created with the new <code>SINGULARid</code> that is a deep-copy
 of the existing entity. Then the existing entity would be deleted.</p>
-<h5 id="self-attribute"><code>self</code> Attribute <a class="anchor" href="#self-attribute">☍</a></h5>
+<h5 id="self-attribute"><a class="anchor" href="#self-attribute">☍</a> <code>self</code> Attribute</h5>
 <ul>
 <li>
 <p>Type: URL</p>
@@ -702,7 +702,7 @@ information.</li>
 </ul>
 </li>
 </ul>
-<h5 id="shortself-attribute"><code>shortself</code> Attribute <a class="anchor" href="#shortself-attribute">☍</a></h5>
+<h5 id="shortself-attribute"><a class="anchor" href="#shortself-attribute">☍</a> <code>shortself</code> Attribute</h5>
 <ul>
 <li>
 <p>Type: URL</p>
@@ -748,7 +748,7 @@ URL, either directly or indirectly via an HTTP redirect.</li>
 </ul>
 </li>
 </ul>
-<h5 id="xid-attribute"><code>xid</code> Attribute <a class="anchor" href="#xid-attribute">☍</a></h5>
+<h5 id="xid-attribute"><a class="anchor" href="#xid-attribute">☍</a> <code>xid</code> Attribute</h5>
 <ul>
 <li>
 <p>Type: XID</p>
@@ -787,7 +787,7 @@ type <code>xid</code> (see <a href="#model.target"><code>target</code> model att
 </ul>
 </li>
 </ul>
-<h5 id="epoch-attribute"><code>epoch</code> Attribute <a class="anchor" href="#epoch-attribute">☍</a></h5>
+<h5 id="epoch-attribute"><a class="anchor" href="#epoch-attribute">☍</a> <code>epoch</code> Attribute</h5>
 <ul>
 <li>
 <p>Type: Unsigned Integer</p>
@@ -829,7 +829,7 @@ an existing entity in the collection.</p>
 </ul>
 </li>
 </ul>
-<h5 id="name-attribute"><code>name</code> Attribute <a class="anchor" href="#name-attribute">☍</a></h5>
+<h5 id="name-attribute"><a class="anchor" href="#name-attribute">☍</a> <code>name</code> Attribute</h5>
 <ul>
 <li>
 <p>Type: String</p>
@@ -864,7 +864,7 @@ out of scope of this specification.</p>
 </ul>
 </li>
 </ul>
-<h5 id="description-attribute"><code>description</code> Attribute <a class="anchor" href="#description-attribute">☍</a></h5>
+<h5 id="description-attribute"><a class="anchor" href="#description-attribute">☍</a> <code>description</code> Attribute</h5>
 <ul>
 <li>
 <p>Type: String</p>
@@ -885,7 +885,7 @@ out of scope of this specification.</p>
 </ul>
 </li>
 </ul>
-<h5 id="documentation-attribute"><code>documentation</code> Attribute <a class="anchor" href="#documentation-attribute">☍</a></h5>
+<h5 id="documentation-attribute"><a class="anchor" href="#documentation-attribute">☍</a> <code>documentation</code> Attribute</h5>
 <ul>
 <li>
 <p>Type: URL</p>
@@ -910,7 +910,7 @@ an HTTP <code>GET</code> to this URL.</p>
 </ul>
 </li>
 </ul>
-<h5 id="labels-attribute"><code>labels</code> Attribute <a class="anchor" href="#labels-attribute">☍</a></h5>
+<h5 id="labels-attribute"><a class="anchor" href="#labels-attribute">☍</a> <code>labels</code> Attribute</h5>
 <ul>
 <li>
 <p>Type: Map of name/value string pairs</p>
@@ -944,7 +944,7 @@ semicolon(<code>;</code>) is used instead of colon(<code>:</code>). So, this mig
 to consider when choosing to use labels that can be empty strings.</p>
 </li>
 </ul>
-<h5 id="createdat-attribute"><code>createdat</code> Attribute <a class="anchor" href="#createdat-attribute">☍</a></h5>
+<h5 id="createdat-attribute"><a class="anchor" href="#createdat-attribute">☍</a> <code>createdat</code> Attribute</h5>
 <ul>
 <li>
 <p>Type: Timestamp</p>
@@ -980,7 +980,7 @@ to the processing rules above, MUST use the same value in all cases.</li>
 </ul>
 </li>
 </ul>
-<h5 id="modifiedat-attribute"><code>modifiedat</code> Attribute <a class="anchor" href="#modifiedat-attribute">☍</a></h5>
+<h5 id="modifiedat-attribute"><a class="anchor" href="#modifiedat-attribute">☍</a> <code>modifiedat</code> Attribute</h5>
 <ul>
 <li>
 <p>Type: Timestamp</p>
@@ -1029,7 +1029,7 @@ to the processing rules above MUST use the same value in all cases.</li>
 </li>
 </ul>
 <hr>
-<h3 id="registry-apis">Registry APIs <a class="anchor" href="#registry-apis">☍</a></h3>
+<h3 id="registry-apis"><a class="anchor" href="#registry-apis">☍</a> Registry APIs</h3>
 <p>This specification defines the following API patterns:</p>
 <pre><code class="language-yaml">/                                               # Access the Registry
 /capabilities                                   # Access available features
@@ -1120,7 +1120,7 @@ any <code>defaultversionsticky</code> attribute included in the request MUST be 
 <li><code>?noreadonly</code> - presence of this query parameter indicates that any attempt
 to update a read-only Resource MUST be silently ignored.</li>
 </ul>
-<h4 id="no-code-servers">No-Code Servers <a class="anchor" href="#no-code-servers">☍</a></h4>
+<h4 id="no-code-servers"><a class="anchor" href="#no-code-servers">☍</a> No-Code Servers</h4>
 <p>One of the goals of xRegistry is to be as broadly supported as possible.
 Requiring all xRegistry endpoints to support the full range of APIs defined
 in this specification might not be feasible in all cases. In particular, there
@@ -1151,7 +1151,7 @@ response based on the specific situation. For example, in the case of an
 authentication error the server could return <code>401 Unauthorized</code>.</p>
 <p>The following sections define the APIs in more detail.</p>
 <hr>
-<h4 id="registry-collections">Registry Collections <a class="anchor" href="#registry-collections">☍</a></h4>
+<h4 id="registry-collections"><a class="anchor" href="#registry-collections">☍</a> Registry Collections</h4>
 <p>Registry collections (<code>GROUPS</code>, <code>RESOURCES</code> and <code>versions</code>) that are defined
 by the <a href="#registry-model">Registry Model</a> MUST be serialized according to the
 rules defined below.</p>
@@ -1209,7 +1209,7 @@ indicates the use of the <a href="../pagination/spec.md">pagination specificatio
 MAY be used for that API.</p>
 <p>The requirements on the presence of the 3 <code>COLLECTIONS</code> attributes varies
 between document and API views, and is defined below:</p>
-<h5 id="collections-in-document-view">Collections in Document View <a class="anchor" href="#collections-in-document-view">☍</a></h5>
+<h5 id="collections-in-document-view"><a class="anchor" href="#collections-in-document-view">☍</a> Collections in Document View</h5>
 <p>In document view:</p>
 <ul>
 <li><code>COLLECTIONSurl</code> and <code>COLLECTIONScount</code> are OPTIONAL.</li>
@@ -1219,7 +1219,7 @@ between document and API views, and is defined below:</p>
 (e.g. <code>{}</code>). If the collection is not part of the flag value then
 <code>COLLECTIONS</code> MUST NOT be included in the response.</li>
 </ul>
-<h5 id="collections-in-api-view">Collections in API View <a class="anchor" href="#collections-in-api-view">☍</a></h5>
+<h5 id="collections-in-api-view"><a class="anchor" href="#collections-in-api-view">☍</a> Collections in API View</h5>
 <p>In API view:</p>
 <ul>
 <li><code>COLLECTIONSurl</code> is REQUIRED for responses even if there are no entities
@@ -1237,7 +1237,7 @@ be silently ignored by the server if present.</li>
 <li><code>COLLECTIONS</code> is OPTIONAL for requests. See <a href="#updating-nested-registry-collections">Updating Nested Registry
 Collections</a> for more details.</li>
 </ul>
-<h5 id="updating-nested-registry-collections">Updating Nested Registry Collections <a class="anchor" href="#updating-nested-registry-collections">☍</a></h5>
+<h5 id="updating-nested-registry-collections"><a class="anchor" href="#updating-nested-registry-collections">☍</a> Updating Nested Registry Collections</h5>
 <p>When updating an entity that can contain Registry collections, the request
 MAY contain the 3 collection attributes. The <code>COLLECTIONSurl</code> and
 <code>COLLECTIONScount</code> attributes MUST be silently ignored by the server.</p>
@@ -1304,12 +1304,12 @@ attributes are to be ignored - for the purposes of updating the &quot;default&qu
 Version's attributes. So, in this case the <code>name</code> of the default (<code>v1</code>)
 Version will be <code>Blob Created Message Definition</code>.</p>
 <hr>
-<h4 id="entity-processing-rules">Entity Processing Rules <a class="anchor" href="#entity-processing-rules">☍</a></h4>
+<h4 id="entity-processing-rules"><a class="anchor" href="#entity-processing-rules">☍</a> Entity Processing Rules</h4>
 <p>Rather than repeating the processing rules for each type of xRegistry
 entity or Registry collection, the overall pattern is defined once in this
 section and any entity-, or collection-specific rules will be detailed in the
 appropriate section in the specification.</p>
-<h5 id="creating-or-updating-entities">Creating or Updating Entities <a class="anchor" href="#creating-or-updating-entities">☍</a></h5>
+<h5 id="creating-or-updating-entities"><a class="anchor" href="#creating-or-updating-entities">☍</a> Creating or Updating Entities</h5>
 <p>This defines the general rules for how to update entities.</p>
 <p>Creating or updating entities MAY be done using HTTP <code>PUT</code>, <code>PATCH</code> or <code>POST</code>
 methods:</p>
@@ -1420,7 +1420,7 @@ Note that this URL MUST be the same as the <code>self</code> attribute of that e
 query parameters specified on the request URL (e.g. <code>?inline</code>). If an error
 occurs while generating the response (e.g. invalid <code>?filter</code>), then
 an error MUST be generated and the entire operation MUST be undone.</p>
-<h5 id="retrieving-a-registry-collection">Retrieving a Registry Collection <a class="anchor" href="#retrieving-a-registry-collection">☍</a></h5>
+<h5 id="retrieving-a-registry-collection"><a class="anchor" href="#retrieving-a-registry-collection">☍</a> Retrieving a Registry Collection</h5>
 <p>To retrieve a Registry collection, an HTTP <code>GET</code> MAY be used. The request
 MUST be of the form:</p>
 <pre><code class="language-yaml">GET PATH-TO-COLLECTION
@@ -1437,7 +1437,7 @@ Link: &lt;URL&gt;;rel=next;count=UINTEGER ?
   } *
 }
 </code></pre>
-<h5 id="retrieving-an-entity-from-a-registry-collection">Retrieving an Entity from a Registry Collection <a class="anchor" href="#retrieving-an-entity-from-a-registry-collection">☍</a></h5>
+<h5 id="retrieving-an-entity-from-a-registry-collection"><a class="anchor" href="#retrieving-an-entity-from-a-registry-collection">☍</a> Retrieving an Entity from a Registry Collection</h5>
 <p>To retrieve an entity, an HTTP <code>GET</code> MAY be used. The request MUST be of the
 form:</p>
 <pre><code class="language-yaml">GET PATH-TO-COLLECTION/ID-OF-ENTITY
@@ -1451,7 +1451,7 @@ Content-Type: application/json; charset=utf-8
   ... remaining entity attributes ...
 }
 </code></pre>
-<h5 id="deleting-entities-in-a-registry-collection">Deleting Entities in a Registry Collection <a class="anchor" href="#deleting-entities-in-a-registry-collection">☍</a></h5>
+<h5 id="deleting-entities-in-a-registry-collection"><a class="anchor" href="#deleting-entities-in-a-registry-collection">☍</a> Deleting Entities in a Registry Collection</h5>
 <p>There are two ways to delete entities from a Registry collection:</p>
 <ol>
 <li>to delete a single entity, an HTTP <code>DELETE</code> MAY be used. The request MUST
@@ -1541,7 +1541,7 @@ within any nested Registry collections.</p>
 <p>if, as an extension, the server chooses to return additional data in the
 HTTP body.</p>
 <hr>
-<h3 id="registry-entity">Registry Entity <a class="anchor" href="#registry-entity">☍</a></h3>
+<h3 id="registry-entity"><a class="anchor" href="#registry-entity">☍</a> Registry Entity</h3>
 <p>The Registry entity represents the root of a Registry and is the main
 entry-point for traversal and discovery.</p>
 <p>The serialization of the Registry entity adheres to this form:</p>
@@ -1591,7 +1591,7 @@ OPTIONAL in requests.</li>
 OPTIONAL in requests.</li>
 </ul>
 <p>and the following Registry level attributes:</p>
-<h5 id="specversion-attribute"><code>specversion</code> Attribute <a class="anchor" href="#specversion-attribute">☍</a></h5>
+<h5 id="specversion-attribute"><a class="anchor" href="#specversion-attribute">☍</a> <code>specversion</code> Attribute</h5>
 <ul>
 <li>
 <p>Type: String</p>
@@ -1615,7 +1615,7 @@ adheres to</p>
 </ul>
 </li>
 </ul>
-<h5 id="model-attribute"><code>model</code> Attribute <a class="anchor" href="#model-attribute">☍</a></h5>
+<h5 id="model-attribute"><a class="anchor" href="#model-attribute">☍</a> <code>model</code> Attribute</h5>
 <ul>
 <li>
 <p>Type: Registry Model</p>
@@ -1632,7 +1632,7 @@ Resources supported by this Registry. See <a href="#registry-model">Registry Mod
 </ul>
 </li>
 </ul>
-<h5 id="groups-collections"><code>GROUPS</code> Collections <a class="anchor" href="#groups-collections">☍</a></h5>
+<h5 id="groups-collections"><a class="anchor" href="#groups-collections">☍</a> <code>GROUPS</code> Collections</h5>
 <ul>
 <li>
 <p>Type: Set of <a href="#registry-collections">Registry Collections</a></p>
@@ -1650,7 +1650,7 @@ Registry, even if some of the collections are empty.</li>
 </ul>
 </li>
 </ul>
-<h4 id="retrieving-the-registry">Retrieving the Registry <a class="anchor" href="#retrieving-the-registry">☍</a></h4>
+<h4 id="retrieving-the-registry"><a class="anchor" href="#retrieving-the-registry">☍</a> Retrieving the Registry</h4>
 <p>To retrieve the Registry, its metadata attributes, and Groups, an HTTP <code>GET</code>
 MAY be used.</p>
 <p>The request MUST be of the form:</p>
@@ -1797,7 +1797,7 @@ Content-Type: application/json; charset=utf-8
   }
 }
 </code></pre>
-<h4 id="updating-the-registry-entity">Updating the Registry Entity <a class="anchor" href="#updating-the-registry-entity">☍</a></h4>
+<h4 id="updating-the-registry-entity"><a class="anchor" href="#updating-the-registry-entity">☍</a> Updating the Registry Entity</h4>
 <p>To update the Registry entity, an HTTP <code>PUT</code> or <code>PATCH</code> MAY be used.</p>
 <p>The request MUST be of the form:</p>
 <pre><code class="language-yaml">PUT /
@@ -1892,7 +1892,7 @@ Content-Type: application/json; charset=utf-8
 }
 </code></pre>
 <hr>
-<h3 id="registry-capabilities">Registry Capabilities <a class="anchor" href="#registry-capabilities">☍</a></h3>
+<h3 id="registry-capabilities"><a class="anchor" href="#registry-capabilities">☍</a> Registry Capabilities</h3>
 <p>In order to programmatically discover which capabilities are supported by an
 implementation, servers MUST support exposing this information via a
 &quot;capabilities&quot; map that lists each supported feature along with any related
@@ -1945,7 +1945,7 @@ not being supported. All supported extensions MUST be included in the list.</p>
 <p>Absence, presence, or configuration values of a feature in the map MAY vary
 based on the authorization level of the client making the request.</p>
 <p>The following defines the specification-defined capabilities:</p>
-<h4 id="flags"><code>flags</code> <a class="anchor" href="#flags">☍</a></h4>
+<h4 id="flags"><a class="anchor" href="#flags">☍</a> <code>flags</code></h4>
 <ul>
 <li>Name: <code>flags</code></li>
 <li>Type: Array of strings</li>
@@ -1965,7 +1965,7 @@ parameters are supported.</li>
 </ul>
 </li>
 </ul>
-<h4 id="mutable"><code>mutable</code> <a class="anchor" href="#mutable">☍</a></h4>
+<h4 id="mutable"><a class="anchor" href="#mutable">☍</a> <code>mutable</code></h4>
 <ul>
 <li>Name <code>mutable</code></li>
 <li>Type: Array of strings</li>
@@ -1980,7 +1980,7 @@ even if the client has the ability to edit Resources in general.</li>
 <li>When not specified, the default value MUST be an empty list and the Registry
 is read-only.</li>
 </ul>
-<h4 id="pagination"><code>pagination</code> <a class="anchor" href="#pagination">☍</a></h4>
+<h4 id="pagination"><a class="anchor" href="#pagination">☍</a> <code>pagination</code></h4>
 <ul>
 <li>Name: <code>pagination</code></li>
 <li>Type: Boolean</li>
@@ -1988,7 +1988,7 @@ is read-only.</li>
 <a href="../pagination/spec.md">pagination</a> specification (value of <code>true</code>).</li>
 <li>When not specified, the default value MUST be <code>false</code>.</li>
 </ul>
-<h4 id="schemas"><code>schemas</code> <a class="anchor" href="#schemas">☍</a></h4>
+<h4 id="schemas"><a class="anchor" href="#schemas">☍</a> <code>schemas</code></h4>
 <ul>
 <li>Name: <code>schemas</code></li>
 <li>Type: Array of Strings</li>
@@ -2002,7 +2002,7 @@ specification).</li>
 <li>A value of <code>xRegistry-json/1.0-rc1</code> MUST be included in the list.</li>
 <li>When not specified, the default value MUST be <code>xRegistry-json/1.0-rc1</code>.</li>
 </ul>
-<h4 id="shortself"><code>shortself</code> <a class="anchor" href="#shortself">☍</a></h4>
+<h4 id="shortself"><a class="anchor" href="#shortself">☍</a> <code>shortself</code></h4>
 <ul>
 <li>Name: <code>shortself</code></li>
 <li>Type: Boolean</li>
@@ -2011,7 +2011,7 @@ in the server serialization of the entities within the Registry (value of
 <code>true</code>).</li>
 <li>When not specified, the default value MUST be <code>false</code>.</li>
 </ul>
-<h4 id="specversions"><code>specversions</code> <a class="anchor" href="#specversions">☍</a></h4>
+<h4 id="specversions"><a class="anchor" href="#specversions">☍</a> <code>specversions</code></h4>
 <ul>
 <li>Name: <code>specversions</code></li>
 <li>Type: Array of strings</li>
@@ -2020,7 +2020,7 @@ in the server serialization of the entities within the Registry (value of
 <li>A value of <code>1.0-rc1</code> MUST be included in the list.</li>
 <li>When not specified, the default value MUST be <code>1.0-rc1</code>.</li>
 </ul>
-<h4 id="sticky"><code>sticky</code> <a class="anchor" href="#sticky">☍</a></h4>
+<h4 id="sticky"><a class="anchor" href="#sticky">☍</a> <code>sticky</code></h4>
 <ul>
 <li>Name: <code>sticky</code></li>
 <li>Type: Boolean</li>
@@ -2034,7 +2034,7 @@ capability indicates whether a request to set a Resource's
 extension values.</p>
 <p>For clarity, servers MUST include all known capabilities in the serialization,
 even if they are set to their default values or have empty lists.</p>
-<h4 id="updating-the-capabilities-of-a-server">Updating the Capabilities of a Server <a class="anchor" href="#updating-the-capabilities-of-a-server">☍</a></h4>
+<h4 id="updating-the-capabilities-of-a-server"><a class="anchor" href="#updating-the-capabilities-of-a-server">☍</a> Updating the Capabilities of a Server</h4>
 <p>If supported, updates to the server's capabilities MAY be done via an HTTP
 <code>PUT</code>, or <code>PATCH</code>, to the <code>/capabilities</code> API, or by updating the <code>capabilities</code>
 attribute on the root of the Registry. As with other APIs, a <code>PUT</code> MUST be
@@ -2181,7 +2181,7 @@ if <code>pagination</code> is not supported, then a server SHOULD still include:
   }
 </code></pre>
 <p>in the <code>/capabilities?offered</code> output (assuming both APIs are supported).</p>
-<h3 id="registry-model">Registry Model <a class="anchor" href="#registry-model">☍</a></h3>
+<h3 id="registry-model"><a class="anchor" href="#registry-model">☍</a> Registry Model</h3>
 <p>The Registry model defines the Groups, Resources, extension attributes and
 changes to specification-defined attributes. This information is
 intended to be used by tooling that does not have knowledge of the structure of
@@ -3041,7 +3041,7 @@ list of <code>groups.resource.metaattributes</code> names.</li>
 </ul>
 </li>
 </ul>
-<h4 id="retrieving-the-registry-model">Retrieving the Registry Model <a class="anchor" href="#retrieving-the-registry-model">☍</a></h4>
+<h4 id="retrieving-the-registry-model"><a class="anchor" href="#retrieving-the-registry-model">☍</a> Retrieving the Registry Model</h4>
 <p>To retrieve the Registry Model as a stand-alone entity, an HTTP <code>GET</code> MAY be
 used.</p>
 <p>Registries MAY support exposing the model in a variety of well-defined schema
@@ -3191,7 +3191,7 @@ Content-Type: application/json; charset=utf-8
   }
 }
 </code></pre>
-<h4 id="updating-the-registry-model">Updating the Registry Model <a class="anchor" href="#updating-the-registry-model">☍</a></h4>
+<h4 id="updating-the-registry-model"><a class="anchor" href="#updating-the-registry-model">☍</a> Updating the Registry Model</h4>
 <p>To update the Registry model, the new full representation of the model
 MAY be included on an HTTP <code>PUT</code> to the Registry Entity in the <code>model</code>
 attribute, or a <code>PUT</code> MAY be done to the <code>/model</code> API. Note that <code>PATCH</code>
@@ -3426,7 +3426,7 @@ Content-Type: application/json; charset=utf-8
   }
 }
 </code></pre>
-<h5 id="reuse-of-resource-definitions">Reuse of Resource Definitions <a class="anchor" href="#reuse-of-resource-definitions">☍</a></h5>
+<h5 id="reuse-of-resource-definitions"><a class="anchor" href="#reuse-of-resource-definitions">☍</a> Reuse of Resource Definitions</h5>
 <p>When a Resource type definition is to be shared between Groups, rather than
 creating a duplicate Resource definition, the <code>ximport</code> mechanism MAY be used
 instead. When defining the Resources of a Group, a special Resource &quot;plural&quot;
@@ -3474,7 +3474,7 @@ MUST be unique across all imported and locally defined Resources. Locally
 defined Resources MUST NOT use <code>ximport</code> as a <code>plural</code> or <code>singular</code> name.</p>
 <p>See <a href="#cross-referencing-resources">Cross Referencing Resources</a> for more
 additional information.</p>
-<h5 id="includes-in-the-xregistry-model-data">Includes in the xRegistry Model Data <a class="anchor" href="#includes-in-the-xregistry-model-data">☍</a></h5>
+<h5 id="includes-in-the-xregistry-model-data"><a class="anchor" href="#includes-in-the-xregistry-model-data">☍</a> Includes in the xRegistry Model Data</h5>
 <p>There might be times when it is necessary for an xRegistry model to reuse
 portions of another xRegistry model defined elsewhere. Rather than forcing
 the duplication of the model definitions, an &quot;include&quot; type of JSON directive
@@ -3567,7 +3567,7 @@ from an external Group named <code>group1</code> in another xRegistry.</p>
 }
 </code></pre>
 <hr>
-<h3 id="exporting">Exporting <a class="anchor" href="#exporting">☍</a></h3>
+<h3 id="exporting"><a class="anchor" href="#exporting">☍</a> Exporting</h3>
 <p>The <code>/export</code> API MUST be an alias for
 <code>GET /?doc&amp;inline=*,model,capabilities&quot;. If supported, it MUST only support the </code>GET` HTTP method. This API was created:</p>
 <ul>
@@ -3582,7 +3582,7 @@ single API call.</li>
 <p>Query parameters MAY be included on the request and any <code>?inline</code> flag
 specified MUST override the default value defined above.</p>
 <hr>
-<h3 id="groups">Groups <a class="anchor" href="#groups">☍</a></h3>
+<h3 id="groups"><a class="anchor" href="#groups">☍</a> Groups</h3>
 <p>Groups represent entities that typically act as a collection mechanism for
 related Resources. However, it is worth noting that Groups do not have to have
 Resources associated with them. It is possible to have Groups be the main (or
@@ -3632,7 +3632,7 @@ OPTIONAL in requests.</li>
 OPTIONAL in requests.</li>
 </ul>
 <p>and the following Group level attributes:</p>
-<h5 id="resources-collections"><code>RESOURCES</code> Collections <a class="anchor" href="#resources-collections">☍</a></h5>
+<h5 id="resources-collections"><a class="anchor" href="#resources-collections">☍</a> <code>RESOURCES</code> Collections</h5>
 <ul>
 <li>
 <p>Type: Set of <a href="#registry-collections">Registry Collections</a>.</p>
@@ -3650,7 +3650,7 @@ even if some of the collections are empty.</li>
 </ul>
 </li>
 </ul>
-<h4 id="retrieving-a-group-collection">Retrieving a Group Collection <a class="anchor" href="#retrieving-a-group-collection">☍</a></h4>
+<h4 id="retrieving-a-group-collection"><a class="anchor" href="#retrieving-a-group-collection">☍</a> Retrieving a Group Collection</h4>
 <p>To retrieve a Group collection, an HTTP <code>GET</code> MAY be used.</p>
 <p>The request MUST be of the form:</p>
 <pre><code class="language-yaml">GET /GROUPS
@@ -3719,7 +3719,7 @@ Link: &lt;https://example.com/endpoints&amp;page=2&gt;;rel=next;count=100
 <p>Notice that the <code>Link</code> HTTP header is present, indicating that there
 is a second page of results that can be retrieved via the specified URL,
 and that there are total of 100 items in this collection.</p>
-<h4 id="creating-or-updating-groups">Creating or Updating Groups <a class="anchor" href="#creating-or-updating-groups">☍</a></h4>
+<h4 id="creating-or-updating-groups"><a class="anchor" href="#creating-or-updating-groups">☍</a> Creating or Updating Groups</h4>
 <p>Creating or updating Groups via HTTP MAY be done by using the HTTP <code>PUT</code>,
 <code>PATCH</code> or <code>POST</code> methods:</p>
 <ul>
@@ -3839,7 +3839,7 @@ Content-Type: application/json; charset=utf-8
   }
 }
 </code></pre>
-<h4 id="retrieving-a-group">Retrieving a Group <a class="anchor" href="#retrieving-a-group">☍</a></h4>
+<h4 id="retrieving-a-group"><a class="anchor" href="#retrieving-a-group">☍</a> Retrieving a Group</h4>
 <p>To retrieve a Group, an HTTP <code>GET</code> MAY be used.</p>
 <p>The request MUST be of the form:</p>
 <pre><code class="language-yaml">GET /GROUPS/gID
@@ -3887,7 +3887,7 @@ Content-Type: application/json; charset=utf-8
   &quot;messagescount&quot;: 5
 }
 </code></pre>
-<h4 id="deleting-groups">Deleting Groups <a class="anchor" href="#deleting-groups">☍</a></h4>
+<h4 id="deleting-groups"><a class="anchor" href="#deleting-groups">☍</a> Deleting Groups</h4>
 <p>To delete one or more Groups, an HTTP <code>DELETE</code> MAY be used:</p>
 <ul>
 <li><code>DELETE /GROUPS/gID[?epoch=UINTEGER]</code></li>
@@ -3897,7 +3897,7 @@ Content-Type: application/json; charset=utf-8
 Registry Collection</a>
 section.</p>
 <hr>
-<h3 id="resources">Resources <a class="anchor" href="#resources">☍</a></h3>
+<h3 id="resources"><a class="anchor" href="#resources">☍</a> Resources</h3>
 <p>Resources typically represent the main entity that the Registry is managing.
 Each Resource is associated with a Group to aid in their discovery and to show
 a relationship with Resources in that same Group. Resources appear within the
@@ -3943,7 +3943,7 @@ Collection attributes.</li>
 and Versions. While it mainly uses the term &quot;Resource&quot; for ease of reading, in
 most cases it can be assumed that the same applies for &quot;Versions&quot;. When this
 is not the case, it will be explicitly called out.</p>
-<h4 id="resource-metadata-vs-resource-document">Resource Metadata vs Resource Document <a class="anchor" href="#resource-metadata-vs-resource-document">☍</a></h4>
+<h4 id="resource-metadata-vs-resource-document"><a class="anchor" href="#resource-metadata-vs-resource-document">☍</a> Resource Metadata vs Resource Document</h4>
 <p>Unlike Groups, which consist entirely of xRegistry managed metadata, Resources
 typically have their own domain-specific data and document format that needs
 to be kept distinct from the xRegistry Resource metadata. As discussed
@@ -4014,7 +4014,7 @@ Resource's metadata. However, the <code>RESOURCEurl</code> attribute MUST always
 if it has a value.</p>
 <p>Note that the serialization of a Resource MUST only use at most one of these 3
 attributes at a time.</p>
-<h4 id="resource-attributes">Resource Attributes <a class="anchor" href="#resource-attributes">☍</a></h4>
+<h4 id="resource-attributes"><a class="anchor" href="#resource-attributes">☍</a> Resource Attributes</h4>
 <p>Resource attributes are non-versioned attributes associated with a Resource.
 In a sense they can be considered to be global to the Resource and its
 Versions, but they are not part of, or serialized in, any Version. Instead,
@@ -4091,7 +4091,7 @@ based on the <code>shortself</code> capability. OPTIONAL in requests.</li>
 requests.</li>
 </ul>
 <p>and the following Resource level attributes:</p>
-<h5 id="xref-attribute"><code>xref</code> Attribute <a class="anchor" href="#xref-attribute">☍</a></h5>
+<h5 id="xref-attribute"><a class="anchor" href="#xref-attribute">☍</a> <code>xref</code> Attribute</h5>
 <ul>
 <li>
 <p>Type: Relative URI (xid).</p>
@@ -4109,7 +4109,7 @@ Resources</a> for more information.</p>
 </ul>
 </li>
 </ul>
-<h5 id="readonly-attribute"><code>readonly</code> Attribute <a class="anchor" href="#readonly-attribute">☍</a></h5>
+<h5 id="readonly-attribute"><a class="anchor" href="#readonly-attribute">☍</a> <code>readonly</code> Attribute</h5>
 <ul>
 <li>
 <p>Type: Boolean</p>
@@ -4134,7 +4134,7 @@ in which case the error MUST be silently ignored. See
 </ul>
 </li>
 </ul>
-<h5 id="compatibility-attribute"><code>compatibility</code> Attribute <a class="anchor" href="#compatibility-attribute">☍</a></h5>
+<h5 id="compatibility-attribute"><a class="anchor" href="#compatibility-attribute">☍</a> <code>compatibility</code> Attribute</h5>
 <ul>
 <li>
 <p>Type: String (with resource-specified enumeration of possible values)</p>
@@ -4194,7 +4194,7 @@ Versions. If that's not the case, the server MUST generate an error
 </ul>
 </li>
 </ul>
-<h4 id="compatibilityauthority-attribute"><code>compatibilityauthority</code> Attribute <a class="anchor" href="#compatibilityauthority-attribute">☍</a></h4>
+<h4 id="compatibilityauthority-attribute"><a class="anchor" href="#compatibilityauthority-attribute">☍</a> <code>compatibilityauthority</code> Attribute</h4>
 <ul>
 <li>
 <p>Name: <code>compatibilityauthority</code></p>
@@ -4236,7 +4236,7 @@ MUST be <code>external</code>.</li>
 </ul>
 </li>
 </ul>
-<h5 id="defaultversionid-attribute"><code>defaultversionid</code> Attribute <a class="anchor" href="#defaultversionid-attribute">☍</a></h5>
+<h5 id="defaultversionid-attribute"><a class="anchor" href="#defaultversionid-attribute">☍</a> <code>defaultversionid</code> Attribute</h5>
 <ul>
 <li>
 <p>Type: String</p>
@@ -4264,7 +4264,7 @@ below for how to process these two attributes.</li>
 </ul>
 </li>
 </ul>
-<h5 id="defaultversionurl-attribute"><code>defaultversionurl</code> Attribute <a class="anchor" href="#defaultversionurl-attribute">☍</a></h5>
+<h5 id="defaultversionurl-attribute"><a class="anchor" href="#defaultversionurl-attribute">☍</a> <code>defaultversionurl</code> Attribute</h5>
 <ul>
 <li>
 <p>Type: URL</p>
@@ -4302,7 +4302,7 @@ MUST be an absolute URL per the API view constraints listed above.</li>
 </ul>
 </li>
 </ul>
-<h5 id="defaultversionsticky-attribute"><code>defaultversionsticky</code> Attribute <a class="anchor" href="#defaultversionsticky-attribute">☍</a></h5>
+<h5 id="defaultversionsticky-attribute"><a class="anchor" href="#defaultversionsticky-attribute">☍</a> <code>defaultversionsticky</code> Attribute</h5>
 <ul>
 <li>
 <p>Type: Boolean</p>
@@ -4372,7 +4372,7 @@ newest Version.</li>
 </ul>
 </li>
 </ul>
-<h5 id="meta-attributesub-object"><code>meta</code> Attribute/Sub-Object <a class="anchor" href="#meta-attributesub-object">☍</a></h5>
+<h5 id="meta-attributesub-object"><a class="anchor" href="#meta-attributesub-object">☍</a> <code>meta</code> Attribute/Sub-Object</h5>
 <ul>
 <li>
 <p>Type: Object</p>
@@ -4409,7 +4409,7 @@ possible, an update request to the <code>metaurl</code> directly would be a bett
 choice, or use <code>PATCH</code> instead and only include the <code>meta</code> sub-object.</p>
 <p>During a write operation, the absence of the <code>meta</code> attribute indicates that
 no changes are to be made to the <code>meta</code> sub-object.</p>
-<h5 id="metaurl-attribute"><code>metaurl</code> Attribute <a class="anchor" href="#metaurl-attribute">☍</a></h5>
+<h5 id="metaurl-attribute"><a class="anchor" href="#metaurl-attribute">☍</a> <code>metaurl</code> Attribute</h5>
 <ul>
 <li>
 <p>Type: URL</p>
@@ -4446,7 +4446,7 @@ MUST be an absolute URL per the API view constraints listed above.</li>
 </ul>
 </li>
 </ul>
-<h5 id="versions-collection"><code>versions</code> Collection <a class="anchor" href="#versions-collection">☍</a></h5>
+<h5 id="versions-collection"><a class="anchor" href="#versions-collection">☍</a> <code>versions</code> Collection</h5>
 <ul>
 <li>
 <p>Type: <a href="#registry-collections">Registry Collection</a></p>
@@ -4462,7 +4462,7 @@ MUST be an absolute URL per the API view constraints listed above.</li>
 </ul>
 </li>
 </ul>
-<h4 id="serializing-resources">Serializing Resources <a class="anchor" href="#serializing-resources">☍</a></h4>
+<h4 id="serializing-resources"><a class="anchor" href="#serializing-resources">☍</a> Serializing Resources</h4>
 <p>Serializing Resources requires some special processing due to Resources not
 representing just a single set of data. In particular, the following
 aspects need to be taken into account:</p>
@@ -4488,7 +4488,7 @@ message's body:</p>
 <p>Which variant is used is controlled by the use of <code>$details</code> on the URL path.
 The following sections go into more details about these two serialization
 options.</p>
-<h5 id="serializing-resource-documents">Serializing Resource Documents <a class="anchor" href="#serializing-resource-documents">☍</a></h5>
+<h5 id="serializing-resource-documents"><a class="anchor" href="#serializing-resource-documents">☍</a> Serializing Resource Documents</h5>
 <p>When a Resource is serialized as its underlying domain-specific document,
 in other words <code>$details</code> is not appended to its URL path, the HTTP body of
 requests and responses MUST be the exact bytes of the document. If the
@@ -4574,7 +4574,7 @@ will be slightly different (to exclude Resource level attributes). See the
 next sections for more information.</p>
 <p>Scalar default Version extension attributes MUST also appear as
 <code>xRegistry-</code> HTTP headers.</p>
-<h5 id="serializing-resource-metadata">Serializing Resource Metadata <a class="anchor" href="#serializing-resource-metadata">☍</a></h5>
+<h5 id="serializing-resource-metadata"><a class="anchor" href="#serializing-resource-metadata">☍</a> Serializing Resource Metadata</h5>
 <p>Appending <code>$details</code> to a Resource or Version's URL path modifies the
 serialization of the entity such that rather than the HTTP body containing
 the entity's domain-specific &quot;document&quot; and the xRegistry metadata being
@@ -4639,7 +4639,7 @@ this form:</p>
 <p>The serialization of a Version will look similar except the <code>meta</code> and
 <code>versions</code> related Resource level attributes MUST NOT be present. More on this
 in the next sections.</p>
-<h4 id="cross-referencing-resources">Cross Referencing Resources <a class="anchor" href="#cross-referencing-resources">☍</a></h4>
+<h4 id="cross-referencing-resources"><a class="anchor" href="#cross-referencing-resources">☍</a> Cross Referencing Resources</h4>
 <p>Typically, Resources exist within the scope of a single Group, however there
 might be situations where a Resource needs to be related to multiple Groups.
 In these cases, there are two options. First, a copy of the Resource could be
@@ -4820,7 +4820,7 @@ serialization of the source Resource will not include any target Resource
 attributes or nested collections. Rather, it will only show the <code>RESOURCEid</code>
 and <code>xref</code> attributes.</p>
 <hr>
-<h4 id="resource-and-version-apis">Resource and Version APIs <a class="anchor" href="#resource-and-version-apis">☍</a></h4>
+<h4 id="resource-and-version-apis"><a class="anchor" href="#resource-and-version-apis">☍</a> Resource and Version APIs</h4>
 <p>For convenience, the Resource and Version create, update and delete APIs can be
 summarized as:</p>
 <p><em><strong><code>POST /GROUPS/gID</code></strong></em></p>
@@ -4876,7 +4876,7 @@ summarized as:</p>
 </ul>
 <p>The following sections go into more detail about each API.</p>
 <hr>
-<h4 id="retrieving-a-resource-collection">Retrieving a Resource Collection <a class="anchor" href="#retrieving-a-resource-collection">☍</a></h4>
+<h4 id="retrieving-a-resource-collection"><a class="anchor" href="#retrieving-a-resource-collection">☍</a> Retrieving a Resource Collection</h4>
 <p>To retrieve all Resources in a Resource Collection, an HTTP <code>GET</code> MAY be used.</p>
 <p>The request MUST be of the form:</p>
 <pre><code class="language-yaml">GET /GROUPS/gID/RESOURCES
@@ -4965,7 +4965,7 @@ Link: &lt;https://example.com/endpoints/ep1/messages&amp;page=2&gt;;rel=next;cou
   }
 }
 </code></pre>
-<h4 id="creating-or-updating-resources-and-versions">Creating or Updating Resources and Versions <a class="anchor" href="#creating-or-updating-resources-and-versions">☍</a></h4>
+<h4 id="creating-or-updating-resources-and-versions"><a class="anchor" href="#creating-or-updating-resources-and-versions">☍</a> Creating or Updating Resources and Versions</h4>
 <p>These APIs follow the overall pattern described in the <a href="#creating-or-updating-entities">Creating or Updating
 Entities</a> section. Any variations will be
 called out.</p>
@@ -5338,7 +5338,7 @@ Content-Type: application/json; charset=utf-8
 <p>Note that in this case, the new &quot;label&quot; replaces all existing labels, it is
 not a &quot;merge&quot; operation because all attributes need to be specified in their
 entirety.</p>
-<h4 id="retrieving-a-resource">Retrieving a Resource <a class="anchor" href="#retrieving-a-resource">☍</a></h4>
+<h4 id="retrieving-a-resource"><a class="anchor" href="#retrieving-a-resource">☍</a> Retrieving a Resource</h4>
 <p>To retrieve a Resource, an HTTP <code>GET</code> MAY be used.</p>
 <p>The request MUST be of the form:</p>
 <pre><code class="language-yaml">GET /GROUPS/gID/RESOURCES/rID
@@ -5403,7 +5403,7 @@ Resource in the <code>versions</code> collection - same as <code>defaultversionu
 value. This allows for HTTP tooling that is not aware of xRegistry to know
 the desired filename to use if the HTTP body were to be written to a file.</li>
 </ul>
-<h4 id="retrieving-a-resource-as-metadata">Retrieving a Resource as Metadata <a class="anchor" href="#retrieving-a-resource-as-metadata">☍</a></h4>
+<h4 id="retrieving-a-resource-as-metadata"><a class="anchor" href="#retrieving-a-resource-as-metadata">☍</a> Retrieving a Resource as Metadata</h4>
 <p>When a Resource has the <code>hasdocument</code> model attribute set to <code>true</code>, to
 retrieve a Resource's metadata (Resource attributes) as a JSON object, an
 HTTP <code>GET</code> with <code>$details</code> appended to its URL path MAY be used.</p>
@@ -5499,7 +5499,7 @@ Content-Location: https://example.com/endpoints/ep1/messages/msg1/versions/1.0
   &quot;versionscount&quot;: 1
 }
 </code></pre>
-<h4 id="deleting-resources">Deleting Resources <a class="anchor" href="#deleting-resources">☍</a></h4>
+<h4 id="deleting-resources"><a class="anchor" href="#deleting-resources">☍</a> Deleting Resources</h4>
 <p>To delete one or more Resources, and all of their Versions, an HTTP <code>DELETE</code>
 MAY be used:</p>
 <ul>
@@ -5511,7 +5511,7 @@ Registry Collection</a>
 section.</p>
 <p>Deleting a Resource MUST delete all Versions within the Resource.</p>
 <hr>
-<h3 id="versions">Versions <a class="anchor" href="#versions">☍</a></h3>
+<h3 id="versions"><a class="anchor" href="#versions">☍</a> Versions</h3>
 <p>Versions represent historical instances of a Resource. When a Resource is
 updated, there are two actions that might take place. First, the update can
 completely replace an existing Version of the Resource. This is most typically
@@ -5590,7 +5590,7 @@ when <code>true</code>, OPTIONAL when <code>false</code>. OPTIONAL in requests.<
 <li><a href="#resourcebase64-attribute"><code>RESOURCEbase64</code></a> - OPTIONAL.</li>
 </ul>
 <p>as defined below:</p>
-<h5 id="versionid-attribute"><code>versionid</code> Attribute <a class="anchor" href="#versionid-attribute">☍</a></h5>
+<h5 id="versionid-attribute"><a class="anchor" href="#versionid-attribute">☍</a> <code>versionid</code> Attribute</h5>
 <ul>
 <li>
 <p>Type: String</p>
@@ -5615,7 +5615,7 @@ for use by the <code>?setdefaultversionid</code> feature.</li>
 </ul>
 </li>
 </ul>
-<h5 id="isdefault-attribute"><code>isdefault</code> Attribute <a class="anchor" href="#isdefault-attribute">☍</a></h5>
+<h5 id="isdefault-attribute"><a class="anchor" href="#isdefault-attribute">☍</a> <code>isdefault</code> Attribute</h5>
 <ul>
 <li>
 <p>Type: Boolean</p>
@@ -5648,7 +5648,7 @@ information about this attribute.</p>
 </ul>
 </li>
 </ul>
-<h5 id="ancestor-attribute"><code>ancestor</code> Attribute <a class="anchor" href="#ancestor-attribute">☍</a></h5>
+<h5 id="ancestor-attribute"><a class="anchor" href="#ancestor-attribute">☍</a> <code>ancestor</code> Attribute</h5>
 <ul>
 <li>
 <p>Type: String</p>
@@ -5703,7 +5703,7 @@ appropriately.</li>
 </ul>
 </li>
 </ul>
-<h5 id="contenttype-attribute"><code>contenttype</code> Attribute <a class="anchor" href="#contenttype-attribute">☍</a></h5>
+<h5 id="contenttype-attribute"><a class="anchor" href="#contenttype-attribute">☍</a> <code>contenttype</code> Attribute</h5>
 <ul>
 <li>
 <p>Type: String</p>
@@ -5737,7 +5737,7 @@ HTTP <code>GET</code> to the <code>RESOURCEurl</code>, it is expected that they 
 </ul>
 </li>
 </ul>
-<h5 id="resourceurl-attribute"><code>RESOURCEurl</code> Attribute <a class="anchor" href="#resourceurl-attribute">☍</a></h5>
+<h5 id="resourceurl-attribute"><a class="anchor" href="#resourceurl-attribute">☍</a> <code>RESOURCEurl</code> Attribute</h5>
 <ul>
 <li>
 <p>Type: URI</p>
@@ -5764,7 +5764,7 @@ set to <code>false</code>.</li>
 </ul>
 </li>
 </ul>
-<h5 id="resource-attribute"><code>RESOURCE</code> Attribute <a class="anchor" href="#resource-attribute">☍</a></h5>
+<h5 id="resource-attribute"><a class="anchor" href="#resource-attribute">☍</a> <code>RESOURCE</code> Attribute</h5>
 <ul>
 <li>
 <p>Type: Resource Document</p>
@@ -5790,7 +5790,7 @@ set to `false.</li>
 </ul>
 </li>
 </ul>
-<h5 id="resourcebase64-attribute"><code>RESOURCEbase64</code> Attribute <a class="anchor" href="#resourcebase64-attribute">☍</a></h5>
+<h5 id="resourcebase64-attribute"><a class="anchor" href="#resourcebase64-attribute">☍</a> <code>RESOURCEbase64</code> Attribute</h5>
 <ul>
 <li>
 <p>Type: String</p>
@@ -5816,7 +5816,7 @@ set to `false.</li>
 </ul>
 </li>
 </ul>
-<h4 id="version-ids">Version IDs <a class="anchor" href="#version-ids">☍</a></h4>
+<h4 id="version-ids"><a class="anchor" href="#version-ids">☍</a> Version IDs</h4>
 <p>If a server does not support client-side specification of the <code>versionid</code> of a
 new Version (see the <code>setversionid</code> attribute in the <a href="#registry-model">Registry
 Model</a>), or if a client chooses to not specify the <code>versionid</code>,
@@ -5840,7 +5840,7 @@ it is RECOMMENDED to include a major version identifier in the Resource
 so that incompatible, but historically related Resources can be more easily
 identified by users and developers. The Version's <code>versionid</code> then functions
 as the semantic minor version identifier.</p>
-<h4 id="default-version-of-a-resource">Default Version of a Resource <a class="anchor" href="#default-version-of-a-resource">☍</a></h4>
+<h4 id="default-version-of-a-resource"><a class="anchor" href="#default-version-of-a-resource">☍</a> Default Version of a Resource</h4>
 <p>As Versions of a Resource are added or removed, there needs to be a mechanism
 by which the &quot;default&quot; one is determined. There are two options for how this
 might be done:</p>
@@ -5911,7 +5911,7 @@ default Version, not the old one.</li>
 in any Resource's Versions, for example, attributes such as <code>modifiedat</code>
 remain unchanged.</li>
 </ul>
-<h4 id="retrieving-all-versions">Retrieving all Versions <a class="anchor" href="#retrieving-all-versions">☍</a></h4>
+<h4 id="retrieving-all-versions"><a class="anchor" href="#retrieving-all-versions">☍</a> Retrieving all Versions</h4>
 <p>To retrieve all Versions of a Resource, an HTTP <code>GET</code> MAY be used.</p>
 <p>The request MUST be of the form:</p>
 <pre><code class="language-yaml">GET /GROUPS/gID/RESOURCES/rID/versions
@@ -5973,10 +5973,10 @@ Link: &lt;https://example.com/endpoints/ep1/messages/msg1/versions&amp;page=2&gt
   }
 }
 </code></pre>
-<h4 id="creating-or-updating-versions">Creating or Updating Versions <a class="anchor" href="#creating-or-updating-versions">☍</a></h4>
+<h4 id="creating-or-updating-versions"><a class="anchor" href="#creating-or-updating-versions">☍</a> Creating or Updating Versions</h4>
 <p>See <a href="#creating-or-updating-resources-and-versions">Creating or Updating Resources and
 Versions</a>.</p>
-<h4 id="retrieving-a-version">Retrieving a Version <a class="anchor" href="#retrieving-a-version">☍</a></h4>
+<h4 id="retrieving-a-version"><a class="anchor" href="#retrieving-a-version">☍</a> Retrieving a Version</h4>
 <p>To retrieve a particular Version of a Resource, an HTTP <code>GET</code> MAY be used.</p>
 <p>The request MUST be of the form:</p>
 <pre><code class="language-yaml">GET /GROUPS/gID/RESOURCES/rID/versions/vID
@@ -6060,7 +6060,7 @@ Content-Disposition: msg1
   # Definition of a &quot;Blob Created&quot; event excluded for brevity
 }
 </code></pre>
-<h4 id="retrieving-a-version-as-metadata">Retrieving a Version as Metadata <a class="anchor" href="#retrieving-a-version-as-metadata">☍</a></h4>
+<h4 id="retrieving-a-version-as-metadata"><a class="anchor" href="#retrieving-a-version-as-metadata">☍</a> Retrieving a Version as Metadata</h4>
 <p>To retrieve a particular Version's metadata, an HTTP <code>GET</code> with <code>$details</code>
 appended to its <code>RESOURCEid</code> MAY be used. Note that in cases where the
 Resource's <code>hasdocument</code> is <code>false</code> then the <code>$details</code> suffix is OPTIONAL.</p>
@@ -6120,7 +6120,7 @@ Content-Type: application/json; charset=utf-8
   &quot;ancestor&quot;: &quot;1.0&quot;
 }
 </code></pre>
-<h4 id="deleting-versions">Deleting Versions <a class="anchor" href="#deleting-versions">☍</a></h4>
+<h4 id="deleting-versions"><a class="anchor" href="#deleting-versions">☍</a> Deleting Versions</h4>
 <p>To delete one or more Versions of a Resource, an HTTP <code>DELETE</code> MAY be used:</p>
 <ul>
 <li><code>DELETE /GROUPS/gID/RESOURCES/rID/versions/vid[?epoch=UINTEGER&amp;setdefaultversionid=vID]</code></li>
@@ -6148,7 +6148,7 @@ HTTP body.</p>
 <pre><code class="language-yaml">HTTP/1.1 204 No Content
 </code></pre>
 <hr>
-<h3 id="configuring-responses">Configuring Responses <a class="anchor" href="#configuring-responses">☍</a></h3>
+<h3 id="configuring-responses"><a class="anchor" href="#configuring-responses">☍</a> Configuring Responses</h3>
 <p>Any request MAY include a set of query parameters (flags) to control how the
 response is to be generated. The following sections will define the following
 flags:</p>
@@ -6163,7 +6163,7 @@ it is too large then it MUST generate an error (<a href="#too_large">too_large</
 those cases, the client will need to query the individual inlinable attributes
 in isolation so the Registry can leverage
 <a href="../pagination/spec.md">pagination</a> of the response.</p>
-<h4 id="inline">Inline <a class="anchor" href="#inline">☍</a></h4>
+<h4 id="inline"><a class="anchor" href="#inline">☍</a> Inline</h4>
 <p>The <code>?inline</code> query parameter (flag) MAY be used on requests to indicate whether
 nested collections/objects, or certain (potentially large) attributes, are to
 be included in the response message.</p>
@@ -6288,7 +6288,7 @@ child appears, not all collections in the parent.</p>
 plural name for the collection in its defined case.</p>
 <p>A request to inline an unknown, or non-inlinable, attribute MUST generate an
 error (<a href="#invalid_data">invalid_data</a>).</p>
-<h4 id="filter">Filter <a class="anchor" href="#filter">☍</a></h4>
+<h4 id="filter"><a class="anchor" href="#filter">☍</a> Filter</h4>
 <p>The <code>?filter</code> query parameter (flag) on a request indicates that the response
 MUST include only those entities that match the specified filter criteria.
 This means that any Registry Collection's attributes MUST be modified
@@ -6485,7 +6485,7 @@ mygroups/g1/myresources/r1/versions/v2
 <p>Notice the first part of the <code>?filter</code> expression (to the left of the &quot;and&quot;
 (<code>,</code>)) has no impact on the results because the list of resulting leaves in
 that subtree is not changed by that search criteria.</p>
-<h4 id="doc">Doc <a class="anchor" href="#doc">☍</a></h4>
+<h4 id="doc"><a class="anchor" href="#doc">☍</a> Doc</h4>
 <p>The <code>?doc</code> query parameter (flag) MAY be used to indicate that the response
 MUST use &quot;document view&quot; when serializing entities and MUST be modified to do
 the following:</p>
@@ -6589,7 +6589,7 @@ collection, or to one of its Versions, but the Resource is defined as an
 (<a href="#cannot_doc_xref">cannot_doc_xref</a>) and SHOULD indicate that using <code>?doc</code>
 on this part of the hierarchy is not valid - due to it not technically existing
 in document view.</p>
-<h3 id="http-header-values">HTTP Header Values <a class="anchor" href="#http-header-values">☍</a></h3>
+<h3 id="http-header-values"><a class="anchor" href="#http-header-values">☍</a> HTTP Header Values</h3>
 <p>Some attributes can contain arbitrary UTF-8 string content,
 and per <a href="https://tools.ietf.org/html/rfc7230#section-3">RFC7230, section 3</a>, HTTP headers MUST only use
 printable characters from the US-ASCII character set, and are terminated by a
@@ -6653,7 +6653,7 @@ where &quot;%20&quot; is the encoded form of space, &quot;%E2%82%AC&quot; is the
 of the Euro symbol, and &quot;%F0%9F%98%80&quot; is the encoded form of the
 grinning face emoji.</li>
 </ul>
-<h3 id="error-processing">Error Processing <a class="anchor" href="#error-processing">☍</a></h3>
+<h3 id="error-processing"><a class="anchor" href="#error-processing">☍</a> Error Processing</h3>
 <p>If an error occurs during the processing of a request, even if the error was
 during the creation of the response (e.g. an invalid <code>?inline</code> value was
 provided), then an error MUST be generated and the entire request MUST be
@@ -6700,7 +6700,7 @@ specification.</p>
 be as specified. The other field values are recommendations and MAY be modified
 as appropriate, including being specified in a language other than English.</p>
 <!-- start-err-def -->
-<h4 id="ancestor-circular-reference">ancestor_circular_reference <a class="anchor" href="#ancestor-circular-reference">☍</a></h4>
+<h4 id="ancestor-circular-reference"><a class="anchor" href="#ancestor-circular-reference">☍</a> ancestor_circular_reference</h4>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#ancestor_circular_reference</code></li>
 <li>Code: <code>400 Bad Request</code></li>
@@ -6709,7 +6709,7 @@ as appropriate, including being specified in a language other than English.</p>
 <li>Data:  n/a</li>
 <li>Detail: {information specific to the processing details}</li>
 </ul>
-<h4 id="api-not-found">api_not_found <a class="anchor" href="#api-not-found">☍</a></h4>
+<h4 id="api-not-found"><a class="anchor" href="#api-not-found">☍</a> api_not_found</h4>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#api_not_found</code></li>
 <li>Code: <code>404 Not Found</code></li>
@@ -6718,7 +6718,7 @@ as appropriate, including being specified in a language other than English.</p>
 <li>Data: {the unsupported path}</li>
 <li>Detail: {information specific to the processing details}</li>
 </ul>
-<h4 id="bad-flag">bad_flag <a class="anchor" href="#bad-flag">☍</a></h4>
+<h4 id="bad-flag"><a class="anchor" href="#bad-flag">☍</a> bad_flag</h4>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#bad_flag</code></li>
 <li>Code: <code>400 Bad Request</code></li>
@@ -6727,7 +6727,7 @@ as appropriate, including being specified in a language other than English.</p>
 <li>Data:  {query parameter name and value}</li>
 <li>Detail: {information specific to the processing details}</li>
 </ul>
-<h4 id="bad-request">bad_request <a class="anchor" href="#bad-request">☍</a></h4>
+<h4 id="bad-request"><a class="anchor" href="#bad-request">☍</a> bad_request</h4>
 <p>This error is purposely generic and can be used when there isn't a more
 condition-specific error that would be more appropriate. Implementations
 SHOULD attempt to use a more specific error when possible.</p>
@@ -6739,7 +6739,7 @@ SHOULD attempt to use a more specific error when possible.</p>
 <li>Data: {Short description of the problematic data or reason}</li>
 <li>Detail: {information specific to the processing details}</li>
 </ul>
-<h4 id="cannot-doc-xref">cannot_doc_xref <a class="anchor" href="#cannot-doc-xref">☍</a></h4>
+<h4 id="cannot-doc-xref"><a class="anchor" href="#cannot-doc-xref">☍</a> cannot_doc_xref</h4>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#cannot_doc_xref</code></li>
 <li>Code: <code>400 Bad Request</code></li>
@@ -6748,7 +6748,7 @@ SHOULD attempt to use a more specific error when possible.</p>
 <li>Data: {the Resource's URL}</li>
 <li>Detail: {information specific to the processing details}</li>
 </ul>
-<h4 id="capability-error">capability_error <a class="anchor" href="#capability-error">☍</a></h4>
+<h4 id="capability-error"><a class="anchor" href="#capability-error">☍</a> capability_error</h4>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#capability_error</code></li>
 <li>Code: <code>400 Bad Request</code></li>
@@ -6757,7 +6757,7 @@ SHOULD attempt to use a more specific error when possible.</p>
 <li>Data: {capability JSON snippet that caused the issue}</li>
 <li>Detail: {information specific to the processing details}</li>
 </ul>
-<h4 id="compatibility-violation">compatibility_violation <a class="anchor" href="#compatibility-violation">☍</a></h4>
+<h4 id="compatibility-violation"><a class="anchor" href="#compatibility-violation">☍</a> compatibility_violation</h4>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#compatibility_violation</code></li>
 <li>Code: <code>400 Bad Request</code></li>
@@ -6766,7 +6766,7 @@ SHOULD attempt to use a more specific error when possible.</p>
 <li>Data: {list of &quot;Versionid&quot; values that would be in violation}</li>
 <li>Detail: {information specific to the processing details}</li>
 </ul>
-<h4 id="data-retrieval-error">data_retrieval_error <a class="anchor" href="#data-retrieval-error">☍</a></h4>
+<h4 id="data-retrieval-error"><a class="anchor" href="#data-retrieval-error">☍</a> data_retrieval_error</h4>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#data_retrieval_error</code></li>
 <li>Code: <code>500 Internal Server Error</code></li>
@@ -6775,7 +6775,7 @@ SHOULD attempt to use a more specific error when possible.</p>
 <li>Data: {Short description of the problematic data or reason}</li>
 <li>Detail: {information specific to the processing details}</li>
 </ul>
-<h4 id="details-required">details_required <a class="anchor" href="#details-required">☍</a></h4>
+<h4 id="details-required"><a class="anchor" href="#details-required">☍</a> details_required</h4>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#details_required</code></li>
 <li>Code: <code>400 Bad Request</code></li>
@@ -6784,7 +6784,7 @@ SHOULD attempt to use a more specific error when possible.</p>
 <li>Data:  n/a</li>
 <li>Detail: {information specific to the processing details}</li>
 </ul>
-<h4 id="extra-xregistry-headers">extra_xregistry_headers <a class="anchor" href="#extra-xregistry-headers">☍</a></h4>
+<h4 id="extra-xregistry-headers"><a class="anchor" href="#extra-xregistry-headers">☍</a> extra_xregistry_headers</h4>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#extra_xregistry_headers</code></li>
 <li>Code: <code>400 Bad Request</code></li>
@@ -6793,7 +6793,7 @@ SHOULD attempt to use a more specific error when possible.</p>
 <li>Data: {list of xRegistry HTTP header names}</li>
 <li>Detail: {information specific to the processing details}</li>
 </ul>
-<h4 id="header-decoding-error">header_decoding_error <a class="anchor" href="#header-decoding-error">☍</a></h4>
+<h4 id="header-decoding-error"><a class="anchor" href="#header-decoding-error">☍</a> header_decoding_error</h4>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#header_decoding_error</code></li>
 <li>Code: <code>400 Bad Request</code></li>
@@ -6802,7 +6802,7 @@ SHOULD attempt to use a more specific error when possible.</p>
 <li>Data:  {the header value}</li>
 <li>Detail: {information specific to the processing details}</li>
 </ul>
-<h4 id="invalid-character">invalid_character <a class="anchor" href="#invalid-character">☍</a></h4>
+<h4 id="invalid-character"><a class="anchor" href="#invalid-character">☍</a> invalid_character</h4>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#invalid_character</code></li>
 <li>Code: <code>400 Bad Request</code></li>
@@ -6811,7 +6811,7 @@ SHOULD attempt to use a more specific error when possible.</p>
 <li>Data:  {invalid character}</li>
 <li>Detail: {information specific to the processing details}</li>
 </ul>
-<h4 id="invalid-data">invalid_data <a class="anchor" href="#invalid-data">☍</a></h4>
+<h4 id="invalid-data"><a class="anchor" href="#invalid-data">☍</a> invalid_data</h4>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#invalid_data</code></li>
 <li>Code: <code>400 Bad Request</code></li>
@@ -6820,7 +6820,7 @@ SHOULD attempt to use a more specific error when possible.</p>
 <li>Data:  {invalid data}</li>
 <li>Detail: {information specific to the processing details}</li>
 </ul>
-<h4 id="invalid-data-type">invalid_data_type <a class="anchor" href="#invalid-data-type">☍</a></h4>
+<h4 id="invalid-data-type"><a class="anchor" href="#invalid-data-type">☍</a> invalid_data_type</h4>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#invalid_data_type</code></li>
 <li>Code: <code>405 Bad Request</code></li>
@@ -6829,7 +6829,7 @@ SHOULD attempt to use a more specific error when possible.</p>
 <li>Data: ... The invalid data ...</li>
 <li>Detail: ... Information specific to the processing details ...</li>
 </ul>
-<h4 id="method-not-allowed">method_not_allowed <a class="anchor" href="#method-not-allowed">☍</a></h4>
+<h4 id="method-not-allowed"><a class="anchor" href="#method-not-allowed">☍</a> method_not_allowed</h4>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#method_not_allowed</code></li>
 <li>Code: <code>405 Method Not Allowed</code></li>
@@ -6838,7 +6838,7 @@ SHOULD attempt to use a more specific error when possible.</p>
 <li>Data: {the unsupported HTTP method}</li>
 <li>Detail: {information specific to the processing details}</li>
 </ul>
-<h4 id="mismatched-epoch">mismatched_epoch <a class="anchor" href="#mismatched-epoch">☍</a></h4>
+<h4 id="mismatched-epoch"><a class="anchor" href="#mismatched-epoch">☍</a> mismatched_epoch</h4>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#mismatched_epoch</code></li>
 <li>Code: <code>400 Bad Request</code></li>
@@ -6847,7 +6847,7 @@ SHOULD attempt to use a more specific error when possible.</p>
 <li>Data: {the invalid epoch value}</li>
 <li>Detail: {information specific to the processing details}</li>
 </ul>
-<h4 id="mismatched-id">mismatched_id <a class="anchor" href="#mismatched-id">☍</a></h4>
+<h4 id="mismatched-id"><a class="anchor" href="#mismatched-id">☍</a> mismatched_id</h4>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#mismatched_id</code></li>
 <li>Code: <code>400 Bad Request</code></li>
@@ -6856,7 +6856,7 @@ SHOULD attempt to use a more specific error when possible.</p>
 <li>Data: {the invalid ID value}</li>
 <li>Detail: {information specific to the processing details}</li>
 </ul>
-<h4 id="misplaced-epoch">misplaced_epoch <a class="anchor" href="#misplaced-epoch">☍</a></h4>
+<h4 id="misplaced-epoch"><a class="anchor" href="#misplaced-epoch">☍</a> misplaced_epoch</h4>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#misplaced_epoch</code></li>
 <li>Code: <code>400 Bad Request</code></li>
@@ -6865,7 +6865,7 @@ SHOULD attempt to use a more specific error when possible.</p>
 <li>Data:  n/a</li>
 <li>Detail: {information specific to the processing details}</li>
 </ul>
-<h4 id="missing-versions">missing_versions <a class="anchor" href="#missing-versions">☍</a></h4>
+<h4 id="missing-versions"><a class="anchor" href="#missing-versions">☍</a> missing_versions</h4>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#missing_versions</code></li>
 <li>Code: <code>400 Bad Request</code></li>
@@ -6874,7 +6874,7 @@ SHOULD attempt to use a more specific error when possible.</p>
 <li>Data: {URL to entity being processed}</li>
 <li>Detail: {information specific to the processing details}</li>
 </ul>
-<h4 id="model-compliance-error">model_compliance_error <a class="anchor" href="#model-compliance-error">☍</a></h4>
+<h4 id="model-compliance-error"><a class="anchor" href="#model-compliance-error">☍</a> model_compliance_error</h4>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#model_compliance_error</code></li>
 <li>Code: <code>400 Bad Request</code></li>
@@ -6883,7 +6883,7 @@ SHOULD attempt to use a more specific error when possible.</p>
 <li>Data: {list of XIDs of non-compliant entities}</li>
 <li>Detail: {information specific to the processing details}</li>
 </ul>
-<h4 id="model-error">model_error <a class="anchor" href="#model-error">☍</a></h4>
+<h4 id="model-error"><a class="anchor" href="#model-error">☍</a> model_error</h4>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#model_error</code></li>
 <li>Code: <code>400 Bad Request</code></li>
@@ -6892,7 +6892,7 @@ SHOULD attempt to use a more specific error when possible.</p>
 <li>Data: {model JSON snippet that caused the issue}</li>
 <li>Detail: {information specific to the processing details}</li>
 </ul>
-<h4 id="multiple-roots">multiple_roots <a class="anchor" href="#multiple-roots">☍</a></h4>
+<h4 id="multiple-roots"><a class="anchor" href="#multiple-roots">☍</a> multiple_roots</h4>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#multiple_roots</code></li>
 <li>Code: <code>400 Bad Request</code></li>
@@ -6901,7 +6901,7 @@ SHOULD attempt to use a more specific error when possible.</p>
 <li>Data:  n/a</li>
 <li>Detail: {information specific to the processing details}</li>
 </ul>
-<h4 id="not-found">not_found <a class="anchor" href="#not-found">☍</a></h4>
+<h4 id="not-found"><a class="anchor" href="#not-found">☍</a> not_found</h4>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#not_found</code></li>
 <li>Code: <code>404 Not Found</code></li>
@@ -6910,7 +6910,7 @@ SHOULD attempt to use a more specific error when possible.</p>
 <li>Data: {URL to the entity requested}</li>
 <li>Detail: {information specific to the processing details}</li>
 </ul>
-<h4 id="readonly">readonly <a class="anchor" href="#readonly">☍</a></h4>
+<h4 id="readonly"><a class="anchor" href="#readonly">☍</a> readonly</h4>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#readonly</code></li>
 <li>Code: <code>400 Bad Request</code></li>
@@ -6919,7 +6919,7 @@ SHOULD attempt to use a more specific error when possible.</p>
 <li>Data: {URL to entity being processed}</li>
 <li>Detail: {information specific to the processing details}</li>
 </ul>
-<h4 id="required-attribute-missing">required_attribute_missing <a class="anchor" href="#required-attribute-missing">☍</a></h4>
+<h4 id="required-attribute-missing"><a class="anchor" href="#required-attribute-missing">☍</a> required_attribute_missing</h4>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#required_attribute_missing</code></li>
 <li>Code: <code>400 Bad Request</code></li>
@@ -6928,7 +6928,7 @@ SHOULD attempt to use a more specific error when possible.</p>
 <li>Data: {list of mandatory attributes}</li>
 <li>Detail: {information specific to the processing details}</li>
 </ul>
-<h4 id="server-error">server_error <a class="anchor" href="#server-error">☍</a></h4>
+<h4 id="server-error"><a class="anchor" href="#server-error">☍</a> server_error</h4>
 <p>This error MAY be used when it appears that the incoming request was valid but
 something unexpected happened in the server that caused an error condition.</p>
 <ul>
@@ -6939,7 +6939,7 @@ something unexpected happened in the server that caused an error condition.</p>
 <li>Data:  n/a</li>
 <li>Detail: {information specific to the processing details}</li>
 </ul>
-<h4 id="too-large">too_large <a class="anchor" href="#too-large">☍</a></h4>
+<h4 id="too-large"><a class="anchor" href="#too-large">☍</a> too_large</h4>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#too_large</code></li>
 <li>Code: <code>406 Not Acceptable</code></li>
@@ -6948,7 +6948,7 @@ something unexpected happened in the server that caused an error condition.</p>
 <li>Data: {the names of the fields/attributes that are too large}</li>
 <li>Detail: {information specific to the processing details}</li>
 </ul>
-<h4 id="too-many-versions">too_many_versions <a class="anchor" href="#too-many-versions">☍</a></h4>
+<h4 id="too-many-versions"><a class="anchor" href="#too-many-versions">☍</a> too_many_versions</h4>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#too_many_versions</code></li>
 <li>Code: <code>400 Bad Request</code></li>
@@ -6957,7 +6957,7 @@ something unexpected happened in the server that caused an error condition.</p>
 <li>Data: {the URL to the entity being processed}</li>
 <li>Detail: {information specific to the processing details}</li>
 </ul>
-<h4 id="unknown-attribute">unknown_attribute <a class="anchor" href="#unknown-attribute">☍</a></h4>
+<h4 id="unknown-attribute"><a class="anchor" href="#unknown-attribute">☍</a> unknown_attribute</h4>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#unknown_attribute</code></li>
 <li>Code: <code>400 Bad Request</code></li>
@@ -6966,7 +6966,7 @@ something unexpected happened in the server that caused an error condition.</p>
 <li>Data:  {unknown attribute name}</li>
 <li>Detail: {information specific to the processing details}</li>
 </ul>
-<h4 id="unknown-id">unknown_id <a class="anchor" href="#unknown-id">☍</a></h4>
+<h4 id="unknown-id"><a class="anchor" href="#unknown-id">☍</a> unknown_id</h4>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#unknown_id</code></li>
 <li>Code: <code>400 Bad Request</code></li>
@@ -6975,7 +6975,7 @@ something unexpected happened in the server that caused an error condition.</p>
 <li>Data: {URL to entity being processed}</li>
 <li>Detail: {information specific to the processing details}</li>
 </ul>
-<h4 id="unsupported-specversion">unsupported_specversion <a class="anchor" href="#unsupported-specversion">☍</a></h4>
+<h4 id="unsupported-specversion"><a class="anchor" href="#unsupported-specversion">☍</a> unsupported_specversion</h4>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#unsupported_specversion</code></li>
 <li>Code: <code>400 Bad Request</code></li>

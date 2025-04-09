@@ -1,9 +1,9 @@
 {
-  "createdat": "2025-04-09T19:44:33.262145992Z",
+  "createdat": "2025-04-09T20:27:55.367169004Z",
   "docid": "sample.png",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2025-04-09T19:44:33.262145992Z",
+  "modifiedat": "2025-04-09T20:27:55.367169004Z",
   "self": "https://xregistry.io/xreg/specs/core-v1/docs/sample.png/versions/v1.0-rc1",
   "versionid": "v1.0-rc1",
   "xid": "/specs/core-v1/docs/sample.png/versions/v1.0-rc1"

@@ -1,8 +1,8 @@
 {
-  "createdat": "2025-04-09T19:44:33.923416627Z",
+  "createdat": "2025-04-09T20:27:55.956282234Z",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2025-04-09T19:44:33.923416627Z",
+  "modifiedat": "2025-04-09T20:27:55.956282234Z",
   "sampleid": "doc-store-model.json",
   "self": "https://xregistry.io/xreg/specs/core-v1/samples/doc-store-model.json/versions/v1.0-rc1",
   "versionid": "v1.0-rc1",

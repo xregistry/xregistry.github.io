@@ -1,9 +1,9 @@
 {
-  "createdat": "2025-04-09T19:44:36.032800038Z",
+  "createdat": "2025-04-09T20:27:57.873083338Z",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "https://xregistry.io/xreg/specs/schema-v1/schemas/document-schema.avsc/meta",
-  "modifiedat": "2025-04-09T19:44:36.032800038Z",
+  "modifiedat": "2025-04-09T20:27:57.873083338Z",
   "schemaid": "document-schema.avsc",
   "self": "https://xregistry.io/xreg/specs/schema-v1/schemas/document-schema.avsc",
   "versionid": "v1.0-rc1",

@@ -1,8 +1,8 @@
 {
-  "createdat": "2025-04-09T19:44:35.455952283Z",
+  "createdat": "2025-04-09T20:27:57.302779003Z",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2025-04-09T19:44:35.455952283Z",
+  "modifiedat": "2025-04-09T20:27:57.302779003Z",
   "schemaid": "document-schema.json",
   "self": "https://xregistry.io/xreg/specs/message-v1/schemas/document-schema.json/versions/v1.0-rc1",
   "versionid": "v1.0-rc1",

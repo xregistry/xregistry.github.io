@@ -1,10 +1,10 @@
 {
-  "createdat": "2025-04-09T19:44:32.896619876Z",
+  "createdat": "2025-04-09T20:27:55.020620978Z",
   "docid": "model.json",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "https://xregistry.io/xreg/specs/core-v1/docs/model.json/meta",
-  "modifiedat": "2025-04-09T19:44:32.896619876Z",
+  "modifiedat": "2025-04-09T20:27:55.020620978Z",
   "self": "https://xregistry.io/xreg/specs/core-v1/docs/model.json",
   "versionid": "v1.0-rc1",
   "versionscount": 1,

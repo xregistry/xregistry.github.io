@@ -1,19 +1,19 @@
-<h1 id="pagination---version-01-wip">Pagination - Version 0.1-wip <a class="anchor" href="#pagination---version-01-wip">☍</a></h1>
+<h1 id="pagination---version-01-wip"><a class="anchor" href="#pagination---version-01-wip">☍</a> Pagination - Version 0.1-wip</h1>
 <p>This document describes a mechanism by which a server can return a set of
 records to a client in an incremental fashion. Often this will be used when
 a client is doing a query for a set of records and the result set is too large
 to return in one response.</p>
-<h2 id="notations-and-terminology">Notations and Terminology <a class="anchor" href="#notations-and-terminology">☍</a></h2>
-<h3 id="notational-conventions">Notational Conventions <a class="anchor" href="#notational-conventions">☍</a></h3>
+<h2 id="notations-and-terminology"><a class="anchor" href="#notations-and-terminology">☍</a> Notations and Terminology</h2>
+<h3 id="notational-conventions"><a class="anchor" href="#notational-conventions">☍</a> Notational Conventions</h3>
 <p>The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;, &quot;SHOULD&quot;,
 &quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;, &quot;MAY&quot;, and &quot;OPTIONAL&quot; in this document are to be
 interpreted as described in <a href="https://tools.ietf.org/html/rfc2119">RFC 2119</a>.</p>
-<h2 id="client-request">Client Request <a class="anchor" href="#client-request">☍</a></h2>
+<h2 id="client-request"><a class="anchor" href="#client-request">☍</a> Client Request</h2>
 <p>When a client sends a request to a server which is meant to result in a
 set of records being returned, the client MAY include extra attributes
 to control how those records are to be returned if the results can not
 fit within one response message.</p>
-<h3 id="client-attributes">Client Attributes <a class="anchor" href="#client-attributes">☍</a></h3>
+<h3 id="client-attributes"><a class="anchor" href="#client-attributes">☍</a> Client Attributes</h3>
 <p>The follow list of attributes MAY be included in a client's request for
 a set of records from a server. The client MUST only specify these on
 the initial request for set. If the results can not fit within one
@@ -21,7 +21,7 @@ message then these attributes MUST NOT be added to subsequent requests
 by the client. Note, the server MAY include these attributes within
 the URI-reference returned in a response message, but the client MUST NOT
 modify those values.</p>
-<h4 id="limit">limit <a class="anchor" href="#limit">☍</a></h4>
+<h4 id="limit"><a class="anchor" href="#limit">☍</a> limit</h4>
 <ul>
 <li>Type: <code>Unsigned 64-bit Integer</code></li>
 <li>Description: Indicates the maximum number of records per message
@@ -42,10 +42,10 @@ as many, or as little, records per response message.</li>
 </ul>
 </li>
 </ul>
-<h2 id="server-response">Server Response <a class="anchor" href="#server-response">☍</a></h2>
+<h2 id="server-response"><a class="anchor" href="#server-response">☍</a> Server Response</h2>
 <p>When a server returns a set of records, it MAY include additional attributes
 to help the client retrieve the next set of records.</p>
-<h3 id="server-attributes">Server Attributes <a class="anchor" href="#server-attributes">☍</a></h3>
+<h3 id="server-attributes"><a class="anchor" href="#server-attributes">☍</a> Server Attributes</h3>
 <p>The following list of attributes MAY be included in a server's response to
 a client's request for a set of records.</p>
 <p>Note: in the examples listed below, the use of certain query parameters
@@ -53,7 +53,7 @@ in the response messages from the server, such as <code>offset</code> and <code>
 are an implementation detail of the server. How the server encodes the
 information it needs to retrieve a certain set of records is not mandated by
 this specification.</p>
-<h4 id="link">link <a class="anchor" href="#link">☍</a></h4>
+<h4 id="link"><a class="anchor" href="#link">☍</a> link</h4>
 <ul>
 <li>Type: <code>URI-Reference</code></li>
 <li>Description: A URI-Reference to another set of records. The relationship
@@ -80,7 +80,7 @@ relationship</li>
 </ul>
 </li>
 </ul>
-<h4 id="rel">rel <a class="anchor" href="#rel">☍</a></h4>
+<h4 id="rel"><a class="anchor" href="#rel">☍</a> rel</h4>
 <ul>
 <li>Type: <code>String</code></li>
 <li>Description: A string representing the relationship between the records
@@ -109,7 +109,7 @@ specification, additional values MAY be defined.</li>
 </ul>
 </li>
 </ul>
-<h4 id="expires">expires <a class="anchor" href="#expires">☍</a></h4>
+<h4 id="expires"><a class="anchor" href="#expires">☍</a> expires</h4>
 <ul>
 <li>Type: <code>Timestamp</code></li>
 <li>Description: Indicates when the set of records referenced by the
@@ -124,7 +124,7 @@ typically not need to save any state related to this client's requests.</li>
 </ul>
 </li>
 </ul>
-<h4 id="count">count <a class="anchor" href="#count">☍</a></h4>
+<h4 id="count"><a class="anchor" href="#count">☍</a> count</h4>
 <ul>
 <li>Type: <code>Unsigned 64-bit Integer</code></li>
 <li>Description: Indicates the total number of records in the set referenced by
@@ -139,10 +139,10 @@ particular set of records</li>
 </ul>
 </li>
 </ul>
-<h2 id="http-binding">HTTP Binding <a class="anchor" href="#http-binding">☍</a></h2>
+<h2 id="http-binding"><a class="anchor" href="#http-binding">☍</a> HTTP Binding</h2>
 <p>THe following describes how the attributes defined above would appear in a
 flow of HTTP messages during the retrieval of a set of records.</p>
-<h3 id="request-for-a-record-set">Request for a record set <a class="anchor" href="#request-for-a-record-set">☍</a></h3>
+<h3 id="request-for-a-record-set"><a class="anchor" href="#request-for-a-record-set">☍</a> Request for a record set</h3>
 <p>To request a set of records from a server, a client will send an HTTP GET
 request to the server. How this URL is determined is out of scope of this
 specification.</p>
@@ -153,7 +153,7 @@ the server MUST accept the <code>limit</code> attribute as a query parameter (na
 <p>For example:</p>
 <pre><code>http://example.com/people?limit=100
 </code></pre>
-<h3 id="response-for-a-record-set">Response for a record set <a class="anchor" href="#response-for-a-record-set">☍</a></h3>
+<h3 id="response-for-a-record-set"><a class="anchor" href="#response-for-a-record-set">☍</a> Response for a record set</h3>
 <p>Each successful response from the server will adhere to the following:</p>
 <ul>
 <li>MUST respond with an HTTP 200</li>
@@ -189,7 +189,7 @@ Expires: Thu, 01 Dec 2021 16:00:00 GMT
 <pre><code>Link: &lt;http://example.com?id=1001&gt;;rel=next;count=3000
 Link: &lt;http://example.com?id=0&gt;;rel=prev;count=3000
 </code></pre>
-<h3 id="iterating-over-the-record-set">Iterating over the record set <a class="anchor" href="#iterating-over-the-record-set">☍</a></h3>
+<h3 id="iterating-over-the-record-set"><a class="anchor" href="#iterating-over-the-record-set">☍</a> Iterating over the record set</h3>
 <p>Once the record set retrieval has started, the client MAY use the Links
 returned from the server to iterate through the full set of records.
 Typically, the client will use the <code>next</code> Link from each response to retrieve

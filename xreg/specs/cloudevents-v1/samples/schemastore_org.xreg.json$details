@@ -1,9 +1,9 @@
 {
-  "createdat": "2025-04-09T19:44:32.773299967Z",
+  "createdat": "2025-04-09T20:27:54.901995575Z",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "https://xregistry.io/xreg/specs/cloudevents-v1/samples/schemastore_org.xreg.json/meta",
-  "modifiedat": "2025-04-09T19:44:32.773299967Z",
+  "modifiedat": "2025-04-09T20:27:54.901995575Z",
   "sampleid": "schemastore_org.xreg.json",
   "self": "https://xregistry.io/xreg/specs/cloudevents-v1/samples/schemastore_org.xreg.json",
   "versionid": "v1.0-rc1",

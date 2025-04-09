@@ -1,9 +1,9 @@
-<h1 id="schema-registry-service---version-10-rc1">Schema Registry Service - Version 1.0-rc1 <a class="anchor" href="#schema-registry-service---version-10-rc1">☍</a></h1>
-<h2 id="abstract">Abstract <a class="anchor" href="#abstract">☍</a></h2>
+<h1 id="schema-registry-service---version-10-rc1"><a class="anchor" href="#schema-registry-service---version-10-rc1">☍</a> Schema Registry Service - Version 1.0-rc1</h1>
+<h2 id="abstract"><a class="anchor" href="#abstract">☍</a> Abstract</h2>
 <p>This specification defines a Schema Registry extension to the xRegistry document
 format and API <a href="../core/spec.md">specification</a>. A Schema Registry allows for
 the storage, management and discovery of schema documents.</p>
-<h2 id="table-of-contents">Table of Contents <a class="anchor" href="#table-of-contents">☍</a></h2>
+<h2 id="table-of-contents"><a class="anchor" href="#table-of-contents">☍</a> Table of Contents</h2>
 <ul>
 <li><a href="#overview">Overview</a></li>
 <li><a href="#notations-and-terminology">Notations and Terminology</a>
@@ -19,7 +19,7 @@ the storage, management and discovery of schema documents.</p>
 </ul>
 </li>
 </ul>
-<h2 id="overview">Overview <a class="anchor" href="#overview">☍</a></h2>
+<h2 id="overview"><a class="anchor" href="#overview">☍</a> Overview</h2>
 <p>This specification defines a Schema Registry extension to the xRegistry document
 format and API <a href="../core/spec.md">specification</a>.</p>
 <p>For easy reference, the JSON serialization of a Schema Registry adheres to
@@ -103,8 +103,8 @@ this form:</p>
   } ?
 }
 </code></pre>
-<h2 id="notations-and-terminology">Notations and Terminology <a class="anchor" href="#notations-and-terminology">☍</a></h2>
-<h3 id="notational-conventions">Notational Conventions <a class="anchor" href="#notational-conventions">☍</a></h3>
+<h2 id="notations-and-terminology"><a class="anchor" href="#notations-and-terminology">☍</a> Notations and Terminology</h2>
+<h3 id="notational-conventions"><a class="anchor" href="#notational-conventions">☍</a> Notational Conventions</h3>
 <p>The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;, &quot;SHOULD&quot;,
 &quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;, &quot;MAY&quot;, and &quot;OPTIONAL&quot; in this document are to be
 interpreted as described in <a href="https://tools.ietf.org/html/rfc2119">RFC 2119</a>.</p>
@@ -122,9 +122,9 @@ and <code>+</code> means the preceding attribute MUST appear at least once. The 
 of the <code>#</code> character means the remaining portion of the line is a comment.
 Whitespace characters in the JSON snippets are used for readability and are
 not normative.</p>
-<h3 id="terminology">Terminology <a class="anchor" href="#terminology">☍</a></h3>
+<h3 id="terminology"><a class="anchor" href="#terminology">☍</a> Terminology</h3>
 <p>This specification defines the following terms:</p>
-<h4 id="schema">Schema <a class="anchor" href="#schema">☍</a></h4>
+<h4 id="schema"><a class="anchor" href="#schema">☍</a> Schema</h4>
 <p>A schema, in the sense of this specification, defines the structure of the
 body/payload of a serialized message, but also of a structured data element
 stored on disk or elsewhere. In self-describing serialization formats like JSON,
@@ -143,14 +143,14 @@ Versions of a single <strong>schema</strong> MUST adhere to the rules defined by
 being created.</p>
 <p>In &quot;semantic Versioning&quot; terms, you can think of a <strong>schema</strong> as a &quot;major
 version&quot; and the <strong>schema Versions</strong> as &quot;minor versions&quot;.</p>
-<h2 id="schema-registry-model">Schema Registry Model <a class="anchor" href="#schema-registry-model">☍</a></h2>
+<h2 id="schema-registry-model"><a class="anchor" href="#schema-registry-model">☍</a> Schema Registry Model</h2>
 <p>The formal xRegistry extension model of the Schema Registry resides in the
 <a href="model.json">model.json</a> file.</p>
-<h4 id="schema-group">Schema Group <a class="anchor" href="#schema-group">☍</a></h4>
+<h4 id="schema-group"><a class="anchor" href="#schema-group">☍</a> Schema Group</h4>
 <p>A schema group is a container for schemas that are related to each other in some
 application-defined way. This specification does not impose any restrictions on
 what schemas can be contained in a schema group.</p>
-<h2 id="schema-registry">Schema Registry <a class="anchor" href="#schema-registry">☍</a></h2>
+<h2 id="schema-registry"><a class="anchor" href="#schema-registry">☍</a> Schema Registry</h2>
 <p>The Schema Registry is a metadata store for organizing schemas and schema
 Versions of any kind; it is a document store.</p>
 <p>The xRegistry API extension model of the Schema Registry, which is defined in
@@ -192,7 +192,7 @@ attributes, including the <code>*</code> attribute of type <code>any</code>.</p>
 <p>Since the Schema Registry is an application of the xRegistry specification, all
 attributes for Groups, Resources, and Resource Version objects are inherited
 from there.</p>
-<h3 id="schema-groups">Schema Groups <a class="anchor" href="#schema-groups">☍</a></h3>
+<h3 id="schema-groups"><a class="anchor" href="#schema-groups">☍</a> Schema Groups</h3>
 <p>The group (GROUP) name for the Schema Registry is <code>schemagroups</code>. The group does
 not have any specific extension attributes.</p>
 <p>A schema group is a collection of schemas that are related to each other in some
@@ -219,7 +219,7 @@ containing 5 schemas.</p>
   }
 }
 </code></pre>
-<h3 id="schema-resources">Schema Resources <a class="anchor" href="#schema-resources">☍</a></h3>
+<h3 id="schema-resources"><a class="anchor" href="#schema-resources">☍</a> Schema Resources</h3>
 <p>The resources (RESOURCE) collection inside of schema groups is named <code>schemas</code>.
 The type of the resource is <code>schema</code>. Any single <code>schema</code> is a container for
 one or more <code>Versions</code>, which hold the concrete schema documents or schema
@@ -256,7 +256,7 @@ schemas can be more easily identified by users and developers. The schema
 <p>The following extensions are defined for the <code>schema</code> Resource in addition to
 the core xRegistry Resource
 <a href="../core/spec.md#attributes-and-extensions">attributes</a>:</p>
-<h4 id="validation"><code>validation</code> <a class="anchor" href="#validation">☍</a></h4>
+<h4 id="validation"><a class="anchor" href="#validation">☍</a> <code>validation</code></h4>
 <ul>
 <li>
 <p>Type: Boolean</p>
@@ -283,7 +283,7 @@ section of the model.</li>
 </ul>
 </li>
 </ul>
-<h4 id="deprecated"><code>deprecated</code> <a class="anchor" href="#deprecated">☍</a></h4>
+<h4 id="deprecated"><a class="anchor" href="#deprecated">☍</a> <code>deprecated</code></h4>
 <ul>
 <li>
 <p>Type: Object containing the following properties:</p>
@@ -344,7 +344,7 @@ advance of removing an schema, but is it RECOMMENDED that they do so.</p>
 </ul>
 </li>
 </ul>
-<h4 id="format"><code>format</code> <a class="anchor" href="#format">☍</a></h4>
+<h4 id="format"><a class="anchor" href="#format">☍</a> <code>format</code></h4>
 <ul>
 <li>
 <p>Type: String</p>
@@ -448,11 +448,11 @@ Versions for a schema named <code>com.example.telemetrydata</code>:</p>
   }
 }
 </code></pre>
-<h3 id="schema-formats">Schema Formats <a class="anchor" href="#schema-formats">☍</a></h3>
+<h3 id="schema-formats"><a class="anchor" href="#schema-formats">☍</a> Schema Formats</h3>
 <p>This section defines a set of common schema <code>format</code> values that MUST be used
 for the given formats, but applications MAY define extensions for other
 formats on their own.</p>
-<h4 id="json-schema">JSON Schema <a class="anchor" href="#json-schema">☍</a></h4>
+<h4 id="json-schema"><a class="anchor" href="#json-schema">☍</a> JSON Schema</h4>
 <p>The <a href="#format"><code>format</code></a> identifier for JSON Schema is <code>JsonSchema</code>.</p>
 <p>When the <code>format</code> attribute is set to <code>JsonSchema</code>, the <code>schema</code> attribute of
 the schema Resource is a JSON object representing a JSON Schema document
@@ -481,7 +481,7 @@ document.</p>
 <p>which follows the exact convention as defined for JSON schema and expecting an
 eventually released version 1.0 of the JSON Schema specification using a plain
 version number.</p>
-<h4 id="xml-schema">XML Schema <a class="anchor" href="#xml-schema">☍</a></h4>
+<h4 id="xml-schema"><a class="anchor" href="#xml-schema">☍</a> XML Schema</h4>
 <p>The <a href="#format"><code>format</code></a> identifier for XML Schema is <code>XSD</code>. The
 version of the XML Schema format is the version of the W3C XML Schema
 specification that is used to define the schema.</p>
@@ -503,7 +503,7 @@ element definition of the schema is used.</p>
 <li><code>XSD/1.0</code></li>
 <li><code>XSD/1.1</code></li>
 </ul>
-<h4 id="apache-avro-schema">Apache Avro Schema <a class="anchor" href="#apache-avro-schema">☍</a></h4>
+<h4 id="apache-avro-schema"><a class="anchor" href="#apache-avro-schema">☍</a> Apache Avro Schema</h4>
 <p>The <a href="#format"><code>format</code></a> identifier for Apache Avro Schema is
 <code>Avro</code>. The version of the Apache Avro Schema format is the version of the
 Apache Avro Schema release that is used to define the schema.</p>
@@ -531,7 +531,7 @@ which the reference is already in the form of a URI fragment, the suffix is
 appended separated with a colon, for instance
 <code>.../com.example.telemetrydata:TelemetryEvent</code>.</li>
 </ul>
-<h4 id="protobuf-schema">Protobuf Schema <a class="anchor" href="#protobuf-schema">☍</a></h4>
+<h4 id="protobuf-schema"><a class="anchor" href="#protobuf-schema">☍</a> Protobuf Schema</h4>
 <p>The <a href="#format"><code>format</code></a> identifier for Protobuf Schema is
 <code>Protobuf</code>. The version of the Protobuf Schema format is the version of the
 Protobuf syntax that is used to define the schema.</p>
