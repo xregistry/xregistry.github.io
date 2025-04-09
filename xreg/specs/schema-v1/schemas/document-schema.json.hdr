@@ -1,0 +1,14 @@
+content-disposition:document-schema.json
+content-location:https://xregistry.io/xreg/specs/schema-v1/schemas/document-schema.json/versions/v1.0-rc1
+content-type:text/plain; charset=utf-8
+xregistry-createdat:2025-04-09T19:44:36.220530241Z
+xregistry-epoch:1
+xregistry-isdefault:true
+xregistry-metaurl:https://xregistry.io/xreg/specs/schema-v1/schemas/document-schema.json/meta
+xregistry-modifiedat:2025-04-09T19:44:36.220530241Z
+xregistry-schemaid:document-schema.json
+xregistry-self:https://xregistry.io/xreg/specs/schema-v1/schemas/document-schema.json
+xregistry-versionid:v1.0-rc1
+xregistry-versionscount:1
+xregistry-versionsurl:https://xregistry.io/xreg/specs/schema-v1/schemas/document-schema.json/versions
+xregistry-xid:/specs/schema-v1/schemas/document-schema.json

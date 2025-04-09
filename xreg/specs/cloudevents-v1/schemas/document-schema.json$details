@@ -1,0 +1,13 @@
+{
+  "createdat": "2025-04-09T19:44:31.604522727Z",
+  "epoch": 1,
+  "isdefault": true,
+  "metaurl": "https://xregistry.io/xreg/specs/cloudevents-v1/schemas/document-schema.json/meta",
+  "modifiedat": "2025-04-09T19:44:31.604522727Z",
+  "schemaid": "document-schema.json",
+  "self": "https://xregistry.io/xreg/specs/cloudevents-v1/schemas/document-schema.json",
+  "versionid": "v1.0-rc1",
+  "versionscount": 1,
+  "versionsurl": "https://xregistry.io/xreg/specs/cloudevents-v1/schemas/document-schema.json/versions",
+  "xid": "/specs/cloudevents-v1/schemas/document-schema.json"
+}

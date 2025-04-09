@@ -1,0 +1,10 @@
+{
+  "createdat": "2025-04-09T19:44:33.79459041Z",
+  "epoch": 1,
+  "isdefault": true,
+  "modifiedat": "2025-04-09T19:44:33.79459041Z",
+  "sampleid": "doc-store-data.json",
+  "self": "https://xregistry.io/xreg/specs/core-v1/samples/doc-store-data.json/versions/v1.0-rc1",
+  "versionid": "v1.0-rc1",
+  "xid": "/specs/core-v1/samples/doc-store-data.json/versions/v1.0-rc1"
+}

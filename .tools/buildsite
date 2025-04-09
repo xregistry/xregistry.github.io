@@ -6,32 +6,28 @@ set -e
 export IMAGE=xreg-server-all
 export XR_SERVER=localhost:8383
 export FILES=$HOME/work/xreg
+export VERBOSE="-v"
+export VER=v1.0-rc1
 export DIR=xreg
 
-echo Starting xreg server
+# If server isn't already running...
 docker inspect sitexreg > /dev/null 2>&1 || (
-	docker rm -f sitexreg > /dev/null 2>&1 || true
+    echo "# Starting xreg server, and waiting for it to be ready"
 	docker run -dti --name sitexreg -p 8383:8080 $IMAGE > /dev/null
-
-	echo Waiting for server to start
-	while ! curl -sq localhost:8383 > /dev/null 2>&1 ; do
-  	sleep 1
-	done
+	while ! xr get -s $XR_SERVER > /dev/null 2>&1 ; do sleep 1 ; done
 )
 
-# Erase everything that might already be there
-echo Deleting any old domains that might be there
-xr delete /domains > /dev/null 2>&1 || true
+echo "# Deleting any old 'specs' that might be there"
+xr delete /specs > /dev/null 2>&1 || true
 
-# Create a new model
-echo Defining the model
+echo "# Defining the model"
 echo '
 {
   "groups": {
-    "domains": {
-	  "singular": "domain",
+    "specs": {
+	  "singular": "spec",
 	  "resources": {
-	    "specs"  : { "singular": "spec" },
+	    "docs"   : { "singular": "doc" },
 	    "schemas": { "singular": "schema" },
 	    "samples": { "singular": "sample" }
 	  }
@@ -39,71 +35,54 @@ echo '
   }
 }
 ' | xr model update -d @-
-echo
 
-export VER="versions/1.0-rc1"
- 
-# Cloudevents
-for i in $FILES/cloudevents/*json $FILES/cloudevents/*md ; do
-  xr create /domains/cloudevents/specs/`basename $i`/$VER -d @$i -v
+# List of files->target in xref we need to process ('files' can have wildcards)
+list=(
+"$FILES/cloudevents/*json"                    cloudevents-v1/docs
+"$FILES/cloudevents/*md"                      cloudevents-v1/docs
+"$FILES/cloudevents/schemas/*"                cloudevents-v1/schemas
+"$FILES/cloudevents/samples/scenarios/*.json" cloudevents-v1/samples
+"$FILES/cloudevents/samples/schemas/*.json"   cloudevents-v1/samples
+"$FILES/core/model.json"                      core-v1/docs
+"$FILES/core/primer.md"                       core-v1/docs
+"$FILES/core/sample-model.json"               core-v1/docs
+"$FILES/core/sample.png"                      core-v1/docs
+"$FILES/core/spec.md"                         core-v1/docs
+"$FILES/core/xregbasicmodel.png"              core-v1/docs
+"$FILES/core/xregfullmodel.png"               core-v1/docs
+"$FILES/core/samples/*json"                   core-v1/samples
+"$FILES/core/samples/*cereg"                  core-v1/samples
+"$FILES/endpoint/*.json"                      endpoint-v1/docs
+"$FILES/endpoint/*md"                         endpoint-v1/docs
+"$FILES/endpoint/schemas/*"                   endpoint-v1/schemas
+"$FILES/message/*.json"                       message-v1/docs
+"$FILES/message/*md"                          message-v1/docs
+"$FILES/message/schemas/*"                    message-v1/schemas
+"$FILES/schema/*.json"                        schema-v1/docs
+"$FILES/schema/*md"                           schema-v1/docs
+"$FILES/schema/schemas/*"                     schema-v1/schemas
+"$FILES/pagination/spec.md"                   pagination-v1/docs
+)
+
+for (( i=0 ; ; i++)); do
+  [[ "${list[$i]}" == "" ]] && break
+  src=${list[$i]}
+  (( i=i+1 ))
+  tgt=${list[$i]}
+
+  for file in $src ; do
+  	# echo $tgt "<-" $file
+	type="text/plain"
+	[[ "$file" == *".json" ]] && type="application/json"
+	[[ "$file" == *".html" ]] && type="text/html"
+
+    xr create $VERBOSE /specs/$tgt/`basename $file`/versions/$VER -d @$file
+  done
 done
 
-for i in $FILES/cloudevents/schemas/* ; do
-  xr create /domains/cloudevents/schemas/`basename $i`/$VER -d @$i -v
-done
-
-for i in $FILES/cloudevents/samples/scenarios/*.json \
-         $FILES/cloudevents/samples/schemas/*.json ; do
-  xr create /domains/cloudevents/samples/`basename $i`/$VER -d @$i -v
-done
-
-# Core
-for i in model.json primer.md sample-model.json sample.png spec.md \
-         xregbasicmodel.png xregfullmodel.png ; do
-  xr create /domains/core/specs/$i/$VER -d @$FILES/core/$i -v
-done
-
-for i in $FILES/core/samples/*json $FILES/core/samples/*cereg ; do
-  xr create /domains/core/samples/`basename $i`/$VER -d @$i -v
-done
-
-# Endpoint
-for i in $FILES/endpoint/*.json $FILES/endpoint/*md ; do
-  xr create /domains/endpoint/specs/`basename $i`/$VER -d @$i -v
-done
-
-for i in $FILES/endpoint/schemas/* ; do
-  xr create /domains/endpoint/schemas/`basename $i`/$VER -d @$i -v
-done
-
-# Message
-for i in $FILES/message/*.json $FILES/message/*md ; do
-  xr create /domains/message/specs/`basename $i`/$VER -d @$i -v
-done
-
-for i in $FILES/message/schemas/* ; do
-  xr create /domains/message/schemas/`basename $i`/$VER -d @$i -v
-done
-
-# Schema
-for i in $FILES/schema/*.json $FILES/schema/*md ; do
-  xr create /domains/schema/specs/`basename $i`/$VER -d @$i -v
-done
-
-for i in $FILES/schema/schemas/* ; do
-  xr create /domains/schema/schemas/`basename $i`/$VER -d @$i -v
-done
-
-# Pagination
-for i in $FILES/schema/*md ; do
-  xr create /domains/pagination/specs/`basename $i`/$VER -d @$i -v
-done
-
-echo
-echo Now download the registry
+echo "# Downloading the registry to dir: $DIR"
 rm -rf ./$DIR/
 mkdir -p ./$DIR
-xr download ./$DIR -v -u https://xregistry.io/xreg
+xr download $VERBOSE ./$DIR -u https://xregistry.io/xreg --md2html
 
 docker rm -f sitexreg > /dev/null
-

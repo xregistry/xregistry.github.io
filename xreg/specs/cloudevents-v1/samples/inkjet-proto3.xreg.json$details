@@ -1,0 +1,13 @@
+{
+  "createdat": "2025-04-09T19:44:31.962936083Z",
+  "epoch": 1,
+  "isdefault": true,
+  "metaurl": "https://xregistry.io/xreg/specs/cloudevents-v1/samples/inkjet-proto3.xreg.json/meta",
+  "modifiedat": "2025-04-09T19:44:31.962936083Z",
+  "sampleid": "inkjet-proto3.xreg.json",
+  "self": "https://xregistry.io/xreg/specs/cloudevents-v1/samples/inkjet-proto3.xreg.json",
+  "versionid": "v1.0-rc1",
+  "versionscount": 1,
+  "versionsurl": "https://xregistry.io/xreg/specs/cloudevents-v1/samples/inkjet-proto3.xreg.json/versions",
+  "xid": "/specs/cloudevents-v1/samples/inkjet-proto3.xreg.json"
+}

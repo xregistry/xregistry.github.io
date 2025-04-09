@@ -63,12 +63,12 @@
     }
   },
   "groups": {
-    "domains": {
-      "plural": "domains",
-      "singular": "domain",
+    "specs": {
+      "plural": "specs",
+      "singular": "spec",
       "attributes": {
-        "domainid": {
-          "name": "domainid",
+        "specid": {
+          "name": "specid",
           "type": "string",
           "immutable": true,
           "required": true
@@ -123,6 +123,168 @@
         }
       },
       "resources": {
+        "docs": {
+          "plural": "docs",
+          "singular": "doc",
+          "maxversions": 0,
+          "setversionid": true,
+          "setdefaultversionsticky": true,
+          "hasdocument": true,
+          "attributes": {
+            "docid": {
+              "name": "docid",
+              "type": "string",
+              "immutable": true,
+              "required": true
+            },
+            "versionid": {
+              "name": "versionid",
+              "type": "string",
+              "immutable": true,
+              "required": true
+            },
+            "self": {
+              "name": "self",
+              "type": "url",
+              "readonly": true,
+              "immutable": true,
+              "required": true
+            },
+            "xid": {
+              "name": "xid",
+              "type": "xid",
+              "readonly": true,
+              "immutable": true,
+              "required": true
+            },
+            "epoch": {
+              "name": "epoch",
+              "type": "uinteger",
+              "required": true
+            },
+            "name": {
+              "name": "name",
+              "type": "string"
+            },
+            "isdefault": {
+              "name": "isdefault",
+              "type": "boolean",
+              "readonly": true,
+              "required": true,
+              "default": false
+            },
+            "description": {
+              "name": "description",
+              "type": "string"
+            },
+            "documentation": {
+              "name": "documentation",
+              "type": "url"
+            },
+            "labels": {
+              "name": "labels",
+              "type": "map",
+              "item": {
+                "type": "string"
+              }
+            },
+            "createdat": {
+              "name": "createdat",
+              "type": "timestamp",
+              "required": true
+            },
+            "modifiedat": {
+              "name": "modifiedat",
+              "type": "timestamp",
+              "required": true
+            },
+            "contenttype": {
+              "name": "contenttype",
+              "type": "string"
+            }
+          },
+          "metaattributes": {
+            "docid": {
+              "name": "docid",
+              "type": "string",
+              "immutable": true,
+              "required": true
+            },
+            "self": {
+              "name": "self",
+              "type": "url",
+              "readonly": true,
+              "immutable": true,
+              "required": true
+            },
+            "xid": {
+              "name": "xid",
+              "type": "xid",
+              "readonly": true,
+              "immutable": true,
+              "required": true
+            },
+            "xref": {
+              "name": "xref",
+              "type": "url"
+            },
+            "epoch": {
+              "name": "epoch",
+              "type": "uinteger",
+              "required": true
+            },
+            "createdat": {
+              "name": "createdat",
+              "type": "timestamp",
+              "required": true
+            },
+            "modifiedat": {
+              "name": "modifiedat",
+              "type": "timestamp",
+              "required": true
+            },
+            "readonly": {
+              "name": "readonly",
+              "type": "boolean",
+              "required": true,
+              "default": false
+            },
+            "compatibility": {
+              "name": "compatibility",
+              "type": "string",
+              "enum": [
+                "none",
+                "backward",
+                "backward_transitive",
+                "forward",
+                "forward_transitive",
+                "full",
+                "full_transitive"
+              ],
+              "strict": false,
+              "required": true,
+              "default": "none"
+            },
+            "defaultversionid": {
+              "name": "defaultversionid",
+              "type": "string",
+              "required": true
+            },
+            "defaultversionurl": {
+              "name": "defaultversionurl",
+              "type": "url",
+              "readonly": true,
+              "required": true
+            },
+            "defaultversionsticky": {
+              "name": "defaultversionsticky",
+              "type": "boolean",
+              "readonly": true,
+              "required": true,
+              "default": false
+            }
+          }
+        },
         "samples": {
           "plural": "samples",
           "singular": "sample",
@@ -368,168 +530,6 @@
           "metaattributes": {
             "schemaid": {
               "name": "schemaid",
-              "type": "string",
-              "immutable": true,
-              "required": true
-            },
-            "self": {
-              "name": "self",
-              "type": "url",
-              "readonly": true,
-              "immutable": true,
-              "required": true
-            },
-            "xid": {
-              "name": "xid",
-              "type": "xid",
-              "readonly": true,
-              "immutable": true,
-              "required": true
-            },
-            "xref": {
-              "name": "xref",
-              "type": "url"
-            },
-            "epoch": {
-              "name": "epoch",
-              "type": "uinteger",
-              "required": true
-            },
-            "createdat": {
-              "name": "createdat",
-              "type": "timestamp",
-              "required": true
-            },
-            "modifiedat": {
-              "name": "modifiedat",
-              "type": "timestamp",
-              "required": true
-            },
-            "readonly": {
-              "name": "readonly",
-              "type": "boolean",
-              "required": true,
-              "default": false
-            },
-            "compatibility": {
-              "name": "compatibility",
-              "type": "string",
-              "enum": [
-                "none",
-                "backward",
-                "backward_transitive",
-                "forward",
-                "forward_transitive",
-                "full",
-                "full_transitive"
-              ],
-              "strict": false,
-              "required": true,
-              "default": "none"
-            },
-            "defaultversionid": {
-              "name": "defaultversionid",
-              "type": "string",
-              "required": true
-            },
-            "defaultversionurl": {
-              "name": "defaultversionurl",
-              "type": "url",
-              "readonly": true,
-              "required": true
-            },
-            "defaultversionsticky": {
-              "name": "defaultversionsticky",
-              "type": "boolean",
-              "readonly": true,
-              "required": true,
-              "default": false
-            }
-          }
-        },
-        "specs": {
-          "plural": "specs",
-          "singular": "spec",
-          "maxversions": 0,
-          "setversionid": true,
-          "setdefaultversionsticky": true,
-          "hasdocument": true,
-          "attributes": {
-            "specid": {
-              "name": "specid",
-              "type": "string",
-              "immutable": true,
-              "required": true
-            },
-            "versionid": {
-              "name": "versionid",
-              "type": "string",
-              "immutable": true,
-              "required": true
-            },
-            "self": {
-              "name": "self",
-              "type": "url",
-              "readonly": true,
-              "immutable": true,
-              "required": true
-            },
-            "xid": {
-              "name": "xid",
-              "type": "xid",
-              "readonly": true,
-              "immutable": true,
-              "required": true
-            },
-            "epoch": {
-              "name": "epoch",
-              "type": "uinteger",
-              "required": true
-            },
-            "name": {
-              "name": "name",
-              "type": "string"
-            },
-            "isdefault": {
-              "name": "isdefault",
-              "type": "boolean",
-              "readonly": true,
-              "required": true,
-              "default": false
-            },
-            "description": {
-              "name": "description",
-              "type": "string"
-            },
-            "documentation": {
-              "name": "documentation",
-              "type": "url"
-            },
-            "labels": {
-              "name": "labels",
-              "type": "map",
-              "item": {
-                "type": "string"
-              }
-            },
-            "createdat": {
-              "name": "createdat",
-              "type": "timestamp",
-              "required": true
-            },
-            "modifiedat": {
-              "name": "modifiedat",
-              "type": "timestamp",
-              "required": true
-            },
-            "contenttype": {
-              "name": "contenttype",
-              "type": "string"
-            }
-          },
-          "metaattributes": {
-            "specid": {
-              "name": "specid",
               "type": "string",
               "immutable": true,
               "required": true

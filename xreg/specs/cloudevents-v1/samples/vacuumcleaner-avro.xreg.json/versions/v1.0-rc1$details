@@ -1,0 +1,10 @@
+{
+  "createdat": "2025-04-09T19:44:32.300017177Z",
+  "epoch": 1,
+  "isdefault": true,
+  "modifiedat": "2025-04-09T19:44:32.300017177Z",
+  "sampleid": "vacuumcleaner-avro.xreg.json",
+  "self": "https://xregistry.io/xreg/specs/cloudevents-v1/samples/vacuumcleaner-avro.xreg.json/versions/v1.0-rc1",
+  "versionid": "v1.0-rc1",
+  "xid": "/specs/cloudevents-v1/samples/vacuumcleaner-avro.xreg.json/versions/v1.0-rc1"
+}

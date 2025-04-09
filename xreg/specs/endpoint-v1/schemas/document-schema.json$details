@@ -1,0 +1,13 @@
+{
+  "createdat": "2025-04-09T19:44:34.871613645Z",
+  "epoch": 1,
+  "isdefault": true,
+  "metaurl": "https://xregistry.io/xreg/specs/endpoint-v1/schemas/document-schema.json/meta",
+  "modifiedat": "2025-04-09T19:44:34.871613645Z",
+  "schemaid": "document-schema.json",
+  "self": "https://xregistry.io/xreg/specs/endpoint-v1/schemas/document-schema.json",
+  "versionid": "v1.0-rc1",
+  "versionscount": 1,
+  "versionsurl": "https://xregistry.io/xreg/specs/endpoint-v1/schemas/document-schema.json/versions",
+  "xid": "/specs/endpoint-v1/schemas/document-schema.json"
+}

@@ -1,0 +1,14 @@
+content-disposition:openapi.json
+content-location:https://xregistry.io/xreg/specs/cloudevents-v1/schemas/openapi.json/versions/v1.0-rc1
+content-type:text/plain; charset=utf-8
+xregistry-createdat:2025-04-09T19:44:31.720783915Z
+xregistry-epoch:1
+xregistry-isdefault:true
+xregistry-metaurl:https://xregistry.io/xreg/specs/cloudevents-v1/schemas/openapi.json/meta
+xregistry-modifiedat:2025-04-09T19:44:31.720783915Z
+xregistry-schemaid:openapi.json
+xregistry-self:https://xregistry.io/xreg/specs/cloudevents-v1/schemas/openapi.json
+xregistry-versionid:v1.0-rc1
+xregistry-versionscount:1
+xregistry-versionsurl:https://xregistry.io/xreg/specs/cloudevents-v1/schemas/openapi.json/versions
+xregistry-xid:/specs/cloudevents-v1/schemas/openapi.json

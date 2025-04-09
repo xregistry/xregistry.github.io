@@ -1,0 +1,13 @@
+{
+  "createdat": "2025-04-09T19:44:34.309595046Z",
+  "epoch": 1,
+  "isdefault": true,
+  "metaurl": "https://xregistry.io/xreg/specs/core-v1/samples/contoso-crm.cereg/meta",
+  "modifiedat": "2025-04-09T19:44:34.309595046Z",
+  "sampleid": "contoso-crm.cereg",
+  "self": "https://xregistry.io/xreg/specs/core-v1/samples/contoso-crm.cereg",
+  "versionid": "v1.0-rc1",
+  "versionscount": 1,
+  "versionsurl": "https://xregistry.io/xreg/specs/core-v1/samples/contoso-crm.cereg/versions",
+  "xid": "/specs/core-v1/samples/contoso-crm.cereg"
+}

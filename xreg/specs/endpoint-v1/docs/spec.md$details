@@ -1,0 +1,13 @@
+{
+  "createdat": "2025-04-09T19:44:34.576028639Z",
+  "docid": "spec.md",
+  "epoch": 1,
+  "isdefault": true,
+  "metaurl": "https://xregistry.io/xreg/specs/endpoint-v1/docs/spec.md/meta",
+  "modifiedat": "2025-04-09T19:44:34.576028639Z",
+  "self": "https://xregistry.io/xreg/specs/endpoint-v1/docs/spec.md",
+  "versionid": "v1.0-rc1",
+  "versionscount": 1,
+  "versionsurl": "https://xregistry.io/xreg/specs/endpoint-v1/docs/spec.md/versions",
+  "xid": "/specs/endpoint-v1/docs/spec.md"
+}

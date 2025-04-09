@@ -1,0 +1,562 @@
+<h1 id="schema-registry-service---version-10-rc1">Schema Registry Service - Version 1.0-rc1 <a class="anchor" href="#schema-registry-service---version-10-rc1">☍</a></h1>
+<h2 id="abstract">Abstract <a class="anchor" href="#abstract">☍</a></h2>
+<p>This specification defines a Schema Registry extension to the xRegistry document
+format and API <a href="../core/spec.md">specification</a>. A Schema Registry allows for
+the storage, management and discovery of schema documents.</p>
+<h2 id="table-of-contents">Table of Contents <a class="anchor" href="#table-of-contents">☍</a></h2>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#notations-and-terminology">Notations and Terminology</a>
+<ul>
+<li><a href="#notational-conventions">Notational Conventions</a></li>
+<li><a href="#terminology">Terminology</a></li>
+</ul>
+</li>
+<li><a href="#schema-registry">Schema Registry</a>
+<ul>
+<li><a href="#schema-groups">Schema Groups</a></li>
+<li><a href="#schema-resources">Schema Resources</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="overview">Overview <a class="anchor" href="#overview">☍</a></h2>
+<p>This specification defines a Schema Registry extension to the xRegistry document
+format and API <a href="../core/spec.md">specification</a>.</p>
+<p>For easy reference, the JSON serialization of a Schema Registry adheres to
+this form:</p>
+<pre><code class="language-yaml">{
+  &quot;specversion&quot;: &quot;STRING&quot;,                         # xRegistry core attributes
+  &quot;registryid&quot;: &quot;STRING&quot;,
+  &quot;self&quot;: &quot;URL&quot;,
+  &quot;xid&quot;: &quot;XID&quot;,
+  &quot;epoch&quot;: UINTEGER,
+  &quot;name&quot;: &quot;STRING&quot;, ?
+  &quot;description&quot;: &quot;STRING&quot;, ?
+  &quot;documentation&quot;: &quot;URL&quot;, ?
+  &quot;labels&quot;: {
+    &quot;STRING&quot;: &quot;STRING&quot; *
+  }, ?
+  &quot;createdat&quot;: &quot;TIMESTAMP&quot;,
+  &quot;modifiedat&quot;: &quot;TIMESTAMP&quot;,
+
+  &quot;model&quot;: { ... }, ?
+
+  &quot;schemagroupsurl&quot;: &quot;URL&quot;,                        # SchemaGroups collection
+  &quot;schemagroupscount&quot;: UINTEGER,
+  &quot;schemagroups&quot;: {
+    &quot;KEY&quot;: {                                       # schemagroupid
+      &quot;schemagroupid&quot;: &quot;STRING&quot;,                   # xRegistry core attributes
+      &quot;self&quot;: &quot;URL&quot;,
+      &quot;xid&quot;: &quot;XID&quot;,
+      &quot;epoch&quot;: UINTEGER,
+      &quot;name&quot;: &quot;STRING&quot;, ?
+      &quot;description&quot;: &quot;STRING&quot;, ?
+      &quot;documentation&quot;: &quot;URL&quot;, ?
+      &quot;labels&quot;: { &quot;STRING&quot;: &quot;STRING&quot; * }, ?
+      &quot;createdat&quot;: &quot;TIMESTAMP&quot;,
+      &quot;modifiedat&quot;: &quot;TIMESTAMP&quot;,
+
+      &quot;schemasurl&quot;: &quot;URL&quot;,                         # Schemas collection
+      &quot;schemascount&quot;: UINTEGER,
+      &quot;schemas&quot;: {
+        &quot;KEY&quot;: {                                   # schemaid
+          &quot;schemaid&quot;: &quot;STRING&quot;,                    # xRegistry core attributes
+          &quot;versionid&quot;: &quot;STRING&quot;,
+          &quot;self&quot;: &quot;URL&quot;,
+          &quot;xid&quot;: &quot;XID&quot;,
+          #  Start of default Version's attributes
+          &quot;epoch&quot;: UINTEGER,
+          &quot;name&quot;: &quot;STRING&quot;, ?                      # Version level attrs
+          &quot;description&quot;: &quot;STRING&quot;, ?
+          &quot;documentation&quot;: &quot;URL&quot;, ?
+          &quot;labels&quot;: { &quot;STRING&quot;: &quot;STRING&quot; * }, ?
+          &quot;createdat&quot;: &quot;TIMESTAMP&quot;,
+          &quot;modifiedat&quot;: &quot;TIMESTAMP&quot;,
+          &quot;ancestor&quot;: &quot;STRING&quot;,
+
+          &quot;deprecated&quot;: {
+            &quot;effective&quot;: &quot;TIMESTAMP&quot;, ?
+            &quot;removal&quot;: &quot;TIMESTAMP&quot;, ?
+            &quot;alternative&quot;: &quot;URL&quot;, ?
+            &quot;docs&quot;: &quot;URL&quot;?
+          }, ?
+
+          &quot;format&quot;: &quot;STRING&quot;, ?
+
+          &quot;schemaurl&quot;: &quot;URL&quot;, ?
+          &quot;schema&quot;: ANY ?
+          &quot;schemabase64&quot;: &quot;STRING&quot;, ?
+          #  End of default Version's attributes
+
+          &quot;metaurl&quot;: &quot;URL&quot;,                    # Resource level attrs
+          &quot;meta&quot;: {
+            ... core spec metadata attributes ...
+            &quot;validation&quot;: BOOLEAN ?
+          }, ?
+
+          &quot;versionsurl&quot;: &quot;URL&quot;,
+          &quot;versionscount&quot;: UINTEGER,
+          &quot;versions&quot;: { ... } ?
+        } *
+      } ?
+    } *
+  } ?
+}
+</code></pre>
+<h2 id="notations-and-terminology">Notations and Terminology <a class="anchor" href="#notations-and-terminology">☍</a></h2>
+<h3 id="notational-conventions">Notational Conventions <a class="anchor" href="#notational-conventions">☍</a></h3>
+<p>The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;, &quot;SHOULD&quot;,
+&quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;, &quot;MAY&quot;, and &quot;OPTIONAL&quot; in this document are to be
+interpreted as described in <a href="https://tools.ietf.org/html/rfc2119">RFC 2119</a>.</p>
+<p>For clarity, OPTIONAL attributes (specification-defined and extensions) are
+OPTIONAL for clients to use, but the servers' responsibility will vary.
+Server-unknown extension attributes MUST be silently stored in the backing
+datastore. Specification-defined, and server-known extension, attributes MUST
+generate an error if corresponding feature is not supported or enabled.
+However, as with all attributes, if accepting the attribute would result in a
+bad state (such as exceeding a size limit, or results in a security issue),
+then the server MAY choose to reject the request.</p>
+<p>In the pseudo JSON format snippets <code>?</code> means the preceding attribute is
+OPTIONAL, <code>*</code> means the preceding attribute MAY appear zero or more times,
+and <code>+</code> means the preceding attribute MUST appear at least once. The presence
+of the <code>#</code> character means the remaining portion of the line is a comment.
+Whitespace characters in the JSON snippets are used for readability and are
+not normative.</p>
+<h3 id="terminology">Terminology <a class="anchor" href="#terminology">☍</a></h3>
+<p>This specification defines the following terms:</p>
+<h4 id="schema">Schema <a class="anchor" href="#schema">☍</a></h4>
+<p>A schema, in the sense of this specification, defines the structure of the
+body/payload of a serialized message, but also of a structured data element
+stored on disk or elsewhere. In self-describing serialization formats like JSON,
+XML, BSON, or MessagePack, schemas primarily help with validating whether a
+message body conforms with a set of rules defined in the schema and with
+generating code that can produce or consume the defined structure. For
+schema-dependent serialization formats like Protobuf or Apache Avro, a schema
+is needed to decode the structured data from its serialized, binary form.</p>
+<p>We use the term <strong>schema</strong> (or schema Resource) in this specification as a
+logical grouping of <strong>schema Versions</strong>. A <strong>schema Version</strong> is a concrete
+document. The <strong>schema</strong> Resource is a semantic umbrella formed around one or
+more concrete schema Version documents. Per the definition of the
+<a href="../core/spec.md#compatibility-attribute"><code>compatibility</code></a> attribute, all
+Versions of a single <strong>schema</strong> MUST adhere to the rules defined by the
+<code>compatibility</code> attribute. Any breaking change MUST result in a new <strong>schema</strong>
+being created.</p>
+<p>In &quot;semantic Versioning&quot; terms, you can think of a <strong>schema</strong> as a &quot;major
+version&quot; and the <strong>schema Versions</strong> as &quot;minor versions&quot;.</p>
+<h2 id="schema-registry-model">Schema Registry Model <a class="anchor" href="#schema-registry-model">☍</a></h2>
+<p>The formal xRegistry extension model of the Schema Registry resides in the
+<a href="model.json">model.json</a> file.</p>
+<h4 id="schema-group">Schema Group <a class="anchor" href="#schema-group">☍</a></h4>
+<p>A schema group is a container for schemas that are related to each other in some
+application-defined way. This specification does not impose any restrictions on
+what schemas can be contained in a schema group.</p>
+<h2 id="schema-registry">Schema Registry <a class="anchor" href="#schema-registry">☍</a></h2>
+<p>The Schema Registry is a metadata store for organizing schemas and schema
+Versions of any kind; it is a document store.</p>
+<p>The xRegistry API extension model of the Schema Registry, which is defined in
+detail below, is as follows:</p>
+<pre><code class="language-yaml">{
+  &quot;groups&quot;: [
+    {
+      &quot;singular&quot;: &quot;schemagroup&quot;,
+      &quot;plural&quot;: &quot;schemagroups&quot;,
+
+      &quot;resources&quot;: [
+        {
+          &quot;singular&quot;: &quot;schema&quot;,
+          &quot;plural&quot;: &quot;schemas&quot;,
+          &quot;versions&quot;: 0,
+
+          &quot;attributes&quot;: {
+            &quot;format&quot;: {
+              &quot;name&quot;: &quot;format&quot;,
+              &quot;type&quot;: &quot;string&quot;,
+              &quot;description&quot;: &quot;Schema format identifier for this schema version&quot;
+            }
+          },
+          &quot;metaattributes&quot;: {
+            &quot;validation&quot;: {
+              &quot;name&quot;: &quot;validation&quot;,
+              &quot;type&quot;: &quot;boolean&quot;,
+              &quot;description&quot;: &quot;Verify compliance with specified 'format'&quot;
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+</code></pre>
+<p>Implementations of this specification MAY include additional extension
+attributes, including the <code>*</code> attribute of type <code>any</code>.</p>
+<p>Since the Schema Registry is an application of the xRegistry specification, all
+attributes for Groups, Resources, and Resource Version objects are inherited
+from there.</p>
+<h3 id="schema-groups">Schema Groups <a class="anchor" href="#schema-groups">☍</a></h3>
+<p>The group (GROUP) name for the Schema Registry is <code>schemagroups</code>. The group does
+not have any specific extension attributes.</p>
+<p>A schema group is a collection of schemas that are related to each other in some
+application-defined way. A schema group does not impose any restrictions on the
+contained schemas, meaning that a schema group MAY contain schemas of different
+formats. Every schema MUST reside inside a schema group.</p>
+<p>Example:</p>
+<p>The follow abbreviated Schema Registry's contents shows a single schema group
+containing 5 schemas.</p>
+<pre><code class="language-yaml">{
+  &quot;specversion&quot;: 1.0-rc1,
+  # other xRegistry top-level attributes excluded for brevity
+
+  &quot;schemagroupsurl&quot;: &quot;http://example.com/schemagroups&quot;,
+  &quot;schemagroupscount&quot;: 1,
+  &quot;schemagroups&quot;: {
+    &quot;com.example.schemas&quot;: {
+      &quot;schemagroupid&quot;: &quot;com.example.schemas&quot;,
+      # Other xRegistry group-level attributes excluded for brevity
+
+      &quot;schemasurl&quot;: &quot;https://example.com/schemagroups/com.example.schemas/schemas&quot;,
+      &quot;schemascount&quot;: 5
+    }
+  }
+}
+</code></pre>
+<h3 id="schema-resources">Schema Resources <a class="anchor" href="#schema-resources">☍</a></h3>
+<p>The resources (RESOURCE) collection inside of schema groups is named <code>schemas</code>.
+The type of the resource is <code>schema</code>. Any single <code>schema</code> is a container for
+one or more <code>Versions</code>, which hold the concrete schema documents or schema
+document references.</p>
+<p>All Versions of a schema MUST adhere to the semantic rules of the schema's
+<code>compatibility</code> attribute. This specification defines &quot;compatibility&quot; for
+schemas as follows; version B of a schema is said to be compatible with
+version A of a schema if all of the following are true:</p>
+<ul>
+<li>Any document that adheres to the rules specified by schema A also adheres to
+rules specified by schema B.</li>
+<li>Any processing rules defined for schema A also apply for schema B.</li>
+<li>Any processing rules defined for schema B, that are not defined for schema
+A, do not conflict with the processing rules for schema A.</li>
+</ul>
+<p>Implementations of this specification MAY choose to support any of the
+<a href="../core/spec.md#compatibility-attribute"><code>compatibility</code></a> values defined in
+the core xRegistry specification.</p>
+<p>Implementations of this specification SHOULD use the xRegistry default
+algorithm for generating new <code>versionid</code> values and for determining which is
+the latest Version. See <a href="../core/spec.md#version-ids">Version IDs</a> for more
+information, but in summary it means:</p>
+<ul>
+<li><code>versionid</code>s are unsigned integers starting with <code>1</code></li>
+<li>They monotomically increase by <code>1</code> with each new Version</li>
+<li>The latest is the Version with the lexically largest <code>versionid</code> value after
+all <code>versionid</code>s have been left-padded with spaces to the same length</li>
+</ul>
+<p>When semantic versioning is used in a solution, it is RECOMMENDED to include a
+major version identifier in the <code>schemaid</code>, like <code>&quot;com.example.event.v1&quot;</code> or
+<code>&quot;com.example.event.2024-02&quot;</code>, so that incompatible, but historically related
+schemas can be more easily identified by users and developers. The schema
+<code>versionid</code> then functions as the semantic minor version identifier.</p>
+<p>The following extensions are defined for the <code>schema</code> Resource in addition to
+the core xRegistry Resource
+<a href="../core/spec.md#attributes-and-extensions">attributes</a>:</p>
+<h4 id="validation"><code>validation</code> <a class="anchor" href="#validation">☍</a></h4>
+<ul>
+<li>
+<p>Type: Boolean</p>
+</li>
+<li>
+<p>Description: Indicates whether or not the server will validate the Resource's
+document(s) against the specified <code>format</code> attribute. A value of <code>true</code>
+indicates that the server MUST reject any request that would cause any
+Version of this Resource to be invalid per the rules as defined by the
+<code>format</code> specification. Note, this includes a request to set this attribute
+to <code>true</code>. This means that before validation can be enabled all existing
+Versions of the Resource MUST be compliant.</p>
+<p>A value of <code>false</code> indicates that the server MUST NOT do any validation.</p>
+<p>If <code>format</code> is not specified, or if the value is not known by the server
+(but it an allowable value), then the server MUST NOT perform any validation.</p>
+</li>
+<li>
+<p>Constraints:</p>
+<ul>
+<li>OPTIONAL</li>
+<li>When not specified, the default value MUST be <code>true</code>.</li>
+<li>MUST be a Resource level attribute defined within the <code>metaattributes</code>
+section of the model.</li>
+</ul>
+</li>
+</ul>
+<h4 id="deprecated"><code>deprecated</code> <a class="anchor" href="#deprecated">☍</a></h4>
+<ul>
+<li>
+<p>Type: Object containing the following properties:</p>
+<ul>
+<li>
+<p><code>effective</code><br>
+An OPTIONAL property indicating the time when the schema entered, or will
+enter, a deprecated state. The date MAY be in the past or future. If this
+property is not present the schema is already in a deprecated state.
+If present, this MUST be an <a href="https://tools.ietf.org/html/rfc3339">RFC3339</a> timestamp.</p>
+</li>
+<li>
+<p><code>removal</code><br>
+An OPTIONAL property indicating the time when the schema MAY be removed.
+The schema MUST NOT be removed before this time. If this property is not
+present then client can not make any assumption as to when the schema
+might be removed. Note: as with most properties, this property is mutable.
+If present, this MUST be an <a href="https://tools.ietf.org/html/rfc3339">RFC3339</a> timestamp and MUST NOT be
+sooner than the <code>effective</code> time if present.</p>
+</li>
+<li>
+<p><code>alternative</code><br>
+An OPTIONAL property specifying the URL to an alternative schema the
+client can consider as a replacement for this schema. There is no
+guarantee that the referenced schema is an exact replacement, rather the
+client is expected to investigate the schema to determine if it is
+appropriate.</p>
+</li>
+<li>
+<p><code>docs</code><br>
+An OPTIONAL property specifying the URL to additional information about
+the deprecation of the schema. This specification does not mandate any
+particular format or information, however some possibilities include:
+reasons for the deprecation or additional information about likely
+alternative schema. The URL MUST support an HTTP GET request.</p>
+</li>
+</ul>
+<p>Note that an implementation is not mandated to use this attribute in
+advance of removing an schema, but is it RECOMMENDED that they do so.</p>
+</li>
+<li>
+<p>Constraints:</p>
+<ul>
+<li>OPTIONAL</li>
+</ul>
+</li>
+<li>
+<p>Examples:</p>
+<ul>
+<li><code>&quot;deprecated&quot;: {}</code></li>
+<li>
+<pre><code>&quot;deprecated&quot;: {
+  &quot;removal&quot;: &quot;2030-12-19T00:00:00-00:00&quot;,
+  &quot;alternative&quot;: &quot;https://example.com/schema/myschema&quot;
+}
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="format"><code>format</code> <a class="anchor" href="#format">☍</a></h4>
+<ul>
+<li>
+<p>Type: String</p>
+</li>
+<li>
+<p>Description: Identifies the schema format. In absence of formal media-type
+definitions for several important schema formats, we define a convention here
+to reference schema formats by name and version as <code>{NAME}/{VERSION}</code>. This
+specification defines a set of common <a href="#schema-formats">schema format names</a>
+that MUST be used for the given formats, but applications MAY define
+extensions for other formats on their own.</p>
+<p>For many schema registry use cases this attribute is important for schema
+validation purposes, and as such implementations can choose to modify the
+model to make this attribute mandatory.</p>
+</li>
+<li>
+<p>Constraints:</p>
+<ul>
+<li>If present, MUST be a non-empty string</li>
+<li>MUST follow the naming convention <code>{NAME}/{VERSION}</code>, whereby <code>{NAME}</code> is
+the name of the schema format and <code>{VERSION}</code> is the Version of the schema
+format in the format defined by the schema format itself.</li>
+<li>MUST be a Version level attribute defined within the <code>attributes</code> section
+of the model.</li>
+</ul>
+</li>
+<li>
+<p>Examples:</p>
+<ul>
+<li><code>JsonSchema/draft-07</code></li>
+<li><code>Protobuf/3</code></li>
+<li><code>XSD/1.1</code></li>
+<li><code>Avro/1.9</code></li>
+</ul>
+</li>
+</ul>
+<p>The following abbreviated example shows three embedded <code>Protobuf/3</code> schema
+Versions for a schema named <code>com.example.telemetrydata</code>:</p>
+<pre><code class="language-yaml">{
+  &quot;specversion&quot;: 1.0-rc1,
+  # other xRegistry top-level attributes excluded for brevity
+
+  &quot;schemagroupsurl&quot;: &quot;http://example.com/schemagroups&quot;,
+  &quot;schemagroupscount&quot;: 1,
+  &quot;schemagroups&quot;: {
+    &quot;com.example.telemetry&quot;: {
+      &quot;schemagroupid&quot;: &quot;com.example.telemetry&quot;,
+      # other xRegistry group-level attributes excluded for brevity
+
+      &quot;schemasurl&quot;: &quot;http://example.com/schemagroups/com.example.telemetry/schemas&quot;,
+      &quot;schemascount&quot;: 1,
+      &quot;schemas&quot;: {
+        &quot;com.example.telemetrydata&quot;: {
+          &quot;schemaid&quot;: &quot;com.example.telemetrydata&quot;,
+          &quot;versionid&quot;: &quot;3&quot;,
+          &quot;description&quot;: &quot;device telemetry event data&quot;,
+          &quot;ancestor&quot;: &quot;2&quot;,
+          &quot;format&quot;: &quot;Protobuf/3&quot;,
+          # other xRegistry default Version attributes excluded for brevity
+
+          &quot;schema&quot;: &quot;syntax = \&quot;proto3\&quot;; message Metrics { float metric = 1; string unit = 2; string description = 3; } }&quot;,
+
+          &quot;metaurl&quot;: &quot;http://example.com/schemagroups/com.example.telemetry/schemas/com.example.telemetrydata/meta&quot;,
+          &quot;versionsurl&quot;: &quot;http://example.com/schemagroups/com.example.telemetry/schemas/com.example.telemetrydata/versions&quot;,
+          &quot;versionscount&quot;: 3,
+          &quot;versions&quot;: {
+            &quot;1&quot;: {
+              &quot;schemaid&quot;: &quot;com.example.telemetrydata&quot;,
+              &quot;versionid&quot;: &quot;1&quot;,
+              &quot;description&quot;: &quot;device telemetry event data&quot;,
+              &quot;ancestor&quot;: &quot;1&quot;,
+              &quot;format&quot;: &quot;Protobuf/3&quot;,
+              # other xRegistry Version-level attributes excluded for brevity
+
+              &quot;schema&quot;: &quot;syntax = \&quot;proto3\&quot;; message Metrics { float metric = 1; } }&quot;
+            },
+            &quot;2&quot;: {
+              &quot;schemaid&quot;: &quot;com.example.telemetrydata&quot;,
+              &quot;versionid&quot;: &quot;2&quot;,
+              &quot;description&quot;: &quot;device telemetry event data&quot;,
+              &quot;ancestor&quot;: &quot;1&quot;,
+              &quot;format&quot;: &quot;Protobuf/3&quot;,
+              # other xRegistry Version-level attributes excluded for brevity
+
+              &quot;schema&quot;: &quot;syntax = \&quot;proto3\&quot;; message Metrics { float metric = 1; string unit = 2; } }&quot;
+            },
+            &quot;3&quot;: {
+              &quot;schemaid&quot;: &quot;com.example.telemetrydata&quot;,
+              &quot;versionid&quot;: &quot;3&quot;,
+              &quot;description&quot;: &quot;device telemetry event data&quot;,
+              &quot;ancestor&quot;: &quot;2&quot;,
+              &quot;format&quot;: &quot;Protobuf/3&quot;,
+              # other xRegistry Version-level attributes excluded for brevity
+
+              &quot;schema&quot;: &quot;syntax = \&quot;proto3\&quot;; message Metrics { float metric = 1; string unit = 2; string description = 3; } }&quot;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+</code></pre>
+<h3 id="schema-formats">Schema Formats <a class="anchor" href="#schema-formats">☍</a></h3>
+<p>This section defines a set of common schema <code>format</code> values that MUST be used
+for the given formats, but applications MAY define extensions for other
+formats on their own.</p>
+<h4 id="json-schema">JSON Schema <a class="anchor" href="#json-schema">☍</a></h4>
+<p>The <a href="#format"><code>format</code></a> identifier for JSON Schema is <code>JsonSchema</code>.</p>
+<p>When the <code>format</code> attribute is set to <code>JsonSchema</code>, the <code>schema</code> attribute of
+the schema Resource is a JSON object representing a JSON Schema document
+conformant with the declared version.</p>
+<p>A URI-reference, like
+<a href="../message/spec.md#dataschemauri"><code>schemauri</code></a> that points
+to a JSON Schema document MAY use a JSON pointer expression to deep link into
+the schema document to reference a particular type definition. Otherwise the
+top-level object definition of the schema is used.</p>
+<p>The version of the JSON Schema format is the version of the JSON
+Schema specification that is used to define the schema. The version of the JSON
+Schema specification is defined in the <code>$schema</code> attribute of the schema
+document.</p>
+<p>The identifiers for the following JSON Schema versions</p>
+<ul>
+<li>Draft 07: <code>http://json-schema.org/draft-07/schema</code></li>
+<li>Draft 2019-09: <code>https://json-schema.org/draft/2019-09/schema</code></li>
+<li>Draft 2020-12: <code>https://json-schema.org/draft/2020-12/schema</code></li>
+</ul>
+<p>are defined as follows:</p>
+<ul>
+<li><code>JsonSchema/draft-07</code></li>
+<li><code>JsonSchema/draft/2019-09</code></li>
+<li><code>JsonSchema/draft/2020-12</code></li>
+</ul>
+<p>which follows the exact convention as defined for JSON schema and expecting an
+eventually released version 1.0 of the JSON Schema specification using a plain
+version number.</p>
+<h4 id="xml-schema">XML Schema <a class="anchor" href="#xml-schema">☍</a></h4>
+<p>The <a href="#format"><code>format</code></a> identifier for XML Schema is <code>XSD</code>. The
+version of the XML Schema format is the version of the W3C XML Schema
+specification that is used to define the schema.</p>
+<p>When the <code>format</code> attribute is set to <code>XSD</code>, the <code>schema</code> attribute of
+schema Resource is a string containing an XML Schema document conformant with
+the declared version.</p>
+<p>A URI-reference, like
+<a href="../message/spec.md#dataschemauri"><code>schemauri</code></a> that points
+to a XSD Schema document MAY use an XPath expression to deep link into the
+schema document to reference a particular type definition. Otherwise the root
+element definition of the schema is used.</p>
+<p>The identifiers for the following XML Schema versions:</p>
+<ul>
+<li>1.0: <code>https://www.w3.org/TR/xmlschema-1/</code></li>
+<li>1.1: <code>https://www.w3.org/TR/xmlschema11-1/</code></li>
+</ul>
+<p>are defined as follows:</p>
+<ul>
+<li><code>XSD/1.0</code></li>
+<li><code>XSD/1.1</code></li>
+</ul>
+<h4 id="apache-avro-schema">Apache Avro Schema <a class="anchor" href="#apache-avro-schema">☍</a></h4>
+<p>The <a href="#format"><code>format</code></a> identifier for Apache Avro Schema is
+<code>Avro</code>. The version of the Apache Avro Schema format is the version of the
+Apache Avro Schema release that is used to define the schema.</p>
+<p>When the <code>format</code> attribute is set to <code>Avro</code>, the <code>schema</code> attribute of the
+schema Resource is a JSON object representing an Avro schema document conformant
+with the declared version.</p>
+<p>Examples:</p>
+<ul>
+<li><code>Avro/1.8.2</code> is the identifier for the Apache Avro release 1.8.2.</li>
+<li><code>Avro/1.11.0</code> is the identifier for the Apache Avro release 1.11.0</li>
+</ul>
+<p>A URI-reference, like
+<a href="../message/spec.md#dataschemauri"><code>schemauri</code></a> that points
+to an Avro Schema document MUST reference an Avro record declaration contained
+in the schema document using a URI fragment suffix <code>[:]{record-name}</code>. The ':'
+character is used as a separator when the URI already contains a fragment.</p>
+<p>Examples:</p>
+<ul>
+<li>If the Avro schema document is referenced using the URI
+<code>https://example.com/avro/telemetry.avsc</code>, the URI fragment <code>#TelemetryEvent</code>
+references the record declaration of the <code>TelemetryEvent</code> record.</li>
+<li>If the Avro schema document is a local Schema Registry reference like
+<code>#/schemagroups/com.example.telemetry/schemas/com.example.telemetrydata</code>, in the
+which the reference is already in the form of a URI fragment, the suffix is
+appended separated with a colon, for instance
+<code>.../com.example.telemetrydata:TelemetryEvent</code>.</li>
+</ul>
+<h4 id="protobuf-schema">Protobuf Schema <a class="anchor" href="#protobuf-schema">☍</a></h4>
+<p>The <a href="#format"><code>format</code></a> identifier for Protobuf Schema is
+<code>Protobuf</code>. The version of the Protobuf Schema format is the version of the
+Protobuf syntax that is used to define the schema.</p>
+<p>When the <code>format</code> attribute is set to <code>Protobuf</code>, the <code>schema</code> attribute of the
+schema Resource is a string containing a Protobuf schema document conformant
+with the declared version.</p>
+<ul>
+<li><code>Protobuf/3</code> is the identifier for the Protobuf syntax version 3.</li>
+<li><code>Protobuf/2</code> is the identifier for the Protobuf syntax version 2.</li>
+</ul>
+<p>A URI-reference, like
+[<code>schemauri</code>](../message/spec.md#dataschemauri that points
+to an Protobuf Schema document MUST reference an Protobuf <code>message</code> declaration
+contained in the schema document using a URI fragment suffix
+<code>[:]{message-name}</code>. The ':' character is used as a separator when the URI
+already contains a fragment.</p>
+<p>Examples:</p>
+<ul>
+<li>If the Protobuf schema document is referenced using the URI
+<code>https://example.com/protobuf/telemetry.proto</code>, the URI fragment
+<code>#TelemetryEvent</code> references the message declaration of the <code>TelemetryEvent</code>
+message.</li>
+<li>If the Protobuf schema document is a local Schema Registry reference like
+<code>#/schemagroups/com.example.telemetry/schemas/com.example.telemetrydata</code>, in
+the which the reference is already in the form of a URI fragment, the suffix
+is appended separated with a colon, for instance
+<code>.../com.example.telemetrydata:TelemetryEvent</code>.</li>
+</ul>

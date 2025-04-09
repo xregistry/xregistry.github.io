@@ -1,0 +1,13 @@
+{
+  "createdat": "2025-04-09T19:44:35.598447537Z",
+  "epoch": 1,
+  "isdefault": true,
+  "metaurl": "https://xregistry.io/xreg/specs/message-v1/schemas/openapi.json/meta",
+  "modifiedat": "2025-04-09T19:44:35.598447537Z",
+  "schemaid": "openapi.json",
+  "self": "https://xregistry.io/xreg/specs/message-v1/schemas/openapi.json",
+  "versionid": "v1.0-rc1",
+  "versionscount": 1,
+  "versionsurl": "https://xregistry.io/xreg/specs/message-v1/schemas/openapi.json/versions",
+  "xid": "/specs/message-v1/schemas/openapi.json"
+}
