@@ -4,6 +4,8 @@ plugins:
 - jekyll-remote-theme
 - jekyll-redirect-from
 
+eclude: tools
+
 favicon: https://github.com/cncf/artwork/raw/main/projects/xregistry/icon/color/xregistry-icon-color.svg
 image: https://github.com/cncf/artwork/raw/main/projects/xregistry/horizontal/color/xregistry-horizontal-color.svg
 title: xRegistry
