@@ -13,8 +13,8 @@ export DIR=xreg
 # If server isn't already running...
 docker inspect sitexreg > /dev/null 2>&1 || (
     echo "# Starting xreg server, and waiting for it to be ready"
-	docker run -dti --name sitexreg -p 8383:8080 $IMAGE > /dev/null
-	while ! xr get -s $XR_SERVER > /dev/null 2>&1 ; do sleep 1 ; done
+    docker run -dti --name sitexreg -p 8383:8080 $IMAGE > /dev/null
+    while ! xr get -s $XR_SERVER > /dev/null 2>&1 ; do sleep 1 ; done
 )
 
 echo "# Deleting any old 'specs' that might be there"
@@ -25,13 +25,13 @@ echo '
 {
   "groups": {
     "specs": {
-	  "singular": "spec",
-	  "resources": {
-	    "docs"   : { "singular": "doc" },
-	    "schemas": { "singular": "schema" },
-	    "samples": { "singular": "sample" }
-	  }
-	}
+      "singular": "spec",
+      "resources": {
+        "docs"   : { "singular": "doc" },
+        "schemas": { "singular": "schema" },
+        "samples": { "singular": "sample" }
+      }
+    }
   }
 }
 ' | xr model update -d @-
@@ -71,10 +71,10 @@ for (( i=0 ; ; i++)); do
   tgt=${list[$i]}
 
   for file in $src ; do
-  	# echo $tgt "<-" $file
-	type="text/plain"
-	[[ "$file" == *".json" ]] && type="application/json"
-	[[ "$file" == *".html" ]] && type="text/html"
+    # echo $tgt "<-" $file
+    type="text/plain"
+    [[ "$file" == *".json" ]] && type="application/json"
+    [[ "$file" == *".html" ]] && type="text/html"
 
     xr create $VERBOSE /specs/$tgt/`basename $file`/versions/$VER -d @$file
   done
