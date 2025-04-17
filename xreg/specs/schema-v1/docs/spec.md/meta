@@ -1,12 +1,12 @@
 {
   "compatibility": "none",
-  "createdat": "2025-04-09T20:27:57.717028685Z",
+  "createdat": "2025-04-17T13:44:38.01975328Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
   "defaultversionurl": "https://xregistry.io/xreg/specs/schema-v1/docs/spec.md/versions/v1.0-rc1",
   "docid": "spec.md",
   "epoch": 1,
-  "modifiedat": "2025-04-09T20:27:57.717028685Z",
+  "modifiedat": "2025-04-17T13:44:38.01975328Z",
   "readonly": false,
   "self": "https://xregistry.io/xreg/specs/schema-v1/docs/spec.md/meta",
   "xid": "/specs/schema-v1/docs/spec.md/meta"

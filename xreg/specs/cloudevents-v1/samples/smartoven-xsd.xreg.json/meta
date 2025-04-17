@@ -1,11 +1,11 @@
 {
   "compatibility": "none",
-  "createdat": "2025-04-09T20:27:54.368014983Z",
+  "createdat": "2025-04-17T13:44:33.554951684Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
   "defaultversionurl": "https://xregistry.io/xreg/specs/cloudevents-v1/samples/smartoven-xsd.xreg.json/versions/v1.0-rc1",
   "epoch": 1,
-  "modifiedat": "2025-04-09T20:27:54.368014983Z",
+  "modifiedat": "2025-04-17T13:44:33.554951684Z",
   "readonly": false,
   "sampleid": "smartoven-xsd.xreg.json",
   "self": "https://xregistry.io/xreg/specs/cloudevents-v1/samples/smartoven-xsd.xreg.json/meta",

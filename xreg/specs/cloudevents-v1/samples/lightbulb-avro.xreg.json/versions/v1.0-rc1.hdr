@@ -1,10 +1,11 @@
 content-disposition:lightbulb-avro.xreg.json
 content-location:https://xregistry.io/xreg/specs/cloudevents-v1/samples/lightbulb-avro.xreg.json/versions/v1.0-rc1
 content-type:text/plain; charset=utf-8
-xregistry-createdat:2025-04-09T20:27:54.263980269Z
+xregistry-ancestor:v1.0-rc1
+xregistry-createdat:2025-04-17T13:44:33.410004008Z
 xregistry-epoch:1
 xregistry-isdefault:true
-xregistry-modifiedat:2025-04-09T20:27:54.263980269Z
+xregistry-modifiedat:2025-04-17T13:44:33.410004008Z
 xregistry-sampleid:lightbulb-avro.xreg.json
 xregistry-self:https://xregistry.io/xreg/specs/cloudevents-v1/samples/lightbulb-avro.xreg.json/versions/v1.0-rc1
 xregistry-versionid:v1.0-rc1

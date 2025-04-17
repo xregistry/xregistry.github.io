@@ -1,12 +1,13 @@
 content-disposition:model.json
-content-length:1194
+content-length:1132
 content-location:https://xregistry.io/xreg/specs/schema-v1/docs/model.json/versions/v1.0-rc1
 content-type:text/plain; charset=utf-8
-xregistry-createdat:2025-04-09T20:27:57.559215246Z
+xregistry-ancestor:v1.0-rc1
+xregistry-createdat:2025-04-17T13:44:37.843926827Z
 xregistry-docid:model.json
 xregistry-epoch:1
 xregistry-isdefault:true
-xregistry-modifiedat:2025-04-09T20:27:57.559215246Z
+xregistry-modifiedat:2025-04-17T13:44:37.843926827Z
 xregistry-self:https://xregistry.io/xreg/specs/schema-v1/docs/model.json/versions/v1.0-rc1
 xregistry-versionid:v1.0-rc1
 xregistry-xid:/specs/schema-v1/docs/model.json/versions/v1.0-rc1

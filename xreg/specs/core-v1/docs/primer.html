@@ -719,3 +719,16 @@ the client or calculated/inferred by the server is an implementation detail.</p>
 messages (aside from when special flags, like the <code>?doc</code> flag, is enabled)
 must include all required attributes, even if they are duplicated elsewhere
 in the message.</p>
+<h1 id="deprecation-of-entities-in-an-xregistry"><a class="anchor" href="#deprecation-of-entities-in-an-xregistry">☍</a> Deprecation of entities in an xRegistry</h1>
+<p>The core specification defines a <code>deprecated</code> attribute that may appear
+under a Resource's <code>meta</code> sub-object. This attribute was added to the Resource
+itself rather than to the Version because it was determined that the most
+likely usage of this feature is to express the intent to deprecate the entire
+Resource rather than just one Version (or subset of Versions). This is not say
+that the use of this feature might not be useful at the Version-level or even
+at the Group-level. However, for those cases, custom models may define
+an extension at the appropriate location in the model to meet their needs.
+When doing so it is recommended to use the same attribute definition as
+defined in the core specification for consistency. It is worth noting that
+the Endpoint <a href="../endpoint/spec.md">specification</a> does exactly this to
+indicate when an Endpoint (i.e. a Group) is deprecated.</p>

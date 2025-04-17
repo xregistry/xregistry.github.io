@@ -1,9 +1,10 @@
 {
-  "createdat": "2025-04-09T20:27:57.054800996Z",
+  "ancestor": "v1.0-rc1",
+  "createdat": "2025-04-17T13:44:37.168620362Z",
   "docid": "spec.md",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2025-04-09T20:27:57.054800996Z",
+  "modifiedat": "2025-04-17T13:44:37.168620362Z",
   "self": "https://xregistry.io/xreg/specs/message-v1/docs/spec.md/versions/v1.0-rc1",
   "versionid": "v1.0-rc1",
   "xid": "/specs/message-v1/docs/spec.md/versions/v1.0-rc1"

@@ -62,9 +62,10 @@ Versions</a></li>
 </li>
 <li><a href="#configuring-responses">Configuring Responses</a>
 <ul>
-<li><a href="#inline">Inline</a></li>
-<li><a href="#filter">Filter</a></li>
-<li><a href="#doc">Doc</a></li>
+<li><a href="#collections-flag">Collections Flag</a></li>
+<li><a href="#doc-flag">Doc Flag</a></li>
+<li><a href="#filter-flag">Filter Flag</a></li>
+<li><a href="#inline-flag">Inline Flag</a></li>
 </ul>
 </li>
 <li><a href="#http-header-values">HTTP Header Values</a></li>
@@ -130,9 +131,10 @@ src="./sample.png" height="300"></p>
 
   &quot;capabilities&quot;: {                     # Supported capabilities/options
     &quot;flags&quot;: [                          # Query parameters
-      &quot;doc&quot;,? &quot;epoch&quot;,? &quot;filter&quot;,? &quot;inline&quot;,?  &quot;nodefaultversionid&quot;,?
-      &quot;nodefaultversionsticky&quot;,? &quot;noepoch&quot;,?  &quot;noreadonly&quot;,?  &quot;offered&quot;,?
-      &quot;schema&quot;,? &quot;setdefaultversionid&quot;,? &quot;specversion&quot;,?
+      &quot;collections&quot;,? &quot;doc&quot;,? &quot;epoch&quot;,? &quot;filter&quot;,? &quot;inline&quot;,?
+      &quot;nodefaultversionid&quot;,? &quot;nodefaultversionsticky&quot;,? &quot;noepoch&quot;,?
+      &quot;noreadonly&quot;,?  &quot;offered&quot;,? &quot;schema&quot;,? &quot;setdefaultversionid&quot;,?
+      &quot;specversion&quot;,?
       &quot;STRING&quot; *
     ],
     &quot;mutable&quot;: [                        # What is mutable in the Registry
@@ -267,6 +269,12 @@ src="./sample.png" height="300"></p>
             &quot;readonly&quot;: BOOLEAN,                   # Default=false
             &quot;compatibility&quot;: &quot;STRING&quot;,             # Default=none
             &quot;compatibilityauthority&quot;: &quot;STRING&quot;, ?  # Default=external
+            &quot;deprecated&quot;: {
+              &quot;effective&quot;: &quot;TIMESTAMP&quot;, ?
+              &quot;removal&quot;: &quot;TIMESTAMP&quot;, ?
+              &quot;alternative&quot;: &quot;URL&quot;, ?
+              &quot;docs&quot;: &quot;URL&quot;?
+            }, ?
 
             &quot;defaultversionid&quot;: &quot;STRING&quot;,
             &quot;defaultversionurl&quot;: &quot;URL&quot;,
@@ -408,7 +416,7 @@ include the &quot;default&quot; Version, so duplicating that information is redu
 </ul>
 <p>Most of these differences are to make it easier for tooling to use the
 &quot;stand-alone&quot; document view of the Registry. For a complete list of the
-differences in &quot;document view&quot; see the <a href="#doc">Doc</a> flag and the
+differences in &quot;document view&quot; see the <a href="#doc-flag">Doc Flag</a> flag and the
 <a href="#exporting">Exporting</a> section.</p>
 <p>Note that &quot;document view&quot; only refers to response messages. There is no
 &quot;document view&quot; concept for requests. However, &quot;document view&quot; responses
@@ -689,8 +697,8 @@ is set to <code>false</code>, then this URL's <code>SINGULARid</code> MUST NOT i
 <ul>
 <li>REQUIRED.</li>
 <li>MUST be a relative URL of the form <code>#JSON-POINTER</code> where the <code>JSON-POINTER</code>
-locates this entity within the current document. See <a href="#doc">Doc</a> for more
-information.</li>
+locates this entity within the current document. See <a href="#doc-flag">Doc Flag</a>
+for more information.</li>
 <li>MUST NOT include <code>$details</code> suffix on its <code>SINGULARid</code>.</li>
 </ul>
 </li>
@@ -1042,8 +1050,8 @@ to the processing rules above MUST use the same value in all cases.</li>
 /GROUPS/gID/RESOURCES/rID/versions              # Versions of a Resource
 /GROUPS/gID/RESOURCES/rID/versions/vID          # Access a Version of a Resource
 </code></pre>
-<p>While these APIs are shown to be at the root path of a Registry Service,
-implementation MAY choose to prefix them as necessary. However, the same
+<p>While these APIs are shown to be at the root path of a host,
+implementations MAY choose to prefix them as necessary. However, the same
 prefix MUST be used consistently for all APIs in the same Registry instance.</p>
 <p>Support for any particular API defined by this specification is OPTIONAL,
 however, it is STRONGLY RECOMMENDED that server-side implementations support at
@@ -1120,6 +1128,12 @@ any <code>defaultversionsticky</code> attribute included in the request MUST be 
 <li><code>?noreadonly</code> - presence of this query parameter indicates that any attempt
 to update a read-only Resource MUST be silently ignored.</li>
 </ul>
+<p>Any JSON xRegistry metadata message that represents a single entity (i.e. not
+a map) MAY include a top-level &quot;$schema&quot; attribute that points to a JSON Schema
+document that describes the message contents. These notations can be used or
+ignored by receivers of these messages. There is no requirement for
+implementation of this specification to persist these values, to include them
+in responses or to use this information.</p>
 <h4 id="no-code-servers"><a class="anchor" href="#no-code-servers">☍</a> No-Code Servers</h4>
 <p>One of the goals of xRegistry is to be as broadly supported as possible.
 Requiring all xRegistry endpoints to support the full range of APIs defined
@@ -1169,17 +1183,17 @@ to their respective forms as follows:</p>
 (e.g. <code>endpoints</code>, <code>versions</code>).</li>
 <li>The <code>COLLECTIONSurl</code> attribute MUST be a URL that can be used to retrieve
 the <code>COLLECTIONS</code> map via an HTTP(s) <code>GET</code> (including any necessary
-<a href="#filter">filtering</a>) and MUST be a read-only attribute that MUST
+<a href="#filter-flag">filtering</a>) and MUST be a read-only attribute that MUST
 be silently ignored by a server during a write operation. An empty
 collection MUST return an HTTP 200 with an empty map (<code>{}</code>). This attribute
 MUST be an absolute URL except when <code>?doc</code> is enabled and the collection
 is inlined, in which case it MUST be a relative URL.</li>
 <li>The <code>COLLECTIONScount</code> attribute MUST contain the number of entities in the
-<code>COLLECTIONS</code> map (after any necessary <a href="#filter">filtering</a>) and MUST
+<code>COLLECTIONS</code> map (after any necessary <a href="#filter-flag">filtering</a>) and MUST
 be a read-only attribute that MUST be silently ignored by a server during
 a write operation.</li>
 <li>The <code>COLLECTIONS</code> attribute is a map and MUST contain the entities of the
-collection (after any necessary <a href="#filter">filtering</a>), and MUST use
+collection (after any necessary <a href="#filter-flag">filtering</a>), and MUST use
 the <code>SINGULARid</code> of each entity as its map key.</li>
 <li>The key of each entity in the collection MUST be unique within the scope of
 the collection.</li>
@@ -1214,7 +1228,7 @@ between document and API views, and is defined below:</p>
 <ul>
 <li><code>COLLECTIONSurl</code> and <code>COLLECTIONScount</code> are OPTIONAL.</li>
 <li><code>COLLECTIONS</code> is conditional in responses based on the values in the
-<a href="#inline"><code>?inline</code></a> flag. If a collection is part of the flag's value then
+<a href="#inline-flag">Inline Flag</a>. If a collection is part of the flag's value then
 <code>COLLECTIONS</code> MUST be present in the response even if it is empty
 (e.g. <code>{}</code>). If the collection is not part of the flag value then
 <code>COLLECTIONS</code> MUST NOT be included in the response.</li>
@@ -1230,7 +1244,7 @@ to allow for cases where calculating the exact count is too costly.</li>
 <li><code>COLLECTIONSurl</code> and <code>COLLECTIONScount</code> are OPTIONAL for requests and MUST
 be silently ignored by the server if present.</li>
 <li><code>COLLECTIONS</code> is conditional in responses based on the values in the
-<a href="#inline"><code>?inline</code></a> flag. If a collection is part of the flag's value then
+<a href="#inline-flag">Inline Flag</a>. If a collection is part of the flag's value then
 <code>COLLECTIONS</code> MUST be present in the response even if it is empty
 (e.g. <code>{}</code>). If the collection is not part of the flag value then
 <code>COLLECTIONS</code> MUST NOT be included in the response.</li>
@@ -1953,7 +1967,7 @@ based on the authorization level of the client making the request.</p>
 map indicates no support for that flag, and if included in a request
 SHOULD be silently ignored by servers.</li>
 <li>Defined values:
-<code>doc</code>, <code>epoch</code>, <code>filter</code>, <code>inline</code>, <code>nodefaultversionid</code>,
+<code>collections</code>, <code>doc</code>, <code>epoch</code>, <code>filter</code>, <code>inline</code>, <code>nodefaultversionid</code>,
 <code>nodefaultversionsticky</code>, <code>noepoch</code>, <code>noreadonly</code>, <code>offered</code>, <code>schema</code>,
 <code>setdefaultversionid</code>, <code>specversion</code>.</li>
 <li>When not specified, the default value MUST be an empty list and no query
@@ -2131,9 +2145,9 @@ capability.</li>
 {
   &quot;flags&quot;: {
     &quot;type&quot;: &quot;string&quot;,
-    &quot;enum&quot;: [ &quot;doc&quot;, &quot;epoch&quot;, &quot;filter&quot;, &quot;inline&quot;, &quot;nodefaultversionid&quot;,
-      &quot;nodefaultversionsticky&quot;, &quot;noepoch&quot;, &quot;noreadonly&quot;, &quot;offered&quot;, &quot;schema&quot;,
-      &quot;setdefaultversionid&quot;, &quot;specversion&quot; ]
+    &quot;enum&quot;: [ &quot;collections&quot;, &quot;doc&quot;, &quot;epoch&quot;, &quot;filter&quot;, &quot;inline&quot;,
+      &quot;nodefaultversionid&quot;, &quot;nodefaultversionsticky&quot;, &quot;noepoch&quot;, &quot;noreadonly&quot;,
+      &quot;offered&quot;, &quot;schema&quot;, &quot;setdefaultversionid&quot;, &quot;specversion&quot; ]
   },
   &quot;pagination&quot;: {
     &quot;type&quot;: &quot;boolean&quot;,
@@ -4007,7 +4021,7 @@ the potentially large amount of data from the Resource's document in request
 and response messages could be cumbersome. To address this, the <code>RESOURCE</code> and
 <code>RESOURCEbase64</code> attributes do not appear by default as part of the
 serialization of the Resource. Rather, they MUST only appear in responses when
-the <a href="#inline"><code>?inline=RESOURCE</code></a> query parameter is used. Likewise, in
+the <a href="#inline-flag"><code>?inline=RESOURCE</code></a> query parameter is used. Likewise, in
 requests, these attributes are OPTIONAL and would only need to be used when a
 change to the document's content is needed at the same time as updates to the
 Resource's metadata. However, the <code>RESOURCEurl</code> attribute MUST always appear
@@ -4052,6 +4066,7 @@ Resource attribute MUST adhere to the following:</p>
     &quot;readonly&quot;: BOOLEAN,                   # Default=false
     &quot;compatibility&quot;: &quot;STRING&quot;,             # Default=none
     &quot;compatibilityauthority&quot;: &quot;STRING&quot;, ?  # Default=external
+    &quot;deprecated&quot;: { ... }, ?
 
     &quot;defaultversionid&quot;: &quot;STRING&quot;,
     &quot;defaultversionurl&quot;: &quot;URL&quot;,
@@ -4160,8 +4175,8 @@ implementations of this specification are REQUIRED to perform the proper
 compatibility checks to ensure that all Versions of a Resource adhere to the
 rules defined by the current value of this attribute.
 For <code>compatibility</code> strategies that require understanding the sequence in
-which Versions need to be compatible, the server MUST use the [<code>ancestor</code>]
-(#ancestor-attribute) to determine the sequence of Versions.</p>
+which Versions need to be compatible, the server MUST use the
+<a href="#ancestor-attribute"><code>ancestor</code></a> to determine the sequence of Versions.</p>
 <p>Note that, like all attributes, if a default value is defined as part of the
 model, then this attribute MUST be populated with that value if no value
 is provided.</p>
@@ -4236,6 +4251,67 @@ MUST be <code>external</code>.</li>
 </ul>
 </li>
 </ul>
+<h4 id="deprecated"><a class="anchor" href="#deprecated">☍</a> <code>deprecated</code></h4>
+<ul>
+<li>
+<p>Type: Object containing the following properties:</p>
+<ul>
+<li>
+<p><code>effective</code><br>
+An OPTIONAL property indicating the time when the Resource entered, or will
+enter, a deprecated state. The date MAY be in the past or future. If this
+property is not present the Resource is already in a deprecated state.
+If present, this MUST be an <a href="https://tools.ietf.org/html/rfc3339">RFC3339</a> timestamp.</p>
+</li>
+<li>
+<p><code>removal</code><br>
+An OPTIONAL property indicating the time when the Resource MAY be removed.
+The Resource MUST NOT be removed before this time. If this property is not
+present then client can not make any assumption as to when the Resource
+might be removed. Note: as with most properties, this property is mutable.
+If present, this MUST be an <a href="https://tools.ietf.org/html/rfc3339">RFC3339</a> timestamp and MUST NOT be
+sooner than the <code>effective</code> time if present.</p>
+</li>
+<li>
+<p><code>alternative</code><br>
+An OPTIONAL property specifying the URL to an alternative Resource the
+client can consider as a replacement for this Resource. There is no
+guarantee that the referenced Resource is an exact replacement, rather the
+client is expected to investigate the Resource to determine if it is
+appropriate.</p>
+</li>
+<li>
+<p><code>docs</code><br>
+An OPTIONAL property specifying the URL to additional information about
+the deprecation of the Resource. This specification does not mandate any
+particular format or information, however some possibilities include:
+reasons for the deprecation or additional information about likely
+alternative Resources. The URL MUST support an HTTP GET request.</p>
+</li>
+</ul>
+<p>Note that an implementation is not mandated to use this attribute in
+advance of removing a Resource, but is it RECOMMENDED that they do so.</p>
+</li>
+<li>
+<p>Constraints:</p>
+<ul>
+<li>OPTIONAL</li>
+</ul>
+</li>
+<li>
+<p>Examples:</p>
+<ul>
+<li><code>&quot;deprecated&quot;: {}</code></li>
+<li>
+<pre><code>&quot;deprecated&quot;: {
+  &quot;removal&quot;: &quot;2030-12-19T00:00:00&quot;,
+  &quot;alternative&quot;: &quot;https://example.com/entities-v2/myentity&quot;
+}
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
 <h5 id="defaultversionid-attribute"><a class="anchor" href="#defaultversionid-attribute">☍</a> <code>defaultversionid</code> Attribute</h5>
 <ul>
 <li>
@@ -4289,8 +4365,8 @@ be the same as the Version's <code>self</code> attribute.</li>
 <li>REQUIRED.</li>
 <li>If the default Version is inlined in the document then this attribute
 MUST be a relative URL of the form <code>#JSON-POINTER</code> where the <code>JSON-POINTER</code>
-locates the default Version within the current document. See <a href="#doc">Doc</a>
-for more information.</li>
+locates the default Version within the current document. See
+<a href="#doc-flag">Doc Flag</a> for more information.</li>
 <li>If the default Version is not inlined in the document, then this attribute
 MUST be an absolute URL per the API view constraints listed above.</li>
 </ul>
@@ -4433,8 +4509,8 @@ to the Resource's default Version attributes.</p>
 <li>REQUIRED.</li>
 <li>If the <code>meta</code> sub-object is inlined in the document then this attribute
 MUST be a relative URL of the form <code>#JSON-POINTER</code> where the <code>JSON-POINTER</code>
-locates the <code>meta</code> sub-object within the current document. See <a href="#doc">Doc</a>
-for more information.</li>
+locates the <code>meta</code> sub-object within the current document. See
+<a href="#doc-flag">Doc Flag</a> for more information.</li>
 <li>If the <code>meta</code> sub-object is not inlined in the document then this attribute
 MUST be an absolute URL per the API view constraints listed above.</li>
 </ul>
@@ -4626,6 +4702,7 @@ this form:</p>
     &quot;readonly&quot;: BOOLEAN,                   # Default=false
     &quot;compatibility&quot;: &quot;STRING&quot;,             # Default=none
     &quot;compatibilityauthority&quot;: &quot;STRING&quot;, ?  # Default=external
+    &quot;deprecated&quot;: { ... },
 
     &quot;defaultversionid&quot;: &quot;STRING&quot;,
     &quot;defaultversionurl&quot;: &quot;URL&quot;,
@@ -4922,6 +4999,7 @@ Link: &lt;URL&gt;;rel=next;count=UINTEGER ?
       &quot;readonly&quot;: BOOLEAN,                   # Default=false
       &quot;compatibility&quot;: &quot;STRING&quot;,             # Default=none
       &quot;compatibilityauthority&quot;: &quot;STRING&quot;, ?  # Default=external
+      &quot;deprecated&quot;: { ... }, ?
 
       &quot;defaultversionid&quot;: &quot;STRING&quot;,
       &quot;defaultversionurl&quot;: &quot;URL&quot;,
@@ -5125,6 +5203,7 @@ in the request MUST adhere to the following:</p>
     &quot;modifiedat&quot;: &quot;TIMESTAMP&quot;, ?
     &quot;compatibility&quot;: &quot;STRING&quot;, ?
     &quot;compatibilityauthority&quot;: &quot;STRING&quot;, ?
+    &quot;deprecated&quot;: { ... }, ?
 
     &quot;defaultversionid&quot;: &quot;STRING&quot;,
     &quot;defaultversionsticky&quot;: BOOLEAN
@@ -5448,6 +5527,7 @@ Content-Location: URL ?
     &quot;readonly&quot;: BOOLEAN,
     &quot;compatibility&quot;: &quot;STRING&quot;,
     &quot;compatibilityauthority&quot;: &quot;STRING&quot;, ?
+    &quot;deprecated&quot;: { ... }, ?
 
     &quot;defaultversionid&quot;: &quot;STRING&quot;,
     &quot;defaultversionurl&quot;: &quot;URL&quot;,
@@ -5673,9 +5753,10 @@ descending case-insensitive alphabetical order based on the <code>versionid</cod
 attribute.</li>
 </ol>
 <p>If a write operation contains multiple Versions with the <code>ancestor</code> attribute
-omitted, the server MUST order all of those Versions based on the <code>createdat</code>
-attribute and then alphabetically (ascending). The first Version will have
-the most recent Version's <code>versionid</code> as its <code>ancestor</code> as clarified above.</p>
+omitted, or set to a value of <code>null</code>, the server MUST order all of those
+Versions based on the <code>createdat</code> attribute and then alphabetically
+(ascending) based on the <code>versionid</code>. The first Version will have the most
+recent Version's <code>versionid</code> as its <code>ancestor</code> as clarified above.</p>
 <p>When deleting a Version, the server MUST update the <code>ancestor</code> attribute
 of any Version that points to the deleted Version to point to itself,
 making it a new root.</p>
@@ -5695,6 +5776,8 @@ that the server generate an error
 (<a href="#ancestor_circular_reference">ancestor_circular_reference</a>) if a request
 attempts to do so. For example, an operation that makes Version A's
 ancestor B, and Version B's ancestor A, would generate an error.</li>
+<li>When absent in a write operation request, it MUST be interpreted as the
+same as if it were present with its existing value.</li>
 <li>Any attempt to set an <code>ancestor</code> attribute to a non-existing <code>versionid</code>
 MUST generate an error (<a href="#invalid_data">invalid_data</a>).</li>
 <li>For clarity, any modification to the <code>ancestor</code> attribute MUST result in
@@ -6153,9 +6236,10 @@ HTTP body.</p>
 response is to be generated. The following sections will define the following
 flags:</p>
 <ul>
-<li><a href="#inline"><code>?inline</code></a></li>
-<li><a href="#filter"><code>?filter</code></a></li>
-<li><a href="#doc"><code>?doc</code></a></li>
+<li><a href="#collections-flag"><code>?collections</code></a></li>
+<li><a href="#doc-flag"><code>?doc</code></a></li>
+<li><a href="#filter-flag"><code>?filter</code></a></li>
+<li><a href="#inline-flag"><code>?inline</code></a></li>
 </ul>
 <p>Implementations of this specification SHOULD support all 3 flags.</p>
 <p>Note: If the Registry cannot return all expected data in one response because
@@ -6163,132 +6247,134 @@ it is too large then it MUST generate an error (<a href="#too_large">too_large</
 those cases, the client will need to query the individual inlinable attributes
 in isolation so the Registry can leverage
 <a href="../pagination/spec.md">pagination</a> of the response.</p>
-<h4 id="inline"><a class="anchor" href="#inline">☍</a> Inline</h4>
-<p>The <code>?inline</code> query parameter (flag) MAY be used on requests to indicate whether
-nested collections/objects, or certain (potentially large) attributes, are to
-be included in the response message.</p>
-<p>The <code>?inline</code> query parameter on a request indicates that the response
-MUST include the contents of all specified inlinable attributes. Inlinable
-attributes include:</p>
+<h4 id="collections-flag"><a class="anchor" href="#collections-flag">☍</a> Collections Flag</h4>
+<p>The <code>?collections</code> query parameter (flag) MAY be used on requests directed
+to the Registry itself or to Group instance to indicate that the response
+message MUST NOT include any attributes from the top-level entity (Registry
+or Group), but instead MUST include only all of the nested Collection maps
+that are defined at that level. Specifying it on a request directed to
+some other part of the Registry MUST generate an error (<a href="#bad_flag">bad_flag</a>).
+Use of this flag MUST implicitly turn on inlining - <code>?inline=*</code>.</p>
+<p>Servers MAY choose include, or exclude, the sibling <code>COLLECTIONSurl</code> and
+<code>COLLECTIONScount</code> attributes for those top-level collections.</p>
+<p>Note that this feature only applies to the root entity of the response and not
+to any nested entities/collections.</p>
+<p>This feature is meant to be used when the Collections of the Registry, or
+Group, are of interest but not the top-level metadata. For example, this could
+be used to export one or more Group types from a Registry where the resulting
+JSON document is then used to import them into another Registry. If the
+Registry-level attributes were present in the output then they would need to
+be removed prior to the import, otherwise they would override the target
+Registry's values.</p>
+<p>The resulting JSON, when using this feature, is designed to be used on a
+future <code>POST /</code> operation to either a Registry entity or to a Group instance
+as appropriate.</p>
+<h4 id="doc-flag"><a class="anchor" href="#doc-flag">☍</a> Doc Flag</h4>
+<p>The <code>?doc</code> query parameter (flag) MAY be used to indicate that the response
+MUST use &quot;document view&quot; when serializing entities and MUST be modified to do
+the following:</p>
 <ul>
-<li>The <code>model</code> attribute on the Registry entity.</li>
-<li>The <code>capabilities</code> attribute on the Registry entity.</li>
-<li>All <a href="#registry-collections">Registry Collection</a> types - e.g. <code>GROUPS</code>,
-<code>RESOURCES</code> and <code>versions</code>.</li>
-<li>The <code>RESOURCE</code> attribute in a Resource or Version.</li>
-<li>The <code>meta</code> attribute in a Resource.</li>
+<li>Remove the default Version attributes from a Resource's serialization.</li>
+<li>When a Resource (source) uses the <code>xref</code> feature, the target Resource's
+attributes are excluded from the source's serialization.</li>
+<li>Convert the following attributes into relative URLs if, and only if, the
+entities that they reference are included in the response output:
+<code>self</code>, <code>COLLECTIONSurl</code>, <code>metaurl</code>, <code>defaultversionurl</code>.</li>
 </ul>
-<p>While the <code>RESOURCE</code> and <code>RESOURCEbase64</code> attributes are defined as two
-separate attributes, they are technically two separate &quot;views&quot; of the same
-underlying data. As such, the usage of each will be based on the content type
-of the Resource, specifying <code>RESOURCE</code> in the <code>?inline</code> query parameter MUST
-be interpreted as a request for the appropriate attribute. In other words,
-<code>RESOURCEbase64</code> is not a valid inlinable attribute name.</p>
-<p>Use of this feature is useful for cases where the contents of the Registry are
-to be represented as a single (self-contained) document.</p>
-<p>Some examples:</p>
-<ul>
-<li><code>GET /?inline=model</code>                 # Just 'model'</li>
-<li><code>GET /?inline=model,endpoints</code>       # Model and one level under <code>endpoints</code></li>
-<li><code>GET /?inline=*</code>                     # Everything except 'model'</li>
-<li><code>GET /?inline=model,*</code>               # Everything, including 'model'</li>
-<li><code>GET /?inline=endpoints.messages</code>    # One level below 'endpoints.messages'</li>
-<li><code>GET /?inline=endpoints.*</code>           # Everything below 'endpoints'</li>
-<li><code>GET /endpoints/ep1/?inline=messages.message</code>     # Just 'message'</li>
-<li><code>GET /endpoints/ep1/messages/msg1?inline=message</code> # Just 'message'</li>
-</ul>
-<p>The format of the <code>?inline</code> query parameter is:</p>
-<pre><code class="language-yaml">?inline[=PATH[,...]]
-</code></pre>
-<p>Where <code>PATH</code> is a string indicating which inlinable attributes to show in
-the response. References to nested attributes are represented using a
-dot (<code>.</code>) notation where the xRegistry collections names along the hierarchy
-are concatenated. For example: <code>endpoints.messages.versions</code> will inline all
-Versions of Messages. Non-leaf parts of the <code>PATH</code> MUST only reference
-xRegistry collection names and not any specific entity IDs since <code>PATH</code> is
-meant to be an abstract traversal of the model.</p>
-<p>To reference an attribute with a dot as part of its name, the JSONPath
-escaping mechanism MUST be used: <code>['my.name']</code>. For example,
-<code>prop1.my.name.prop2</code> would be specified as <code>prop1['my.name'].prop2</code> if
-<code>my.name</code> is the name of an attribute.</p>
-<p>There MAY be multiple <code>PATH</code>s specified, either as comma separated values on
-a single <code>?inline</code> query parameter or via multiple <code>?inline</code> query parameters.</p>
-<p>The <code>*</code> value MAY be used to indicate that all nested inlinable attributes
-at that level in the hierarchy (and below) MUST be inlined - except <code>model</code>
-and <code>capabilities</code> at the root of the Registry. These two are excluded since
-the data associated with them are configuration related. To include their data
-the request MUST include <code>PATH</code> values of <code>model</code> or <code>capabilities</code>. Use of
-<code>*</code> MUST only be used as the last part of the <code>PATH</code> (in its entirety). For
-example, <code>foo*</code> and <code>*.foo</code> are not valid <code>PATH</code> values, but <code>*</code> and
-<code>endpoints.*</code> are.</p>
-<p>An <code>?inline</code> query parameter without any value MAY be supported and if so it
-MUST have the same semantic meaning as <code>?inline=*</code>.</p>
-<p>The specific value of <code>PATH</code> will vary based on where the request is directed.
-For example, a request to the root of the Registry MUST start with a <code>GROUPS</code>
-name, while a request directed at a Group would start with a <code>RESOURCES</code> name.</p>
-<p>For example, given a Registry with a model that has <code>endpoints</code> as a Group and
-<code>messages</code> as a Resource within <code>endpoints</code>, the table below shows some
-<code>PATH</code> values and a description of the result:</p>
+<p>All of the relative URLs mentioned in the last bullet MUST begin with <code>#</code>
+and be followed by a
+<a href="https://datatracker.ietf.org/doc/html/rfc6901">JSON Pointer</a> reference to the
+entity within the response, e.g. <code>#/endpoints/e1</code>. This means that they are
+relative to the root of the document (response) generated, and not necessarily
+relative to the root of the Registry. Additionally, when those URLs are
+relative and reference a Resource or Version, the <code>$details</code> suffix MUST NOT
+be present despite the semantics of the suffix being applied (as noted below).</p>
+<p>For clarity, if a Registry has a Schema Resource at
+<code>/schemagroups/g1/schemas/s1</code>, then this entity's <code>self</code> URL (when serialized
+in document view) would change based on the path specified on the <code>GET</code>
+request:</p>
 <table>
 <thead>
 <tr>
-<th>HTTP <code>GET</code> Path</th>
-<th>Example ?inline=PATH values</th>
-<th>Comment</th>
+<th>GET Path</th>
+<th><code>self</code> URL</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>/</td>
-<td>?inline=endpoints</td>
-<td>Inlines the <code>endpoints</code> collection, but just one level of it, not any nested inlinable attributes</td>
+<td><code>http://example.com/myreg</code></td>
+<td><code>#/schemagroups/g1/schemas/s1</code></td>
 </tr>
 <tr>
-<td>/</td>
-<td>?inline=endpoints.messages.versions</td>
-<td>Inlines the <code>versions</code> collection of all messages. Note that this implicitly means the parent attributes (<code>messages</code> and <code>endpoints</code> would also be inlined - however any other <code>GROUPS</code> or <code>RESOURCE</code>s types would not be</td>
+<td><code>http://example.com/myreg/schemagroups</code></td>
+<td><code>#/g1/schemas/s1</code></td>
 </tr>
 <tr>
-<td>/endpoints</td>
-<td>?inline=messages</td>
-<td>Inlines just <code>messages</code> and not any nested attributes. Note we don't need to specify the parent <code>GROUP</code> since the URL already included it</td>
+<td><code>http://example.com/myreg/schemagroups/g1/ </code></td>
+<td><code>#/schemas/s1</code></td>
 </tr>
 <tr>
-<td>/endpoints/ep1</td>
-<td>?inline=messages.versions</td>
-<td>Similar to the previous <code>endpoints.messages.version</code> example</td>
+<td><code>http://example.com/myreg/schemagroups/g1/schemas </code></td>
+<td><code>#/s1</code></td>
 </tr>
 <tr>
-<td>/endpoints/ep1</td>
-<td>?inline=messages.message</td>
-<td>Inline the Resource itself</td>
-</tr>
-<tr>
-<td>/endpoints/ep1</td>
-<td>?inline=endpoints</td>
-<td>Invalid, already in <code>endpoints</code> and there is no <code>RESOURCE</code> called <code>endpoints</code></td>
-</tr>
-<tr>
-<td>/</td>
-<td>?inline=endpoints.messages.meta</td>
-<td>Inlines the <code>meta</code> attributes/sub-object of each <code>message</code> returned.</td>
-</tr>
-<tr>
-<td>/</td>
-<td>?inline=endpoints.*</td>
-<td>Inlines everything for all <code>endpoints</code>.</td>
+<td><code>http://example.com/myreg/schemagroups/g1/schemas/s1</code></td>
+<td><code>#/</code></td>
 </tr>
 </tbody>
 </table>
-<p>Note that asking for an attribute to be inlined will implicitly cause all of
-its parents to be inlined as well, but just the parent's collections needed to
-show the child. In other words, just the collection in the parent in which the
-child appears, not all collections in the parent.</p>
-<p>When specifying a collection to be inlined, it MUST be specified using the
-plural name for the collection in its defined case.</p>
-<p>A request to inline an unknown, or non-inlinable, attribute MUST generate an
-error (<a href="#invalid_data">invalid_data</a>).</p>
-<h4 id="filter"><a class="anchor" href="#filter">☍</a> Filter</h4>
+<p>This feature is useful when a client wants to minimize the amount of data
+returned by a server because the duplication of that data (typically used for
+human readability purposes) isn't necessary. For example, if tooling would
+ignore the duplication, or if the data will be used to populate a new
+Registry, then this feature might be used. It also makes the output more of a
+&quot;stand-alone&quot; document that minimizes external references.</p>
+<p>For clarity, the serialization of a Resource in document view will adhere to
+the following:</p>
+<pre><code class="language-yaml">{
+  &quot;RESOURCEid&quot;: &quot;STRING&quot;,
+  &quot;self&quot;: &quot;URL&quot;,
+  &quot;shortself&quot;: &quot;URL&quot;, ?
+  &quot;xid&quot;: &quot;XID&quot;,
+
+  &quot;metaurl&quot;: &quot;URL&quot;,
+  &quot;meta&quot;: {
+    &quot;RESOURCEid&quot;: &quot;STRING&quot;,
+    &quot;self&quot;: URL&quot;,
+    &quot;shortself&quot;: &quot;URL&quot;, ?
+    &quot;xid&quot;: &quot;XID&quot;,
+    &quot;xref&quot;: &quot;URL&quot; ?
+    # The following attributes are absent if 'xref' is set
+    &quot;epoch&quot;: UINTEGER&quot;,
+    &quot;createdat&quot;: &quot;TIMESTAMP&quot;,
+    &quot;modifiedat&quot;: &quot;TIMESTAMP&quot;,
+    &quot;ancestor&quot;: &quot;STRING&quot;,
+    &quot;readonly&quot;: BOOLEAN,
+    &quot;compatibility&quot;: &quot;STRING&quot;,
+    &quot;compatibilityauthority&quot;: &quot;STRING&quot;, ?
+    &quot;deprecated&quot;: { ... }, ?
+
+    &quot;defaultversionid&quot;: &quot;STRING&quot;,
+    &quot;defaultversionurl&quot;: &quot;URL&quot;
+    &quot;defaultversionsticky&quot;: BOOLEAN
+  }
+}
+</code></pre>
+<p>Note that the attributes <code>epoch</code> through <code>defaultversionsticky</code> MUST be
+excluded if <code>xref</code> is set because those would be picked-up from the target
+Resource's <code>meta</code> sub-object.</p>
+<p>If <code>?doc</code> is used on a request directed to a Resource, or Version,
+that has the <code>hasdocument</code> model aspect set to <code>true</code>, then the processing
+of the request MUST take place as if the <code>$details</code> suffix was specified
+in the URL. Meaning, the response MUST be the xRegistry metadata view of the
+Resource and not the Resource's &quot;document&quot;.</p>
+<p>If <code>?doc</code> is used on a request directed to a Resource's <code>versions</code>
+collection, or to one of its Versions, but the Resource is defined as an
+<code>xref</code> to another Resource, then the server MUST generate an error
+(<a href="#cannot_doc_xref">cannot_doc_xref</a>) and SHOULD indicate that using <code>?doc</code>
+on this part of the hierarchy is not valid - due to it not technically existing
+in document view.</p>
+<h4 id="filter-flag"><a class="anchor" href="#filter-flag">☍</a> Filter Flag</h4>
 <p>The <code>?filter</code> query parameter (flag) on a request indicates that the response
 MUST include only those entities that match the specified filter criteria.
 This means that any Registry Collection's attributes MUST be modified
@@ -6485,110 +6571,131 @@ mygroups/g1/myresources/r1/versions/v2
 <p>Notice the first part of the <code>?filter</code> expression (to the left of the &quot;and&quot;
 (<code>,</code>)) has no impact on the results because the list of resulting leaves in
 that subtree is not changed by that search criteria.</p>
-<h4 id="doc"><a class="anchor" href="#doc">☍</a> Doc</h4>
-<p>The <code>?doc</code> query parameter (flag) MAY be used to indicate that the response
-MUST use &quot;document view&quot; when serializing entities and MUST be modified to do
-the following:</p>
+<h4 id="inline-flag"><a class="anchor" href="#inline-flag">☍</a> Inline Flag</h4>
+<p>The <code>?inline</code> query parameter (flag) MAY be used on requests to indicate whether
+nested collections/objects, or certain (potentially large) attributes, are to
+be included in the response message.</p>
+<p>The <code>?inline</code> query parameter on a request indicates that the response
+MUST include the contents of all specified inlinable attributes. Inlinable
+attributes include:</p>
 <ul>
-<li>Remove the default Version attributes from a Resource's serialization.</li>
-<li>When a Resource (source) uses the <code>xref</code> feature, the target Resource's
-attributes are excluded from the source's serialization.</li>
-<li>Convert the following attributes into relative URLs if, and only if, the
-entities that they reference are included in the response output:
-<code>self</code>, <code>COLLECTIONSurl</code>, <code>metaurl</code>, <code>defaultversionurl</code>.</li>
+<li>The <code>model</code> attribute on the Registry entity.</li>
+<li>The <code>capabilities</code> attribute on the Registry entity.</li>
+<li>All <a href="#registry-collections">Registry Collection</a> types - e.g. <code>GROUPS</code>,
+<code>RESOURCES</code> and <code>versions</code>.</li>
+<li>The <code>RESOURCE</code> attribute in a Resource or Version.</li>
+<li>The <code>meta</code> attribute in a Resource.</li>
 </ul>
-<p>All of the relative URLs mentioned in the last bullet MUST begin with <code>#</code>
-and be followed by a
-<a href="https://datatracker.ietf.org/doc/html/rfc6901">JSON Pointer</a> reference to the
-entity within the response, e.g. <code>#/endpoints/e1</code>. This means that they are
-relative to the root of the document (response) generated, and not necessarily
-relative to the root of the Registry. Additionally, when those URLs are
-relative and reference a Resource or Version, the <code>$details</code> suffix MUST NOT
-be present despite the semantics of the suffix being applied (as noted below).</p>
-<p>For clarity, if a Registry has a Schema Resource at
-<code>/schemagroups/g1/schemas/s1</code>, then this entity's <code>self</code> URL (when serialized
-in document view) would change based on the path specified on the <code>GET</code>
-request:</p>
+<p>While the <code>RESOURCE</code> and <code>RESOURCEbase64</code> attributes are defined as two
+separate attributes, they are technically two separate &quot;views&quot; of the same
+underlying data. As such, the usage of each will be based on the content type
+of the Resource, specifying <code>RESOURCE</code> in the <code>?inline</code> query parameter MUST
+be interpreted as a request for the appropriate attribute. In other words,
+<code>RESOURCEbase64</code> is not a valid inlinable attribute name.</p>
+<p>Use of this feature is useful for cases where the contents of the Registry are
+to be represented as a single (self-contained) document.</p>
+<p>Some examples:</p>
+<ul>
+<li><code>GET /?inline=model</code>                 # Just 'model'</li>
+<li><code>GET /?inline=model,endpoints</code>       # Model and one level under <code>endpoints</code></li>
+<li><code>GET /?inline=*</code>                     # Everything except 'model'</li>
+<li><code>GET /?inline=model,*</code>               # Everything, including 'model'</li>
+<li><code>GET /?inline=endpoints.messages</code>    # One level below 'endpoints.messages'</li>
+<li><code>GET /?inline=endpoints.*</code>           # Everything below 'endpoints'</li>
+<li><code>GET /endpoints/ep1/?inline=messages.message</code>     # Just 'message'</li>
+<li><code>GET /endpoints/ep1/messages/msg1?inline=message</code> # Just 'message'</li>
+</ul>
+<p>The format of the <code>?inline</code> query parameter is:</p>
+<pre><code class="language-yaml">?inline[=PATH[,...]]
+</code></pre>
+<p>Where <code>PATH</code> is a string indicating which inlinable attributes to show in
+the response. References to nested attributes are represented using a
+dot (<code>.</code>) notation where the xRegistry collections names along the hierarchy
+are concatenated. For example: <code>endpoints.messages.versions</code> will inline all
+Versions of Messages. Non-leaf parts of the <code>PATH</code> MUST only reference
+xRegistry collection names and not any specific entity IDs since <code>PATH</code> is
+meant to be an abstract traversal of the model.</p>
+<p>To reference an attribute with a dot as part of its name, the JSONPath
+escaping mechanism MUST be used: <code>['my.name']</code>. For example,
+<code>prop1.my.name.prop2</code> would be specified as <code>prop1['my.name'].prop2</code> if
+<code>my.name</code> is the name of an attribute.</p>
+<p>There MAY be multiple <code>PATH</code>s specified, either as comma separated values on
+a single <code>?inline</code> query parameter or via multiple <code>?inline</code> query parameters.</p>
+<p>The <code>*</code> value MAY be used to indicate that all nested inlinable attributes
+at that level in the hierarchy (and below) MUST be inlined - except <code>model</code>
+and <code>capabilities</code> at the root of the Registry. These two are excluded since
+the data associated with them are configuration related. To include their data
+the request MUST include <code>PATH</code> values of <code>model</code> or <code>capabilities</code>. Use of
+<code>*</code> MUST only be used as the last part of the <code>PATH</code> (in its entirety). For
+example, <code>foo*</code> and <code>*.foo</code> are not valid <code>PATH</code> values, but <code>*</code> and
+<code>endpoints.*</code> are.</p>
+<p>An <code>?inline</code> query parameter without any value MAY be supported and if so it
+MUST have the same semantic meaning as <code>?inline=*</code>.</p>
+<p>The specific value of <code>PATH</code> will vary based on where the request is directed.
+For example, a request to the root of the Registry MUST start with a <code>GROUPS</code>
+name, while a request directed at a Group would start with a <code>RESOURCES</code> name.</p>
+<p>For example, given a Registry with a model that has <code>endpoints</code> as a Group and
+<code>messages</code> as a Resource within <code>endpoints</code>, the table below shows some
+<code>PATH</code> values and a description of the result:</p>
 <table>
 <thead>
 <tr>
-<th>GET Path</th>
-<th><code>self</code> URL</th>
+<th>HTTP <code>GET</code> Path</th>
+<th>Example ?inline=PATH values</th>
+<th>Comment</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>http://example.com/myreg</code></td>
-<td><code>#/schemagroups/g1/schemas/s1</code></td>
+<td>/</td>
+<td>?inline=endpoints</td>
+<td>Inlines the <code>endpoints</code> collection, but just one level of it, not any nested inlinable attributes</td>
 </tr>
 <tr>
-<td><code>http://example.com/myreg/schemagroups</code></td>
-<td><code>#/g1/schemas/s1</code></td>
+<td>/</td>
+<td>?inline=endpoints.messages.versions</td>
+<td>Inlines the <code>versions</code> collection of all messages. Note that this implicitly means the parent attributes (<code>messages</code> and <code>endpoints</code> would also be inlined - however any other <code>GROUPS</code> or <code>RESOURCE</code>s types would not be</td>
 </tr>
 <tr>
-<td><code>http://example.com/myreg/schemagroups/g1/ </code></td>
-<td><code>#/schemas/s1</code></td>
+<td>/endpoints</td>
+<td>?inline=messages</td>
+<td>Inlines just <code>messages</code> and not any nested attributes. Note we don't need to specify the parent <code>GROUP</code> since the URL already included it</td>
 </tr>
 <tr>
-<td><code>http://example.com/myreg/schemagroups/g1/schemas </code></td>
-<td><code>#/s1</code></td>
+<td>/endpoints/ep1</td>
+<td>?inline=messages.versions</td>
+<td>Similar to the previous <code>endpoints.messages.version</code> example</td>
 </tr>
 <tr>
-<td><code>http://example.com/myreg/schemagroups/g1/schemas/s1</code></td>
-<td><code>#/</code></td>
+<td>/endpoints/ep1</td>
+<td>?inline=messages.message</td>
+<td>Inline the Resource itself</td>
+</tr>
+<tr>
+<td>/endpoints/ep1</td>
+<td>?inline=endpoints</td>
+<td>Invalid, already in <code>endpoints</code> and there is no <code>RESOURCE</code> called <code>endpoints</code></td>
+</tr>
+<tr>
+<td>/</td>
+<td>?inline=endpoints.messages.meta</td>
+<td>Inlines the <code>meta</code> attributes/sub-object of each <code>message</code> returned.</td>
+</tr>
+<tr>
+<td>/</td>
+<td>?inline=endpoints.*</td>
+<td>Inlines everything for all <code>endpoints</code>.</td>
 </tr>
 </tbody>
 </table>
-<p>This feature is useful when a client wants to minimize the amount of data
-returned by a server because the duplication of that data (typically used for
-human readability purposes) isn't necessary. For example, if tooling would
-ignore the duplication, or if the data will be used to populate a new
-Registry, then this feature might be used. It also makes the output more of a
-&quot;stand-alone&quot; document that minimizes external references.</p>
-<p>For clarity, the serialization of a Resource in document view will adhere to
-the following:</p>
-<pre><code class="language-yaml">{
-  &quot;RESOURCEid&quot;: &quot;STRING&quot;,
-  &quot;self&quot;: &quot;URL&quot;,
-  &quot;shortself&quot;: &quot;URL&quot;, ?
-  &quot;xid&quot;: &quot;XID&quot;,
-
-  &quot;metaurl&quot;: &quot;URL&quot;,
-  &quot;meta&quot;: {
-    &quot;RESOURCEid&quot;: &quot;STRING&quot;,
-    &quot;self&quot;: URL&quot;,
-    &quot;shortself&quot;: &quot;URL&quot;, ?
-    &quot;xid&quot;: &quot;XID&quot;,
-    &quot;xref&quot;: &quot;URL&quot; ?
-    # The following attributes are absent if 'xref' is set
-    &quot;epoch&quot;: UINTEGER&quot;,
-    &quot;createdat&quot;: &quot;TIMESTAMP&quot;,
-    &quot;modifiedat&quot;: &quot;TIMESTAMP&quot;,
-    &quot;ancestor&quot;: &quot;STRING&quot;,
-    &quot;readonly&quot;: BOOLEAN,
-    &quot;compatibility&quot;: &quot;STRING&quot;,
-    &quot;compatibilityauthority&quot;: &quot;STRING&quot;, ?
-
-    &quot;defaultversionid&quot;: &quot;STRING&quot;,
-    &quot;defaultversionurl&quot;: &quot;URL&quot;
-    &quot;defaultversionsticky&quot;: BOOLEAN
-  }
-}
-</code></pre>
-<p>Note that the attributes <code>epoch</code> through <code>defaultversionsticky</code> MUST be
-excluded if <code>xref</code> is set because those would be picked-up from the target
-Resource's <code>meta</code> sub-object.</p>
-<p>If <code>?doc</code> is used on a request directed to a Resource, or Version,
-that has the <code>hasdocument</code> model aspect set to <code>true</code>, then the processing
-of the request MUST take place as if the <code>$details</code> suffix was specified
-in the URL. Meaning, the response MUST be the xRegistry metadata view of the
-Resource and not the Resource's &quot;document&quot;.</p>
-<p>If <code>?doc</code> is used on a request directed to a Resource's <code>versions</code>
-collection, or to one of its Versions, but the Resource is defined as an
-<code>xref</code> to another Resource, then the server MUST generate an error
-(<a href="#cannot_doc_xref">cannot_doc_xref</a>) and SHOULD indicate that using <code>?doc</code>
-on this part of the hierarchy is not valid - due to it not technically existing
-in document view.</p>
+<p>Note that asking for an attribute to be inlined will implicitly cause all of
+its parents to be inlined as well, but just the parent's collections needed to
+show the child. In other words, just the collection in the parent in which the
+child appears, not all collections in the parent.</p>
+<p>When specifying a collection to be inlined, it MUST be specified using the
+plural name for the collection in its defined case.</p>
+<p>A request to inline an unknown, or non-inlinable, attribute MUST generate an
+error (<a href="#invalid_data">invalid_data</a>).</p>
 <h3 id="http-header-values"><a class="anchor" href="#http-header-values">☍</a> HTTP Header Values</h3>
 <p>Some attributes can contain arbitrary UTF-8 string content,
 and per <a href="https://tools.ietf.org/html/rfc7230#section-3">RFC7230, section 3</a>, HTTP headers MUST only use

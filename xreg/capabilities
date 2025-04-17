@@ -1,5 +1,6 @@
 {
   "flags": [
+    "collections",
     "doc",
     "epoch",
     "filter",

@@ -86,13 +86,6 @@ this form:</p>
           &quot;modifiedat&quot;: &quot;TIMESTAMP&quot;,
           &quot;ancestor&quot;: &quot;STRING&quot;,
 
-          &quot;deprecated&quot;: {
-            &quot;effective&quot;: &quot;TIMESTAMP&quot;, ?
-            &quot;removal&quot;: &quot;TIMESTAMP&quot;, ?
-            &quot;alternative&quot;: &quot;URL&quot;, ?
-            &quot;docs&quot;: &quot;URL&quot;?
-          }, ?
-
           &quot;basemessageurl&quot;: &quot;URL&quot;, ?           # Message being extended
 
           &quot;envelope&quot;: &quot;STRING&quot;, ?              # e.g. CloudEvents/1.0
@@ -276,67 +269,6 @@ the look-up value (id) of messages with their related events.</p>
 <p>The following extensions are defined for the <code>message</code> Resource in addition to
 the core xRegistry Resource
 <a href="../core/spec.md#attributes-and-extensions">attributes</a>:</p>
-<h4 id="deprecated"><a class="anchor" href="#deprecated">☍</a> <code>deprecated</code></h4>
-<ul>
-<li>
-<p>Type: Object containing the following properties:</p>
-<ul>
-<li>
-<p><code>effective</code><br>
-An OPTIONAL property indicating the time when the message entered, or will
-enter, a deprecated state. The date MAY be in the past or future. If this
-property is not present the message is already in a deprecated state.
-If present, this MUST be an <a href="https://tools.ietf.org/html/rfc3339">RFC3339</a> timestamp.</p>
-</li>
-<li>
-<p><code>removal</code><br>
-An OPTIONAL property indicating the time when the message MAY be removed.
-The message MUST NOT be removed before this time. If this property is not
-present then client can not make any assumption as to when the message
-might be removed. Note: as with most properties, this property is mutable.
-If present, this MUST be an <a href="https://tools.ietf.org/html/rfc3339">RFC3339</a> timestamp and MUST NOT be
-sooner than the <code>effective</code> time if present.</p>
-</li>
-<li>
-<p><code>alternative</code><br>
-An OPTIONAL property specifying the URL to an alternative message the
-client can consider as a replacement for this message. There is no
-guarantee that the referenced message is an exact replacement, rather the
-client is expected to investigate the message to determine if it is
-appropriate.</p>
-</li>
-<li>
-<p><code>docs</code><br>
-An OPTIONAL property specifying the URL to additional information about
-the deprecation of the message. This specification does not mandate any
-particular format or information, however some possibilities include:
-reasons for the deprecation or additional information about likely
-alternative messages. The URL MUST support an HTTP GET request.</p>
-</li>
-</ul>
-<p>Note that an implementation is not mandated to use this attribute in
-advance of removing an message, but is it RECOMMENDED that they do so.</p>
-</li>
-<li>
-<p>Constraints:</p>
-<ul>
-<li>OPTIONAL</li>
-</ul>
-</li>
-<li>
-<p>Examples:</p>
-<ul>
-<li><code>&quot;deprecated&quot;: {}</code></li>
-<li>
-<pre><code>&quot;deprecated&quot;: {
-  &quot;removal&quot;: &quot;2030-12-19T00:00:00-00:00&quot;,
-  &quot;alternative&quot;: &quot;https://example.com/messages/popped&quot;
-}
-</code></pre>
-</li>
-</ul>
-</li>
-</ul>
 <h4 id="basemessageurl"><a class="anchor" href="#basemessageurl">☍</a> <code>basemessageurl</code></h4>
 <ul>
 <li>Type: URI-reference</li>
@@ -657,7 +589,7 @@ placeholders MUST be replaced with valid values. For example, the value
 <code>{foo}/bar</code> would be replaced with <code>abc/bar</code> or <code>xyz/bar</code> when creating a
 message.</p>
 <p>If the <code>type</code> property has the value <code>timestamp</code> and the <code>value</code> property is
-set to a value of <code>01-01-0000T00:00:00Z</code>, the value MUST be replaced with the
+set to a value of <code>0000-01-01T00:00:00Z</code>, the value MUST be replaced with the
 current timestamp when creating a message.</p>
 <h4 id="metadata-envelopes"><a class="anchor" href="#metadata-envelopes">☍</a> Metadata Envelopes</h4>
 <p>This specification only defines one metadata envelope: &quot;CloudEvents/1.0&quot;.</p>
@@ -722,7 +654,7 @@ value &quot;1.0&quot;.</li>
 <li>The <code>type</code>, <code>id</code>, and <code>source</code> attributes implicitly have the <code>required</code> flag
 set to <code>true</code> and MUST NOT be declared as <code>required: false</code>.</li>
 <li>The <code>id</code> attribute's <code>value</code> SHOULD NOT be defined.</li>
-<li>The <code>time</code> attribute's <code>value</code> default value MUST be <code>01-01-0000T00:00:00Z</code>
+<li>The <code>time</code> attribute's <code>value</code> default value MUST be <code>0000-01-01T00:00:00Z</code>
 (&quot;current time&quot;) and SHOULD NOT be declared with a different value.</li>
 <li>The <code>datacontenttype</code> attribute's <code>value</code> is inferred from the
 <a href="#dataschemaformat"><code>dataschemaformat</code></a> attribute of the message definition

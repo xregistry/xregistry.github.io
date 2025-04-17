@@ -130,6 +130,7 @@
           "setversionid": true,
           "setdefaultversionsticky": true,
           "hasdocument": true,
+          "singleversionroot": false,
           "attributes": {
             "docid": {
               "name": "docid",
@@ -196,6 +197,11 @@
             "modifiedat": {
               "name": "modifiedat",
               "type": "timestamp",
+              "required": true
+            },
+            "ancestor": {
+              "name": "ancestor",
+              "type": "string",
               "required": true
             },
             "contenttype": {
@@ -292,6 +298,7 @@
           "setversionid": true,
           "setdefaultversionsticky": true,
           "hasdocument": true,
+          "singleversionroot": false,
           "attributes": {
             "sampleid": {
               "name": "sampleid",
@@ -358,6 +365,11 @@
             "modifiedat": {
               "name": "modifiedat",
               "type": "timestamp",
+              "required": true
+            },
+            "ancestor": {
+              "name": "ancestor",
+              "type": "string",
               "required": true
             },
             "contenttype": {
@@ -454,6 +466,7 @@
           "setversionid": true,
           "setdefaultversionsticky": true,
           "hasdocument": true,
+          "singleversionroot": false,
           "attributes": {
             "schemaid": {
               "name": "schemaid",
@@ -520,6 +533,11 @@
             "modifiedat": {
               "name": "modifiedat",
               "type": "timestamp",
+              "required": true
+            },
+            "ancestor": {
+              "name": "ancestor",
+              "type": "string",
               "required": true
             },
             "contenttype": {

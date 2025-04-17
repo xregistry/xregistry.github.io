@@ -365,7 +365,7 @@ advance of removing an Endpoint, but is it RECOMMENDED that they do so.</p>
 <li><code>&quot;deprecated&quot;: {}</code></li>
 <li>
 <pre><code>&quot;deprecated&quot;: {
-  &quot;removal&quot;: &quot;2030-12-19T00:00:00-00:00&quot;,
+  &quot;removal&quot;: &quot;2030-12-19T00:00:00&quot;,
   &quot;alternative&quot;: &quot;https://example.com/endpoints/123&quot;
 }
 </code></pre>
@@ -682,7 +682,7 @@ message definition groups that are not inlined in the endpoint definition.</p>
 <p>Example:</p>
 <pre><code class="language-yaml">{
   &quot;protocol&quot;: &quot;HTTP/1.1&quot;,
-  &quot;options&quot;: {
+  &quot;protocoloptions&quot;: {
     &quot;method&quot;: &quot;POST&quot;
   },
   &quot;messagegroups&quot;: [
@@ -698,7 +698,7 @@ MAY contain inlined messages. See
 <p>Example:</p>
 <pre><code class="language-yaml">{
   &quot;protocol&quot;: &quot;HTTP/1.1&quot;,
-  &quot;options&quot;: {
+  &quot;protocoloptions&quot;: {
     &quot;method&quot;: &quot;POST&quot;
   },
 
@@ -773,7 +773,7 @@ identical.</p>
 <p>Example:</p>
 <pre><code class="language-yaml">{
   &quot;protocol&quot;: &quot;HTTP/1.1&quot;,
-  &quot;options&quot;: {
+  &quot;protocoloptions&quot;: {
     &quot;method&quot;: &quot;POST&quot;,
     &quot;headers&quot;: [
       {

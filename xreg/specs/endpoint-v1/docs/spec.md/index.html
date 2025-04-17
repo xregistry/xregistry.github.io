@@ -352,7 +352,7 @@ The following attributes are defined for Endpoints:
   - `"deprecated": {}`
   - ```
     "deprecated": {
-      "removal": "2030-12-19T00:00:00-00:00",
+      "removal": "2030-12-19T00:00:00",
       "alternative": "https://example.com/endpoints/123"
     }
     ```
@@ -587,7 +587,7 @@ Example:
 ```yaml
 {
   "protocol": "HTTP/1.1",
-  "options": {
+  "protocoloptions": {
     "method": "POST"
   },
   "messagegroups": [
@@ -608,7 +608,7 @@ Example:
 ```yaml
 {
   "protocol": "HTTP/1.1",
-  "options": {
+  "protocoloptions": {
     "method": "POST"
   },
 
@@ -688,7 +688,7 @@ Example:
 ```yaml
 {
   "protocol": "HTTP/1.1",
-  "options": {
+  "protocoloptions": {
     "method": "POST",
     "headers": [
       {

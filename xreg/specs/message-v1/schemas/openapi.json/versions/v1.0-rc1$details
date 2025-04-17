@@ -1,8 +1,9 @@
 {
-  "createdat": "2025-04-09T20:27:57.428303735Z",
+  "ancestor": "v1.0-rc1",
+  "createdat": "2025-04-17T13:44:37.672061632Z",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2025-04-09T20:27:57.428303735Z",
+  "modifiedat": "2025-04-17T13:44:37.672061632Z",
   "schemaid": "openapi.json",
   "self": "https://xregistry.io/xreg/specs/message-v1/schemas/openapi.json/versions/v1.0-rc1",
   "versionid": "v1.0-rc1",

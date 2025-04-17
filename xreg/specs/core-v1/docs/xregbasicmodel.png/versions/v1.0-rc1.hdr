@@ -1,11 +1,12 @@
 content-disposition:xregbasicmodel.png
 content-location:https://xregistry.io/xreg/specs/core-v1/docs/xregbasicmodel.png/versions/v1.0-rc1
 content-type:image/png
-xregistry-createdat:2025-04-09T20:27:55.606574123Z
+xregistry-ancestor:v1.0-rc1
+xregistry-createdat:2025-04-17T13:44:35.235394047Z
 xregistry-docid:xregbasicmodel.png
 xregistry-epoch:1
 xregistry-isdefault:true
-xregistry-modifiedat:2025-04-09T20:27:55.606574123Z
+xregistry-modifiedat:2025-04-17T13:44:35.235394047Z
 xregistry-self:https://xregistry.io/xreg/specs/core-v1/docs/xregbasicmodel.png/versions/v1.0-rc1
 xregistry-versionid:v1.0-rc1
 xregistry-xid:/specs/core-v1/docs/xregbasicmodel.png/versions/v1.0-rc1

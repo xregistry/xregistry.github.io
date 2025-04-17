@@ -16,3 +16,6 @@ deps:
 docker:
 	@docker run -ti -v $(PWD):/tmp/spec -w /tmp/spec python:3.11 \
 	    make -f tools/Makefile
+
+buildsite:
+	tools/buildsite
