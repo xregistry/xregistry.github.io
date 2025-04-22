@@ -1,10 +1,10 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2025-04-22T01:17:59.419246529Z",
+  "createdat": "2025-04-22T01:51:11.469949956Z",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "https://xregistry.io/xreg/specs/endpoint-v1/schemas/document-schema.json/meta",
-  "modifiedat": "2025-04-22T01:17:59.419246529Z",
+  "modifiedat": "2025-04-22T01:51:11.469949956Z",
   "schemaid": "document-schema.json",
   "self": "https://xregistry.io/xreg/specs/endpoint-v1/schemas/document-schema.json",
   "versionid": "v1.0-rc1",

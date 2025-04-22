@@ -2,10 +2,10 @@ content-disposition:vacuumcleaner-avro.xreg.json
 content-location:https://xregistry.io/xreg/specs/cloudevents-v1/samples/vacuumcleaner-avro.xreg.json/versions/v1.0-rc1
 content-type:text/plain; charset=utf-8
 xregistry-ancestor:v1.0-rc1
-xregistry-createdat:2025-04-22T01:17:57.573307941Z
+xregistry-createdat:2025-04-22T01:51:09.674966504Z
 xregistry-epoch:1
 xregistry-isdefault:true
-xregistry-modifiedat:2025-04-22T01:17:57.573307941Z
+xregistry-modifiedat:2025-04-22T01:51:09.674966504Z
 xregistry-sampleid:vacuumcleaner-avro.xreg.json
 xregistry-self:https://xregistry.io/xreg/specs/cloudevents-v1/samples/vacuumcleaner-avro.xreg.json/versions/v1.0-rc1
 xregistry-versionid:v1.0-rc1

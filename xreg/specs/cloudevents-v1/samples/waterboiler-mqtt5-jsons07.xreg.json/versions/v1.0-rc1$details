@@ -1,9 +1,9 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2025-04-22T01:17:57.735580224Z",
+  "createdat": "2025-04-22T01:51:09.841279741Z",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2025-04-22T01:17:57.735580224Z",
+  "modifiedat": "2025-04-22T01:51:09.841279741Z",
   "sampleid": "waterboiler-mqtt5-jsons07.xreg.json",
   "self": "https://xregistry.io/xreg/specs/cloudevents-v1/samples/waterboiler-mqtt5-jsons07.xreg.json/versions/v1.0-rc1",
   "versionid": "v1.0-rc1",

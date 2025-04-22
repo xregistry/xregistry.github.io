@@ -1,10 +1,10 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2025-04-22T01:18:00.299153725Z",
+  "createdat": "2025-04-22T01:51:12.347748792Z",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "https://xregistry.io/xreg/specs/schema-v1/schemas/document-schema.avsc/meta",
-  "modifiedat": "2025-04-22T01:18:00.299153725Z",
+  "modifiedat": "2025-04-22T01:51:12.347748792Z",
   "schemaid": "document-schema.avsc",
   "self": "https://xregistry.io/xreg/specs/schema-v1/schemas/document-schema.avsc",
   "versionid": "v1.0-rc1",
