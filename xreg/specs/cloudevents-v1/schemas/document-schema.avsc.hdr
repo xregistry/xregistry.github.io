@@ -2,11 +2,11 @@ content-disposition:document-schema.avsc
 content-location:https://xregistry.io/xreg/specs/cloudevents-v1/schemas/document-schema.avsc/versions/v1.0-rc1
 content-type:text/plain; charset=utf-8
 xregistry-ancestor:v1.0-rc1
-xregistry-createdat:2025-04-22T02:33:07.120718759Z
+xregistry-createdat:2025-04-22T14:38:23.335222322Z
 xregistry-epoch:1
 xregistry-isdefault:true
 xregistry-metaurl:https://xregistry.io/xreg/specs/cloudevents-v1/schemas/document-schema.avsc/meta
-xregistry-modifiedat:2025-04-22T02:33:07.120718759Z
+xregistry-modifiedat:2025-04-22T14:38:23.335222322Z
 xregistry-schemaid:document-schema.avsc
 xregistry-self:https://xregistry.io/xreg/specs/cloudevents-v1/schemas/document-schema.avsc
 xregistry-versionid:v1.0-rc1

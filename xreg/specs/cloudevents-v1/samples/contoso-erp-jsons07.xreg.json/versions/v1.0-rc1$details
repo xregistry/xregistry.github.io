@@ -1,9 +1,9 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2025-04-22T02:33:07.370206757Z",
+  "createdat": "2025-04-22T14:38:23.588654362Z",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2025-04-22T02:33:07.370206757Z",
+  "modifiedat": "2025-04-22T14:38:23.588654362Z",
   "sampleid": "contoso-erp-jsons07.xreg.json",
   "self": "https://xregistry.io/xreg/specs/cloudevents-v1/samples/contoso-erp-jsons07.xreg.json/versions/v1.0-rc1",
   "versionid": "v1.0-rc1",

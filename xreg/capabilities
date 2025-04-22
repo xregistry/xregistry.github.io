@@ -1,6 +1,4 @@
 {
-  "flags": null,
-  "mutable": null,
   "pagination": false,
   "schemas": [
     "xregistry-json/1.0-rc1"

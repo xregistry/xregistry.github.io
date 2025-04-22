@@ -1,11 +1,11 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2025-04-22T02:33:08.214990747Z",
+  "createdat": "2025-04-22T14:38:24.434175437Z",
   "docid": "primer.md",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "https://xregistry.io/xreg/specs/core-v1/docs/primer.md/meta",
-  "modifiedat": "2025-04-22T02:33:08.214990747Z",
+  "modifiedat": "2025-04-22T14:38:24.434175437Z",
   "self": "https://xregistry.io/xreg/specs/core-v1/docs/primer.md",
   "versionid": "v1.0-rc1",
   "versionscount": 1,

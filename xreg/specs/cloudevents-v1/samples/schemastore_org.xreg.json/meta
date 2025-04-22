@@ -1,11 +1,11 @@
 {
   "compatibility": "none",
-  "createdat": "2025-04-22T02:33:08.034136702Z",
+  "createdat": "2025-04-22T14:38:24.251524449Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
   "defaultversionurl": "https://xregistry.io/xreg/specs/cloudevents-v1/samples/schemastore_org.xreg.json/versions/v1.0-rc1",
   "epoch": 1,
-  "modifiedat": "2025-04-22T02:33:08.034136702Z",
+  "modifiedat": "2025-04-22T14:38:24.251524449Z",
   "readonly": false,
   "sampleid": "schemastore_org.xreg.json",
   "self": "https://xregistry.io/xreg/specs/cloudevents-v1/samples/schemastore_org.xreg.json/meta",
