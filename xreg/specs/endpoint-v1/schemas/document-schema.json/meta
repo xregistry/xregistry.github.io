@@ -1,11 +1,11 @@
 {
   "compatibility": "none",
-  "createdat": "2025-04-22T01:51:11.469949956Z",
+  "createdat": "2025-04-22T02:33:09.489270946Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
   "defaultversionurl": "https://xregistry.io/xreg/specs/endpoint-v1/schemas/document-schema.json/versions/v1.0-rc1",
   "epoch": 1,
-  "modifiedat": "2025-04-22T01:51:11.469949956Z",
+  "modifiedat": "2025-04-22T02:33:09.489270946Z",
   "readonly": false,
   "schemaid": "document-schema.json",
   "self": "https://xregistry.io/xreg/specs/endpoint-v1/schemas/document-schema.json/meta",
