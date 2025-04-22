@@ -1,10 +1,10 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2025-04-21T20:14:13.44356538Z",
+  "createdat": "2025-04-22T01:17:57.654482826Z",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "https://xregistry.io/xreg/specs/cloudevents-v1/samples/watchkam-jsons07.xreg.json/meta",
-  "modifiedat": "2025-04-21T20:14:13.44356538Z",
+  "modifiedat": "2025-04-22T01:17:57.654482826Z",
   "sampleid": "watchkam-jsons07.xreg.json",
   "self": "https://xregistry.io/xreg/specs/cloudevents-v1/samples/watchkam-jsons07.xreg.json",
   "versionid": "v1.0-rc1",

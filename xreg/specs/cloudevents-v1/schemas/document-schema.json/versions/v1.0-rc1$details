@@ -1,9 +1,9 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2025-04-21T20:14:12.860917146Z",
+  "createdat": "2025-04-22T01:17:57.078520136Z",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2025-04-21T20:14:12.860917146Z",
+  "modifiedat": "2025-04-22T01:17:57.078520136Z",
   "schemaid": "document-schema.json",
   "self": "https://xregistry.io/xreg/specs/cloudevents-v1/schemas/document-schema.json/versions/v1.0-rc1",
   "versionid": "v1.0-rc1",

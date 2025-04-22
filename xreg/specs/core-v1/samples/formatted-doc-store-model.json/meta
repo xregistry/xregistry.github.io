@@ -1,11 +1,11 @@
 {
   "compatibility": "none",
-  "createdat": "2025-04-21T20:14:14.696518769Z",
+  "createdat": "2025-04-22T01:17:58.939498367Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
   "defaultversionurl": "https://xregistry.io/xreg/specs/core-v1/samples/formatted-doc-store-model.json/versions/v1.0-rc1",
   "epoch": 1,
-  "modifiedat": "2025-04-21T20:14:14.696518769Z",
+  "modifiedat": "2025-04-22T01:17:58.939498367Z",
   "readonly": false,
   "sampleid": "formatted-doc-store-model.json",
   "self": "https://xregistry.io/xreg/specs/core-v1/samples/formatted-doc-store-model.json/meta",

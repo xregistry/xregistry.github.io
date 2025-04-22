@@ -1,11 +1,11 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2025-04-21T20:14:12.627771819Z",
+  "createdat": "2025-04-22T01:17:56.852842565Z",
   "docid": "model.json",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "https://xregistry.io/xreg/specs/cloudevents-v1/docs/model.json/meta",
-  "modifiedat": "2025-04-21T20:14:12.627771819Z",
+  "modifiedat": "2025-04-22T01:17:56.852842565Z",
   "self": "https://xregistry.io/xreg/specs/cloudevents-v1/docs/model.json",
   "versionid": "v1.0-rc1",
   "versionscount": 1,
