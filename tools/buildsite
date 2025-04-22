@@ -2,8 +2,8 @@
 
 set -e
 
-# export IMAGE=ghcr.io/xregistry/xreg-server-all 
-export IMAGE=xreg-server-all
+# export IMAGE=ghcr.io/xregistry/xrserver-all
+export IMAGE=xrserver-all
 export XR_SERVER=localhost:8383
 export FILES=$HOME/work/xreg
 export VERBOSE="-v"
@@ -11,9 +11,10 @@ export VER=v1.0-rc1
 export DIR=xreg
 
 # If server isn't already running...
-docker inspect sitexreg > /dev/null 2>&1 || (
+docker ps | grep sitexreg > /dev/null 2>&1 || (
     echo "# Starting xreg server, and waiting for it to be ready"
-    docker run -dti --name sitexreg -p 8383:8080 $IMAGE > /dev/null
+	docker rm -f sitexreg > /dev/null 2>&1 || true
+    docker run -dti --name sitexreg -p 8383:8080 $IMAGE run --createreg > /dev/null
     while ! xr get -s $XR_SERVER > /dev/null 2>&1 ; do sleep 1 ; done
 )
 

@@ -3,10 +3,10 @@ content-length:961
 content-location:https://xregistry.io/xreg/specs/core-v1/samples/formatted-doc-store-data.json/versions/v1.0-rc1
 content-type:text/plain; charset=utf-8
 xregistry-ancestor:v1.0-rc1
-xregistry-createdat:2025-04-17T13:44:35.864308829Z
+xregistry-createdat:2025-04-21T20:14:14.606252048Z
 xregistry-epoch:1
 xregistry-isdefault:true
-xregistry-modifiedat:2025-04-17T13:44:35.864308829Z
+xregistry-modifiedat:2025-04-21T20:14:14.606252048Z
 xregistry-sampleid:formatted-doc-store-data.json
 xregistry-self:https://xregistry.io/xreg/specs/core-v1/samples/formatted-doc-store-data.json/versions/v1.0-rc1
 xregistry-versionid:v1.0-rc1

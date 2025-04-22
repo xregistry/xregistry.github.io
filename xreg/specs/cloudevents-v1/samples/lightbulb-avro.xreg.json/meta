@@ -1,11 +1,11 @@
 {
   "compatibility": "none",
-  "createdat": "2025-04-17T13:44:33.410004008Z",
+  "createdat": "2025-04-21T20:14:13.198767509Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
   "defaultversionurl": "https://xregistry.io/xreg/specs/cloudevents-v1/samples/lightbulb-avro.xreg.json/versions/v1.0-rc1",
   "epoch": 1,
-  "modifiedat": "2025-04-17T13:44:33.410004008Z",
+  "modifiedat": "2025-04-21T20:14:13.198767509Z",
   "readonly": false,
   "sampleid": "lightbulb-avro.xreg.json",
   "self": "https://xregistry.io/xreg/specs/cloudevents-v1/samples/lightbulb-avro.xreg.json/meta",
