@@ -1,0 +1,14 @@
+{
+  "ancestor": "v1.0-rc1",
+  "createdat": "2025-04-30T14:59:20.41863539Z",
+  "epoch": 1,
+  "isdefault": true,
+  "metaurl": "https://xregistry.io/xreg/xregistryspecs/schema-v1/schemas/document-schema.avsc/meta",
+  "modifiedat": "2025-04-30T14:59:20.41863539Z",
+  "schemaid": "document-schema.avsc",
+  "self": "https://xregistry.io/xreg/xregistryspecs/schema-v1/schemas/document-schema.avsc",
+  "versionid": "v1.0-rc1",
+  "versionscount": 1,
+  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/schema-v1/schemas/document-schema.avsc/versions",
+  "xid": "/xregistryspecs/schema-v1/schemas/document-schema.avsc"
+}

@@ -1,0 +1,14 @@
+{
+  "ancestor": "v1.0-rc1",
+  "createdat": "2025-04-30T14:59:17.215721404Z",
+  "epoch": 1,
+  "isdefault": true,
+  "metaurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/schemas/openapi.json/meta",
+  "modifiedat": "2025-04-30T14:59:17.215721404Z",
+  "schemaid": "openapi.json",
+  "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/schemas/openapi.json",
+  "versionid": "v1.0-rc1",
+  "versionscount": 1,
+  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/schemas/openapi.json/versions",
+  "xid": "/xregistryspecs/cloudevents-v1/schemas/openapi.json"
+}

@@ -1,0 +1,13 @@
+{
+  "compatibility": "none",
+  "createdat": "2025-04-30T14:59:19.317248737Z",
+  "defaultversionid": "v1.0-rc1",
+  "defaultversionsticky": false,
+  "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/endpoint-v1/docs/spec.md/versions/v1.0-rc1",
+  "docid": "spec.md",
+  "epoch": 1,
+  "modifiedat": "2025-04-30T14:59:19.317248737Z",
+  "readonly": false,
+  "self": "https://xregistry.io/xreg/xregistryspecs/endpoint-v1/docs/spec.md/meta",
+  "xid": "/xregistryspecs/endpoint-v1/docs/spec.md/meta"
+}

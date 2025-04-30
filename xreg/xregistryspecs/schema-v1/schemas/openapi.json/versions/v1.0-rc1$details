@@ -1,0 +1,11 @@
+{
+  "ancestor": "v1.0-rc1",
+  "createdat": "2025-04-30T14:59:20.659682162Z",
+  "epoch": 1,
+  "isdefault": true,
+  "modifiedat": "2025-04-30T14:59:20.659682162Z",
+  "schemaid": "openapi.json",
+  "self": "https://xregistry.io/xreg/xregistryspecs/schema-v1/schemas/openapi.json/versions/v1.0-rc1",
+  "versionid": "v1.0-rc1",
+  "xid": "/xregistryspecs/schema-v1/schemas/openapi.json/versions/v1.0-rc1"
+}

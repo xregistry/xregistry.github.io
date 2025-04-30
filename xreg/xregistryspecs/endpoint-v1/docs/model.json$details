@@ -1,0 +1,14 @@
+{
+  "ancestor": "v1.0-rc1",
+  "createdat": "2025-04-30T14:59:19.209982357Z",
+  "docid": "model.json",
+  "epoch": 1,
+  "isdefault": true,
+  "metaurl": "https://xregistry.io/xreg/xregistryspecs/endpoint-v1/docs/model.json/meta",
+  "modifiedat": "2025-04-30T14:59:19.209982357Z",
+  "self": "https://xregistry.io/xreg/xregistryspecs/endpoint-v1/docs/model.json",
+  "versionid": "v1.0-rc1",
+  "versionscount": 1,
+  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/endpoint-v1/docs/model.json/versions",
+  "xid": "/xregistryspecs/endpoint-v1/docs/model.json"
+}

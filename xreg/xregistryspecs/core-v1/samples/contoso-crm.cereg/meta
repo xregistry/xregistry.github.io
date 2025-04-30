@@ -1,0 +1,13 @@
+{
+  "compatibility": "none",
+  "createdat": "2025-04-30T14:59:19.113566618Z",
+  "defaultversionid": "v1.0-rc1",
+  "defaultversionsticky": false,
+  "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/samples/contoso-crm.cereg/versions/v1.0-rc1",
+  "epoch": 1,
+  "modifiedat": "2025-04-30T14:59:19.113566618Z",
+  "readonly": false,
+  "sampleid": "contoso-crm.cereg",
+  "self": "https://xregistry.io/xreg/xregistryspecs/core-v1/samples/contoso-crm.cereg/meta",
+  "xid": "/xregistryspecs/core-v1/samples/contoso-crm.cereg/meta"
+}

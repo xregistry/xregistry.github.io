@@ -1,0 +1,13 @@
+{
+  "compatibility": "none",
+  "createdat": "2025-04-30T14:59:17.904650442Z",
+  "defaultversionid": "v1.0-rc1",
+  "defaultversionsticky": false,
+  "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/windgenerator-kafka-avro.xreg.json/versions/v1.0-rc1",
+  "epoch": 1,
+  "modifiedat": "2025-04-30T14:59:17.904650442Z",
+  "readonly": false,
+  "sampleid": "windgenerator-kafka-avro.xreg.json",
+  "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/windgenerator-kafka-avro.xreg.json/meta",
+  "xid": "/xregistryspecs/cloudevents-v1/samples/windgenerator-kafka-avro.xreg.json/meta"
+}

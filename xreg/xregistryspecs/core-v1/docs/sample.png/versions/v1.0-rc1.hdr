@@ -1,0 +1,12 @@
+content-disposition:sample.png
+content-location:https://xregistry.io/xreg/xregistryspecs/core-v1/docs/sample.png/versions/v1.0-rc1
+content-type:image/png
+xregistry-ancestor:v1.0-rc1
+xregistry-createdat:2025-04-30T14:59:18.356307115Z
+xregistry-docid:sample.png
+xregistry-epoch:1
+xregistry-isdefault:true
+xregistry-modifiedat:2025-04-30T14:59:18.356307115Z
+xregistry-self:https://xregistry.io/xreg/xregistryspecs/core-v1/docs/sample.png/versions/v1.0-rc1
+xregistry-versionid:v1.0-rc1
+xregistry-xid:/xregistryspecs/core-v1/docs/sample.png/versions/v1.0-rc1

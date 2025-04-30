@@ -1,0 +1,14 @@
+{
+  "ancestor": "v1.0-rc1",
+  "createdat": "2025-04-30T14:59:19.946691953Z",
+  "epoch": 1,
+  "isdefault": true,
+  "metaurl": "https://xregistry.io/xreg/xregistryspecs/message-v1/schemas/document-schema.json/meta",
+  "modifiedat": "2025-04-30T14:59:19.946691953Z",
+  "schemaid": "document-schema.json",
+  "self": "https://xregistry.io/xreg/xregistryspecs/message-v1/schemas/document-schema.json",
+  "versionid": "v1.0-rc1",
+  "versionscount": 1,
+  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/message-v1/schemas/document-schema.json/versions",
+  "xid": "/xregistryspecs/message-v1/schemas/document-schema.json"
+}

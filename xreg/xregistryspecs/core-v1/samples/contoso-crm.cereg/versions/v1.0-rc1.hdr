@@ -1,0 +1,12 @@
+content-disposition:contoso-crm.cereg
+content-location:https://xregistry.io/xreg/xregistryspecs/core-v1/samples/contoso-crm.cereg/versions/v1.0-rc1
+content-type:text/plain; charset=utf-8
+xregistry-ancestor:v1.0-rc1
+xregistry-createdat:2025-04-30T14:59:19.113566618Z
+xregistry-epoch:1
+xregistry-isdefault:true
+xregistry-modifiedat:2025-04-30T14:59:19.113566618Z
+xregistry-sampleid:contoso-crm.cereg
+xregistry-self:https://xregistry.io/xreg/xregistryspecs/core-v1/samples/contoso-crm.cereg/versions/v1.0-rc1
+xregistry-versionid:v1.0-rc1
+xregistry-xid:/xregistryspecs/core-v1/samples/contoso-crm.cereg/versions/v1.0-rc1

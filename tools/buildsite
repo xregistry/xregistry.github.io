@@ -5,28 +5,34 @@ set -e
 # export IMAGE=ghcr.io/xregistry/xrserver-all
 export IMAGE=xrserver-all
 export XR_SERVER=localhost:8383
-export FILES=$HOME/work/xreg
 export VERBOSE="-v"
 export VER=v1.0-rc1
 export DIR=xreg
 
+# Clone the spec repo
+rm -rf tmpspec
+git clone https://github.com/xregistry/spec.git tmpspec
+pushd tmpspec
+export FILES=$PWD
+echo
+
 # If server isn't already running...
 docker ps | grep sitexreg > /dev/null 2>&1 || (
     echo "# Starting xreg server, and waiting for it to be ready"
-	docker rm -f sitexreg > /dev/null 2>&1 || true
-    docker run -dti --name sitexreg -p 8383:8080 $IMAGE run --createreg > /dev/null
+    docker rm -f sitexreg > /dev/null 2>&1 || true
+    docker run -dti --name sitexreg -p 8383:8080 $IMAGE > /dev/null
     while ! xr get -s $XR_SERVER > /dev/null 2>&1 ; do sleep 1 ; done
 )
 
-echo "# Deleting any old 'specs' that might be there"
-xr delete /specs > /dev/null 2>&1 || true
+echo "# Deleting any old 'xregistryspecs' that might be there"
+xr delete /xregistryspecs > /dev/null 2>&1 || true
 
 echo "# Defining the model"
 echo '
 {
   "groups": {
-    "specs": {
-      "singular": "spec",
+    "xregistryspecs": {
+      "singular": "xregistryspec",
       "resources": {
         "docs"   : { "singular": "doc" },
         "schemas": { "singular": "schema" },
@@ -39,28 +45,26 @@ echo '
 
 # List of files->target in xref we need to process ('files' can have wildcards)
 list=(
-"$FILES/cloudevents/*json"                    cloudevents-v1/docs
-"$FILES/cloudevents/*md"                      cloudevents-v1/docs
+"$FILES/cloudevents/*.json"                   cloudevents-v1/docs
+"$FILES/cloudevents/*.md"                     cloudevents-v1/docs
 "$FILES/cloudevents/schemas/*"                cloudevents-v1/schemas
 "$FILES/cloudevents/samples/scenarios/*.json" cloudevents-v1/samples
 "$FILES/cloudevents/samples/schemas/*.json"   cloudevents-v1/samples
 "$FILES/core/model.json"                      core-v1/docs
 "$FILES/core/primer.md"                       core-v1/docs
 "$FILES/core/sample-model.json"               core-v1/docs
-"$FILES/core/sample.png"                      core-v1/docs
+"$FILES/core/*.png"                           core-v1/docs
 "$FILES/core/spec.md"                         core-v1/docs
-"$FILES/core/xregbasicmodel.png"              core-v1/docs
-"$FILES/core/xregfullmodel.png"               core-v1/docs
-"$FILES/core/samples/*json"                   core-v1/samples
-"$FILES/core/samples/*cereg"                  core-v1/samples
+"$FILES/core/samples/*.json"                  core-v1/samples
+"$FILES/core/samples/*.cereg"                 core-v1/samples
 "$FILES/endpoint/*.json"                      endpoint-v1/docs
-"$FILES/endpoint/*md"                         endpoint-v1/docs
+"$FILES/endpoint/*.md"                        endpoint-v1/docs
 "$FILES/endpoint/schemas/*"                   endpoint-v1/schemas
 "$FILES/message/*.json"                       message-v1/docs
-"$FILES/message/*md"                          message-v1/docs
+"$FILES/message/*.md"                         message-v1/docs
 "$FILES/message/schemas/*"                    message-v1/schemas
 "$FILES/schema/*.json"                        schema-v1/docs
-"$FILES/schema/*md"                           schema-v1/docs
+"$FILES/schema/*.md"                          schema-v1/docs
 "$FILES/schema/schemas/*"                     schema-v1/schemas
 "$FILES/pagination/spec.md"                   pagination-v1/docs
 )
@@ -77,9 +81,12 @@ for (( i=0 ; ; i++)); do
     [[ "$file" == *".json" ]] && type="application/json"
     [[ "$file" == *".html" ]] && type="text/html"
 
-    xr create $VERBOSE /specs/$tgt/`basename $file`/versions/$VER -d @$file
+    xr create $VERBOSE /xregistryspecs/$tgt/`basename $file`/versions/$VER \
+        -d @$file
   done
 done
+
+popd
 
 echo "# Downloading the registry to dir: $DIR"
 rm -rf ./$DIR/
@@ -87,3 +94,13 @@ mkdir -p ./$DIR
 xr download $VERBOSE ./$DIR -u https://xregistry.io/xreg --md2html -c
 
 docker rm -f sitexreg > /dev/null
+
+rm -rf tmpspec
+
+IFS='|' lines=$(git diff -w | grep "^[-+]" | grep -v modifiedat | grep -v createdat | grep -v "/xreg/")
+if [[ "$lines" == "" ]]; then
+  echo "Nothing changed"
+else
+  echo "Changes:"
+  echo $lines
+fi

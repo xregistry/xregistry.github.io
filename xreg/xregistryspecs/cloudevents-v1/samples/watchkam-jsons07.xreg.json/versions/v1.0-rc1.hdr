@@ -1,0 +1,12 @@
+content-disposition:watchkam-jsons07.xreg.json
+content-location:https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/watchkam-jsons07.xreg.json/versions/v1.0-rc1
+content-type:text/plain; charset=utf-8
+xregistry-ancestor:v1.0-rc1
+xregistry-createdat:2025-04-30T14:59:17.732263108Z
+xregistry-epoch:1
+xregistry-isdefault:true
+xregistry-modifiedat:2025-04-30T14:59:17.732263108Z
+xregistry-sampleid:watchkam-jsons07.xreg.json
+xregistry-self:https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/watchkam-jsons07.xreg.json/versions/v1.0-rc1
+xregistry-versionid:v1.0-rc1
+xregistry-xid:/xregistryspecs/cloudevents-v1/samples/watchkam-jsons07.xreg.json/versions/v1.0-rc1

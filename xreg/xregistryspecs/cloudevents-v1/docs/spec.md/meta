@@ -1,0 +1,13 @@
+{
+  "compatibility": "none",
+  "createdat": "2025-04-30T14:59:16.94649365Z",
+  "defaultversionid": "v1.0-rc1",
+  "defaultversionsticky": false,
+  "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/docs/spec.md/versions/v1.0-rc1",
+  "docid": "spec.md",
+  "epoch": 1,
+  "modifiedat": "2025-04-30T14:59:16.94649365Z",
+  "readonly": false,
+  "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/docs/spec.md/meta",
+  "xid": "/xregistryspecs/cloudevents-v1/docs/spec.md/meta"
+}

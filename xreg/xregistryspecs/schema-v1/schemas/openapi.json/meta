@@ -1,0 +1,13 @@
+{
+  "compatibility": "none",
+  "createdat": "2025-04-30T14:59:20.659682162Z",
+  "defaultversionid": "v1.0-rc1",
+  "defaultversionsticky": false,
+  "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/schema-v1/schemas/openapi.json/versions/v1.0-rc1",
+  "epoch": 1,
+  "modifiedat": "2025-04-30T14:59:20.659682162Z",
+  "readonly": false,
+  "schemaid": "openapi.json",
+  "self": "https://xregistry.io/xreg/xregistryspecs/schema-v1/schemas/openapi.json/meta",
+  "xid": "/xregistryspecs/schema-v1/schemas/openapi.json/meta"
+}
