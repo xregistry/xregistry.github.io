@@ -28,20 +28,9 @@ echo "# Deleting any old 'xregistryspecs' that might be there"
 xr delete /xregistryspecs > /dev/null 2>&1 || true
 
 echo "# Defining the model"
-echo '
-{
-  "groups": {
-    "xregistryspecs": {
-      "singular": "xregistryspec",
-      "resources": {
-        "docs"   : { "singular": "doc" },
-        "schemas": { "singular": "schema" },
-        "samples": { "singular": "sample" }
-      }
-    }
-  }
-}
-' | xr model update -d @-
+xr $VERBOSE model group create xregistryspecs:xregistryspec
+xr $VERBOSE model resource create -g xregistryspecs \
+      docs:doc schemas:schema samples:sample
 
 # List of files->target in xref we need to process ('files' can have wildcards)
 list=(

@@ -2,10 +2,10 @@ content-disposition:smartoven-xsd.xreg.json
 content-location:https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/smartoven-xsd.xreg.json/versions/v1.0-rc1
 content-type:text/plain; charset=utf-8
 xregistry-ancestor:v1.0-rc1
-xregistry-createdat:2025-04-30T14:59:17.564186813Z
+xregistry-createdat:2025-05-08T12:37:17.969360029Z
 xregistry-epoch:1
 xregistry-isdefault:true
-xregistry-modifiedat:2025-04-30T14:59:17.564186813Z
+xregistry-modifiedat:2025-05-08T12:37:17.969360029Z
 xregistry-sampleid:smartoven-xsd.xreg.json
 xregistry-self:https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/smartoven-xsd.xreg.json/versions/v1.0-rc1
 xregistry-versionid:v1.0-rc1

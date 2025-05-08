@@ -487,7 +487,8 @@ entity (i.e. dangling pointer), but the syntax MUST reference a
 defined/valid type in the Registry. This type of attribute is used in
 place of <code>url</code> so that the Registry can do &quot;type checking&quot; to ensure the
 value references the correct type of Registry entity. See the definition of
-the <a href="#model.target"><code>target</code> model attribute</a> for more information.</li>
+the <a href="#model.target"><code>target</code> model attribute</a> for more information.
+Its value MUST start with a <code>/</code>.</li>
 <li><code>string</code> - sequence of Unicode characters.</li>
 <li><code>timestamp</code> - an <a href="https://tools.ietf.org/html/rfc3339">RFC3339</a> timestamp.
 Use of a <code>time-zone</code> notation is RECOMMENDED.</li>

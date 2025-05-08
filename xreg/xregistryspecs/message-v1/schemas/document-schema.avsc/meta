@@ -1,11 +1,11 @@
 {
   "compatibility": "none",
-  "createdat": "2025-04-30T14:59:19.837086819Z",
+  "createdat": "2025-05-08T12:37:20.165470058Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
   "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/message-v1/schemas/document-schema.avsc/versions/v1.0-rc1",
   "epoch": 1,
-  "modifiedat": "2025-04-30T14:59:19.837086819Z",
+  "modifiedat": "2025-05-08T12:37:20.165470058Z",
   "readonly": false,
   "schemaid": "document-schema.avsc",
   "self": "https://xregistry.io/xreg/xregistryspecs/message-v1/schemas/document-schema.avsc/meta",

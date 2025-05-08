@@ -110,7 +110,7 @@ this form:</p>
         &quot;retain&quot;: BOOLEAN, ?                           # Default: false
         &quot;cleansession&quot;: BOOLEAN, ?                     # Default: true
         &quot;willtopic&quot;: &quot;STRING&quot;, ?
-        &quot;willmessage&quot;: &quot;STRING&quot; ?
+        &quot;willmessage&quot;: &quot;XID&quot; ?
 
         # &quot;MQTT/5.0&quot; protocol options
         &quot;topic&quot;: &quot;STRING&quot;, ?
@@ -118,7 +118,7 @@ this form:</p>
         &quot;retain&quot;: BOOLEAN, ?                           # Default: false
         &quot;cleansession&quot;: BOOLEAN, ?                     # Default: true
         &quot;willtopic&quot;: &quot;STRING&quot;, ?
-        &quot;willmessage&quot;: &quot;STRING&quot; ?
+        &quot;willmessage&quot;: &quot;XID&quot; ?
 
         # &quot;KAFKA&quot; protocol options
         &quot;topic&quot;: &quot;STRING&quot;, ?
@@ -132,7 +132,7 @@ this form:</p>
         &quot;subject&quot;: &quot;STRING&quot; ?
       }, ?
 
-      &quot;messagegroups&quot;: [ URI * ], ?
+      &quot;messagegroups&quot;: [ XID * ], ?
       # End of default Version's attributes
 
       &quot;messagesurl&quot;: &quot;URL&quot;, ?
@@ -612,7 +612,7 @@ compliant with the <a href="#protocol-options">protocol's options</a>.</li>
 </li>
 </ul>
 <h4 id="messagegroups"><a class="anchor" href="#messagegroups">☍</a> <code>messagegroups</code></h4>
-<p>The <code>messagegroups</code> attribute is an array of URI-references to message
+<p>The <code>messagegroups</code> attribute is an array of XID-references to message
 definition groups. The <code>messagegroups</code> attribute is used to reference
 message definition groups that are not inlined in the endpoint definition.</p>
 <p>Example:</p>
@@ -622,7 +622,7 @@ message definition groups that are not inlined in the endpoint definition.</p>
     &quot;method&quot;: &quot;POST&quot;
   },
   &quot;messagegroups&quot;: [
-    &quot;https://example.com/registry/messagegroups/mygroup&quot;
+    &quot;/messagegroups/mygroup&quot;
   ]
 }
 </code></pre>
@@ -827,10 +827,10 @@ connections.
 URI Template syntax.</li>
 </ul>
 </li>
-<li><code>willmessage</code>: This is URI and/or JSON Pointer that refers to the MQTT
-<code>willmessage</code> to use for the endpoint.
+<li><code>willmessage</code>: This is XID that refers to the MQTT <code>willmessage</code> to use for
+the endpoint.
 <ul>
-<li>The value MUST be a non-empty string.</li>
+<li>The value MUST be a non-empty XID.</li>
 <li>It MUST point to a valid
 <a href="../message/spec.md#message-definitions">´message´</a> that MUST either
 use the <a href="../message/spec.md#cloudevents10">&quot;CloudEvents/1.0&quot;</a> or
@@ -849,7 +849,7 @@ use the <a href="../message/spec.md#cloudevents10">&quot;CloudEvents/1.0&quot;</
     &quot;retain&quot;: false,
     &quot;cleansession&quot;: false,
     &quot;willtopic&quot;: &quot;mytopic&quot;,
-    &quot;willmessage&quot;: &quot;#/messagegroups/mygroup/messages/mywillmessage&quot;
+    &quot;willmessage&quot;: &quot;/messagegroups/mygroup/messages/mywillmessage&quot;
   }
 }
 </code></pre>

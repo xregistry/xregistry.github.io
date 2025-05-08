@@ -2,10 +2,10 @@ content-disposition:openapi.json
 content-location:https://xregistry.io/xreg/xregistryspecs/schema-v1/schemas/openapi.json/versions/v1.0-rc1
 content-type:text/plain; charset=utf-8
 xregistry-ancestor:v1.0-rc1
-xregistry-createdat:2025-04-30T14:59:20.659682162Z
+xregistry-createdat:2025-05-08T12:37:20.983827515Z
 xregistry-epoch:1
 xregistry-isdefault:true
-xregistry-modifiedat:2025-04-30T14:59:20.659682162Z
+xregistry-modifiedat:2025-05-08T12:37:20.983827515Z
 xregistry-schemaid:openapi.json
 xregistry-self:https://xregistry.io/xreg/xregistryspecs/schema-v1/schemas/openapi.json/versions/v1.0-rc1
 xregistry-versionid:v1.0-rc1

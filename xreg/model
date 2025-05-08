@@ -81,6 +81,26 @@
           "type": "any"
         }
       }
+    },
+    "xregistryspecsurl": {
+      "name": "xregistryspecsurl",
+      "type": "url",
+      "readonly": true,
+      "immutable": true,
+      "required": true
+    },
+    "xregistryspecscount": {
+      "name": "xregistryspecscount",
+      "type": "uinteger",
+      "readonly": true,
+      "required": true
+    },
+    "xregistryspecs": {
+      "name": "xregistryspecs",
+      "type": "map",
+      "item": {
+        "type": "object"
+      }
     }
   },
   "groups": {
@@ -142,6 +162,84 @@
           "name": "modifiedat",
           "type": "timestamp",
           "required": true
+        },
+        "docsurl": {
+          "name": "docsurl",
+          "type": "url",
+          "readonly": true,
+          "immutable": true,
+          "required": true
+        },
+        "docscount": {
+          "name": "docscount",
+          "type": "uinteger",
+          "readonly": true,
+          "required": true
+        },
+        "docs": {
+          "name": "docs",
+          "type": "map",
+          "item": {
+            "type": "object",
+            "attributes": {
+              "*": {
+                "name": "*",
+                "type": "any"
+              }
+            }
+          }
+        },
+        "samplesurl": {
+          "name": "samplesurl",
+          "type": "url",
+          "readonly": true,
+          "immutable": true,
+          "required": true
+        },
+        "samplescount": {
+          "name": "samplescount",
+          "type": "uinteger",
+          "readonly": true,
+          "required": true
+        },
+        "samples": {
+          "name": "samples",
+          "type": "map",
+          "item": {
+            "type": "object",
+            "attributes": {
+              "*": {
+                "name": "*",
+                "type": "any"
+              }
+            }
+          }
+        },
+        "schemasurl": {
+          "name": "schemasurl",
+          "type": "url",
+          "readonly": true,
+          "immutable": true,
+          "required": true
+        },
+        "schemascount": {
+          "name": "schemascount",
+          "type": "uinteger",
+          "readonly": true,
+          "required": true
+        },
+        "schemas": {
+          "name": "schemas",
+          "type": "map",
+          "item": {
+            "type": "object",
+            "attributes": {
+              "*": {
+                "name": "*",
+                "type": "any"
+              }
+            }
+          }
         }
       },
       "resources": {
@@ -242,6 +340,49 @@
             "doc": {
               "name": "doc",
               "type": "any"
+            },
+            "metaurl": {
+              "name": "metaurl",
+              "type": "url",
+              "readonly": true,
+              "immutable": true,
+              "required": true
+            },
+            "meta": {
+              "name": "meta",
+              "type": "object",
+              "attributes": {
+                "*": {
+                  "name": "*",
+                  "type": "any"
+                }
+              }
+            },
+            "versionsurl": {
+              "name": "versionsurl",
+              "type": "url",
+              "readonly": true,
+              "immutable": true,
+              "required": true
+            },
+            "versionscount": {
+              "name": "versionscount",
+              "type": "uinteger",
+              "readonly": true,
+              "required": true
+            },
+            "versions": {
+              "name": "versions",
+              "type": "map",
+              "item": {
+                "type": "object",
+                "attributes": {
+                  "*": {
+                    "name": "*",
+                    "type": "any"
+                  }
+                }
+              }
             }
           },
           "metaattributes": {
@@ -459,6 +600,49 @@
             "sample": {
               "name": "sample",
               "type": "any"
+            },
+            "metaurl": {
+              "name": "metaurl",
+              "type": "url",
+              "readonly": true,
+              "immutable": true,
+              "required": true
+            },
+            "meta": {
+              "name": "meta",
+              "type": "object",
+              "attributes": {
+                "*": {
+                  "name": "*",
+                  "type": "any"
+                }
+              }
+            },
+            "versionsurl": {
+              "name": "versionsurl",
+              "type": "url",
+              "readonly": true,
+              "immutable": true,
+              "required": true
+            },
+            "versionscount": {
+              "name": "versionscount",
+              "type": "uinteger",
+              "readonly": true,
+              "required": true
+            },
+            "versions": {
+              "name": "versions",
+              "type": "map",
+              "item": {
+                "type": "object",
+                "attributes": {
+                  "*": {
+                    "name": "*",
+                    "type": "any"
+                  }
+                }
+              }
             }
           },
           "metaattributes": {
@@ -676,6 +860,49 @@
             "schema": {
               "name": "schema",
               "type": "any"
+            },
+            "metaurl": {
+              "name": "metaurl",
+              "type": "url",
+              "readonly": true,
+              "immutable": true,
+              "required": true
+            },
+            "meta": {
+              "name": "meta",
+              "type": "object",
+              "attributes": {
+                "*": {
+                  "name": "*",
+                  "type": "any"
+                }
+              }
+            },
+            "versionsurl": {
+              "name": "versionsurl",
+              "type": "url",
+              "readonly": true,
+              "immutable": true,
+              "required": true
+            },
+            "versionscount": {
+              "name": "versionscount",
+              "type": "uinteger",
+              "readonly": true,
+              "required": true
+            },
+            "versions": {
+              "name": "versions",
+              "type": "map",
+              "item": {
+                "type": "object",
+                "attributes": {
+                  "*": {
+                    "name": "*",
+                    "type": "any"
+                  }
+                }
+              }
             }
           },
           "metaattributes": {
