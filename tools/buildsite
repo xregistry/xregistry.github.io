@@ -3,7 +3,7 @@
 set -e
 
 # export IMAGE=ghcr.io/xregistry/xrserver-all
-export IMAGE=xrserver-all
+export IMAGE=ghcr.io/xregistry/xrserver-all
 export XR_SERVER=localhost:8383
 export VERBOSE="-v"
 export VER=v1.0-rc1
@@ -21,7 +21,7 @@ docker ps | grep sitexreg > /dev/null 2>&1 || (
     echo "# Starting xreg server, and waiting for it to be ready"
     docker rm -f sitexreg > /dev/null 2>&1 || true
     docker run -dti --name sitexreg -p 8383:8080 $IMAGE > /dev/null
-    while ! xr get -s $XR_SERVER > /dev/null 2>&1 ; do sleep 1 ; done
+    while ! curl --silent --fail http://$XR_SERVER ; do sleep 1 ; done
 )
 
 echo "# Deleting any old 'xregistryspecs' that might be there"
