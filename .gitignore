@@ -1,0 +1,17 @@
+# Jekyll generated files
+_site/
+.sass-cache/
+.jekyll-metadata
+
+# Bundler config
+.bundle
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+
+__pycache__/
+tools/__pycache__

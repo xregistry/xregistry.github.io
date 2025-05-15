@@ -2,3 +2,668 @@
 ---
 
 @import "{{ site.theme }}";
+
+/* Custom styles for xRegistry */
+
+/* Header .feature-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 24px;
+  margin-bottom: 30px;
+}nner customization */
+#header_wrap {
+  background: #151d28;
+  background: -moz-linear-gradient(135deg, #1e2b3a, #0d1117);
+  background: -webkit-linear-gradient(135deg, #1e2b3a, #0d1117);
+  background: -ms-linear-gradient(135deg, #1e2b3a, #0d1117);
+  background: -o-linear-gradient(135deg, #1e2b3a, #0d1117);
+  background: linear-gradient(135deg, #1e2b3a, #0d1117);
+  position: relative;
+  z-index: 5;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+
+#header_wrap:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('data:image/svg+xml;utf8,<svg width="60" height="60" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="100" height="100" fill="none" stroke="%23ffffff" stroke-width="1" stroke-opacity="0.05"/></svg>');
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+#header_wrap .inner {
+  padding: 20px 10px;
+  padding-top: 60px; /* Add space at the top to clear the GitHub button */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+#header_wrap .header-content {
+  display: flex;
+  flex-direction: column;
+}
+
+#project_title {
+  margin-top: 5px;
+}
+
+/* Logo styles */
+.header-logo {
+  max-width: 280px;
+  height: auto;
+  margin: 0;
+  display: block;
+  transition: transform 0.3s ease;
+  filter: none; /* Ensure no filters are applied */
+  border: none; /* Ensure no border is applied */
+  box-shadow: none !important; /* Ensure no box shadow is applied */
+}
+
+.header-logo:hover {
+  transform: scale(1.02);
+  filter: none; /* Ensure no filters are applied on hover state */
+  border: none; /* Ensure no border is applied even on hover */
+  box-shadow: none !important; /* Ensure no box shadow is applied even on hover */
+}
+
+/* Layout styles */
+.main-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+.section-column {
+  flex: 1 1 45%;
+  min-width: 300px;
+}
+
+/* Feature boxes */
+.feature-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.feature-box {
+  min-width: auto;
+  background-color: #f8f8f8;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 0px;
+  border-left: 4px solid #2879d0;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  z-index: 1;
+}
+
+.feature-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  border-left-width: 5px;
+}
+
+.feature-box::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #2879d0, rgba(40, 121, 208, 0.4));
+  border-radius: 0 0 5px 5px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.feature-box:hover::after {
+  opacity: 1;
+}
+
+.feature-box h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: #2879d0;
+  display: flex;
+  align-items: center;
+  font-size: 1.1rem;
+}
+
+.feature-box h3 i {
+  margin-right: 12px; /* Increased from 10px */
+  font-size: 1.2em;
+  width: 30px; /* Set fixed width for icons */
+  text-align: center;
+  color: #2879d0;
+  opacity: 0.9;
+  padding: 4px; /* Added padding around icons */
+}
+
+.feature-box p {
+  margin-bottom: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* Section headings */
+.section-heading {
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 10px;
+}
+
+.section-heading i {
+  margin-right: 10px;
+  color: #2879d0;
+}
+
+/* Use cases */
+.use-case {
+  background-color: #f8f8f8;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.use-case i {
+  margin-right: 15px;
+  font-size: 1.5em;
+  color: #2879d0;
+  padding-top: 3px;
+}
+
+.use-case-content {
+  flex: 1;
+}
+
+.use-case-content h4 {
+  margin-top: 0;
+}
+
+/* Representation */
+.representation {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  background-color: #fafafa;
+  display: flex;
+  align-items: flex-start;
+}
+
+.representation i {
+  font-size: 2em;
+  margin-right: 15px;
+  color: #2879d0;
+}
+
+.representation-content {
+  flex: 1;
+}
+
+.representation-content h4 {
+  margin-top: 0;
+}
+
+/* Documentation links */
+.docs-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.docs-link {
+  flex: 1 1 45%;
+  min-width: 280px;
+  padding: 15px;
+  background-color: #f8f8f8;
+  border-radius: 5px;
+  border-left: 3px solid #2879d0;
+}
+
+.docs-link h4 {
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+}
+
+.docs-link h4 i {
+  margin-right: 10px;
+  color: #2879d0;
+}
+
+/* CTA button */
+.cta-button {
+  display: inline-block;
+  background-color: #2879d0;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-top: 10px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.cta-button:hover {
+  background-color: #1e5f9e;
+  text-decoration: none;
+  color: white;
+}
+
+/* Hero section */
+#hero {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 0;
+  gap: 20px;
+}
+
+.hero-content {
+  flex: 1 1 450px;
+}
+
+.hero-visual {
+  flex: 1 1 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-image {
+  max-width: 100%;
+  height: auto;
+  filter: none;
+}
+
+.hero-content h1 {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+  line-height: 1.2;
+  color: #333;
+}
+
+.hero-tagline {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+/* CTA Buttons */
+.primary-cta-button {
+  display: inline-block;
+  background-color: #2879d0;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.primary-cta-button:hover {
+  background-color: #1e5f9e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  text-decoration: none;
+  color: white;
+}
+
+.secondary-cta-button {
+  display: inline-block;
+  background-color: #f5f5f5;
+  color: #333;
+  padding: 12px 24px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border: 1px solid #ddd;
+}
+
+.secondary-cta-button:hover {
+  background-color: #e5e5e5;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  text-decoration: none;
+}
+
+/* Intro text */
+.intro-text {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 30px; /* Increased from 20px */
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Problem-Solution Section */
+.problem-solution {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 35px;
+}
+
+.problem, .solution {
+  flex: 1 1 45%;
+  min-width: 280px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.problem {
+  background-color: #fff5f5;
+  border-left: 4px solid #e53e3e;
+}
+
+.solution {
+  background-color: #f0fff4;
+  border-left: 4px solid #38a169;
+}
+
+.problem h3, .solution h3 {
+  display: flex;
+  align-items: center;
+  margin-top: 0;
+  color: #333;
+}
+
+.problem h3 i {
+  color: #e53e3e;
+  margin-right: 10px;
+}
+
+.solution h3 i {
+  color: #38a169;
+  margin-right: 10px;
+}
+
+/* Tabbed Content */
+.tabbed-content {
+  margin: 40px 0;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 1px solid #eee;
+  background-color: #f9f9f9;
+}
+
+.tab-button {
+  padding: 15px 25px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  color: #666;
+  transition: all 0.3s;
+  border-bottom: 3px solid transparent;
+}
+
+.tab-button.active {
+  color: #2879d0;
+  border-bottom-color: #2879d0;
+  background-color: white;
+}
+
+.tab-button:hover:not(.active) {
+  background-color: #f0f0f0;
+}
+
+.tab-content {
+  display: none;
+  padding: 25px;
+}
+
+.tab-content.active {
+  display: block;
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Card Design */
+.card-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 40px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.card {
+    width: 100%;
+    display: flex;
+    flex-direction: row; /* Changed from column to row so that the icon and content stack horizontally */
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+    background-color: white;
+    border: 1px solid #eee;
+    margin: 5px 0;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 10px rgba(0,0,0,0.08);
+}
+
+.card-icon {
+  padding: 15px;
+  font-size: 1.5em;
+  color: white;
+  background-color: #2879d0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 50px;
+}
+
+.card-content {
+  padding: 18px; /* Increased from 15px */
+  flex: 1;
+  background-color: white;
+}
+
+.card-content h4 {
+  font-size: 1rem;
+  margin-top: 0;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.card-content p {
+  font-size: 0.85rem;
+  margin: 0;
+  color: #666;
+}
+
+.badge {
+  display: inline-block;
+  background-color: #f0f0f0;
+  font-size: 0.75rem;
+  padding: 3px 8px;
+  border-radius: 3px;
+  margin-top: 10px;
+  color: #666;
+}
+
+/* Documentation Grid */
+.docs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 25px;
+  margin-bottom: 35px;
+}
+
+.docs-card {
+  text-decoration: none;
+  color: inherit;
+  background-color: white;
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+  transition: all 0.3s;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.docs-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+  text-decoration: none;
+}
+
+.docs-card i {
+  font-size: 2em;
+  color: #2879d0;
+  margin-bottom: 15px;
+}
+
+.docs-card h4 {
+  font-size: 1rem;
+  margin: 0 0 10px 0;
+  color: #333;
+}
+
+.docs-card p {
+  font-size: 0.85rem;
+  margin: 0;
+  color: #666;
+}
+
+/* CTA Section */
+.cta-section {
+  background-color: #f9f9f9;
+  padding: 25px;
+  text-align: center;
+  border-radius: 8px;
+  margin: 25px 0;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+}
+
+.cta-section h2 {
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.cta-section h2 i {
+  margin-right: 10px;
+  color: #2879d0;
+}
+
+.cta-section p {
+  max-width: 600px;
+  margin: 0 auto 25px auto;
+  color: #666;
+}
+
+/* Typography improvements */
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-size: 0.95rem; /* Reduced font size */
+}
+
+/* Compact spacing for all sections */
+section {
+  padding: 35px 0;
+  margin-bottom: 25px;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .feature-box, .docs-link, .section-column {
+    flex: 1 1 100%;
+  }
+}
+
+/* GitHub button positioning */
+#forkme_banner, .github-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+  margin: 0;
+}
+
+/* Ensure headline has appropriate spacing to avoid overlap */
+#project_tagline {
+  width: 100%; /* Ensure full width */
+  margin-right: 0; /* No margin needed since we're stacking vertically */
+  max-width: 100%; /* Full width available */
+}
+
+/* View on GitHub button */
+.view-on-github {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 100;
+  background-color: #0366d6;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 0 0 0 4px;
+  text-decoration: none;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s;
+}
+
+.view-on-github:hover {
+  background-color: #024ea7;
+  text-decoration: none;
+  color: white;
+}
+
+.view-on-github i {
+  margin-right: 5px;
+}
