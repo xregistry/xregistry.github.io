@@ -1,4 +1,5 @@
 {
+  "$schema": "https://xregistry.io/xregistryspecs/core-v1/schemas/model.schema.json",
   "groups": {
     "messagegroups": {
       "$include": "../message/model.json#/groups/messagegroups"
@@ -817,7 +818,8 @@
           "type": "array",
           "description": "The message groups that are supported by this endpoint",
           "item": {
-            "type": "xid"
+            "type": "xid",
+            "target": "/messagegroups/messages"
           }
         },
         "*": {
@@ -825,11 +827,7 @@
           "type": "any"
         }
       },
-      "resources": {
-        "messages": {
-          "$include": "../message/model.json#/groups/messagegroups/resources/messages"
-        }
-      }
+      "ximportresources": [ "/messagegroups/messages" ]
     }
   }
 }

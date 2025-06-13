@@ -2,7 +2,8 @@
   "apis": [
     "/capabilities",
     "/export",
-    "/model"
+    "/model",
+    "/modelsource"
   ],
   "flags": null,
   "mutable": null,

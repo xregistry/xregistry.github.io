@@ -1,10 +1,10 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2025-05-08T12:37:17.734146014Z",
+  "createdat": "2025-06-13T03:19:59.279749728Z",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/contoso-erp-jsons07.xreg.json/meta",
-  "modifiedat": "2025-05-08T12:37:17.734146014Z",
+  "modifiedat": "2025-06-13T03:19:59.279749728Z",
   "sampleid": "contoso-erp-jsons07.xreg.json",
   "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/contoso-erp-jsons07.xreg.json",
   "versionid": "v1.0-rc1",

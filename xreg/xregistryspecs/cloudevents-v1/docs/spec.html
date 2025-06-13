@@ -1,19 +1,100 @@
-<h1 id="cloudevents-registry-service---version-10-rc1"><a class="anchor" href="#cloudevents-registry-service---version-10-rc1">☍</a> CloudEvents Registry Service - Version 1.0-rc1</h1>
-<h2 id="abstract"><a class="anchor" href="#abstract">☍</a> Abstract</h2>
-<p>The CloudEvents Registry is a universal catalog and discovery metadata format
+<html>
+<head>
+<style>
+  .anchor {
+    font-size: 12px ;
+    vertical-align: middle ;
+    text-decoration: none ;
+  }
+  body {
+    font-family: sans-serif ;
+    font-size: 16px ; 
+    line-height: 1.5 ; 
+    padding: 0 20 0 30 ; 
+  }
+  pre {
+    font-size: 85% ;
+    background-color: #f2f2f2 ;
+    padding: 12px ;
+  }
+  code {
+    font-size: 85% ;
+    background-color: #f2f2f2 ;
+    padding: .2em .4em ;
+  }
+  pre code {
+    font-size: inherit ;
+    background-color: inherit ;
+    padding: 0px ;
+  }
+  table {
+    border: 1px solid lightgray ;
+    border-collapse: collapse ;
+    border-spacing: 0px ;
+    line-height: 24px ;
+  }
+  tr:nth-child(even) {
+    background-color: #f2f2f2 ;
+  }
+  td,th {
+    border: 1px solid lightgray ;
+    padding: 5px ;
+  }
+  td code, th code {
+    font-size: inherit ;
+  }
+</style>
+</head>
+<h1 id="cloudevents-registry-service---version-10-rc1">CloudEvents Registry Service - Version 1.0-rc1 <a class="anchor" href="#cloudevents-registry-service---version-10-rc1">🔗</a></h1>
+<h2 id="abstract">Abstract <a class="anchor" href="#abstract">🔗</a></h2>
+<p>The &quot;CloudEvents Registry&quot; is a universal catalog and discovery metadata format
 as well as a metadata service API for messaging and eventing schemas,
 metaschemas, and messaging and eventing endpoints.</p>
-<h2 id="table-of-contents"><a class="anchor" href="#table-of-contents">☍</a> Table of Contents</h2>
+<h2 id="table-of-contents">Table of Contents <a class="anchor" href="#table-of-contents">🔗</a></h2>
 <ul>
+<li><a href="#cloudevents-registry-service---version-10-rc1">CloudEvents Registry Service - Version 1.0-rc1</a>
+<ul>
+<li><a href="#abstract">Abstract</a></li>
+<li><a href="#table-of-contents">Table of Contents</a></li>
+<li><a href="#overview">Overview</a></li>
 <li><a href="#notations-and-terminology">Notations and Terminology</a>
 <ul>
 <li><a href="#notational-conventions">Notational Conventions</a></li>
 </ul>
 </li>
-<li><a href="#cloudevents-registry">CloudEvents Registry</a></li>
+<li><a href="#cloudevents-registry">CloudEvents Registry</a>
+<ul>
+<li><a href="#file-format">File format</a></li>
 </ul>
-<h2 id="notations-and-terminology"><a class="anchor" href="#notations-and-terminology">☍</a> Notations and Terminology</h2>
-<h3 id="notational-conventions"><a class="anchor" href="#notational-conventions">☍</a> Notational Conventions</h3>
+</li>
+<li><a href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="overview">Overview <a class="anchor" href="#overview">🔗</a></h2>
+<p>The &quot;CloudEvents Registry&quot; is a universal catalog and discovery metadata format,
+as well as a metadata service API for messaging and eventing schemas,
+metaschemas, and messaging and eventing endpoints.</p>
+<p>The registry is a composite xRegistry model that combines the <a href="../schema/spec.md">Schema
+Registry</a>, the <a href="../message/spec.md">Message Definitions
+Registry</a>, and the <a href="../endpoint/spec.md">Endpoint Registry</a>
+into a single, unified metadata model. This model can be used to describe
+messaging and eventing endpoints, their messages, and the schemas of the
+messages' payloads in a single metadata document or via an API.</p>
+<p>As such, this specification builds upon all those specifications for its
+definitions and demonstrates how they can be used together in a single metadata
+model.</p>
+<p>The name &quot;CloudEvents Registry&quot; indicates that the registry is primarily
+motivated by the development of CloudEvents-based event flows, but it is not
+limited to CloudEvents. It can be used to describe any asynchronous messaging or
+eventing endpoint and its messages, including endpoints that do not use
+CloudEvents at all. The <a href="../message/spec.md#metadata-envelopes-and-message-protocols">Message
+Formats</a> section
+therefore describes not only the attribute meta-schema for CloudEvents, but also
+meta-schemas for the native message envelopes of MQTT, AMQP, and other messaging
+protocols.</p>
+<h2 id="notations-and-terminology">Notations and Terminology <a class="anchor" href="#notations-and-terminology">🔗</a></h2>
+<h3 id="notational-conventions">Notational Conventions <a class="anchor" href="#notational-conventions">🔗</a></h3>
 <p>The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;, &quot;SHOULD&quot;,
 &quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;, &quot;MAY&quot;, and &quot;OPTIONAL&quot; in this document are to be
 interpreted as described in <a href="https://tools.ietf.org/html/rfc2119">RFC 2119</a>.</p>
@@ -31,7 +112,7 @@ and <code>+</code> means the preceding attribute MUST appear at least once. The 
 of the <code>#</code> character means the remaining portion of the line is a comment.
 Whitespace characters in the JSON snippets are used for readability and are
 not normative.</p>
-<h2 id="cloudevents-registry"><a class="anchor" href="#cloudevents-registry">☍</a> CloudEvents Registry</h2>
+<h2 id="cloudevents-registry">CloudEvents Registry <a class="anchor" href="#cloudevents-registry">🔗</a></h2>
 <p>The CloudEvents Registry is a universal catalog and discovery metadata format
 as well as a metadata service API for messaging and eventing schemas,
 metaschemas, and messaging and eventing endpoints.</p>
@@ -39,25 +120,25 @@ metaschemas, and messaging and eventing endpoints.</p>
 implemented separately or in combination.</p>
 <ul>
 <li>The <a href="../schema/spec.md">Schema Registry</a> specification describes the metadata
-description of payload schemas for events and messages. The schema registry is
-universally applicable to any scenario where collaborating parties share
+description of payload schemas for events and messages. The schema registry
+is universally applicable to any scenario where collaborating parties share
 structured data that is defined by formal schemas. For instance, when storing
 Protobuf encoded structured data in a cloud file store, you might place a
-schema registry in file form in the parent directory, which formally organizes
-and documents all versions of all Protobuf schemas that are used in the
-directory.</li>
+schema registry in file form in the parent directory, which formally
+organizes and documents all versions of all Protobuf schemas that are used
+in the directory.</li>
 <li>The <a href="../message/spec.md">Message Definitions Registry</a> specification
-describes the metadata description of events and messages. The payload schemas
-for events and messages can be embedded in the definition, reference an
-external schema document, or can be referenced into the schema registry. The
-message definitions registry is universally applicable to any asynchronous
-messaging and eventing scenario. You might define a group of definitions that
-describe precisely which messages, with which metadata, are permitted to flow
-into a channel and can thus be expected by consumers of that channel and then
-associate that definition group with a topic or queue in your eventing or
-messaging infrastructure. That association might be a metadata attribute on
-the topic or queue in the messaging infrastructure that embeds the metadata or
-points to it.</li>
+describes the metadata description of events and messages. The payload
+schemas for events and messages can be embedded in the definition, reference
+an external schema document, or can be referenced into the schema registry.
+The message definitions registry is universally applicable to any
+asynchronous messaging and eventing scenario. You might define a group of
+definitions that describe precisely which messages, with which metadata, are
+permitted to flow into a channel and can thus be expected by consumers of
+that channel and then associate that definition group with a topic or queue
+in your eventing or messaging infrastructure. That association might be a
+metadata attribute on the topic or queue in the messaging infrastructure
+that embeds the metadata or points to it.</li>
 <li>The <a href="../endpoint/spec.md">Endpoint Registry</a> specification defines the
 metadata description of network endpoints that accept or emit events and
 messages. The endpoint registry is a formal description of associations of
@@ -68,13 +149,13 @@ or as a reference into the message definitions registry.</li>
 </ul>
 <p>The metadata model is structured such that network endpoint information and
 message metadata and payload schemas can be described compactly in a single
-metadata object (and therefore as a single document) in the simplest case or can
-be spread out and managed across separate registry products in a sophisticated
-large-enterprise scenario.</p>
+metadata object (and therefore as a single document) in the simplest case or
+can be spread out and managed across separate registry products in a
+sophisticated large-enterprise scenario.</p>
 <p>The following is an exemplary, compact definition of an MQTT 5.0 consumer
-endpoint with a single, embedded message definition using an embedded Protobuf 3
-schema for its payload.</p>
-<pre><code class="language-yaml">{
+endpoint with a single, embedded message definition using an embedded Protobuf
+3 schema for its payload.</p>
+<pre><code class="language-json">{
   &quot;$schema&quot;: &quot;https://cloudevents.io/schemas/registry&quot;,
   &quot;specversion&quot;: &quot;1.0-rc1&quot;,
   &quot;registryid&quot;: &quot;Example Registry&quot;,
@@ -101,10 +182,10 @@ schema for its payload.</p>
       &quot;config&quot;: {
         &quot;protocol&quot;: &quot;MQTT/5.0&quot;,
         &quot;endpoints&quot;: [
-            { &quot;uri&quot;: &quot;mqtt://mqtt.example.com:1883&quot; }
+          { &quot;uri&quot;: &quot;mqtt://mqtt.example.com:1883&quot; }
         ],
         &quot;options&quot;: {
-            &quot;topic&quot;: &quot;{deviceid}/telemetry&quot;
+          &quot;topic&quot;: &quot;{deviceid}/telemetry&quot;
         }
       },
 
@@ -146,8 +227,8 @@ schema for its payload.</p>
           },
 
           &quot;dataschemaformat&quot;: &quot;Protobuf/3.0&quot;,
-          &quot;dataschema&quot;: &quot;syntax = \&quot;proto3\&quot;; message Metrics { float metric = 1; } }&quot;,
-          &quot;datacontenttype&quot;: &quot;Protobuf/3.0&quot;,
+          &quot;dataschema&quot;: &quot;syntax = \&quot;proto3\&quot;; message Metrics { float metric = 1; }&quot;,
+          &quot;datacontenttype&quot;: &quot;application/x-protobuf&quot;,
 
           &quot;metaurl&quot;: &quot;https://example.com/endpoints/com.example.telemetry/messages/com.example.telemetry/meta&quot;,
           &quot;versionsurl&quot;: &quot;https://example.com/endpoints/com.example.telemetry/messages/com.example.telemetry/versions&quot;,
@@ -159,9 +240,9 @@ schema for its payload.</p>
 }
 </code></pre>
 <p>The same metadata can be expressed by spreading the metadata across the message
-definition and schema registries, which makes the definitions reusable for other
-scenarios:</p>
-<pre><code class="language-yaml">{
+definition and schema registries, which makes the definitions reusable for
+other scenarios:</p>
+<pre><code class="language-json">{
   &quot;$schema&quot;: &quot;https://cloudevents.io/schemas/registry&quot;,
   &quot;specversion&quot;: &quot;1.0-rc1&quot;,
   &quot;registryid&quot;: &quot;Example Registry&quot;,
@@ -206,7 +287,7 @@ scenarios:</p>
   &quot;messagegroupscount&quot;: 1,
   &quot;messagegroups&quot;: {
     &quot;com.example.telemetryEvents&quot;: {
-      &quot;messageid&quot;: &quot;com.example.telemetryEvents&quot;,
+      &quot;messagegroupid&quot;: &quot;com.example.telemetryEvents&quot;,
       &quot;self&quot;: &quot;https://example.com/messagegroups/com.example.telemetryEvents&quot;,
       &quot;xid&quot;: &quot;/messagegroups/com.example.telemetryEvents&quot;,
       &quot;epoch&quot;: 3,
@@ -251,8 +332,8 @@ scenarios:</p>
           },
 
           &quot;dataschemaformat&quot;: &quot;Protobuf/3.0&quot;,
-          &quot;dataschemauri&quot;: &quot;#/schemagroups/com.example.telemetry/schema/com.example.telemetrydata/versions/1.0&quot;,
-          &quot;datacontenttype&quot;: &quot;Protobuf/3.0&quot;,
+          &quot;dataschemauri&quot;: &quot;#/schemagroups/com.example.telemetry/schemas/com.example.telemetrydata/versions/1.0&quot;,
+          &quot;datacontenttype&quot;: &quot;application/x-protobuf&quot;,
 
           &quot;metaurl&quot;: &quot;https://example.com/endpoints/com.example.telemetry/messages/com.example.telemetry/meta&quot;,
           &quot;versionsurl&quot;: &quot;https://example.com/endpoints/com.example.telemetry/messages/com.example.telemetry/versions&quot;,
@@ -262,6 +343,7 @@ scenarios:</p>
     }
   },
 
+  &quot;schemagroupsurl&quot;: &quot;https://example.com/schemagroups&quot;,
   &quot;schemagroupscount&quot;: 1,
   &quot;schemagroups&quot;: {
     &quot;com.example.telemetry&quot;: {
@@ -272,13 +354,14 @@ scenarios:</p>
       &quot;createdat&quot;: &quot;2024-04-30T12:00:00Z&quot;,
       &quot;modifiedat&quot;: &quot;2024-04-31T12:00:00Z&quot;,
 
+      &quot;schemasurl&quot;: &quot;https://example.com/schemagroups/com.example.telemetry/schemas&quot;,
       &quot;schemascount&quot;: 1,
       &quot;schemas&quot;: {
         &quot;com.example.telemetrydata&quot;: {
           &quot;schemaid&quot;: &quot;com.example.telemetrydata&quot;,
           &quot;versionid&quot;: &quot;1.0&quot;,
-          &quot;self&quot;: &quot;https://example.com/schemagroups/com.example.telemetry/schemas&quot;,
-          &quot;xid&quot;: &quot;/schemagroups/com.example.telemetry/schemas&quot;,
+          &quot;self&quot;: &quot;https://example.com/schemagroups/com.example.telemetry/schemas/com.example.telemetrydata&quot;,
+          &quot;xid&quot;: &quot;/schemagroups/com.example.telemetry/schemas/com.example.telemetrydata&quot;,
           &quot;epoch&quot;: 5,
           &quot;isdefault&quot;: true,
           &quot;description&quot;: &quot;device telemetry event data&quot;,
@@ -289,9 +372,9 @@ scenarios:</p>
           &quot;format&quot;: &quot;Protobuf/3.0&quot;,
           &quot;schema&quot;: &quot;syntax = \&quot;proto3\&quot;; message Metrics { float metric = 1;}&quot;,
 
-          &quot;metaurl&quot;: &quot;https://example.com/schemagroups/com.example.telemetry/schemas/meta&quot;,
+          &quot;metaurl&quot;: &quot;https://example.com/schemagroups/com.example.telemetry/schemas/com.example.telemetrydata/meta&quot;,
           &quot;versionscount&quot;: 1,
-          &quot;versionsurl&quot;: &quot;https://example.com/schemagroups/com.example.telemetry/schemas/versions&quot;
+          &quot;versionsurl&quot;: &quot;https://example.com/schemagroups/com.example.telemetry/schemas/com.example.telemetrydata/versions&quot;
         }
       }
     }
@@ -301,7 +384,7 @@ scenarios:</p>
 <p>If we assume the message definitions and schemas to reside at an API endpoint,
 an endpoint definition might just reference the associated message definition
 group with a deep link to the respective object in the service:</p>
-<pre><code class="language-yaml">{
+<pre><code class="language-json">{
   &quot;$schema&quot;: &quot;https://cloudevents.io/schemas/registry&quot;,
   &quot;specversion&quot;: &quot;1.0-rc1&quot;,
   &quot;registryid&quot;: &quot;Example Registry&quot;,
@@ -356,32 +439,34 @@ link will first reference the file and then the object within the file, using
         # ... details ...
       },
 
-      &quot;messagegroups&quot;: [ &quot;https://rawdata.repos.example.com/myorg/myproject/main/example.telemetryEvents.cereg#/definitiongroups/com.example.telemetryEvents&quot; ]
+      &quot;messagegroups&quot;: [ &quot;https://rawdata.repos.example.com/myorg/myproject/main/example.telemetryEvents.cereg#/messagegroups/com.example.telemetryEvents&quot; ]
     }
   }
 }
 </code></pre>
 <p>All other references to other objects in the registry can be expressed in the
 same way.</p>
-<p>While the CloudEvents Registry is primarily motivated by enabling development of
-CloudEvents-based event flows, the registry is not limited to CloudEvents. It
-can be used to describe any asynchronous messaging or eventing endpoint and its
-messages, including endpoints that do not use CloudEvents at all. The <a href="../message/spec.md#metadata-envelopes-and-message-protocols">Message
+<p>While the CloudEvents Registry is primarily motivated by enabling development
+of CloudEvents-based event flows, the registry is not limited to CloudEvents.
+It can be used to describe any asynchronous messaging or eventing endpoint and
+its messages, including endpoints that do not use CloudEvents at all. The
+<a href="../message/spec.md#metadata-envelopes-and-message-protocols">Message
 Formats</a> section
-therefore not only describes the attribute meta-schema for CloudEvents, but also
-meta-schemas for the native message envelopes of MQTT, AMQP, and other messaging
-protocols.</p>
+therefore not only describes the attribute meta-schema for CloudEvents, but
+also meta-schemas for the native message envelopes of MQTT, AMQP, and other
+messaging protocols.</p>
 <p>The registry is designed to be extensible to support any structured data
 encoding and related schemas for message or event payloads. The <a href="../schema/spec.md#schema-formats">Schema
 Formats</a> section describes the meta-schema
 for JSON Schema, XML Schema, Apache Avro schema, and Protobuf schema.</p>
-<h3 id="file-format"><a class="anchor" href="#file-format">☍</a> File format</h3>
+<h3 id="file-format">File format <a class="anchor" href="#file-format">🔗</a></h3>
 <p>A CloudEvents Registry can be implemented using the Registry API or with plain
 text files.</p>
 <p>When using the file-based model, files with the extension <code>.cereg</code> use JSON
 encoding. Files with the extension <code>.cereg.yaml</code> or <code>.cereg.yml</code> use YAML
 encoding. The formal JSON schema for the file format is defined in the
-<a href="../cloudevents/schemas/document-schema.json">CloudEvents Registry Document Schema</a>,
+<a href="../cloudevents/schemas/document-schema.json">CloudEvents Registry Document
+Schema</a>,
 which implements the Registry format and the CloudEvents Registry format.</p>
 <p>The media-type for the file format is <code>application/cloudevents-registry+json</code>
 for the JSON encoding and <code>application/cloudevents-registry+yaml</code> for the YAML
@@ -401,9 +486,9 @@ embedded or referenced. Any of the three sub-registries MAY be omitted.</p>
   &quot;endpointscount&quot;: INT,
   &quot;endpoints&quot;: { ... },
 
-  &quot;definitiongroupsurl&quot;: &quot;URL&quot;,
-  &quot;definitiongroupscount&quot;: INT,
-  &quot;definitiongroups&quot;: { ... },
+  &quot;messagegroupsurl&quot;: &quot;URL&quot;,
+  &quot;messagegroupscount&quot;: INT,
+  &quot;messagegroups&quot;: { ... },
 
   &quot;schemagroupsurl&quot;: &quot;URL&quot;,
   &quot;schemagroupscount&quot;: INT,
@@ -413,4 +498,6 @@ embedded or referenced. Any of the three sub-registries MAY be omitted.</p>
 <p>While the file structure leads with endpoints followed by definition groups and
 then schema groups by convention, the order of the sub-registries is not
 significant.</p>
-<h2 id="references"><a class="anchor" href="#references">☍</a> References</h2>
+<h2 id="references">References <a class="anchor" href="#references">🔗</a></h2>
+
+</html>

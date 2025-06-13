@@ -60,6 +60,33 @@ context of event-driven systems. The following subsections provide a more
 specific overview of how xRegistry can be used to address common challenges in
 the event-driven space.
 
+### Why build something new?
+
+There are numerous metadata registries available today. Several schema
+registries exist. There are standards for container image registries, package
+registries, and API registries. When this effort was started, there was no
+registry for the particular use case of managing metadata about events and their
+endpoints. The CloudEvents project had already defined a schema registry API to
+complement the `dataschema` attribute of CloudEvents, which the team sought to
+extend.
+
+As the project evolved, it became clear that the specification needed to be more
+generic to accommodate a wider range of use cases, which is why the xRegistry
+specification was created. The result is a symmetric API and document format
+that can be used to manage and discover the full metadata graph of a system,
+given models that declare the respective resource types.
+
+Existing registry standards like OCI, Maven, or NPM can indeed be projected into
+the xRegistry resource model shape, allowing for a consistent way to manage
+metadata about these resources and, most importantly, to enable
+cross-referencing between these diverse resources. A container image contains an
+application made available as a package that exposes an endpoint that can accept
+events whose payloads have particular schemas. The xRegistry model allows all
+these resources and their relationships to be expressed in a single model, and
+it can yet leave the authoritative management of the individual resources to
+the respective registries as those can be proxied with an xRegistry API or
+import/exported into an xRegistry representation.
+
 ### Discovery
 
 One of the pain points of event-driven systems is the need to create and
@@ -416,8 +443,8 @@ variable or structure property names - they're usually just stored as
 
 The "delete" operation typically has two variants:
 
-- DELETE .../ID[?setdefaultversionid=vID]
-- DELETE .../COLLECTION[?setdefaultversionid=vID]
+- `DELETE .../<ID>[?setdefaultversionid=VID]`
+- `DELETE .../<COLLECTION>[?setdefaultversionid=VID]`
 
 where the first will delete a single entity, and the second can be used to
 delete multiple entities. In the second case there are a couple of design
@@ -433,12 +460,12 @@ points worth noting:
   or never existed at all, then rather than generating an error (e.g. a `404`),
   the server will ignore this condition and continue processing the list.
   This is because the net result will be what the user is asking for.
-  Note, that this is different from `DELETE ../ID` case where if the
+  Note, that this is different from `DELETE ../<ID>` case where if the
   referenced entity can not be found then a `404` must be generated.
 - when the `?setdefaultversionid` query parameter is specified (when
   deleting Version) then it will be applied after all requested items have
   been deleted successfully. It can be used even if the current "default"
-  Version isn't being deleted. Note that a `404` in the `DELETE .../ID` case
+  Version isn't being deleted. Note that a `404` in the `DELETE .../<ID>` case
   is an error and no changes to the "default" Version will occur.
 
 ### Detection of Referenced Resources
@@ -562,11 +589,11 @@ sensitivity rules in the specification.
 - Groups and Resources must be lower case.
   The plural version of the Group and Resource type names can appear in URLs
   (which is case-sensitive). Additionally, the plural variant can also appear
-  in attribute names (e.g. COLLECTION attributes), and as discussed above,
+  in attribute names (e.g. `<COLLECTION>*` attributes), and as discussed above,
   attributes must be lower case.
 
   The singular version of the Group and Resource type names, can also appear
-  in the RESOURCE attributes, which (again) means they must be lower case.
+  in the `<RESOURCE>*` attributes, which (again) means they must be lower case.
 
   For these reasons, both the plural and singular names of Group and Resource
   types must be defined as lower case.
@@ -615,7 +642,7 @@ the length of the word `count`.
 # Why must Group type and Resource type names be valid attribute names?
 
 Since Group type and Resource type names will appear as attribute names (e.g.
-`GROUPScount` and `RESOURCEurl`), the character set (and length) of their
+`<GROUPS>count` and `<RESOURCE>url`), the character set (and length) of their
 names need to be restricted in the same way as a attribute names.
 
 # Choosing unique Group and Resource names
@@ -828,3 +855,93 @@ When doing so it is recommended to use the same attribute definition as
 defined in the core specification for consistency. It is worth noting that
 the Endpoint [specification](../endpoint/spec.md) does exactly this to
 indicate when an Endpoint (i.e. a Group) is deprecated.
+
+## The `format` attribute in the Schema spec
+
+The `format` attribute in the Schema spec is required when the
+`compatibility` attribute is set to a value other than `none`. This may
+appear to be overly restrictive, especially if your Registry implementation
+only supports a single format. The reason for making this field required, is
+to ease interoperability of registries through export-import functionality.
+That means that when exporting a Schema Registry that only supports a single
+format, the `format` attribute will already be set, avoiding issues when
+importing this Registry into a server that may support multiple formats.
+
+## Problematic characters in attributes
+
+Certain attributes might be used for purposes outside of the scope of the
+xRegistry specification. For example, the `name` or ID-values might be used
+as a file name. While some care was taken to limit the allowable characters
+in some of these cases to the most common uses, not every possible use
+could be taken into account. Therefore, in situations where a value's allowable
+character set might be problematic (e.g. colon (`:`) in a file name on
+Windows), the tooling being used is expected to deal with any potential
+problems that might arise. For example, it may choose to convert or escape
+problematic characters. The specification makes no statement as to how
+these situations are handled, or even if they're supported. In other words,
+tooling might reject such cases, or force uses to use non-problematic
+characters.
+
+## Why do Resources have 3 levels of data?
+
+Resource attributes are split into 3 categories:
+
+- Resource level
+- Resource Meta level
+- Resource Version level
+
+which corresponds to the structure of the Resource object. In other words the
+Resource, serialized in JSON, appears like this:
+
+```yaml
+{
+  "<RESOURCE>id": ...,
+  # Resource level attributes appear here
+  # Additionally the "default" Version's attributes would appear here
+
+  "meta": {
+    "<RESOURCE>id": ...,
+    # Resource meta level attributes appear here
+  }
+
+  "versions": {
+    "<KEY>": {
+      "<RESOURCE>id": ...,
+      "versionid": ...
+      # Resource Version level attributes appear here
+    }
+  }
+}
+```
+
+"Resource level" attributes consist of two types:
+1 - Attributes that makes sense when the Resource is viewed as an alias for
+    the default Version of that Resource. So this would include all of the
+    default Version's attributes with the exception that any URLs referencing
+    the Version (e.g. `self`) would point to the Resource instead.
+2 - Attributes to help in the navigation of the Resource structure. This
+    includes the "meta" sub-object, the "metaurl" and the "versions"
+    collection related attributes.
+
+This allows for clients to interact with the Resource and the Resource's
+default Version almost interchangeably. Most notable difference are the extra
+attributes from group 2 above.
+
+"Resource Meta" level attributes are attributes that are global, and apply
+to the Resource itself and potentially to all Versions of the Resource.
+Such as the creation date of the Resource, or whether the Resource and its
+Versions are read-only. Ideally, these would be present at the Resource level
+but to avoid potential collisions with Version attributes, it was moved into
+the "meta" sub-object. Additionally, it's expected that the "meta" level
+attribute are not normally the most significant data of the Resource - that
+would be the Version attributes - and they will probably not be examined or
+changed nearly as often as the Version attributes.
+
+"Resource Version" level attributes, as the name implies, are attributes
+that can change on a per-Version basis. These are expected to be the main
+reason for the Resource to exist.
+
+The choice of when an attribute appears in the "meta" sub-object versus in the
+Version should be driven by whether the use cases being supported by the
+Resource type definition requires that attribute to be consistent across all
+Versions or have a Version-specific value.

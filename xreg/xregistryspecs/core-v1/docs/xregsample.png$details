@@ -1,0 +1,14 @@
+{
+  "ancestor": "v1.0-rc1",
+  "createdat": "2025-06-13T03:20:00.133216585Z",
+  "docid": "xregsample.png",
+  "epoch": 1,
+  "isdefault": true,
+  "metaurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/xregsample.png/meta",
+  "modifiedat": "2025-06-13T03:20:00.133216585Z",
+  "self": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/xregsample.png",
+  "versionid": "v1.0-rc1",
+  "versionscount": 1,
+  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/xregsample.png/versions",
+  "xid": "/xregistryspecs/core-v1/docs/xregsample.png"
+}

@@ -86,10 +86,6 @@ docker rm -f sitexreg > /dev/null
 
 rm -rf tmpspec
 
-IFS='|' lines=$(git diff -w | grep "^[-+]" | grep -v modifiedat | grep -v createdat | grep -v "/xreg/")
-if [[ "$lines" == "" ]]; then
-  echo "Nothing changed"
-else
-  echo "Changes:"
-  echo $lines
-fi
+echo "Changes:"
+git diff --name-only
+# git diff -w | grep "^[-+]" | grep -v modifiedat | grep -v createdat | grep -v "/xreg/"

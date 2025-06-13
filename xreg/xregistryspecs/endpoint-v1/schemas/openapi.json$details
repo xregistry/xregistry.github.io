@@ -1,0 +1,14 @@
+{
+  "ancestor": "v1.0-rc1",
+  "createdat": "2025-06-13T03:20:00.823727376Z",
+  "epoch": 1,
+  "isdefault": true,
+  "metaurl": "https://xregistry.io/xreg/xregistryspecs/endpoint-v1/schemas/openapi.json/meta",
+  "modifiedat": "2025-06-13T03:20:00.823727376Z",
+  "schemaid": "openapi.json",
+  "self": "https://xregistry.io/xreg/xregistryspecs/endpoint-v1/schemas/openapi.json",
+  "versionid": "v1.0-rc1",
+  "versionscount": 1,
+  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/endpoint-v1/schemas/openapi.json/versions",
+  "xid": "/xregistryspecs/endpoint-v1/schemas/openapi.json"
+}

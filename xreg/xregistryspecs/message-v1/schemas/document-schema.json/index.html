@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://xregistry.io/schema/messagegroups",
+  "$id": "https://xregistry.io/xreg/xregistryspecs/message-v1/schemas/document-schema.json",
   "properties": {
     "messagegroups": {
       "type": "object",
@@ -295,6 +295,31 @@
               },
               "required": [
                 "envelope"
+              ]
+            },
+            {
+              "anyOf": [
+                {
+                  "not": {
+                    "required": [
+                      "envelope"
+                    ]
+                  }
+                },
+                {
+                  "properties": {
+                    "envelope": {
+                      "not": {
+                        "enum": [
+                          "CloudEvents/1.0"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "envelope"
+                  ]
+                }
               ]
             }
           ]
@@ -1034,6 +1059,36 @@
               },
               "required": [
                 "protocol"
+              ]
+            },
+            {
+              "anyOf": [
+                {
+                  "not": {
+                    "required": [
+                      "protocol"
+                    ]
+                  }
+                },
+                {
+                  "properties": {
+                    "protocol": {
+                      "not": {
+                        "enum": [
+                          "AMQP/1.0",
+                          "MQTT/3.1.1",
+                          "MQTT/5.0",
+                          "KAFKA",
+                          "HTTP",
+                          "NATS"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "protocol"
+                  ]
+                }
               ]
             }
           ]

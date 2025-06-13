@@ -45,6 +45,10 @@
       "name": "documentation",
       "type": "url"
     },
+    "icon": {
+      "name": "icon",
+      "type": "url"
+    },
     "labels": {
       "name": "labels",
       "type": "map",
@@ -75,6 +79,17 @@
     "model": {
       "name": "model",
       "type": "object",
+      "readonly": true,
+      "attributes": {
+        "*": {
+          "name": "*",
+          "type": "any"
+        }
+      }
+    },
+    "modelsource": {
+      "name": "modelsource",
+      "type": "object",
       "attributes": {
         "*": {
           "name": "*",
@@ -99,7 +114,13 @@
       "name": "xregistryspecs",
       "type": "map",
       "item": {
-        "type": "object"
+        "type": "object",
+        "attributes": {
+          "*": {
+            "name": "*",
+            "type": "any"
+          }
+        }
       }
     }
   },
@@ -144,6 +165,10 @@
         },
         "documentation": {
           "name": "documentation",
+          "type": "url"
+        },
+        "icon": {
+          "name": "icon",
           "type": "url"
         },
         "labels": {
@@ -303,6 +328,10 @@
               "name": "documentation",
               "type": "url"
             },
+            "icon": {
+              "name": "icon",
+              "type": "url"
+            },
             "labels": {
               "name": "labels",
               "type": "map",
@@ -340,6 +369,28 @@
             "doc": {
               "name": "doc",
               "type": "any"
+            }
+          },
+          "resourceattributes": {
+            "docid": {
+              "name": "docid",
+              "type": "string",
+              "immutable": true,
+              "required": true
+            },
+            "self": {
+              "name": "self",
+              "type": "url",
+              "readonly": true,
+              "immutable": true,
+              "required": true
+            },
+            "xid": {
+              "name": "xid",
+              "type": "xid",
+              "readonly": true,
+              "immutable": true,
+              "required": true
             },
             "metaurl": {
               "name": "metaurl",
@@ -466,8 +517,8 @@
                   "name": "alternative",
                   "type": "url"
                 },
-                "docs": {
-                  "name": "docs",
+                "documentation": {
+                  "name": "documentation",
                   "type": "url"
                 },
                 "effective": {
@@ -563,6 +614,10 @@
               "name": "documentation",
               "type": "url"
             },
+            "icon": {
+              "name": "icon",
+              "type": "url"
+            },
             "labels": {
               "name": "labels",
               "type": "map",
@@ -600,6 +655,28 @@
             "sample": {
               "name": "sample",
               "type": "any"
+            }
+          },
+          "resourceattributes": {
+            "sampleid": {
+              "name": "sampleid",
+              "type": "string",
+              "immutable": true,
+              "required": true
+            },
+            "self": {
+              "name": "self",
+              "type": "url",
+              "readonly": true,
+              "immutable": true,
+              "required": true
+            },
+            "xid": {
+              "name": "xid",
+              "type": "xid",
+              "readonly": true,
+              "immutable": true,
+              "required": true
             },
             "metaurl": {
               "name": "metaurl",
@@ -726,8 +803,8 @@
                   "name": "alternative",
                   "type": "url"
                 },
-                "docs": {
-                  "name": "docs",
+                "documentation": {
+                  "name": "documentation",
                   "type": "url"
                 },
                 "effective": {
@@ -823,6 +900,10 @@
               "name": "documentation",
               "type": "url"
             },
+            "icon": {
+              "name": "icon",
+              "type": "url"
+            },
             "labels": {
               "name": "labels",
               "type": "map",
@@ -860,6 +941,28 @@
             "schema": {
               "name": "schema",
               "type": "any"
+            }
+          },
+          "resourceattributes": {
+            "schemaid": {
+              "name": "schemaid",
+              "type": "string",
+              "immutable": true,
+              "required": true
+            },
+            "self": {
+              "name": "self",
+              "type": "url",
+              "readonly": true,
+              "immutable": true,
+              "required": true
+            },
+            "xid": {
+              "name": "xid",
+              "type": "xid",
+              "readonly": true,
+              "immutable": true,
+              "required": true
             },
             "metaurl": {
               "name": "metaurl",
@@ -986,8 +1089,8 @@
                   "name": "alternative",
                   "type": "url"
                 },
-                "docs": {
-                  "name": "docs",
+                "documentation": {
+                  "name": "documentation",
                   "type": "url"
                 },
                 "effective": {

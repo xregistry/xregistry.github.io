@@ -1,4 +1,5 @@
 {
+  "$schema": "https://xregistry.io/xregistryspecs/core-v1/schemas/model.schema.json",
   "attributes": {
     "specversion": {
       "type": "string",
@@ -43,6 +44,9 @@
     "documentation": {
       "type": "url"
     },
+    "icon": {
+      "type": "url"
+    },
     "labels": {
       "type": "map",
       "item": {
@@ -67,6 +71,15 @@
       }
     },
     "model": {
+      "type": "object",
+      "readonly": true,
+      "attributes": {
+        "*": {
+          "type": "any"
+        }
+      }
+    },
+    "modelsource": {
       "type": "object",
       "attributes": {
         "*": {

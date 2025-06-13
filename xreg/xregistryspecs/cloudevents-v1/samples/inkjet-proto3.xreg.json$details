@@ -1,10 +1,10 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2025-05-08T12:37:17.813998513Z",
+  "createdat": "2025-06-13T03:19:59.338735097Z",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/inkjet-proto3.xreg.json/meta",
-  "modifiedat": "2025-05-08T12:37:17.813998513Z",
+  "modifiedat": "2025-06-13T03:19:59.338735097Z",
   "sampleid": "inkjet-proto3.xreg.json",
   "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/inkjet-proto3.xreg.json",
   "versionid": "v1.0-rc1",
