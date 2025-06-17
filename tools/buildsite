@@ -21,7 +21,7 @@ docker ps | grep sitexreg > /dev/null 2>&1 || (
     echo "# Starting xreg server, and waiting for it to be ready"
     docker rm -f sitexreg > /dev/null 2>&1 || true
     docker run -dti --name sitexreg -p 8383:8080 $IMAGE > /dev/null
-    while ! curl --silent --fail http://$XR_SERVER ; do sleep 1 ; done
+    while ! curl --silent --fail http://$XR_SERVER > /dev/null;do sleep 1;done
 )
 
 echo "# Deleting any old 'xregistryspecs' that might be there"
@@ -87,5 +87,5 @@ docker rm -f sitexreg > /dev/null
 rm -rf tmpspec
 
 echo "Changes:"
-git diff --name-only
+git -P diff --name-only
 # git diff -w | grep "^[-+]" | grep -v modifiedat | grep -v createdat | grep -v "/xreg/"

@@ -1,9 +1,9 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2025-06-13T03:19:59.39986622Z",
+  "createdat": "2025-06-17T20:08:18.694698528Z",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2025-06-13T03:19:59.39986622Z",
+  "modifiedat": "2025-06-17T20:08:18.694698528Z",
   "sampleid": "lightbulb-avro.xreg.json",
   "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/lightbulb-avro.xreg.json/versions/v1.0-rc1",
   "versionid": "v1.0-rc1",

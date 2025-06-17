@@ -1,11 +1,11 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2025-06-13T03:19:59.998853054Z",
+  "createdat": "2025-06-17T20:08:19.34360947Z",
   "docid": "xregbasicmodel.png",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/xregbasicmodel.png/meta",
-  "modifiedat": "2025-06-13T03:19:59.998853054Z",
+  "modifiedat": "2025-06-17T20:08:19.34360947Z",
   "self": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/xregbasicmodel.png",
   "versionid": "v1.0-rc1",
   "versionscount": 1,

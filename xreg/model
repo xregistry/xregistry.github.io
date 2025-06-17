@@ -369,6 +369,10 @@
             "doc": {
               "name": "doc",
               "type": "any"
+            },
+            "docbase64": {
+              "name": "docbase64",
+              "type": "string"
             }
           },
           "resourceattributes": {
@@ -655,6 +659,10 @@
             "sample": {
               "name": "sample",
               "type": "any"
+            },
+            "samplebase64": {
+              "name": "samplebase64",
+              "type": "string"
             }
           },
           "resourceattributes": {
@@ -941,6 +949,10 @@
             "schema": {
               "name": "schema",
               "type": "any"
+            },
+            "schemabase64": {
+              "name": "schemabase64",
+              "type": "string"
             }
           },
           "resourceattributes": {
