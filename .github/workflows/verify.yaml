@@ -1,6 +1,18 @@
 name: verify
 on: [push, pull_request]
+env:
+  FOSSA_API_KEY: ${{ secrets.FOSSA_API_KEY }}
 jobs:
+  fossa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: fossas/fossa-action@main
+        if: ${{ env.FOSSA_API_KEY }}
+        with:
+          api-key: ${{ secrets.FOSSA_API_KEY }}
+          team: "xRegistry"
+
   verify:
     name: verify
     runs-on: ubuntu-latest
