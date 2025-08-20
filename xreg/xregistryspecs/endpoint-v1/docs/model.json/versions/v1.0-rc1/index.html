@@ -6,19 +6,22 @@
     },
     "endpoints": {
       "singular": "endpoint",
-      "modelversion": "1.0-rc1",
+      "modelversion": "1.0-rc2",
       "compatiblewith": "https://xregistry.io/xreg/domains/endpoint/specs/model.json",
       "attributes": {
         "usage": {
           "name": "usage",
-          "type": "string",
+          "type": "array",
           "description": "Client's expected usage of this endpoint",
           "enum": [
             "subscriber",
             "consumer",
             "producer"
           ],
-          "strict": true
+          "strict": true,
+          "item": {
+            "type": "string"
+          }
         },
         "channel": {
           "name": "channel",
