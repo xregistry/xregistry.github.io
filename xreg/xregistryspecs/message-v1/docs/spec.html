@@ -45,7 +45,7 @@
   }
 </style>
 </head>
-<h1 id="message-definitions-registry-service---version-10-rc1">Message Definitions Registry Service - Version 1.0-rc1 <a class="anchor" href="#message-definitions-registry-service---version-10-rc1">🔗</a></h1>
+<h1 id="message-definitions-registry-service---version-10-rc2">Message Definitions Registry Service - Version 1.0-rc2 <a class="anchor" href="#message-definitions-registry-service---version-10-rc2">🔗</a></h1>
 <h2 id="abstract">Abstract <a class="anchor" href="#abstract">🔗</a></h2>
 <p>This specification defines a message and event catalog extension to the
 xRegistry document format and API <a href="../core/spec.md">specification</a>.</p>
@@ -69,18 +69,18 @@ xRegistry document format and API <a href="../core/spec.md">specification</a>.</
 <p>This specification defines a message and event catalog extension to the
 xRegistry document format and API <a href="../core/spec.md">specification</a>. The purpose
 of the catalog is to provide a machine-readable definitions for message and
-event envelopes and logical grouping of related messages and events.</p>
+event envelopes, and logical grouping of related messages and events.</p>
 <p>Managing the description of the payloads of those messages and events is not in
 scope, but delegated to the <a href="../schema/spec.md">schema registry extension</a> for
-xRegistry. Schemas are linked to messages and event declarations by a URI
-reference.</p>
+xRegistry. Schemas are linked from messages and event declarations through a
+URI reference.</p>
 <p>For easy reference, the JSON serialization of a Message Registry adheres to
 this form:</p>
 <pre><code class="language-yaml">{
   &quot;specversion&quot;: &quot;&lt;STRING&gt;&quot;,
   &quot;registryid&quot;: &quot;&lt;STRING&gt;&quot;,
   &quot;self&quot;: &quot;&lt;URL&gt;&quot;,
-  &quot;shortself&quot;: &quot;&lt;URL&gt;&quot;,
+  &quot;shortself&quot;: &quot;&lt;URL&gt;&quot;, ?
   &quot;xid&quot;: &quot;&lt;XID&gt;&quot;,
   &quot;epoch&quot;: &lt;UINTEGER&gt;,
   &quot;name&quot;: &quot;&lt;STRING&gt;&quot;, ?
@@ -92,17 +92,18 @@ this form:</p>
   &quot;createdat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
   &quot;modifiedat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
 
+  &quot;capabilities&quot;: { ... }, ?
   &quot;model&quot;: { ... }, ?
+  &quot;modelsource&quot;: { ... }, ?
 
   &quot;messagegroupsurl&quot;: &quot;&lt;URL&gt;&quot;,
   &quot;messagegroupscount&quot;: &lt;UINTEGER&gt;,
   &quot;messagegroups&quot;: {
-    &quot;&lt;KEY&gt;&quot;: {                                    # messagegroupid
+    &quot;&lt;KEY&gt;&quot;: {                                  # messagegroupid
       &quot;messagegroupid&quot;: &quot;&lt;STRING&gt;&quot;,             # xRegistry core attributes
       &quot;self&quot;: &quot;&lt;URL&gt;&quot;,
-      &quot;shortself&quot;: &quot;&lt;URL&gt;&quot;,
+      &quot;shortself&quot;: &quot;&lt;URL&gt;&quot;, ?
       &quot;xid&quot;: &quot;&lt;XID&gt;&quot;,
-      # Start of default Version's attributes
       &quot;epoch&quot;: &lt;UINTEGER&gt;,
       &quot;name&quot;: &quot;&lt;STRING&gt;&quot;, ?
       &quot;description&quot;: &quot;&lt;STRING&gt;&quot;, ?
@@ -110,7 +111,9 @@ this form:</p>
       &quot;labels&quot;: { &quot;&lt;STRING&gt;&quot;: &quot;&lt;STRING&gt;&quot; * }, ?
       &quot;createdat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
       &quot;modifiedat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
+      &quot;deprecated&quot;: { ... }, ?
 
+      # MessageGroup extension attributes
       &quot;envelope&quot;: &quot;&lt;STRING&gt;&quot;, ?                 # e.g. CloudEvents/1.0
       &quot;protocol&quot;: &quot;&lt;STRING&gt;&quot;, ?                 # e.g. HTTP/1.1
 
@@ -121,8 +124,9 @@ this form:</p>
           &quot;messageid&quot;: &quot;&lt;STRING&gt;&quot;,              # xRegistry core attributes
           &quot;versionid&quot;: &quot;&lt;STRING&gt;&quot;,
           &quot;self&quot;: &quot;&lt;URL&gt;&quot;,
-          &quot;shortself&quot;: &quot;&lt;URL&gt;&quot;,
+          &quot;shortself&quot;: &quot;&lt;URL&gt;&quot;, ?
           &quot;xid&quot;: &quot;&lt;XID&gt;&quot;,
+
           # Start of default Version's attributes
           &quot;epoch&quot;: &lt;UINTEGER&gt;,
           &quot;name&quot;: &quot;&lt;STRING&gt;&quot;, ?
@@ -133,7 +137,8 @@ this form:</p>
           &quot;modifiedat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
           &quot;ancestor&quot;: &quot;&lt;STRING&gt;&quot;,
 
-          &quot;basemessageurl&quot;: &quot;&lt;URL&gt;&quot;, ?         # Message being extended
+          # Start of Message extension attributes
+          &quot;basemessage&quot;: &quot;&lt;URL&gt;&quot;, ?            # Message being extended
 
           &quot;envelope&quot;: &quot;&lt;STRING&gt;&quot;, ?            # e.g. CloudEvents/1.0
           &quot;envelopemetadata&quot;: {
@@ -141,7 +146,7 @@ this form:</p>
 
             # CloudEvents/1.0 &quot;envelope&quot; the &quot;envelopemetadata&quot; is of the form:
             &quot;&lt;STRING&gt;&quot;: {
-              &quot;type&quot;: &quot;&lt;TYPE&gt;&quot;, ?
+              &quot;type&quot;: &quot;&lt;TYPE&gt;&quot;,                # Default=string
               &quot;value&quot;: &lt;ANY&gt;, ?
               &quot;required&quot;: &lt;BOOLEAN&gt;            # Default=false
             } *
@@ -158,7 +163,7 @@ this form:</p>
           &quot;dataschemauri&quot;: &quot;&lt;URI&gt;&quot;, ?
           &quot;dataschemaxid&quot;: &quot;&lt;XID&gt;&quot;, ?
           &quot;datacontenttype&quot;: &quot;&lt;STRING&gt;&quot;, ?
-          # End of default Version's attributes
+          # End of Message extensions and default Version's attributes
 
           &quot;metaurl&quot;: &quot;&lt;URL&gt;&quot;,
           &quot;meta&quot;: { ... }, ?
@@ -195,7 +200,8 @@ not normative.</p>
 <p>A <strong>message</strong> is a transport wrapper around a <strong>message body</strong> (interchangeably
 referred to as payload) that is decorated with <strong>metadata</strong>. The metadata
 describes the message body without an intermediary having to inspect it and
-carries further information useful for identification, routing, and dispatch.</p>
+carries further information useful for identification, routing, and
+dispatching.</p>
 <p>In this specification, <strong>message</strong> is an umbrella term that refers to all kinds
 of messages as well as to <strong>events</strong> as a special form of messages.</p>
 <p>The definition of <a href="https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md#message">message</a> from the CloudEvents specification
@@ -208,18 +214,19 @@ specification.</p>
 <p>A similar transport protocol-independent message metadata convention is, for
 example, the <a href="https://www.w3.org/TR/soap12-part1/">W3C SOAP 1.2 envelope</a> for which support could be added by
 an extension.</p>
-<p>This specification uses <strong>protocol</strong> to refer to a transport protocol-specific
-message metadata convention. When a known protocol is explicitly specified for
-a message definition, the &quot;protocoloptions&quot; section MAY contain constraints
-for the protocol-specific metadata.</p>
+<p>This specification uses <strong>protocol</strong> as a selector into the protocol-specific
+message metadata that is defined under the <code>protocol.ifvalues</code> section of the
+model. When a known protocol is explicitly specified for a message definition,
+the <code>protocoloptions</code> section MAY contain constraints for the
+protocol-specific metadata.</p>
 <h2 id="message-definitions-registry">Message Definitions Registry <a class="anchor" href="#message-definitions-registry">🔗</a></h2>
-<p>The Message Definitions Registry (or &quot;Message Catalog&quot;) is a registry of
+<p>The Message Definitions Registry (or &quot;Message Registry&quot;) is a collection of
 metadata definitions for messages and events. The entries in the registry
 describe constraints for the metadata of messages and events, for instance the
 concrete values and patterns for the <code>type</code>, <code>source</code>, and <code>subject</code> attributes
 of a CloudEvent.</p>
 <p>Message definitions can be used in various contexts. A code generator for
-message producers can be informed, which properties or headers have to be set,
+message producers can be informed which properties or headers have to be set,
 and which data types, values, or patterns are expected to produce a conformant
 message. A message consumer can use the definitions to validate incoming
 messages and to extract the metadata for routing or processing.</p>
@@ -249,24 +256,23 @@ specification.</p>
 <p>The formal xRegistry extension model of the Message Definitions Registry
 resides in the <a href="model.json">model.json</a> file.</p>
 <h3 id="message-definition-groups">Message Definition Groups <a class="anchor" href="#message-definition-groups">🔗</a></h3>
-<p>The Group (<code>&lt;GROUP&gt;</code>) name is <code>messagegroups</code>. The type of a group is
-<code>messagegroup</code>.</p>
+<p>The Group plural name (<code>&lt;GROUPS&gt;</code>) is <code>messagegroups</code>, and the Group singular
+name (<code>&lt;GROUP&gt;</code>) is <code>messagegroup</code>.</p>
 <p>The following attributes are defined for the <code>messagegroup</code> object in addition
 to the xRegistry-defined core
 <a href="../core/spec.md#attributes-and-extensions">attributes</a>:</p>
 <h4 id="envelope-message-group"><code>envelope</code> (Message Group) <a class="anchor" href="#envelope-message-group">🔗</a></h4>
 <ul>
 <li>Type: String</li>
-<li>Description: Identifies the common, transport protocol independent message
+<li>Description: Identifies a common, transport protocol-independent message
 metadata format. Message metadata envelopes are referenced by name and
 version as <code>&lt;NAME&gt;/&lt;VERSION&gt;</code>. This specification defines a set of common
 <a href="#metadata-envelopes">metadata envelope names</a> that MUST be used for the
 given envelopes, but applications MAY define extensions for other envelopes
-on their own. All definitions inside a group MUST use this same envelope.</li>
+on their own. All messages inside a group MUST use this same envelope.</li>
 <li>Constraints:
 <ul>
-<li>At least one of <code>envelopemetadata</code> and <code>protocol</code> MUST be specified.</li>
-<li>If present, MUST be a non-empty string</li>
+<li>If present, MUST be a non-empty case-insensitive string.</li>
 <li>If present, MUST follow the naming convention <code>&lt;NAME&gt;/&lt;VERSION&gt;</code>, whereby
 <code>&lt;NAME&gt;</code> is the name of the metadata envelope and <code>&lt;VERSION&gt;</code> is the
 version of the metadata envelope.</li>
@@ -281,7 +287,7 @@ version of the metadata envelope.</li>
 <h4 id="protocol-message-group"><code>protocol</code> (Message Group) <a class="anchor" href="#protocol-message-group">🔗</a></h4>
 <ul>
 <li>Type: String</li>
-<li>Description: Identifies a transport protocol to be used for this Message.
+<li>Description: Identifies a transport protocol to be bound to for this Message.
 Protocols are referenced by name and version as <code>&lt;NAME&gt;/&lt;VERSION&gt;</code>. This
 specification defines a set of common <a href="#message-protocols">message protocol
 names</a> that MUST be used for the given protocols, but
@@ -289,8 +295,7 @@ applications MAY define extensions for other protocols on their own. All
 messages inside a group MUST use this same protocol.</li>
 <li>Constraints:
 <ul>
-<li>At least one of <code>envelopemetadata</code> and <code>protocol</code> MUST be specified.</li>
-<li>If present, MUST be a non-empty string</li>
+<li>If present, MUST be a non-empty case-insensitive string.</li>
 <li>If present, MUST follow the naming convention <code>&lt;NAME&gt;</code> or
 <code>&lt;NAME&gt;/&lt;VERSION&gt;</code>, whereby <code>&lt;NAME&gt;</code> is the name of the protocol and
 <code>&lt;VERSION&gt;</code> is the version of protocol. The version is REQUIRED if
@@ -307,36 +312,58 @@ protocol options differ between versions.</li>
 </li>
 </ul>
 <h3 id="message-definitions">Message Definitions <a class="anchor" href="#message-definitions">🔗</a></h3>
-<p>The resource (<code>&lt;RESOURCE&gt;</code>) collection name inside <code>messagegroup</code> is
-<code>messages</code>. The resource name is <code>message</code>.</p>
+<p>The Resource plural name (<code>&lt;RESOURCES&gt;</code>) is <code>messages</code>, and the Resource
+singular name (<code>&lt;RESOURCE&gt;</code>) is <code>message</code>.</p>
 <p>Different from schemas, message definitions do not contain a
 version history. If the metadata of two messages differs, they are considered
 different messages.</p>
-<p>When <a href="https://cloudevents.io">CloudEvents</a> is being used for a particular
+<p>When <a href="https://cloudevents.io">CloudEvents</a> is used for a particular
 message, it is RECOMMENDED that the message's <code>messageid</code> attribute be the
 same as the <a href="https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md#type">CloudEvents <code>type</code>
-attribute</a>. Doing so makes for easier management of the meta-model by correlating
+attribute</a>.
+Doing so makes for easier management of the meta-model by correlating
 the look-up value (id) of messages with their related events.</p>
 <p>The following extensions are defined for the <code>message</code> Resource in addition to
 the core xRegistry Resource
 <a href="../core/spec.md#attributes-and-extensions">attributes</a>:</p>
-<h4 id="basemessageurl"><code>basemessageurl</code> <a class="anchor" href="#basemessageurl">🔗</a></h4>
+<h4 id="basemessage"><code>basemessage</code> <a class="anchor" href="#basemessage">🔗</a></h4>
 <ul>
-<li>Type: URI-reference</li>
-<li>Description: if present, the URL points to a message definition that is the
-base for this message definition. By following the URL, the base message
+<li>
+<p>Type: XID</p>
+</li>
+<li>
+<p>Description: if present, the XID points to a message definition that is the
+base for this message definition. By following the XID, the base message
 can be retrieved and extended with the properties of this message. This is
-useful for defining variants of messages that only differ in minor aspects to
-avoid repetition, or messages that only have a <code>envelope</code> with associated
-<code>envelopemetadata</code> to be bound to various protocols.
-Attributes defined in this message fully override the attributes of the base
-message.</li>
-<li>Constraints:
+useful for defining variants of messages that only differ in minor additive
+aspects to avoid repetition. For example, messages that only have a
+<code>envelope</code> with associated <code>envelopemetadata</code> to be bound to various
+protocols.</p>
+<p>Referenced messages MAY themselves have a <code>basemessage</code> value, however,
+the chain of messages MUST NOT be recursive.</p>
+<p>The processing that a client SHOULD take to materialize the message is
+to follow the <code>basemessage</code> attributes to the end of the chain of messages,
+get that message's attributes, and then walk back up the chain performing a
+&quot;merge&quot; operation of the next message's attributes. Note in the case of an
+inherited attribute being a complex type (e.g. map, object), and the
+overlaying attribute is scalar, then the entire inherited attribute (and
+nested values) are replaced by that scalar value.</p>
+<p>If the referenced message can not be found then an error MUST NOT be
+generated.</p>
+</li>
+<li>
+<p>Constraints:</p>
 <ul>
-<li>OPTIONAL</li>
-<li>If present, MUST be a valid URI-reference</li>
-<li>If present, MUST point to a resource of type <code>message</code> using JSON Pointer
-<a href="https://www.rfc-editor.org/rfc/rfc6901">RFC6901</a> notation.</li>
+<li>OPTIONAL.</li>
+<li>If present, MUST be the <code>xid</code> of a Resource, or Version, of type <code>message</code>
+as defined by this specification.</li>
+</ul>
+</li>
+<li>
+<p>Examples:</p>
+<ul>
+<li><code>/messagegroups/group1/messages/msg1</code></li>
+<li><code>/messagegroups/group1/messages/msg1/versions/v1.0</code></li>
 </ul>
 </li>
 </ul>
@@ -348,8 +375,7 @@ boundaries, this attribute is also REQUIRED and MUST be the same as the
 <code>envelope</code> attribute of the <code>messagegroup</code> object into which the message is
 embedded or referenced.</p>
 <p>Illustrating example:</p>
-<pre><code class="language-yaml">
-&quot;messagegroupsurl&quot;: &quot;...&quot;,
+<pre><code class="language-yaml">&quot;messagegroupsurl&quot;: &quot;...&quot;,
 &quot;messagegroupscount&quot;: 2,
 &quot;messagegroups&quot;: {
   &quot;com.example.abc&quot;: {
@@ -390,7 +416,7 @@ embedded or referenced.</p>
 <ul>
 <li>Type: Object</li>
 <li>Description: Describes the metadata constraints for messages of this type.
-The content of this property is defined by the message envelope, but all
+The content of this property is defined by the message <code>envelope</code>, but all
 envelopes use a common schema for the constraints defined for their
 metadata headers, properties or attributes.</li>
 <li>Constraints:
@@ -405,8 +431,17 @@ metadata headers, properties or attributes.</li>
 </li>
 </ul>
 <h4 id="envelopeoptions"><code>envelopeoptions</code> <a class="anchor" href="#envelopeoptions">🔗</a></h4>
-<p>See <a href="../endpoint/spec.md#envelopeoptions"><code>envelopeoptions</code></a> in the Endpoint
-specification.</p>
+<ul>
+<li>Type: Map</li>
+<li>Description: Configuration details of the Message with respect to the
+envelope format used to format the messages. See
+<a href="#metadata-envelopes">Metadata Envelopes</a> for more details.</li>
+<li>Constraints:
+<ul>
+<li>OPTIONAL.</li>
+</ul>
+</li>
+</ul>
 <h4 id="protocol"><code>protocol</code> <a class="anchor" href="#protocol">🔗</a></h4>
 <ul>
 <li>Same as the <a href="#protocol-message-group"><code>protocol</code></a> attribute of the
@@ -438,8 +473,8 @@ equivalent to the schema <a href="../schema/spec.md#format">'format'</a>
 attribute.</li>
 <li>Constraints:
 <ul>
-<li>OPTIONAL</li>
-<li>If present, MUST be a non-empty string</li>
+<li>OPTIONAL.</li>
+<li>If present, MUST be a non-empty case-insensitive string.</li>
 <li>If present, MUST follow the naming convention <code>&lt;NAME&gt;/&lt;VERSION&gt;</code>, whereby
 <code>&lt;NAME&gt;</code> is the name of the schema format and <code>&lt;VERSION&gt;</code> is the version of
 the schema format in the format defined by the schema format itself.</li>
@@ -458,8 +493,7 @@ the schema format in the format defined by the schema format itself.</li>
 <li>Type: Any</li>
 <li>Description: Contains the inline schema for the message payload. The schema
 format is identified by the <code>dataschemaformat</code> attribute. Equivalent to the
-schemaversion
-<a href="../schema/spec.md#schema">'schema'</a> attribute</li>
+<a href="../schema/spec.md#schema">'schema'</a> attribute.</li>
 <li>Constraints:
 <ul>
 <li>OPTIONAL.</li>
@@ -500,7 +534,8 @@ this means the entity MUST be located within the same Registry.</li>
 <li>Constraints:
 <ul>
 <li>OPTIONAL.</li>
-<li>If present, <code>dataschemauri</code> MUST be present.</li>
+<li>If <code>dataschemauri</code> is also present then its value MUST be the <code>self</code>
+URL of the entity referenced by this attribute.</li>
 </ul>
 </li>
 </ul>
@@ -533,13 +568,10 @@ same way as <code>TEXT/Plain; CharSet=utf-8</code>.</p>
 <ul>
 <li>OPTIONAL</li>
 <li>If present, MUST adhere to the format specified in
-<a href="https://tools.ietf.org/html/rfc2046">RFC 2046</a></li>
+<a href="https://tools.ietf.org/html/rfc2046">RFC 2046</a>. For Media Type examples
+see <a href="http://www.iana.org/assignments/media-types/media-types.xhtml">IANA Media
+Types</a></li>
 </ul>
-</li>
-<li>
-<p>For Media Type examples see
-<a href="http://www.iana.org/assignments/media-types/media-types.xhtml">IANA Media
-Types</a></p>
 </li>
 </ul>
 <h3 id="metadata-envelopes-and-message-protocols">Metadata Envelopes and Message Protocols <a class="anchor" href="#metadata-envelopes-and-message-protocols">🔗</a></h3>
@@ -547,7 +579,7 @@ Types</a></p>
 directly supported by this specification.</p>
 <p>Metadata envelopes lean on a protocol-neutral metadata definition like
 CloudEvents. Message protocols lean on a message model definition of a specific
-protocol like AMQP or MQTT or Kafka.</p>
+protocol like AMQP, MQTT or Kafka.</p>
 <p>A message can use either a metadata <code>envelope</code>, a message <code>protocol</code>, or both.</p>
 <p>If a message only uses a metadata <code>envelope</code>, any implicit protocol bindings
 defined by the envelope apply. For instance, a message definition that uses the
@@ -555,10 +587,10 @@ defined by the envelope apply. For instance, a message definition that uses the
 protocols for which CloudEvents bindings exist, and using the respective
 protocol binding rules.</p>
 <p>If a message uses both a metadata <code>envelope</code> and a message <code>protocol</code>, the
-message binding rules apply over the metadata envelope rules. For instance, if
-a message definition uses the &quot;CloudEvents/1.0&quot; envelope and an &quot;AMQP/1.0&quot;
-protocol, then the implicit protocol bindings of the &quot;CloudEvents/1.0&quot; envelope
-are overridden by the &quot;AMQP/1.0&quot; protocol rules.</p>
+message binding rules takes precedence over the metadata envelope rules. For
+instance, if a message definition uses the &quot;CloudEvents/1.0&quot; envelope and an
+&quot;AMQP/1.0&quot; protocol, then the implicit protocol bindings of the
+&quot;CloudEvents/1.0&quot; envelope are overridden by the &quot;AMQP/1.0&quot; protocol rules.</p>
 <p>If a message uses only a message <code>protocol</code>, only the metadata constraints
 defined by the message <code>protocol</code> rules apply.</p>
 <h4 id="common-properties">Common properties <a class="anchor" href="#common-properties">🔗</a></h4>
@@ -582,8 +614,8 @@ headers/properties/attributes constraints:</p>
 message of this type.</li>
 <li>Constraints:
 <ul>
-<li>OPTIONAL. Defaults MUST be <code>false</code>.</li>
-<li>If present, MUST be a boolean value.</li>
+<li>OPTIONAL.</li>
+<li>Default value MUST be <code>false</code>.</li>
 </ul>
 </li>
 </ul>
@@ -594,7 +626,7 @@ message of this type.</li>
 human-readable specification of the property.</li>
 <li>Constraints:
 <ul>
-<li>OPTIONAL</li>
+<li>OPTIONAL.</li>
 </ul>
 </li>
 </ul>
@@ -611,18 +643,18 @@ the property.</li>
 core specification, with some additions:
 <ul>
 <li><code>any</code>: Any type of value, including <code>null</code>.</li>
+<li><code>binary</code>: CloudEvents &quot;Binary&quot; type.</li>
 <li><code>boolean</code>: CloudEvents &quot;Boolean&quot; type.</li>
+<li><code>duration</code>: RFC3339 Duration.</li>
+<li><code>integer</code>: CloudEvents &quot;Integer&quot; type (RFC 7159, Section 6).</li>
+<li><code>number</code>: IEEE754 Double.</li>
 <li><code>string</code>: CloudEvents &quot;String&quot; type.</li>
 <li><code>symbol</code>: A <code>string</code> that is restricted to alphanumerical characters and
 underscores.</li>
-<li><code>binary</code>: CloudEvents &quot;Binary&quot; type.</li>
 <li><code>timestamp</code>: CloudEvents &quot;Timestamp&quot; type (RFC3339 DateTime)</li>
-<li><code>duration</code>: RFC3339 Duration</li>
-<li><code>uritemplate</code>: <a href="https://www.rfc-editor.org/rfc/rfc6570">RFC6570</a> Level 1 URI Template</li>
-<li><code>uri</code>: CloudEvents URI type (RFC3986 URI)</li>
-<li><code>urireference</code>: CloudEvents &quot;URI-reference&quot; type (RFC3986 URI-reference)</li>
-<li><code>number</code>: IEEE754 Double</li>
-<li><code>integer</code>: CloudEvents &quot;Integer&quot; type (RFC 7159, Section 6)</li>
+<li><code>uri</code>: CloudEvents URI type (RFC3986 URI).</li>
+<li><code>urireference</code>: CloudEvents &quot;URI-reference&quot; type (RFC3986 URI-reference).</li>
+<li><code>uritemplate</code>: <a href="https://www.rfc-editor.org/rfc/rfc6570">RFC6570</a> Level 1 URI Template.</li>
 </ul>
 </li>
 </ul>
@@ -633,7 +665,7 @@ underscores.</li>
 <li>Type: Any</li>
 <li>Description: The value of the property. With a few exceptions, see below,
 this is the value that MUST be literally present in the message for the
-message to be considered conformant with this metaschema.</li>
+message to be considered conformant with the message definition.</li>
 <li>Constraints:
 <ul>
 <li>OPTIONAL.</li>
@@ -752,19 +784,19 @@ a message (see the <a href="model.json">model file</a> for the complete definiti
   },
   &quot;id&quot;: {
     &quot;value&quot;: &quot;&lt;STRING&gt;&quot;, ?
-    &quot;type&quot;: &quot;string&quot;, ?
+    &quot;type&quot;: &quot;string&quot;
   },
   &quot;type&quot;: {
     &quot;value&quot;: &quot;&lt;STRING&gt;&quot;, ?
-    &quot;type&quot;: &quot;string&quot;, ?
+    &quot;type&quot;: &quot;string&quot;
   },
   &quot;source&quot;: {
     &quot;value&quot;: &quot;&lt;STRING&gt;&quot;, ?
-    &quot;type&quot;: &quot;string&quot;, ?
+    &quot;type&quot;: &quot;string&quot;
   },
   &quot;subject&quot;: {
     &quot;value&quot;: &quot;&lt;STRING&gt;&quot;, ?
-    &quot;type&quot;: &quot;string&quot; ?
+    &quot;type&quot;: &quot;string&quot;
   },
   &quot;time&quot;: {
     &quot;value&quot;: &quot;&lt;TIMESTAMP&gt;&quot;, ?
@@ -806,7 +838,7 @@ attribute value is <code>https://example.com/schemas/com.example.myevent.json</c
     },
   },
   &quot;dataschemaformat&quot;: &quot;JsonSchema/draft-07&quot;,
-  &quot;dataschemauri&quot;: &quot;https://example.com/schemas/com.example.myevent.json&quot;,
+  &quot;dataschemauri&quot;: &quot;https://example.com/schemas/com.example.myevent.json&quot;
 }
 </code></pre>
 <p>For clarity of the definition, you MAY always declare all implied attribute
@@ -818,7 +850,7 @@ connection. The protocol is based on the
 <a href="https://www.rfc-editor.org/rfc/rfc9110#section-6">HTTP Message Format</a> and is common across all versions of
 HTTP.</p>
 <p>The <a href="#protocoloptions"><code>protocoloptions</code></a> object MAY contain several
-properties:</p>
+properties as defined below:</p>
 <table>
 <thead>
 <tr>
@@ -896,7 +928,8 @@ the value of the placeholder is assumed to be identical.</p>
 <a href="https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-overview-v1.0-os.html">AMQP</a> connection. It is based on the default
 <a href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#section-message-format">AMQP 1.0 Message Format</a>.</p>
 <p>The <a href="#protocoloptions"><code>protocoloptions</code></a> object MAY contain several
-properties, each of which corresponds to a section of the AMQP 1.0 Message:</p>
+properties, each of which corresponds to a section of the AMQP 1.0 Message,
+as defined below:</p>
 <table>
 <thead>
 <tr>
@@ -1058,20 +1091,23 @@ is a <code>uritemplate</code>.</p>
 <h5 id="application-properties-amqp-10"><code>application-properties</code> (AMQP 1.0) <a class="anchor" href="#application-properties-amqp-10">🔗</a></h5>
 <p>The <code>application-properties</code> property is a map that contains the custom
 properties of the AMQP 1.0 <a href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-application-properties">Application Properties</a> section.</p>
-<p>The names of the properties MUST be of type <code>symbol</code> and MUST be unique.
-The values of the properties MAY be of any permitted type.</p>
+<p>The names of the properties MUST be of type <code>symbol</code> and MUST be unique within
+the scope of the map. The values of the properties MAY be of any permitted
+type.</p>
 <h5 id="message-annotations-amqp-10"><code>message-annotations</code> (AMQP 1.0) <a class="anchor" href="#message-annotations-amqp-10">🔗</a></h5>
 <p>The <code>message-annotations</code> property is a map that contains the custom
 properties of the AMQP 1.0 <a href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-message-annotations">Message Annotations</a>
 section.</p>
-<p>The names of the properties MUST be of type <code>symbol</code> and MUST be unique.
-The values of the properties MAY be of any permitted type.</p>
+<p>The names of the properties MUST be of type <code>symbol</code> and MUST be unique within
+the scope of the map. The values of the properties MAY be of any permitted
+type.</p>
 <h5 id="delivery-annotations-amqp-10"><code>delivery-annotations</code> (AMQP 1.0) <a class="anchor" href="#delivery-annotations-amqp-10">🔗</a></h5>
 <p>The <code>delivery-annotations</code> property is a map that contains the custom
 properties of the AMQP 1.0
 <a href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-delivery-annotations">Delivery Annotations</a> section.</p>
-<p>The names of the properties MUST be of type <code>symbol</code> and MUST be unique.
-The values of the properties MAY be of any permitted type.</p>
+<p>The names of the properties MUST be of type <code>symbol</code> and MUST be unique within
+the scope of the map. The values of the properties MAY be of any permitted
+type.</p>
 <h6 id="header-amqp-10"><code>header</code> (AMQP 1.0) <a class="anchor" href="#header-amqp-10">🔗</a></h6>
 <p>The <code>header</code> property is an object that contains the properties of the
 AMQP 1.0 <a href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-header">Message Header</a> section. The
@@ -1115,8 +1151,9 @@ following properties are defined, with type constraints:</p>
 <h6 id="footer-amqp-10"><code>footer</code> (AMQP 1.0) <a class="anchor" href="#footer-amqp-10">🔗</a></h6>
 <p>The <code>footer</code> property is a map that contains the custom properties of the AMQP
 1.0 <a href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-footer">Message Footer</a> section.</p>
-<p>The names of the properties MUST be of type <code>symbol</code> and MUST be unique.
-The values of the properties MAY be of any permitted type.</p>
+<p>The names of the properties MUST be of type <code>symbol</code> and MUST be unique within
+the scope of the map. The values of the properties MAY be of any permitted
+type.</p>
 <h5 id="mqtt311-and-mqtt50-protocols">&quot;MQTT/3.1.1&quot; and &quot;MQTT/5.0&quot; protocols <a class="anchor" href="#mqtt311-and-mqtt50-protocols">🔗</a></h5>
 <p>The &quot;MQTT/3.1.1&quot; and &quot;MQTT/5.0&quot; protocols are used to define messages that are
 sent over <a href="https://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html">MQTT 3.1.1</a> or <a href="https://docs.oasis-open.org/mqtt/mqtt/v5.0/mqtt-v5.0.html">MQTT 5.0</a> connections. The

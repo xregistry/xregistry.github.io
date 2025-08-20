@@ -1,9 +1,9 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2025-06-17T20:08:18.884066477Z",
+  "createdat": "2025-08-20T15:03:33.602666834Z",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2025-06-17T20:08:18.884066477Z",
+  "modifiedat": "2025-08-20T15:03:33.602666834Z",
   "sampleid": "watchkam-jsons07.xreg.json",
   "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/watchkam-jsons07.xreg.json/versions/v1.0-rc1",
   "versionid": "v1.0-rc1",

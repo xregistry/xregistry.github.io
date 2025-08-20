@@ -2,12 +2,12 @@ content-disposition:model.json
 content-location:https://xregistry.io/xreg/xregistryspecs/endpoint-v1/docs/model.json/versions/v1.0-rc1
 content-type:text/plain; charset=utf-8
 xregistry-ancestor:v1.0-rc1
-xregistry-createdat:2025-06-17T20:08:19.966092608Z
+xregistry-createdat:2025-08-20T15:03:34.597177432Z
 xregistry-docid:model.json
 xregistry-epoch:1
 xregistry-isdefault:true
 xregistry-metaurl:https://xregistry.io/xreg/xregistryspecs/endpoint-v1/docs/model.json/meta
-xregistry-modifiedat:2025-06-17T20:08:19.966092608Z
+xregistry-modifiedat:2025-08-20T15:03:34.597177432Z
 xregistry-self:https://xregistry.io/xreg/xregistryspecs/endpoint-v1/docs/model.json
 xregistry-versionid:v1.0-rc1
 xregistry-versionscount:1

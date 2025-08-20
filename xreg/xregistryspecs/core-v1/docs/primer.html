@@ -618,12 +618,14 @@ unexpected casing and could be confused or believe there was an error.</p>
 in case insensitively.</p>
 </li>
 </ul>
-<h1 id="why-the-58-character-limit-on-group-and-resource-names">Why the 58 character limit on Group and Resource names? <a class="anchor" href="#why-the-58-character-limit-on-group-and-resource-names">🔗</a></h1>
-<p>Attribute names and key names are limited to 63 characters, so why are
-Group and Resource names limited to only 58? Because when they appear as
-Collection attributes and we append <code>url</code> or <code>count</code> to them they still have
-to fit within the 63-character limit, and so we need to take into account
-the length of the word <code>count</code>.</p>
+<h1 id="why-the-lower-character-limit-on-some-group-and-resource-names">Why the lower character limit on some Group and Resource names? <a class="anchor" href="#why-the-lower-character-limit-on-some-group-and-resource-names">🔗</a></h1>
+<p>Attribute names and key names are limited to 63 characters, so why are some
+Group and Resource names limited to less? Because when they appear as part of
+attribute names and they can be appended with phrases like <code>url</code>, <code>count</code>
+or <code>base64</code>, and they still have to fit within the 63-character limit, and so
+we need to take into account the length of those phrases.</p>
+<p>Note that Resource names are limited to 57 characters because they may be
+appended with <code>base64</code>, if their <code>hasdocument</code> model aspect is <code>true</code>.</p>
 <h1 id="why-must-group-type-and-resource-type-names-be-valid-attribute-names">Why must Group type and Resource type names be valid attribute names? <a class="anchor" href="#why-must-group-type-and-resource-type-names-be-valid-attribute-names">🔗</a></h1>
 <p>Since Group type and Resource type names will appear as attribute names (e.g.
 <code>&lt;GROUPS&gt;count</code> and <code>&lt;RESOURCE&gt;url</code>), the character set (and length) of their
@@ -687,7 +689,40 @@ decedents of the deleted Version.</p>
 attribute has its value set to the Version's <code>versionid</code> attribute. This
 makes the ancestor explicit, and the possible ambiguity of using another
 value such as null which, based on the scenario, could mean &quot;no ancestor&quot; or
-&quot;default to the latest&quot;.</p>
+&quot;default to the newest&quot;.</p>
+<h1 id="singleversionroot-policy-enforcement"><code>singleversionroot</code> Policy Enforcement <a class="anchor" href="#singleversionroot-policy-enforcement">🔗</a></h1>
+<p>Related to the previous discussions concerning the <code>ancestor</code> attribute,
+the <a href="spec.md#registry-model">Resource Model</a> <code>singleversionroot</code> attribute
+controls whether a Resource is allowed to have more than one &quot;root&quot; Version,
+or whether all Versions of that Resource must be a descendant of the same
+&quot;root&quot; Version.</p>
+<p>Whether <code>singleversionroot</code> is <code>true</code> or <code>false</code> will depend on the use case
+in which the Registry is being used. Some examples that might help pick the
+most appropriate value include:</p>
+<ul>
+<li>
+<p>If each major version of a Resource is a significant change, such that to
+that domain's users it could be considered an entirely new Resource (e.g.
+a non-backwards compatible change has been made), then setting
+<code>singleversionroot</code> to <code>true</code> and using a different xRegistry Resource for
+each major version might be appropriate. Note that this then implies that all
+Versions under each Resources will likely be compatible, and some
+environments have such a policy requirement.</p>
+</li>
+<li>
+<p>However, if a new Resource for each major version introduces a concern about
+the proliferation of Resources, and a domain's users are comfortable if
+checking the Versions string for each Version of a Resource as a hint to the
+compatibility of the Versions, then setting <code>singleversionroot</code> to <code>false</code>
+might be appropriate. Additionally, a value of <code>false</code> might make sense if
+the version string is &quot;just another attribute&quot; of the Version and the
+Resource is acting more like a &quot;collection&quot; of Versions rather than an
+enforcer of a semantic versioning policy.</p>
+</li>
+</ul>
+<p>These examples are not meant to be complete. The flexibility of the
+specification allows for model authors to choose the most appropriate value
+for their needs.</p>
 <h1 id="pruning-versions-with-singleversionroot-enabled">Pruning Versions with <code>singleversionroot</code> enabled <a class="anchor" href="#pruning-versions-with-singleversionroot-enabled">🔗</a></h1>
 <p>There are cases in which the server will need to prune Versions. For
 example, this can happen when attempting to create a new Version that would
@@ -879,5 +914,32 @@ reason for the Resource to exist.</p>
 Version should be driven by whether the use cases being supported by the
 Resource type definition requires that attribute to be consistent across all
 Versions or have a Version-specific value.</p>
+<h2 id="why-are-some-conditional-read-only-attributes-not-ignored">Why are some (conditional) read-only attributes not ignored? <a class="anchor" href="#why-are-some-conditional-read-only-attributes-not-ignored">🔗</a></h2>
+<p>Attributes that are always defined as &quot;read-only&quot; normally have semantics such
+that attempts to update them are silently ignored. This is especially useful
+for attributes that might change over time so that clients do not need to
+either ensure they have the latest value, or remove them from an update
+request.</p>
+<p>However, there are times when trying to update a read-only attribute must
+generate an error. This will happen when the attribute might be read-only based
+on the configuration of the owning entity, in which case it is important for
+clients to know that updating this particular instance of this
+&quot;sometimes read-only&quot; attribute failed. So, while it may seem inconsistent,
+the risk of clients assuming a non-error response meant the request was fully
+adhere to was considered more important.</p>
+<p>For example, if a Resource is defined with the <code>setdefaultversionsticky</code>
+aspect set to <code>false</code> then the <code>meta.defaultversionid</code> attribute of instances
+of that Resource becomes &quot;read-only&quot;. And any attempt to update it will result
+in an error being generated.</p>
+<h2 id="why-isnt-put-idempotent">Why isn't <code>PUT</code> idempotent? <a class="anchor" href="#why-isnt-put-idempotent">🔗</a></h2>
+<p>As stated in the <a href="spec.md">core</a> specification, the <code>PUT</code> operations are
+almost idempotent, per the HTTP specification. For the most part, multiple
+similar <code>PUT</code> requests will have the same effect as a single one, with the
+exception that <code>epoch</code> and <code>modifiedat</code> will be updated each time. This is
+due to the desire to avoid having server implementations perform a &quot;diff&quot; type
+of check on all attributes to determine if anything changed, and then only
+&quot;bumping&quot; those attributes' values if there was a change. This could be an
+expensive or ambiguous check to perform, so it was determined it would be best
+to avoid it all together.</p>
 
 </html>
