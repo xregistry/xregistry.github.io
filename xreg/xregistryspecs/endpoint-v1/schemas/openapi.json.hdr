@@ -2,11 +2,11 @@ content-disposition:openapi.json
 content-location:https://xregistry.io/xreg/xregistryspecs/endpoint-v1/schemas/openapi.json/versions/v1.0-rc1
 content-type:text/plain; charset=utf-8
 xregistry-ancestor:v1.0-rc1
-xregistry-createdat:2025-08-20T15:03:34.8397819Z
+xregistry-createdat:2025-10-17T19:19:45.539247869Z
 xregistry-epoch:1
 xregistry-isdefault:true
 xregistry-metaurl:https://xregistry.io/xreg/xregistryspecs/endpoint-v1/schemas/openapi.json/meta
-xregistry-modifiedat:2025-08-20T15:03:34.8397819Z
+xregistry-modifiedat:2025-10-17T19:19:45.539247869Z
 xregistry-schemaid:openapi.json
 xregistry-self:https://xregistry.io/xreg/xregistryspecs/endpoint-v1/schemas/openapi.json
 xregistry-versionid:v1.0-rc1

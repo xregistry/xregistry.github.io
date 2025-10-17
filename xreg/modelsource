@@ -1,0 +1,22 @@
+{
+  "groups": {
+    "xregistryspecs": {
+      "plural": "xregistryspecs",
+      "singular": "xregistryspec",
+      "resources": {
+        "docs": {
+          "plural": "docs",
+          "singular": "doc"
+        },
+        "samples": {
+          "plural": "samples",
+          "singular": "sample"
+        },
+        "schemas": {
+          "plural": "schemas",
+          "singular": "schema"
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,7 @@
 {
   "apis": [
     "/capabilities",
+    "/capabilitiesoffered",
     "/export",
     "/model",
     "/modelsource"

@@ -675,13 +675,13 @@ in the entity in order to be model compliant.</p>
 <p>Likewise, implementations of the server must validate the entire entity
 against the new model, not just a subset of the entity's attributes.</p>
 <h1 id="multi-root-ancestor-hierarchies">Multi-root ancestor hierarchies <a class="anchor" href="#multi-root-ancestor-hierarchies">🔗</a></h1>
-<p>The <a href="spec.md#ancestor-attribute"><code>ancestor</code> attribute</a> is used to build a
+<p>The <a href="./spec.md#ancestor-attribute"><code>ancestor</code> attribute</a> is used to build a
 hierarchy of Versions to facilitate compatibility checking when the
-<a href="spec.md#compatibility-attribute"><code>compatibility</code> attribute</a> is set. There
+<a href="./spec.md#compatibility-attribute"><code>compatibility</code> attribute</a> is set. There
 are cases in which it's desirable to create multiple roots. In some
 cases it may even be unavoidable, for example when the <code>maxversions</code>
 attribute (see <code>groups.resources.maxversions</code> under
-<a href="spec.md#registry-model">Resource Model</a>) is set to a value that forces
+<a href="./model.md#registry-model">Resource Model</a>) is set to a value that forces
 pruning of the Version tree. In such cases, when deleting the oldest Version,
 this could result in a new root being created when there are multiple
 decedents of the deleted Version.</p>
@@ -692,7 +692,7 @@ value such as null which, based on the scenario, could mean &quot;no ancestor&qu
 &quot;default to the newest&quot;.</p>
 <h1 id="singleversionroot-policy-enforcement"><code>singleversionroot</code> Policy Enforcement <a class="anchor" href="#singleversionroot-policy-enforcement">🔗</a></h1>
 <p>Related to the previous discussions concerning the <code>ancestor</code> attribute,
-the <a href="spec.md#registry-model">Resource Model</a> <code>singleversionroot</code> attribute
+the <a href="./model.md#registry-model">Resource Model</a> <code>singleversionroot</code> attribute
 controls whether a Resource is allowed to have more than one &quot;root&quot; Version,
 or whether all Versions of that Resource must be a descendant of the same
 &quot;root&quot; Version.</p>
@@ -727,11 +727,11 @@ for their needs.</p>
 <p>There are cases in which the server will need to prune Versions. For
 example, this can happen when attempting to create a new Version that would
 exceed the value set on the <code>groups.resources.maxversions</code> attribute of the
-<a href="spec.md#registry-model">Resource Model</a>, or when adjusting this attribute's
+<a href="./model.md#registry-model">Resource Model</a>, or when adjusting this attribute's
 value that is smaller than the number of existing Versions. In such
 scenarios, the server may be unable to prune Versions, when the
 <code>groups.resources.singleversionroot</code> attribute of the
-<a href="spec.md#registry-model">Resource Model</a> is set to <code>true</code> and the request
+<a href="./model.md#registry-model">Resource Model</a> is set to <code>true</code> and the request
 must be rejected.</p>
 <p>Consider a scenario in which 3 Versions exist: v1 is the root (and therefore
 has its <code>ancestor</code> attribute set to v1), and v2 and v3 both have
@@ -761,11 +761,11 @@ Versions exist with the same <code>createdat</code> timestamp, those Versions ar
 sorted in an descending alphabetical order, and the first is the newest
 Version.</p>
 <h1 id="what-does-the-compatibilityauthority-attribute-convey">What does the <code>compatibilityauthority</code> attribute convey? <a class="anchor" href="#what-does-the-compatibilityauthority-attribute-convey">🔗</a></h1>
-<p>The <a href="spec.md#compatibility-attribute"><code>compatibility</code> attribute</a> is a
+<p>The <a href="./spec.md#compatibility-attribute"><code>compatibility</code> attribute</a> is a
 statement made by the authority managing the registry about the
 compatibility guarantees between Versions of the Resource. The authority is
 expected to guarantee the configured <code>compatibility</code>. The
-<a href="spec.md#compatibilityauthority-attribute"><code>compatibilityauthority</code> attribute</a>
+<a href="./spec.md#compatibilityauthority-attribute"><code>compatibilityauthority</code> attribute</a>
 represents who the enforcing authority is. Any requests to set the authority
 to the server when the server cannot perform compatibility checking will be
 refused. In cases where the hosting service isn't backed by an xRegistry
@@ -932,7 +932,7 @@ aspect set to <code>false</code> then the <code>meta.defaultversionid</code> att
 of that Resource becomes &quot;read-only&quot;. And any attempt to update it will result
 in an error being generated.</p>
 <h2 id="why-isnt-put-idempotent">Why isn't <code>PUT</code> idempotent? <a class="anchor" href="#why-isnt-put-idempotent">🔗</a></h2>
-<p>As stated in the <a href="spec.md">core</a> specification, the <code>PUT</code> operations are
+<p>As stated in the <a href="./spec.md">core</a> specification, the <code>PUT</code> operations are
 almost idempotent, per the HTTP specification. For the most part, multiple
 similar <code>PUT</code> requests will have the same effect as a single one, with the
 exception that <code>epoch</code> and <code>modifiedat</code> will be updated each time. This is
@@ -941,5 +941,12 @@ of check on all attributes to determine if anything changed, and then only
 &quot;bumping&quot; those attributes' values if there was a change. This could be an
 expensive or ambiguous check to perform, so it was determined it would be best
 to avoid it all together.</p>
+<h2 id="defining-extensions">Defining Extensions <a class="anchor" href="#defining-extensions">🔗</a></h2>
+<p>When defining extensions for xRegistry, whether it is via a model definition
+or by extending the functionality of the specification itself (e.g. adding
+new APIs), care should be taken to limit the possibility of overlapping with
+any future xRegistry work. While it is impossible to predict the future, some
+steps can be taken to lessen the concern. For example, using domain, or
+company, specific terms when naming things.</p>
 
 </html>

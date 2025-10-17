@@ -1,10 +1,10 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2025-08-20T15:03:34.30432941Z",
+  "createdat": "2025-10-17T19:19:44.960272817Z",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/samples/doc-store-data.json/meta",
-  "modifiedat": "2025-08-20T15:03:34.30432941Z",
+  "modifiedat": "2025-10-17T19:19:44.960272817Z",
   "sampleid": "doc-store-data.json",
   "self": "https://xregistry.io/xreg/xregistryspecs/core-v1/samples/doc-store-data.json",
   "versionid": "v1.0-rc1",

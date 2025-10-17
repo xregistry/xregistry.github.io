@@ -1,12 +1,12 @@
 {
   "compatibility": "none",
-  "createdat": "2025-08-20T15:03:34.597177432Z",
+  "createdat": "2025-10-17T19:19:45.264326087Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
   "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/endpoint-v1/docs/model.json/versions/v1.0-rc1",
   "docid": "model.json",
   "epoch": 1,
-  "modifiedat": "2025-08-20T15:03:34.597177432Z",
+  "modifiedat": "2025-10-17T19:19:45.264326087Z",
   "readonly": false,
   "self": "https://xregistry.io/xreg/xregistryspecs/endpoint-v1/docs/model.json/meta",
   "xid": "/xregistryspecs/endpoint-v1/docs/model.json/meta"
