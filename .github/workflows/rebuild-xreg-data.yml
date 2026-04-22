@@ -18,12 +18,12 @@ jobs:
       - name: Get xr exe
         run: |
           container_id=$(docker create ghcr.io/xregistry/xr)
-          docker cp $container_id:/xr /xr
+          docker cp $container_id:/xr /tmp/xr
           docker rm $container_id
-          chmod +x /xr
-          echo "${{ github.workspace }}/" >> $GITHUB_PATH
+          chmod +x /tmp/xr
+          echo "${{ github.workspace }}/tmp" >> $GITHUB_PATH
           echo $PATH
-          ls -l /
+          ls -l /tmp
 
       - name: Run local script
         run: ./tools/buildsite
