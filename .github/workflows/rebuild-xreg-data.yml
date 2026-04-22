@@ -3,6 +3,7 @@ name: Regen the xreg.io xreg files
 on:
   repository_dispatch:
     types: [main_branch_updated]
+  workflow_dispatch:
 
 jobs:
   update-repo:
