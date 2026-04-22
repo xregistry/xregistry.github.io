@@ -1,0 +1,9 @@
+on:
+  repository_dispatch:
+    types: [main_branch_updated]
+
+jobs:
+  my-job:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Triggered by change in another repo's main branch!"
