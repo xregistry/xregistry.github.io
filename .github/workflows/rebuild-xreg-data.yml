@@ -23,10 +23,6 @@ jobs:
           docker rm $container_id
           chmod +x "${{ github.workspace }}/bin/xr"
           echo "${{ github.workspace }}/bin" >> $GITHUB_PATH
-          echo $PATH
-          env | grep PATH
-          ls -l "${{ github.workspace }}/bin"
-          "${{ github.workspace }}/bin/xr" --help
 
       - name: Run local script
         run: ./tools/buildsite
