@@ -189,8 +189,8 @@ done
 echo "# Downloading the registry to dir: $DIR"
 rm -rf ./$DIR/
 mkdir -p ./$DIR
-# xr download $VERBOSE ./$DIR -u https://xregistry.io/xreg --md2html -c
-xr download $VERBOSE ./$DIR -u http://ubuntu:7070 --md2html -c
+xr download $VERBOSE ./$DIR -u https://xregistry.io/xreg --md2html -c
+# xr download $VERBOSE ./$DIR -u http://ubuntu:7070 --md2html -c
 
 docker rm -f sitexreg > /dev/null
 
