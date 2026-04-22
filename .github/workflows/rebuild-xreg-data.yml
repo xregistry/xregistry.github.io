@@ -6,7 +6,7 @@ on:
 
 jobs:
   update-repo:
-    runs-on: ubuntu-latest
+    runs-on: duglin/xr-git
     permissions:
       contents: write # Required to push changes back
 
