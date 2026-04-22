@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -e
+set -o pipefail
 
 # export IMAGE=ghcr.io/xregistry/xrserver-all
 export IMAGE=ghcr.io/xregistry/xrserver-all
@@ -9,12 +10,107 @@ export VERBOSE="-v"
 export VER=v1.0-rc1
 export DIR=xreg
 
-# Clone the spec repo
-rm -rf tmpspec
-git clone https://github.com/xregistry/spec.git tmpspec
-pushd tmpspec
-export FILES=$PWD
-echo
+# Usage (in your main script after declaring the mapping):
+#   declare -A mapping=(
+#     ["/path/to/original/dir1"]="/path/to/target/dir1"
+#     ["/path/to/original/dir2"]="/path/to/target/dir2"
+#     ...
+#   )
+#   cat FILE | update_md_hrefs "/repo/root" "/abs/dir/of/md/file" > output.md
+#
+# The function reads Markdown from stdin, updates every inline href and image
+# href ([text](href) or ![alt](href)) by resolving the relative path against
+# the original directory, looking up the target file's original directory in
+# the mapping, mapping it to the new directory, and recomputing the correct
+# relative path from the new location of the current file.  Non-relative hrefs
+# (http, mailto, absolute /, #anchors, etc.) are left unchanged.
+
+update_md_hrefs() {
+  repo_root="$1/"
+  original_dir="$2"
+
+  # Nested helper: given an href and the original dir of the current MD, return
+  # new href (or the original href if no mapping applies or it's non-relative)
+  compute_new_href() {
+    local href="$1"
+    local orig_dir="$2"
+
+    # Skip anything that isn't a plain relative local path
+    if [[ "$href" =~ ^(https?://|ftps?://|mailto:|tel:|#|//|/) ]] || [[ -z "$href" ]]; then
+      echo "$href"
+      return
+    fi
+
+    local target_abs="$(realpath -m "${orig_dir}/${href}")"
+    local target_dir="$(dirname "$target_abs")"
+    local target_base="$(basename "$target_abs")"
+
+    target_dir=${target_dir#$repo_root} # make it relative to repo_root
+
+    # If the target's original directory isn't in the mapping, leave unchanged
+    # echo "  Mapping[$target_dir]->${mapping["$target_dir"]}" >&2
+    if [[ -v mapping["$target_dir"] ]]; then
+      target_dir="${mapping[$target_dir]}"
+    else
+      echo "$href"
+      return
+    fi
+
+    src_dir="${original_dir#$repo_root}" # src's dir, relative to curent_dir
+    if [[ -v mapping["$src_dir"] ]]; then
+      src_dir=${mapping["$src_dir"]}
+    fi
+    src_dir="$(realpath -m "$src_dir")" # now make it absolute
+
+    target_dir="$(realpath -m "${target_dir}/${target_base}")" # make absolute
+    href="$(realpath -m --relative-to "$src_dir" "$target_dir")" # make relative
+
+    # Always start with ./ so that href's we don't think a file that starts
+    # "http" is an abs URL (e.g. http.md)
+    echo "./$href"
+  }
+
+  # Process each line from md file that's coming from stdin
+  local line rest
+
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    rest="$line"
+
+    # assume lines with "pattern" are regex lines, and ignore them
+    if [[ "$rest" = *"\"pattern\""* ]]; then
+        printf '%s\n' "$rest"
+        continue
+    fi
+
+    regex='([^]]*\]\()([^\)]*)\)(.*)'
+    # Look for:  pre...](href)...rest
+    # 1= pre...](    2=href    3=...rest   Notice ")" after href is dropped
+    while [[ "$rest" =~ $regex ]]; do
+      printf '%s' "${BASH_REMATCH[1]}"   # show all stuff before 'href' (1)
+      # echo ">> ${BASH_REMATCH[1]}" >&2
+
+      local old_href="${BASH_REMATCH[2]}"
+      local new_href="$(compute_new_href "$old_href" "$original_dir")"
+      printf '%s' "${new_href})"  # add ) back in after the href
+
+      # echo "Mapped ${original_dir}: ${old_href} -> ${new_href}" >&2
+
+      rest="${BASH_REMATCH[3]}"
+    done
+
+    printf '%s\n' "$rest"
+  done
+}
+
+if [[ -n "${XR_SPEC}" ]]; then
+  export FILES=${XR_SPEC}
+else
+  # Clone the spec repo
+  rm -rf tmpspec
+  git clone https://github.com/xregistry/spec.git tmpspec
+  export FILES=${PWD}/tmpspec
+  echo
+fi
 
 # If server isn't already running...
 docker ps | grep sitexreg > /dev/null 2>&1 || (
@@ -25,66 +121,106 @@ docker ps | grep sitexreg > /dev/null 2>&1 || (
 )
 
 echo "# Deleting any old 'xregistryspecs' that might be there"
-xr delete /xregistryspecs > /dev/null 2>&1 || true
+xr $VERBOSE delete -f /xregistryspecs
+xr $VERBOSE model group delete -f xregistryspecs
 
 echo "# Defining the model"
-xr $VERBOSE model group create xregistryspecs:xregistryspec
-xr $VERBOSE model resource create -g xregistryspecs \
+# xr $VERBOSE model group create xregistryspecs:xregistryspec
+xr $VERBOSE model resource create -g xregistryspecs:xregistryspec \
       docs:doc schemas:schema samples:sample
 
 # List of files->target in xref we need to process ('files' can have wildcards)
 list=(
-"$FILES/cloudevents/*.json"                   cloudevents-v1/docs
-"$FILES/cloudevents/*.md"                     cloudevents-v1/docs
-"$FILES/cloudevents/schemas/*"                cloudevents-v1/schemas
-"$FILES/cloudevents/samples/scenarios/*.json" cloudevents-v1/samples
-"$FILES/cloudevents/samples/schemas/*.json"   cloudevents-v1/samples
-"$FILES/core/model.json"                      core-v1/docs
-"$FILES/core/primer.md"                       core-v1/docs
-"$FILES/core/sample-model.json"               core-v1/docs
-"$FILES/core/*.png"                           core-v1/docs
-"$FILES/core/spec.md"                         core-v1/docs
-"$FILES/core/samples/*.json"                  core-v1/samples
-"$FILES/core/samples/*.cereg"                 core-v1/samples
-"$FILES/endpoint/*.json"                      endpoint-v1/docs
-"$FILES/endpoint/*.md"                        endpoint-v1/docs
-"$FILES/endpoint/schemas/*"                   endpoint-v1/schemas
-"$FILES/message/*.json"                       message-v1/docs
-"$FILES/message/*.md"                         message-v1/docs
-"$FILES/message/schemas/*"                    message-v1/schemas
-"$FILES/schema/*.json"                        schema-v1/docs
-"$FILES/schema/*.md"                          schema-v1/docs
-"$FILES/schema/schemas/*"                     schema-v1/schemas
-"$FILES/pagination/spec.md"                   pagination-v1/docs
+"cloudevents/*.json"                   cloudevents-v1/docs
+"cloudevents/*.md"                     cloudevents-v1/docs
+"cloudevents/schemas/*"                cloudevents-v1/schemas
+"cloudevents/samples/scenarios/*.json" cloudevents-v1/samples
+"cloudevents/samples/schemas/*.json"   cloudevents-v1/samples
+"core/*.json"                          core-v1/docs
+"core/*.md"                            core-v1/docs
+"core/*.png"                           core-v1/docs
+"core/samples/*.json"                  core-v1/samples
+"core/samples/*.cereg"                 core-v1/samples
+"endpoint/*.json"                      endpoint-v1/docs
+"endpoint/*.md"                        endpoint-v1/docs
+"endpoint/schemas/*"                   endpoint-v1/schemas
+"message/*.json"                       message-v1/docs
+"message/*.md"                         message-v1/docs
+"message/schemas/*"                    message-v1/schemas
+"schema/*.json"                        schema-v1/docs
+"schema/*.md"                          schema-v1/docs
+"schema/schemas/*"                     schema-v1/schemas
+"pagination/spec.md"                   pagination-v1/docs
 )
+
+declare -A mapping
 
 for (( i=0 ; ; i++)); do
   [[ "${list[$i]}" == "" ]] && break
   src=${list[$i]}
   (( i=i+1 ))
+  base=`dirname "$src"`
+  tgt=${list[$i]}
+  mapping[$base]="$tgt"
+  # echo "Add mapping: $base -> $tgt" >&2
+done
+
+for (( i=0 ; ; i++)); do
+  [[ "${list[$i]}" == "" ]] && break
+  src="$FILES/"${list[$i]}
+  (( i=i+1 ))
   tgt=${list[$i]}
 
   for file in $src ; do
     # echo $tgt "<-" $file
-    type="text/plain"
-    [[ "$file" == *".json" ]] && type="application/json"
-    [[ "$file" == *".html" ]] && type="text/html"
 
-    xr create $VERBOSE /xregistryspecs/$tgt/`basename $file`/versions/$VER \
-        -d @$file
+    if grep -qI . $file ; then
+      # non-binary files have their href's tweaked
+      cat $file | update_md_hrefs "$FILES" "$(dirname $file)" | \
+      xr create $VERBOSE /xregistryspecs/$tgt/`basename $file`/versions/$VER \
+          -d @-
+    else
+      xr create $VERBOSE /xregistryspecs/$tgt/`basename $file`/versions/$VER \
+          -d @$file
+    fi
   done
 done
-
-popd
 
 echo "# Downloading the registry to dir: $DIR"
 rm -rf ./$DIR/
 mkdir -p ./$DIR
-xr download $VERBOSE ./$DIR -u https://xregistry.io/xreg --md2html -c
+# xr download $VERBOSE ./$DIR -u https://xregistry.io/xreg --md2html -c
+xr download $VERBOSE ./$DIR -u http://ubuntu:7070 --md2html -c
 
 docker rm -f sitexreg > /dev/null
 
-rm -rf tmpspec
+echo "# Twiddle hrefs, but just in html files to point to html, not md files"
+find ./$DIR -name \*html \
+    -exec sed -i 's/\(href="[^h][^"]*\)\.md/\1.html/g' {} \;
+
+echo "# Verify all hrefs in html files have been modified correctly"
+
+# Lines in the form of: FILE:href (one href per line)
+# Remove href's that are absolute (starts with http)
+# Remove href's that are local to current file (":#...)
+# Remove "fragment" part of url (#.*)
+# Split file name from url (: -> space)
+# Find href (tgt) relative to source (src)
+grep -roPH 'href="\K[^"]+' xreg | \
+    grep -v ":http" | \
+    grep -v ":#" | \
+    sed 's/#.*//' | \
+    sort -u | \
+    sed 's/:/ /' | \
+    while read src tgt ; do
+        # echo verifying: $file
+        src_dir=$(dirname $src)
+        test -e "${src_dir}/${tgt}" && continue
+        echo  "In $src: ${tgt} doesn't exist"
+        exit 1
+    done
+
+[[ -z "${XR_SPEC}" ]] && rm -rf tmpspec
 
 echo "Changes:"
 git -P diff --name-only
