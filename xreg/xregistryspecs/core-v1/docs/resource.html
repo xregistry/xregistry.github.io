@@ -1,0 +1,1977 @@
+<html>
+<head>
+<style>
+  .anchor {
+    font-size: 12px ;
+    vertical-align: middle ;
+    text-decoration: none ;
+  }
+  body {
+    font-family: sans-serif ;
+    font-size: 16px ;
+    line-height: 1.5 ;
+    padding: 5% 10% 5% 10% ;
+  }
+  pre {
+    font-size: 80% ;
+    background-color: #f2f2f2 ;
+    padding: 12px ;
+  }
+  code {
+    font-size: 85% ;
+    background-color: #f2f2f2 ;
+    padding: .2em .4em ;
+  }
+  pre code {
+    font-size: inherit ;
+    background-color: inherit ;
+    padding: 0px ;
+  }
+  table {
+    border: 1px solid lightgray ;
+    border-collapse: collapse ;
+    border-spacing: 0px ;
+    line-height: 24px ;
+  }
+  tr:nth-child(even) {
+    background-color: #f2f2f2 ;
+  }
+  td,th {
+    border: 1px solid lightgray ;
+    padding: 5px ;
+  }
+  td code, th code {
+    font-size: inherit ;
+  }
+</style>
+</head>
+<h1 id="resource-update-samples">Resource Update Samples <a class="anchor" href="#resource-update-samples">🔗</a></h1>
+<!-- words: fileid valign cellborder cellpadding -->
+<p>This document shows a set of write operations that provide concrete examples of
+how the <a href="./spec.html#resource-processing-algorithm">Resource Processing Algorithm</a>
+is applied based on the state of the Registry and the incoming request.  They
+are meant to be read in order to avoid repeating the same commentary for each
+example.</p>
+<h2 id="table-of-contents">Table of Contents <a class="anchor" href="#table-of-contents">🔗</a></h2>
+<ul>
+<li><a href="#the-setup">The Setup</a></li>
+<li><a href="#create-single-resource-with-empty-content">Create single Resource with empty content</a></li>
+<li><a href="#create-resource-via-the-files-collection">Create Resource via the &quot;files&quot; collection</a></li>
+<li><a href="#create-resource-with-versions-no-defaultversionid">Create Resource with Versions, no defaultversionid</a></li>
+<li><a href="#create-resource-with-versions-and-defaultversionid">Create Resource with Versions and defaultversionid</a></li>
+<li><a href="#create-resource-with-versions-and-unique-defaultversionid">Create Resource with Versions and unique defaultversionid</a></li>
+<li><a href="#create-resource-with-defaultversionid">Create Resource with defaultversionid</a></li>
+<li><a href="#create-resource-with-defaultversionid">Create Resource with defaultversionid</a></li>
+<li><a href="#create-resource-with-versionid-and-versions">Create Resource with versionid and Versions</a></li>
+<li><a href="#update-resource-with-new-versions-and-sticky-default-version">Update Resource with new Versions and sticky default Version</a></li>
+<li><a href="#create-resource-with-versions-and-sticky-default-version">Create Resource with Versions and sticky default Version</a></li>
+<li><a href="#create-resource-with-versionid-and-defaultversionid">Create Resource with versionid and defaultversionid</a></li>
+<li><a href="#create-resource-with-sticky-defaultversionid">Create Resource with sticky defaultversionid</a></li>
+<li><a href="#update-resource-with-non-sticky-bad-defaultversionid">Update Resource with non-sticky bad defaultversionid</a></li>
+<li><a href="#update-resource-with-sticky-non-specified-defaultversionid">Update Resource with sticky non-specified defaultversionid</a></li>
+<li><a href="#patch-resource-with-versions-and-defaultversionsticky">Patch Resource with Versions and defaultversionsticky</a></li>
+<li><a href="#update-resource-with-empty-content">Update Resource with empty content</a></li>
+<li><a href="#patch-resource-with-empty-content">Patch Resource with empty content</a></li>
+<li><a href="#update-resource-with-new-description">Update Resource with new description</a></li>
+<li><a href="#patch-resources-description-field">Patch Resource's description field</a></li>
+<li><a href="#update-resource-with-non-specified-defaultversionsticky">Update Resource with non-specified defaultversionsticky</a></li>
+<li><a href="#patch-resource-with-defaultversionsticky">Patch Resource with defaultversionsticky</a></li>
+<li><a href="#patch-resource-with-sticky-defaultversionid">Patch Resource with sticky defaultversionid</a></li>
+<li><a href="#patch-resource-with-bad-defaultversionid">Patch Resource with bad defaultversionid</a></li>
+<li><a href="#update-resource-with-bad-sticky-defaultversionid">Update Resource with bad sticky defaultversionid</a></li>
+<li><a href="#update-resource-with-non-specified-sticky-default-version">Update Resource with non-specified sticky default Version</a></li>
+<li><a href="#create-resource-with-conflicting-default-version-attributes---variant-1">Create Resource with conflicting default Version attributes - variant 1</a></li>
+<li><a href="#create-resource-with-conflicting-default-version-attributes---variant-2">Create Resource with conflicting default Version attributes - variant 2</a></li>
+<li><a href="#create-resource-with-conflicting-default-version-attributes---variant-3">Create Resource with conflicting default Version attributes - variant 3</a></li>
+<li><a href="#create-resource-with-setdefaultversionid-flag">Create Resource with SetDefaultVersionID flag</a></li>
+<li><a href="#create-resource-with-setdefaultversionid-flag-via-versions">Create Resource with SetDefaultVersionID flag via /versions</a></li>
+</ul>
+<h3 id="the-setup">The Setup <a class="anchor" href="#the-setup">🔗</a></h3>
+<p>Each example:</p>
+<ul>
+<li>Only includes the key attributes that are important from an &quot;understanding&quot;
+perspective.</li>
+<li>Includes explanatory text, highlighting the key aspects.</li>
+<li>Timestamps will only use a year or &quot;now&quot; (meaning it was updated to the
+current time) rather than a full RFC3330 timestamp to make it easier to
+detect changes in values.</li>
+<li>Has a model defined as:</li>
+</ul>
+<pre><code>        {
+          &quot;groups&quot;: {
+            &quot;dirs&quot;: {
+              &quot;singular&quot;: &quot;dir&quot;,
+              &quot;resources&quot;: {
+                &quot;files&quot;: {
+                  &quot;singular&quot;: &quot;file&quot;,
+                  &quot;hasdocument&quot;: false,
+                  &quot;versionmode&quot;: &quot;createdat&quot;
+                }
+              }
+            }
+          }
+        }
+</code></pre>
+<h3 id="create-single-resource-with-empty-content">Create single Resource with empty content <a class="anchor" href="#create-single-resource-with-empty-content">🔗</a></h3>
+<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<p><strong>Initial State:</strong></p>
+<pre><code>Empty
+</code></pre>
+<p><strong>Request:</strong></p>
+<pre><code>PUT /dirs/d1/files/f1
+
+{}
+</code></pre>
+</td><td valign=top>
+<p><strong>Final State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;1&quot;,
+  &quot;epoch&quot;: 1,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;now&quot;,
+  &quot;modifiedat&quot;: &quot;now&quot;,
+  &quot;ancestor&quot;: &quot;1&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;now&quot;,
+    &quot;modifiedat&quot;: &quot;now&quot;,
+    &quot;defaultversionid&quot;: &quot;1&quot;,
+    &quot;defaultversionsticky&quot;: false
+  },
+  &quot;versions&quot;: {
+    &quot;1&quot;: { see Resource.* attrs }
+  }
+}
+</code></pre>
+</td></tr></table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>A new Resource <code>f1</code> is created.</li>
+<li>A Version with a <code>versionid</code> of <code>1</code> is created per the default <code>versionid</code>
+naming algorithm defined in the specification. </li></li>
+<li>Conceptually, this new Version is populated with the Resource's default
+Version attributes from the request. However, since there are none, all
+mandatory attributes are assigned their default values.</li>
+<li>The Version's <code>ancestor</code> value is <code>1</code> (points to itself) because it is the
+root of a hierarchy tree.</li>
+<li>Being the only Version, it is the default Version, and it is not &quot;sticky&quot;.</li>
+<li>Using <code>PATCH</code> instead of <code>PUT</code> will yield the exact same results.</li>
+</ul>
+<hr>
+<h3 id="create-resource-via-the-files-collection">Create Resource via the &quot;files&quot; collection <a class="anchor" href="#create-resource-via-the-files-collection">🔗</a></h3>
+<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<p><strong>Initial State:</strong></p>
+<pre><code>Empty
+</code></pre>
+<p><strong>Request:</strong></p>
+<pre><code>POST /dirs/d1/files
+
+{
+  &quot;f1&quot;: {
+    &quot;name&quot;: &quot;my file&quot;
+  }
+}
+</code></pre>
+</td><td valign=top>
+<p><strong>Final State:</strong></p>
+<pre><code>{
+  &quot;f1&quot;: {
+    &quot;fileid&quot;: &quot;f1&quot;,
+    &quot;versionid&quot;: &quot;1&quot;,
+    &quot;epoch&quot;: 1,
+    &quot;name&quot;: &quot;my file&quot;,
+    &quot;isdefault&quot;: true,
+    &quot;createdat&quot;: &quot;now&quot;,
+    &quot;modifiedat&quot;: &quot;now&quot;,
+    &quot;ancestor&quot;: &quot;1&quot;,
+
+    &quot;meta&quot;: {
+      &quot;epoch&quot;: 1,
+      &quot;createdat&quot;: &quot;now&quot;,
+      &quot;modifiedat&quot;: &quot;now&quot;,
+      &quot;defaultversionid&quot;: &quot;1&quot;,
+      &quot;defaultversionsticky&quot;: false
+    },
+    &quot;versions&quot;: {
+      &quot;1&quot;: { see Resource.* attrs }
+    }
+  }
+}
+</code></pre>
+</td></tr></table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Similar to previous example, but creating the Resource via the owning
+Group's <code>files</code> collection.</li>
+<li>The default Version properties include <code>name</code>, so that will appear both at
+the Resource level and within the Version in the <code>versions</code> collection.</li>
+</ul>
+<hr>
+<h3 id="create-resource-with-versions-no-defaultversionid">Create Resource with Versions, no defaultversionid <a class="anchor" href="#create-resource-with-versions-no-defaultversionid">🔗</a></h3>
+<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<p><strong>Initial State:</strong></p>
+<pre><code>Empty
+</code></pre>
+<p><strong>Request:</strong></p>
+<pre><code>PUT /dirs/d1/files/f1
+
+{
+  &quot;name&quot;: &quot;foo&quot;,
+  &quot;versions&quot;: {
+    &quot;v1&quot;: {},
+    &quot;v2&quot;: {}
+  }
+}
+</code></pre>
+</td><td valign=top>
+<p><strong>Final State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v2&quot;,
+  &quot;epoch&quot;: 1,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;now&quot;,
+  &quot;modifiedat&quot;: &quot;now&quot;,
+  &quot;ancestor&quot;: &quot;v1&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;now&quot;,
+    &quot;modifiedat&quot;: &quot;now&quot;,
+    &quot;defaultversionid&quot;: &quot;v2&quot;,
+    &quot;defaultversionsticky&quot;: false
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: {
+      &quot;epoch&quot;: 1,
+      &quot;createdat&quot;: &quot;now&quot;,
+      &quot;modifiedat&quot;: &quot;now&quot;,
+      &quot;ancestor&quot;: &quot;v1&quot;
+    },
+    &quot;v2&quot;: { see Resource.* attrs }
+  }
+}
+</code></pre>
+</td></tr></table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>After creating the Resource, <code>f1</code>, Versions <code>v1</code> and <code>v2</code> are created.</li>
+<li>Note that <code>name</code> will be ignored because when <code>versionid</code> and
+<code>meta.defaultversionid</code> are absent, but <code>versions</code> is not empty, all
+Resource.* attributes are ignored.</li>
+<li>Since all Versions have the same <code>createdat</code> timestamp they are sorted
+alphabetically by their <code>versionid</code> values in order to set their <code>ancestor</code>
+attributes.</li>
+<li>Which means <code>v2</code> becomes the newest and therefore the default Version.</li>
+<li>Ancestor order: <code>1</code> &lt;- <code>v1</code> &lt;- <code>v2</code>.</li>
+<li>Using <code>PATCH</code> would yield the exact same results.</li>
+</ul>
+<hr>
+<h3 id="create-resource-with-versions-and-defaultversionid">Create Resource with Versions and defaultversionid <a class="anchor" href="#create-resource-with-versions-and-defaultversionid">🔗</a></h3>
+<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<p><strong>Initial State:</strong></p>
+<pre><code>Empty
+</code></pre>
+<p><strong>Request:</strong></p>
+<pre><code>PUT /dirs/d1/files/f1
+
+{
+  &quot;name&quot;: &quot;foo&quot;,
+  &quot;meta&quot;: {
+    &quot;defaultversionid&quot;: &quot;v1&quot;
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: {
+      &quot;createdat&quot;: &quot;2020&quot;
+    },
+    &quot;v2&quot;: {
+      &quot;createdat&quot;: &quot;3030&quot;
+    },
+    &quot;v3&quot;: {}
+  }
+}
+</code></pre>
+</td><td valign=top>
+<p><strong>Final State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v2&quot;,
+  &quot;epoch&quot;: 1,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;3030&quot;,
+  &quot;modifiedat&quot;: &quot;now&quot;,
+  &quot;ancestor&quot;: &quot;v3&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;now&quot;,
+    &quot;modifiedat&quot;: &quot;now&quot;,
+    &quot;defaultversionid&quot;: &quot;v2&quot;,
+    &quot;defaultversionsticky&quot;: false
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: {
+      &quot;epoch&quot;: 1,
+      &quot;createdat&quot;: &quot;2020&quot;,
+      &quot;modifiedat&quot;: &quot;now&quot;,
+      &quot;ancestor&quot;: &quot;v1&quot;
+    },
+    &quot;v2&quot;: { see Resource.* attrs },
+    &quot;v3&quot;: {
+      &quot;epoch&quot;: 1,
+      &quot;createdat&quot;: &quot;now&quot;,
+      &quot;modifiedat&quot;: &quot;now&quot;,
+      &quot;ancestor&quot;: &quot;v1&quot;
+    }
+  }
+}
+</code></pre>
+</td></tr></table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>No Version <code>1</code> is created because we used <code>meta.defaultversionid</code> as a clue
+that Resource.* attributes are for <code>v1</code>.</li>
+<li>Resource.* attributes (eg <code>name</code>) is ignored because <code>v1</code> is part of the
+request's <code>versions</code> collection.</li>
+<li>Ancestor order: <code>v1</code>(2020) &lt;- <code>v3</code> (now) &lt;- <code>v2</code> (3030).</li>
+<li>Version <code>v2</code> is default because it has the newest <code>createdat</code> timestamp.</li>
+</ul>
+<hr>
+<h3 id="create-resource-with-versions-and-unique-defaultversionid">Create Resource with Versions and unique defaultversionid <a class="anchor" href="#create-resource-with-versions-and-unique-defaultversionid">🔗</a></h3>
+<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<p><strong>Initial State:</strong></p>
+<pre><code>Empty
+</code></pre>
+<p><strong>Request:</strong></p>
+<pre><code>PUT /dirs/d1/files/f1
+
+{
+  &quot;name&quot;: &quot;foo&quot;,
+  &quot;meta&quot;: {
+    &quot;defaultversionid&quot;: &quot;v1&quot;
+  },
+  &quot;versions&quot;: {
+    &quot;v2&quot;: {},
+    &quot;v3&quot;: {}
+  }
+}
+</code></pre>
+</td><td valign=top>
+<p><strong>Final State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v3&quot;,
+  &quot;epoch&quot;: 1,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;now&quot;,
+  &quot;modifiedat&quot;: &quot;now&quot;,
+  &quot;ancestor&quot;: &quot;v2&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;now&quot;,
+    &quot;modifiedat&quot;: &quot;now&quot;,
+    &quot;defaultversionid&quot;: &quot;v3&quot;,
+    &quot;defaultversionsticky&quot;: false
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: {
+      &quot;epoch&quot;: 1,
+      &quot;name&quot;: &quot;foo&quot;,
+      &quot;createdat&quot;: &quot;now&quot;,
+      &quot;modifiedat&quot;: &quot;now&quot;,
+      &quot;ancestor&quot;: &quot;v1&quot;
+    },
+    &quot;v2&quot;: {
+      &quot;epoch&quot;: 1,
+      &quot;createdat&quot;: &quot;now&quot;,
+      &quot;modifiedat&quot;: &quot;now&quot;,
+      &quot;ancestor&quot;: &quot;v1&quot;
+    },
+    &quot;v3&quot;: { see Resource.* attrs },
+  }
+}
+</code></pre>
+</td></tr></table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>No Version <code>1</code> is created because we used <code>meta.defaultversionid</code> as a clue
+that Resource.* attributes are for <code>v1</code>.</li>
+<li>Resource.* attributes (eg <code>name</code>) are assigned to <code>v1</code>.</li>
+<li>Ancestor order: <code>v1</code>(now) &lt;- <code>v2</code> (now) &lt;- <code>v3</code> (now).</li>
+<li>Version <code>v3</code> is default because it is the highest alphabetically.</li>
+</ul>
+<hr>
+<h3 id="create-resource-with-defaultversionid">Create Resource with defaultversionid <a class="anchor" href="#create-resource-with-defaultversionid">🔗</a></h3>
+<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<p><strong>Initial State:</strong></p>
+<pre><code>Empty
+</code></pre>
+<p><strong>Request:</strong></p>
+<pre><code>PUT /dirs/d1/files/f1
+
+{
+  &quot;name&quot;: &quot;foo&quot;,
+  &quot;meta&quot;: {
+    &quot;defaultversionid&quot;: &quot;v1&quot;
+  }
+}
+</code></pre>
+</td><td valign=top>
+<p><strong>Final State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v1&quot;,
+  &quot;epoch&quot;: 1,
+  &quot;name&quot;: &quot;foo&quot;,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;now&quot;,
+  &quot;modifiedat&quot;: &quot;now&quot;,
+  &quot;ancestor&quot;: &quot;v1&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;now&quot;,
+    &quot;modifiedat&quot;: &quot;now&quot;,
+    &quot;defaultversionid&quot;: &quot;v1&quot;,
+    &quot;defaultversionsticky&quot;: false
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: { see Resource.* attrs }
+  }
+}
+</code></pre>
+</td></tr></table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Version <code>v1</code> is created due to <code>meta.defaultversionid</code> being set.</li>
+<li>Since <code>v1</code> isn't part of the request's <code>versions</code> collection, the Resource.*
+attributes will be applied.</li>
+</ul>
+<hr>
+<h3 id="create-resource-with-versionid-and-versions">Create Resource with versionid and Versions <a class="anchor" href="#create-resource-with-versionid-and-versions">🔗</a></h3>
+<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<p><strong>Initial State:</strong></p>
+<pre><code>Empty
+</code></pre>
+<p><strong>Request:</strong></p>
+<pre><code>PUT /dirs/d1/files/f1
+
+{
+  &quot;versionid&quot;: &quot;v0&quot;,
+  &quot;name&quot;: &quot;foo&quot;,
+  &quot;versions&quot;: {
+    &quot;v1&quot;: {
+      &quot;createdat&quot;: &quot;2020&quot;
+    },
+    &quot;v2&quot;: {}
+  }
+}
+</code></pre>
+</td><td valign=top>
+<p><strong>Final State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v2&quot;,
+  &quot;epoch&quot;: 1,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;now&quot;,
+  &quot;modifiedat&quot;: &quot;now&quot;,
+  &quot;ancestor&quot;: &quot;v0&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;now&quot;,
+    &quot;modifiedat&quot;: &quot;now&quot;,
+    &quot;defaultversionid&quot;: &quot;v2&quot;,
+    &quot;defaultversionsticky&quot;: false
+  },
+  &quot;versions&quot;: {
+    &quot;v0&quot;: {
+      &quot;epoch&quot;: 1,
+      &quot;name&quot;: &quot;foo&quot;
+      &quot;createdat&quot;: &quot;now&quot;,
+      &quot;modifiedat&quot;: &quot;now&quot;,
+      &quot;ancestor&quot;: &quot;v1&quot;
+    },
+    &quot;v1&quot;: {
+      &quot;epoch&quot;: 1,
+      &quot;createdat&quot;: &quot;2020&quot;,
+      &quot;modifiedat&quot;: &quot;now&quot;,
+      &quot;ancestor&quot;: &quot;v1&quot;
+    },
+    &quot;v2&quot;: { see Resource.* attrs }
+  }
+}
+</code></pre>
+</td></tr></table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Version <code>v0</code> is created because it is not present in <code>versions</code>.</li>
+<li>Ancestor order: <code>v1</code> (2020) &lt;- <code>v0</code> (now) &lt;- <code>v2</code> (now).</li>
+</ul>
+<hr>
+<h3 id="update-resource-with-new-versions-and-sticky-default-version">Update Resource with new Versions and sticky default Version <a class="anchor" href="#update-resource-with-new-versions-and-sticky-default-version">🔗</a></h3>
+<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<p><strong>Initial State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v0&quot;,
+  &quot;epoch&quot;: 1
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;2021&quot;,
+  &quot;modifiedat&quot;: &quot;2021&quot;,
+  &quot;ancestor&quot;: &quot;v0&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;2021&quot;,
+    &quot;modifiedat&quot;: &quot;2021&quot;,
+    &quot;defaultversionid&quot;: &quot;v0&quot;,
+    &quot;defaultversionsticky&quot;: false
+  },
+
+  &quot;versions&quot;: {
+    &quot;v0&quot;: { see Resource.* attrs }
+  }
+}
+</code></pre>
+<p><strong>Request:</strong></p>
+<pre><code>PUT /dirs/d1/files/f1
+
+{
+  &quot;name&quot;: &quot;foo&quot;,
+  &quot;meta&quot;: {
+    &quot;defaultversionid&quot;: &quot;v1&quot;,
+    &quot;defaultversionsticky&quot;: true
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: {
+      &quot;createdat&quot;: &quot;2020&quot;
+    },
+    &quot;v2&quot;: {}
+  }
+}
+</code></pre>
+</td><td valign=top>
+<p><strong>Final State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v1&quot;,
+  &quot;epoch&quot;: 1,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;2020&quot;,
+  &quot;modifiedat&quot;: &quot;now&quot;,
+  &quot;ancestor&quot;: &quot;v0&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 2,
+    &quot;createdat&quot;: &quot;2021&quot;,
+    &quot;modifiedat&quot;: &quot;now&quot;,
+    &quot;defaultversionid&quot;: &quot;v1&quot;,
+    &quot;defaultversionsticky&quot;: true
+  },
+  &quot;versions&quot;: {
+    &quot;v0&quot;: {
+      &quot;epoch&quot;: 2,
+      &quot;name&quot;: &quot;foo&quot;,
+      &quot;createdat&quot;: &quot;2021&quot;,
+      &quot;modifiedat&quot;: &quot;now&quot;,
+      &quot;ancestor&quot;: &quot;v1&quot;
+    },
+    &quot;v1&quot;: { see Resource.* attrs },
+    &quot;v2&quot;: { see Resource.* attrs }
+      &quot;epoch&quot;: 1,
+      &quot;createdat&quot;: &quot;now&quot;,
+      &quot;modifiedat&quot;: &quot;now&quot;,
+      &quot;ancestor&quot;: &quot;v0&quot;
+    }
+  }
+}
+</code></pre>
+</td></tr></table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Version <code>v0</code> (the current default Version) is updated with the
+Resource.* attributes. Notice that <code>versionid</code> is not present in the request
+and that it isn't needed as a &quot;clue&quot; because the Resource already exists
+so we know what the current default Version is.</li>
+<li>While <code>meta.defaultversionid</code> is not used as a clue as to the &quot;current&quot;
+default <code>versionid</code>, it will be used to calculate the resulting default
+Version due to <code>defaultversionsticky</code> being <code>true</code>.</li>
+<li>Ancestor order: <code>v1</code> (2020) &lt;- <code>v0</code> (2021) &lt;- <code>v2</code> (now).</li>
+</ul>
+<hr>
+<h3 id="create-resource-with-versions-and-sticky-default-version">Create Resource with Versions and sticky default Version <a class="anchor" href="#create-resource-with-versions-and-sticky-default-version">🔗</a></h3>
+<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<p><strong>Initial State:</strong></p>
+<pre><code>Empty
+</code></pre>
+<p><strong>Request:</strong></p>
+<pre><code>PUT /dirs/d1/files/f1
+
+{
+  &quot;versionid&quot;: &quot;v0&quot;,
+  &quot;name&quot;: &quot;foo&quot;,
+  &quot;createdat&quot;: &quot;2021&quot;,
+  &quot;meta&quot;: {
+    &quot;defaultversionid&quot;: &quot;v1&quot;,
+    &quot;defaultversionsticky&quot;: true
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: {
+      &quot;createdat&quot;: &quot;2020&quot;
+    },
+    &quot;v2&quot;: {}
+  }
+}
+</code></pre>
+</td><td valign=top>
+<p><strong>Final State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v1&quot;,
+  &quot;epoch&quot;: 1,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;2020&quot;,
+  &quot;modifiedat&quot;: &quot;now&quot;,
+  &quot;ancestor&quot;: &quot;v1&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;now&quot;,
+    &quot;modifiedat&quot;: &quot;now&quot;,
+    &quot;defaultversionid&quot;: &quot;v1&quot;,
+    &quot;defaultversionsticky&quot;: true
+  },
+  &quot;versions&quot;: {
+    &quot;v0&quot;: {
+      &quot;epoch&quot;: 1,
+      &quot;name&quot;: &quot;foo&quot;,
+      &quot;createdat&quot;: &quot;2021&quot;,
+      &quot;modifiedat&quot;: &quot;now&quot;,
+      &quot;ancestor&quot;: &quot;v1&quot;
+    },
+    &quot;v1&quot;: { see Resource.* attrs }
+    &quot;v2&quot;: {
+      &quot;epoch&quot;: 1,
+      &quot;createdat&quot;: &quot;now&quot;,
+      &quot;modifiedat&quot;: &quot;now&quot;,
+      &quot;ancestor&quot;: &quot;v0&quot;
+    }
+  }
+}
+</code></pre>
+</td></tr></table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>In this case <code>versionid</code> at the Resource level is needed to ensure that
+the current default Version is <code>v0</code> and that it is created.</li>
+<li>Notice that the 2 potential &quot;clues&quot; (<code>versionid</code> and <code>meta.defaultversionid</code>)
+have different values because we need to create <code>v0</code> as the current default
+Version when processing the Resource.* attributes, but then assign <code>v1</code> as
+the resulting default Version. This means that in the previous example
+<code>versionid</code> was not needed, but in this example it is to yield the correct
+(same) net result.</li>
+<li>Ancestor order: <code>v1</code> (2020) &lt;- <code>v0</code> (now) &lt;- <code>v2</code> (now).</li>
+</ul>
+<hr>
+<h3 id="create-resource-with-versionid-and-defaultversionid">Create Resource with versionid and defaultversionid <a class="anchor" href="#create-resource-with-versionid-and-defaultversionid">🔗</a></h3>
+<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<p><strong>Initial State:</strong></p>
+<pre><code>Empty
+</code></pre>
+<p><strong>Request:</strong></p>
+<pre><code>PUT /dirs/d1/files/f1
+
+{
+  &quot;versionid&quot;: &quot;v0&quot;,
+  &quot;name&quot;: &quot;foo&quot;,
+  &quot;meta&quot;: {
+    &quot;defaultversionid&quot;: &quot;v1&quot;
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: {
+      &quot;createdat&quot;: &quot;2020&quot;
+    },
+    &quot;v2&quot;: {}
+  }
+}
+</code></pre>
+</td><td valign=top>
+<p><strong>Final State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v2&quot;,
+  &quot;epoch&quot;: 1,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;now&quot;,
+  &quot;modifiedat&quot;: &quot;now&quot;,
+  &quot;ancestor&quot;: &quot;v0&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;now&quot;,
+    &quot;modifiedat&quot;: &quot;now&quot;,
+    &quot;defaultversionid&quot;: &quot;v2&quot;,
+    &quot;defaultversionsticky&quot;: false
+  },
+  &quot;versions&quot;: {
+    &quot;v0&quot;: {
+      &quot;epoch&quot;: 1,
+      &quot;name&quot;: &quot;foo&quot;,
+      &quot;createdat&quot;: &quot;now&quot;,
+      &quot;modifiedat&quot;: &quot;now&quot;,
+      &quot;ancestor&quot;: &quot;v1&quot;
+    },
+    &quot;v1&quot;: {
+      &quot;epoch&quot;: 1,
+      &quot;createdat&quot;: &quot;2020&quot;,
+      &quot;modifiedat&quot;: &quot;now&quot;,
+      &quot;ancestor&quot;: &quot;v1&quot;
+    },
+    &quot;v2&quot;: { see Resource.* attrs }
+  }
+}
+</code></pre>
+</td></tr></table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Version <code>v0</code> is created due to the presence of <code>versionid</code>. Which means
+<code>meta.defaultversionid</code> is ignored for the purpose of determining the
+current default Version. However, it is also ignored when calculating the
+resulting default Version due to <code>defaultversionsticky</code> being <code>false</code>.</li>
+<li>Ancestor order: <code>v1</code> (2020) &lt;- <code>v0</code> (now) &lt;- <code>v2</code> (now).</li>
+</ul>
+<hr>
+<h3 id="create-resource-with-sticky-defaultversionid">Create Resource with sticky defaultversionid <a class="anchor" href="#create-resource-with-sticky-defaultversionid">🔗</a></h3>
+<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<p><strong>Initial State:</strong></p>
+<pre><code>Empty
+</code></pre>
+<p><strong>Request:</strong></p>
+<pre><code>PUT /dirs/d1/files/f1
+
+{
+  &quot;meta&quot;: {
+    &quot;defaultversionid&quot;: &quot;v1&quot;,
+    &quot;defaultversionsticky&quot;: true
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: {
+      &quot;createdat&quot;: &quot;2020&quot;
+    },
+    &quot;v2&quot;: {}
+  }
+}
+</code></pre>
+</td><td valign=top>
+<p><strong>Final State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v1&quot;,
+  &quot;epoch&quot;: 1,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;2020&quot;,
+  &quot;modifiedat&quot;: &quot;now&quot;,
+  &quot;ancestor&quot;: &quot;v1&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;now&quot;,
+    &quot;modifiedat&quot;: &quot;now&quot;,
+    &quot;defaultversionid&quot;: &quot;v1&quot;,
+    &quot;defaultversionsticky&quot;: true
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: { see Resource.* attrs },
+    &quot;v2&quot;: {
+      &quot;epoch&quot;: 1,
+      &quot;createdat&quot;: &quot;now&quot;,
+      &quot;modifiedat&quot;: &quot;now&quot;,
+      &quot;ancestor&quot;: &quot;v1&quot;
+    }
+  }
+}
+</code></pre>
+</td></tr></table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>In this case since <code>versionid</code> is not present, <code>meta.defaultversionid</code> will
+be used as the &quot;clue&quot; for the current default Version.</li>
+<li>And, Version v1 will be the default and it's sticky.</li>
+</ul>
+<hr>
+<h3 id="update-resource-with-non-sticky-bad-defaultversionid">Update Resource with non-sticky bad defaultversionid <a class="anchor" href="#update-resource-with-non-sticky-bad-defaultversionid">🔗</a></h3>
+<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<p><strong>Initial State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v1&quot;,
+  &quot;epoch&quot;: 1,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;2025&quot;,
+  &quot;modifiedat&quot;: &quot;2025&quot;,
+  &quot;ancestor&quot;: &quot;v1&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;2025&quot;,
+    &quot;modifiedat&quot;: &quot;2025&quot;,
+    &quot;defaultversionid&quot;: &quot;v1&quot;,
+    &quot;defaultversionsticky&quot;: true
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: { see Resource.* attrs },
+    &quot;v2&quot;: {
+      &quot;createdat&quot;: &quot;2025&quot;,
+      &quot;ancestor&quot;: &quot;v1&quot;
+    }
+  }
+}
+</code></pre>
+<p><strong>Request:</strong></p>
+<pre><code>PUT /dirs/d1/files/f1
+
+{
+  &quot;name&quot;: &quot;foo&quot;,
+  &quot;meta&quot;: {
+    &quot;defaultversionid&quot;: &quot;abc&quot;
+  },
+  &quot;versions&quot;: {
+    &quot;v2&quot;: {
+      &quot;createdat&quot;: &quot;2020&quot;
+    }
+  }
+}
+</code></pre>
+</td><td valign=top>
+<p><strong>Final State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v1&quot;,
+  &quot;epoch&quot;: 2,
+  &quot;name&quot;: &quot;foo&quot;,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;2025&quot;,
+  &quot;modifiedat&quot;: &quot;now&quot;,
+  &quot;ancestor&quot;: &quot;v2&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 2,
+    &quot;createdat&quot;: &quot;2025&quot;,
+    &quot;modifiedat&quot;: &quot;now&quot;,
+    &quot;defaultversionid&quot;: &quot;v1&quot;,
+    &quot;defaultversionsticky&quot;: false
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: { see Resource.* attrs },
+    &quot;v2&quot;: {
+      &quot;epoch&quot;: 2,
+      &quot;createdat&quot;: &quot;2020&quot;,
+      &quot;modifiedat&quot;: &quot;now&quot;,
+      &quot;ancestor&quot;: &quot;v2&quot;
+    }
+  }
+}
+</code></pre>
+</td></tr></table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Current default Version is <code>v1</code>, and <code>v1</code> is not in the request's <code>versions</code>
+collection, so it's &quot;name&quot; attribute is updated.</li>
+<li>Version <code>v2</code> is updated.</li>
+<li>While <code>meta.defaultversionid</code> references a non-existing Version, no error is
+generated because its value is ignored due to <code>meta.defaultversionsticky</code>
+being <code>false</code>.</li>
+<li>Ancestor order: <code>v2</code> (2020) &lt;- <code>v1</code> (2025).</li>
+</ul>
+<hr>
+<h3 id="update-resource-with-sticky-non-specified-defaultversionid">Update Resource with sticky non-specified defaultversionid <a class="anchor" href="#update-resource-with-sticky-non-specified-defaultversionid">🔗</a></h3>
+<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<p><strong>Initial State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v2&quot;,
+  &quot;epoch&quot;: 1,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;2025&quot;,
+  &quot;modifiedat&quot;: &quot;2025&quot;,
+  &quot;ancestor&quot;: &quot;v1&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;2025&quot;,
+    &quot;modifiedat&quot;: &quot;2025&quot;,
+    &quot;defaultversionid&quot;: &quot;v2&quot;,
+    &quot;defaultversionsticky&quot;: false
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: {
+      &quot;epoch&quot;: 1,
+      &quot;createdat&quot;: &quot;2025&quot;,
+      &quot;modifiedat&quot;: &quot;2025&quot;,
+      &quot;ancestor&quot;: &quot;v1&quot;
+    },
+    &quot;v2&quot;: { see Resource.* attrs }
+    }
+  }
+}
+</code></pre>
+<p><strong>Request:</strong></p>
+<pre><code>PUT /dirs/d1/files/f1
+
+{
+  &quot;name&quot;: &quot;foo&quot;,
+  &quot;meta&quot;: {
+    &quot;defaultversionsticky&quot;: true
+  },
+  &quot;versions&quot;: {
+    &quot;v2&quot;: {
+      &quot;createdat&quot;: &quot;2020&quot;
+    }
+  }
+}
+</code></pre>
+</td><td valign=top>
+<p><strong>Final State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v1&quot;,
+  &quot;epoch&quot;: 2,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;2025&quot;,
+  &quot;modifiedat&quot;: &quot;now&quot;,
+  &quot;ancestor&quot;: &quot;v2&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 2,
+    &quot;createdat&quot;: &quot;2025&quot;,
+    &quot;modifiedat&quot;: &quot;now&quot;,
+    &quot;defaultversionid&quot;: &quot;v1&quot;,
+    &quot;defaultversionsticky&quot;: true
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: { see Resource.* attrs },
+    &quot;v2&quot;: {
+      &quot;epoch&quot;: 2,
+      &quot;createdat&quot;: &quot;2020&quot;,
+      &quot;modifiedat&quot;: &quot;now&quot;,
+      &quot;ancestor&quot;: &quot;v2&quot;
+    }
+  }
+}
+</code></pre>
+</td></tr></table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Notice that &quot;Resource.name&quot; is ignored because <code>v2</code> (the current default
+Version) appears in the request's <code>versions</code> collection.</li>
+<li>While the current default is <code>v2</code>, setting <code>defaultversionsticky</code> to <code>true</code>
+only takes effect after the default Version is recalculated. This is due to
+the fact that <code>PUT</code> is a complete replacement and <code>meta.defaultversionid</code>
+not being in the request is akin to setting it to <code>null</code> in the request. In
+the next example we'll see how <code>PATCH</code> changes this semantics.</li>
+<li>Ancestor order: <code>v2</code> (2020) &lt;- <code>v1</code> (2025).</li>
+</ul>
+<hr>
+<h3 id="patch-resource-with-versions-and-defaultversionsticky">Patch Resource with Versions and defaultversionsticky <a class="anchor" href="#patch-resource-with-versions-and-defaultversionsticky">🔗</a></h3>
+<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<p><strong>Initial State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v2&quot;,
+  &quot;epoch&quot;: 1,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;2025&quot;,
+  &quot;modifiedat&quot;: &quot;2025&quot;,
+  &quot;ancestor&quot;: &quot;v1&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;2025&quot;,
+    &quot;modifiedat&quot;: &quot;2025&quot;,
+    &quot;defaultversionid&quot;: &quot;v2&quot;,
+    &quot;defaultversionsticky&quot;: false
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: {
+      &quot;epoch&quot;: 1,
+      &quot;createdat&quot;: &quot;2025&quot;,
+      &quot;modifiedat&quot;: &quot;2025&quot;,
+      &quot;ancestor&quot;: &quot;v1&quot;
+    },
+    &quot;v2&quot;: { see Resource.* attrs }
+    }
+  }
+}
+</code></pre>
+<p><strong>Request:</strong></p>
+<pre><code>PATCH /dirs/d1/files/f1
+
+{
+  &quot;name&quot;: &quot;foo&quot;,
+  &quot;meta&quot;: {
+    &quot;defaultversionsticky&quot;: true
+  },
+  &quot;versions&quot;: {
+    &quot;v2&quot;: {
+      &quot;createdat&quot;: &quot;2020&quot;
+    }
+  }
+}
+</code></pre>
+</td><td valign=top>
+<p><strong>Final State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v2&quot;,
+  &quot;epoch&quot;: 2,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;2020&quot;,
+  &quot;modifiedat&quot;: &quot;now&quot;,
+  &quot;ancestor&quot;: &quot;v2&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 2,
+    &quot;createdat&quot;: &quot;2025&quot;,
+    &quot;modifiedat&quot;: &quot;now&quot;,
+    &quot;defaultversionid&quot;: &quot;v2&quot;,
+    &quot;defaultversionsticky&quot;: true
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: {
+      &quot;epoch&quot;: 2,
+      &quot;createdat&quot;: &quot;2025&quot;,
+      &quot;modifiedat&quot;: &quot;now&quot;,
+      &quot;ancestor&quot;: &quot;v2&quot;
+    },
+    &quot;v2&quot;: { see Resource.* attrs }
+  }
+}
+</code></pre>
+</td></tr></table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Resource.name is ignored due to <code>v2</code> (the current default Version) being in
+the request's <code>versions</code> collection.</li>
+<li>Since this is a <code>PATCH</code>, unlike the previous example where
+<code>meta.defaultversionid</code> was implicitly set to <code>null</code>, in this case its value
+remains unchanged. So, when <code>meta.defaultversionsticky</code> is set to <code>true</code> the
+current default Version becomes &quot;sticky&quot;.</li>
+<li>Ancestor order: <code>v2</code> (2020) &lt;- <code>v1</code> (2025).</li>
+</ul>
+<hr>
+<h3 id="update-resource-with-empty-content">Update Resource with empty content <a class="anchor" href="#update-resource-with-empty-content">🔗</a></h3>
+<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<p><strong>Initial State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v1&quot;,
+  &quot;epoch&quot;: 1,
+  &quot;name&quot;: &quot;my file&quot;,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;2025&quot;,
+  &quot;modifiedat&quot;: &quot;2025&quot;,
+  &quot;ancestor&quot;: &quot;v1&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;2025&quot;,
+    &quot;modifiedat&quot;: &quot;2025&quot;,
+    &quot;defaultversionid&quot;: &quot;v1&quot;,
+    &quot;defaultversionsticky&quot;: false
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: { see Resource.* attrs }
+  }
+}
+</code></pre>
+<p><strong>Request:</strong></p>
+<pre><code>PUT /dirs/d1/files/f1
+
+{}
+</code></pre>
+</td><td valign=top>
+<p><strong>Final State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v1&quot;,
+  &quot;epoch&quot;: 2,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;2025&quot;,
+  &quot;modifiedat&quot;: &quot;now&quot;,
+  &quot;ancestor&quot;: &quot;v1&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;2025&quot;,
+    &quot;modifiedat&quot;: &quot;2025&quot;,
+    &quot;defaultversionid&quot;: &quot;v1&quot;,
+    &quot;defaultversionsticky&quot;: false
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: { see Resource.* attrs }
+  }
+}
+</code></pre>
+</td></tr></table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Notice that <code>name</code> is deleted because <code>PUT</code> is a complete replacement
+of all attributes.</li>
+<li>No attributes in <code>meta</code> are updated.</li>
+</ul>
+<hr>
+<h3 id="patch-resource-with-empty-content">Patch Resource with empty content <a class="anchor" href="#patch-resource-with-empty-content">🔗</a></h3>
+<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<p><strong>Initial State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v1&quot;,
+  &quot;epoch&quot;: 1,
+  &quot;name&quot;: &quot;my file&quot;,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;2025&quot;,
+  &quot;modifiedat&quot;: &quot;2025&quot;,
+  &quot;ancestor&quot;: &quot;v1&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;2025&quot;,
+    &quot;modifiedat&quot;: &quot;2025&quot;,
+    &quot;defaultversionid&quot;: &quot;v1&quot;,
+    &quot;defaultversionsticky&quot;: false
+  },
+
+  &quot;versions&quot;: {
+    &quot;v1&quot;: { see Resource.* attrs }
+  }
+}
+</code></pre>
+<p><strong>Request:</strong></p>
+<pre><code>PATCH /dirs/d1/files/f1
+
+{}
+</code></pre>
+</td><td valign=top>
+<p><strong>Final State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v1&quot;,
+  &quot;epoch&quot;: 2,
+  &quot;name&quot;: &quot;my file&quot;,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;2025&quot;,
+  &quot;modifiedat&quot;: &quot;now&quot;,
+  &quot;ancestor&quot;: &quot;v1&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;2025&quot;,
+    &quot;modifiedat&quot;: &quot;2025&quot;,
+    &quot;defaultversionid&quot;: &quot;v1&quot;,
+    &quot;defaultversionsticky&quot;: false
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: { see Resource.* attrs }
+  }
+}
+</code></pre>
+</td></tr></table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Notice this time <code>name</code> is unchanged due to the use of <code>PATCH</code> instead of
+<code>PUT</code>.</li>
+<li>However, <code>PATCH</code> does update the <code>epoch</code> and <code>modifiedat</code> timestamps of the
+current default Version.</li>
+<li>The <code>meta</code> sub-object is unchanged.</li>
+</ul>
+<hr>
+<h3 id="update-resource-with-new-description">Update Resource with new description <a class="anchor" href="#update-resource-with-new-description">🔗</a></h3>
+<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<p><strong>Initial State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v1&quot;,
+  &quot;epoch&quot;: 1,
+  &quot;name&quot;: &quot;my file&quot;,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;2025&quot;,
+  &quot;modifiedat&quot;: &quot;2025&quot;,
+  &quot;ancestor&quot;: &quot;v1&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;2025&quot;,
+    &quot;modifiedat&quot;: &quot;2025&quot;,
+    &quot;defaultversionid&quot;: &quot;v1&quot;,
+    &quot;defaultversionsticky&quot;: false
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: { see Resource.* attrs }
+  }
+}
+</code></pre>
+<p><strong>Request:</strong></p>
+<pre><code>PUT /dirs/d1/files/f1
+
+{
+  &quot;description&quot;: &quot;very cool&quot;
+}
+</code></pre>
+</td><td valign=top>
+<p><strong>Final State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v1&quot;,
+  &quot;epoch&quot;: 2,
+  &quot;isdefault&quot;: true,
+  &quot;description&quot;: &quot;very cool&quot;,
+  &quot;createdat&quot;: &quot;2025&quot;,
+  &quot;modifiedat&quot;: &quot;now&quot;,
+  &quot;ancestor&quot;: &quot;v1&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;2025&quot;,
+    &quot;modifiedat&quot;: &quot;2025&quot;,
+    &quot;defaultversionid&quot;: &quot;v1&quot;,
+    &quot;defaultversionsticky&quot;: false
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: { see Resource.* attrs }
+  }
+}
+</code></pre>
+</td></tr></table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Default Version's <code>name</code> attribute is deleted.</li>
+<li>Its <code>description</code> is updated.</li>
+<li>Its <code>epoch</code> and <code>modifiedat</code> are automatically updated.</li>
+<li>The <code>meta</code> sub-object is unchanged.</li>
+</ul>
+<hr>
+<h3 id="patch-resources-description-field">Patch Resource's description field <a class="anchor" href="#patch-resources-description-field">🔗</a></h3>
+<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<p><strong>Initial State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v1&quot;,
+  &quot;epoch&quot;: 1,
+  &quot;name&quot;: &quot;my file&quot;,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;2025&quot;,
+  &quot;modifiedat&quot;: &quot;2025&quot;,
+  &quot;ancestor&quot;: &quot;v1&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;2025&quot;,
+    &quot;modifiedat&quot;: &quot;2025&quot;,
+    &quot;defaultversionid&quot;: &quot;v1&quot;,
+    &quot;defaultversionsticky&quot;: false
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: { see Resource.* attrs }
+  }
+}
+</code></pre>
+<p><strong>Request:</strong></p>
+<pre><code>PATCH /dirs/d1/files/f1
+
+{
+  &quot;description&quot;: &quot;very cool&quot;
+}
+</code></pre>
+</td><td valign=top>
+<p><strong>Final State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v1&quot;,
+  &quot;epoch&quot;: 2,
+  &quot;name&quot;: &quot;my file&quot;,
+  &quot;isdefault&quot;: true,
+  &quot;description&quot;: &quot;very cool&quot;,
+  &quot;createdat&quot;: &quot;2025&quot;,
+  &quot;modifiedat&quot;: &quot;now&quot;,
+  &quot;ancestor&quot;: &quot;v1&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;2025&quot;,
+    &quot;modifiedat&quot;: &quot;2025&quot;,
+    &quot;defaultversionid&quot;: &quot;v1&quot;,
+    &quot;defaultversionsticky&quot;: false
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: { see Resource.* attrs }
+  }
+}
+</code></pre>
+</td></tr></table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Default Version's <code>name</code> attribute is unchanged.</li>
+<li>Its <code>description</code> is updated.</li>
+<li>Its <code>epoch</code> and <code>modifiedat</code> are automatically updated.</li>
+<li>The <code>meta</code> sub-object is unchanged.</li>
+</ul>
+<hr>
+<h3 id="update-resource-with-non-specified-defaultversionsticky">Update Resource with non-specified defaultversionsticky <a class="anchor" href="#update-resource-with-non-specified-defaultversionsticky">🔗</a></h3>
+<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<p><strong>Initial State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v1&quot;,
+  &quot;epoch&quot;: 1,
+  &quot;name&quot;: &quot;my file&quot;,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;2025&quot;,
+  &quot;modifiedat&quot;: &quot;2025&quot;,
+  &quot;ancestor&quot;: &quot;v1&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;2025&quot;,
+    &quot;modifiedat&quot;: &quot;2025&quot;,
+    &quot;defaultversionid&quot;: &quot;v1&quot;,
+    &quot;defaultversionsticky&quot;: false
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: { see Resource.* attrs }
+  }
+}
+</code></pre>
+<p><strong>Request:</strong></p>
+<pre><code>PUT /dirs/d1/files/f1
+
+{
+  &quot;meta: {
+    &quot;defaultversionsticky&quot;: true
+  }
+}
+</code></pre>
+</td><td valign=top>
+<p><strong>Final State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v1&quot;,
+  &quot;epoch&quot;: 2,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;2025&quot;,
+  &quot;modifiedat&quot;: &quot;now&quot;,
+  &quot;ancestor&quot;: &quot;v1&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 2,
+    &quot;createdat&quot;: &quot;2025&quot;,
+    &quot;modifiedat&quot;: &quot;now&quot;,
+    &quot;defaultversionid&quot;: &quot;v1&quot;,
+    &quot;defaultversionsticky&quot;: true
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: { see Resource.* attrs }
+  }
+}
+</code></pre>
+</td></tr></table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>The default Version's <code>name</code> attribute is deleted due to the operation
+being a <code>PUT</code>. Its <code>epoch</code> and <code>modifiedat</code> are automatically updated.</li>
+<li><code>meta.defaultversionsticky</code> is set to <code>true</code>, and since there is only one
+Version the calculated default Version remains <code>1</code>.</li>
+</ul>
+<hr>
+<h3 id="patch-resource-with-defaultversionsticky">Patch Resource with defaultversionsticky <a class="anchor" href="#patch-resource-with-defaultversionsticky">🔗</a></h3>
+<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<p><strong>Initial State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v1&quot;,
+  &quot;epoch&quot;: 1,
+  &quot;name&quot;: &quot;my file&quot;,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;2025&quot;,
+  &quot;modifiedat&quot;: &quot;2025&quot;,
+  &quot;ancestor&quot;: &quot;v1&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;2025&quot;,
+    &quot;modifiedat&quot;: &quot;2025&quot;,
+    &quot;defaultversionid&quot;: &quot;v1&quot;,
+    &quot;defaultversionsticky&quot;: false
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: { see Resource.* attrs }
+  }
+}
+</code></pre>
+<p><strong>Request:</strong></p>
+<pre><code>PATCH /dirs/d1/files/f1
+
+{
+  &quot;meta: {
+    &quot;defaultversionsticky&quot;: true
+  }
+}
+</code></pre>
+</td><td valign=top>
+<p><strong>Final State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v1&quot;,
+  &quot;epoch&quot;: 2,
+  &quot;name&quot;: &quot;my file&quot;,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;2025&quot;,
+  &quot;modifiedat&quot;: &quot;now&quot;,
+  &quot;ancestor&quot;: &quot;v1&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 2,
+    &quot;createdat&quot;: &quot;2025&quot;,
+    &quot;modifiedat&quot;: &quot;now&quot;,
+    &quot;defaultversionid&quot;: &quot;v1&quot;,
+    &quot;defaultversionsticky&quot;: true
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: { see Resource.* attrs }
+  }
+}
+</code></pre>
+</td></tr></table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li><code>name</code> is unchanged, but <code>epoch</code> and <code>modifiedat</code> are automatically updated.</li>
+<li>As with previous example, Version <code>1</code> becomes sticky.</li>
+<li>The default Version's <code>name</code> attribute is unchanged, but <code>epoch</code> and
+<code>modifiedat</code> are automatically updated.</li>
+<li><code>meta.defaultversionsticky</code> is set to <code>true</code>, and since there is only one
+Version the calculated default Version remains <code>1</code>.</li>
+</ul>
+<hr>
+<h3 id="patch-resource-with-sticky-defaultversionid">Patch Resource with sticky defaultversionid <a class="anchor" href="#patch-resource-with-sticky-defaultversionid">🔗</a></h3>
+<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<p><strong>Initial State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v2&quot;,
+  &quot;epoch&quot;: 1,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;2025&quot;,
+  &quot;modifiedat&quot;: &quot;2025&quot;,
+  &quot;ancestor&quot;: &quot;v1&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;2025&quot;,
+    &quot;modifiedat&quot;: &quot;2025&quot;,
+    &quot;defaultversionid&quot;: &quot;v2&quot;,
+    &quot;defaultversionsticky&quot;: false
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: {
+      &quot;epoch&quot;: 1,
+      &quot;createdat&quot;: &quot;2025&quot;,
+      &quot;modifiedat&quot;: &quot;2025&quot;,
+      &quot;ancestor&quot;: &quot;v1&quot;
+    },
+    &quot;v2&quot;: { see Resource.* attrs }
+  }
+}
+</code></pre>
+<p><strong>Request:</strong></p>
+<pre><code>PATCH /dirs/d1/files/f1/meta
+
+{
+  &quot;defaultversionid&quot;: &quot;v1&quot;,
+  &quot;defaultversionsticky&quot;: true
+}
+</code></pre>
+</td><td valign=top>
+<p><strong>Final State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v1&quot;,
+  &quot;epoch&quot;: 1,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;2025&quot;,
+  &quot;modifiedat&quot;: &quot;2025&quot;,
+  &quot;ancestor&quot;: &quot;v1&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 2,
+    &quot;createdat&quot;: &quot;2025&quot;,
+    &quot;modifiedat&quot;: &quot;now&quot;,
+    &quot;defaultversionid&quot;: &quot;v1&quot;,
+    &quot;defaultversionsticky&quot;: true
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: { see Resource.* attrs },
+    &quot;v2&quot;: {
+      &quot;epoch&quot;: 1,
+      &quot;createdat&quot;: &quot;2025&quot;,
+      &quot;modifiedat&quot;: &quot;2025&quot;,
+      &quot;ancestor&quot;: &quot;v1&quot;
+    }
+  }
+}
+</code></pre>
+</td></tr></table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Notice the operation is directed to the <code>meta</code> sub-object, no attributes
+on Version <code>v1</code> or <code>v2</code> are modified.</li>
+<li>However, per the request, the default Version is set to <code>v1</code> and it is
+sticky.</li>
+<li>The <code>meta</code>'s <code>epoch</code> and <code>modifiedat</code> values are updated.</li>
+<li>Ancestor order: <code>v1</code> (2025) &lt;- <code>v2</code> (2025).</li>
+</ul>
+<hr>
+<h3 id="patch-resource-with-bad-defaultversionid">Patch Resource with bad defaultversionid <a class="anchor" href="#patch-resource-with-bad-defaultversionid">🔗</a></h3>
+<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<p><strong>Initial State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v1&quot;,
+  &quot;epoch&quot;: 1,
+  &quot;name&quot;: &quot;my file&quot;,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;2025&quot;,
+  &quot;modifiedat&quot;: &quot;2025&quot;,
+  &quot;ancestor&quot;: &quot;v1&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;2025&quot;,
+    &quot;modifiedat&quot;: &quot;2025&quot;,
+    &quot;defaultversionid&quot;: &quot;v1&quot;,
+    &quot;defaultversionsticky&quot;: false
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: { see Resource.* attrs }
+  }
+}
+</code></pre>
+<p><strong>Request:</strong></p>
+<pre><code>PATCH /dirs/d1/files/f1
+
+{
+  &quot;meta: {
+    &quot;defaultversionid&quot;: &quot;foo&quot;
+  }
+}
+</code></pre>
+</td><td valign=top>
+<p><strong>Final State:</strong></p>
+<pre><code>Error due to `foo` being an unknown Version.
+</code></pre>
+</td></tr></table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>While the request didn't set <code>meta.defaultversionsticky</code> to <code>true</code>
+explicitly, setting <code>meta.defaultversionid</code> via a <code>PATCH</code> implicitly
+sets <code>meta.defaultversionsticky</code> to <code>true</code>. If this operation used <code>PUT</code>
+instead, the error would not have been generated and <code>meta.defaultversionid</code>
+would have been ignored.</li>
+</ul>
+<hr>
+<h3 id="update-resource-with-bad-sticky-defaultversionid">Update Resource with bad sticky defaultversionid <a class="anchor" href="#update-resource-with-bad-sticky-defaultversionid">🔗</a></h3>
+<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<p><strong>Initial State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v1&quot;,
+  &quot;epoch&quot;: 1,
+  &quot;name&quot;: &quot;my file&quot;,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;2025&quot;,
+  &quot;modifiedat&quot;: &quot;2025&quot;,
+  &quot;ancestor&quot;: &quot;v1&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;2025&quot;,
+    &quot;modifiedat&quot;: &quot;2025&quot;,
+    &quot;defaultversionid&quot;: &quot;v1&quot;,
+    &quot;defaultversionsticky&quot;: false
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: { see Resource.* attrs }
+  }
+}
+</code></pre>
+<p><strong>Request:</strong></p>
+<pre><code>PUT /dirs/d1/files/f1
+
+{
+  &quot;meta: {
+    &quot;defaultversionid&quot;: &quot;foo&quot;,
+    &quot;defaultversionsticky&quot;: true
+  }
+}
+</code></pre>
+</td><td valign=top>
+<p><strong>Final State:</strong></p>
+<pre><code>Error due to `foo` being an unknown Version.
+</code></pre>
+</td></tr></table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Similar to the previous example, except using <code>PUT</code>. If
+<code>meta.defaultversionsticky</code> had not been included in the request with a
+value of <code>true</code> then <code>defaultversionid</code> would have been ignored.</li>
+</ul>
+<hr>
+<h3 id="update-resource-with-non-specified-sticky-default-version">Update Resource with non-specified sticky default Version <a class="anchor" href="#update-resource-with-non-specified-sticky-default-version">🔗</a></h3>
+<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<p><strong>Initial State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v1&quot;,
+  &quot;epoch&quot;: 1,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;2025&quot;,
+  &quot;modifiedat&quot;: &quot;2025&quot;,
+  &quot;ancestor&quot;: &quot;v1&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;2025&quot;,
+    &quot;modifiedat&quot;: &quot;2025&quot;,
+    &quot;defaultversionid&quot;: &quot;v1&quot;,
+    &quot;defaultversionsticky&quot;: false
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: { ... }
+  }
+}
+</code></pre>
+<p><strong>Request:</strong></p>
+<pre><code>PUT /dirs/d1/files/f1
+
+{
+  &quot;name&quot;: &quot;foo&quot;,
+  &quot;createdat&quot;: &quot;1999&quot;
+  &quot;meta&quot;: {
+    &quot;defaultversionsticky&quot;: true
+  },
+  &quot;versions&quot;: {
+     &quot;v2&quot;: { &quot;createdat&quot;: &quot;1998&quot; }
+  }
+}
+</code></pre>
+</td><td valign=top>
+<p><strong>Final State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v1&quot;,
+  &quot;epoch&quot;: 2,
+  &quot;name&quot;: &quot;foo&quot;,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;1999&quot;,
+  &quot;modifiedat&quot;: &quot;now&quot;,
+  &quot;ancestor&quot;: &quot;v2&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 2,
+    &quot;createdat&quot;: &quot;2025&quot;,
+    &quot;modifiedat&quot;: &quot;now&quot;,
+    &quot;defaultversionid&quot;: &quot;v1&quot;,
+    &quot;defaultversionsticky&quot;: true
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: { see Resource.* attrs },
+    &quot;v2&quot;: {
+       &quot;epoch&quot;: 1,
+       &quot;createdat&quot;: &quot;1998&quot;,
+       &quot;modifiedat&quot;: &quot;now&quot;,
+       &quot;ancestor&quot;: &quot;v2&quot;
+     }
+  }
+}
+</code></pre>
+</td></tr></table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Version <code>v2</code> is created with a <code>createdat</code> value of <code>1998</code>.</li>
+<li>Version <code>v1</code> is updated (<code>name</code>, <code>createdat</code>, <code>epoch</code> and <code>modifiedat</code>).</li>
+<li>While <code>v2</code> was just created, <code>v1</code> is still the default Version because it has
+a newer <code>createdat</code> value. And it is now sticky per the request.</li>
+<li>Ancestor order: <code>v2</code> (1998) &lt;- <code>v1</code> (1999).</li>
+</ul>
+<hr>
+<h3 id="create-resource-with-conflicting-default-version-attributes---variant-1">Create Resource with conflicting default Version attributes - variant 1 <a class="anchor" href="#create-resource-with-conflicting-default-version-attributes---variant-1">🔗</a></h3>
+<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<p><strong>Initial State:</strong></p>
+<pre><code>Empty
+</code></pre>
+<p><strong>Request:</strong></p>
+<pre><code>PUT /dirs/d1/files/f1
+
+{
+  &quot;versionid&quot;: &quot;v1&quot;,
+  &quot;name&quot;: &quot;foo&quot;,
+  &quot;meta&quot;: {
+    &quot;defaultversionsticky&quot;: true
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: {&quot;name&quot;:&quot;abc&quot;},
+    &quot;v2&quot;: {}
+  }
+}
+</code></pre>
+</td><td valign=top>
+<p><strong>Final State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v2&quot;,
+  &quot;epoch&quot;: 1,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;now&quot;,
+  &quot;modifiedat&quot;: &quot;now&quot;,
+  &quot;ancestor&quot;: &quot;v1&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;now&quot;,
+    &quot;modifiedat&quot;: &quot;now&quot;,
+    &quot;defaultversionid&quot;: &quot;v2&quot;,
+    &quot;defaultversionsticky&quot;: true
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: {
+      &quot;epoch&quot;: 1,
+      &quot;name&quot;: &quot;abc&quot;,
+      &quot;createdat&quot;: &quot;now&quot;,
+      &quot;modifiedat&quot;: &quot;now&quot;,
+      &quot;ancestor&quot;: &quot;v1&quot;
+    },
+    &quot;v2&quot;: { see Resource.* attrs }
+  }
+}
+</code></pre>
+</td></tr></table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Resource.name is ignored because <code>v1</code> is in request's <code>versions</code> collection.</li>
+<li>Version <code>v2</code> is default because it's the highest alphabetically.</li>
+</ul>
+<hr>
+<h3 id="create-resource-with-conflicting-default-version-attributes---variant-2">Create Resource with conflicting default Version attributes - variant 2 <a class="anchor" href="#create-resource-with-conflicting-default-version-attributes---variant-2">🔗</a></h3>
+<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<p><strong>Initial State:</strong></p>
+<pre><code>Empty
+</code></pre>
+<p><strong>Request:</strong></p>
+<pre><code>PUT /dirs/d1/files/f1
+
+{
+  &quot;meta&quot;: {
+    &quot;defaultversionid&quot;: &quot;v1&quot;
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: {&quot;name&quot;:&quot;abc&quot;},
+    &quot;v2&quot;: {}
+  }
+}
+</code></pre>
+</td><td valign=top>
+<p><strong>Final State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v2&quot;,
+  &quot;epoch&quot;: 1,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;now&quot;,
+  &quot;modifiedat&quot;: &quot;now&quot;,
+  &quot;ancestor&quot;: &quot;v1&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;now&quot;,
+    &quot;modifiedat&quot;: &quot;now&quot;,
+    &quot;defaultversionid&quot;: &quot;v2&quot;,
+    &quot;defaultversionsticky&quot;: false
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: {
+      &quot;epoch&quot;: 1,
+      &quot;name&quot;: &quot;abc&quot;,
+      &quot;createdat&quot;: &quot;now&quot;,
+      &quot;modifiedat&quot;: &quot;now&quot;,
+      &quot;ancestor&quot;: &quot;v1&quot;
+    },
+    &quot;v2&quot;: { see Resource.* attrs }
+  }
+}
+</code></pre>
+</td></tr></table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Resource.* attributes (implied &quot;null&quot; values because they're missing) are
+ignored because <code>v1</code> is in the request's <code>versions</code> collection.</li>
+<li>Version <code>v2</code> is default because it's the highest alphabetically,</li>
+<li>Despite <code>meta.defaultversionid</code> being specified, it is ignored when
+calculating the default Version because <code>meta.defaultversionsticky</code> is not
+<code>true</code>.</li>
+</ul>
+<hr>
+<h3 id="create-resource-with-conflicting-default-version-attributes---variant-3">Create Resource with conflicting default Version attributes - variant 3 <a class="anchor" href="#create-resource-with-conflicting-default-version-attributes---variant-3">🔗</a></h3>
+<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<p><strong>Initial State:</strong></p>
+<pre><code>Empty
+</code></pre>
+<p><strong>Request:</strong></p>
+<pre><code>PUT /dirs/d1/files/f1
+
+{
+  &quot;versionid&quot;: &quot;v1&quot;,
+  &quot;versions&quot;: {
+    &quot;v1&quot;: {&quot;name&quot;:&quot;abc&quot;},
+    &quot;v2&quot;: {}
+  }
+}
+</code></pre>
+</td><td valign=top>
+<p><strong>Final State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v2&quot;,
+  &quot;epoch&quot;: 1,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;now&quot;,
+  &quot;modifiedat&quot;: &quot;now&quot;,
+  &quot;ancestor&quot;: &quot;v1&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;now&quot;,
+    &quot;modifiedat&quot;: &quot;now&quot;,
+    &quot;defaultversionid&quot;: &quot;v2&quot;,
+    &quot;defaultversionsticky&quot;: false
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: {
+      &quot;epoch&quot;: 1,
+      &quot;name&quot;: &quot;abc&quot;,
+      &quot;createdat&quot;: &quot;now&quot;,
+      &quot;modifiedat&quot;: &quot;now&quot;,
+      &quot;ancestor&quot;: &quot;v1&quot;
+    },
+    &quot;v2&quot;: { see Resource.* attrs }
+  }
+}
+</code></pre>
+</td></tr></table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Same net results as previous example.</li>
+</ul>
+<h3 id="create-resource-with-setdefaultversionid-flag">Create Resource with SetDefaultVersionID flag <a class="anchor" href="#create-resource-with-setdefaultversionid-flag">🔗</a></h3>
+<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<p><strong>Initial State:</strong></p>
+<pre><code>Empty
+</code></pre>
+<p><strong>Request:</strong></p>
+<pre><code>PUT /dirs/d1/files/f1?setdefaultversionid=v1
+
+{
+  &quot;versions&quot;: {
+    &quot;v1&quot;: {&quot;name&quot;:&quot;abc&quot;},
+    &quot;v2&quot;: {}
+  }
+}
+</code></pre>
+</td><td valign=top>
+<p><strong>Final State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v1&quot;,
+  &quot;epoch&quot;: 1,
+  &quot;name&quot;: &quot;abc&quot;,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;now&quot;,
+  &quot;modifiedat&quot;: &quot;now&quot;,
+  &quot;ancestor&quot;: &quot;v1&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;now&quot;,
+    &quot;modifiedat&quot;: &quot;now&quot;,
+    &quot;defaultversionid&quot;: &quot;v1&quot;,
+    &quot;defaultversionsticky&quot;: true
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: { see Resource.* attrs },
+    &quot;v2&quot;: {
+      &quot;epoch&quot;: 1,
+      &quot;createdat&quot;: &quot;now&quot;,
+      &quot;modifiedat&quot;: &quot;now&quot;,
+      &quot;ancestor&quot;: &quot;v1&quot;
+    },
+  }
+}
+</code></pre>
+</td></tr></table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Use of the <code>?setdefaultversionid</code> flag has the same semantics as setting
+<code>meta.defaultversionid=v1</code> and <code>meta.defaultversionsticky=true</code>.</li>
+</ul>
+<h3 id="create-resource-with-setdefaultversionid-flag-via-versions">Create Resource with SetDefaultVersionID flag via /versions <a class="anchor" href="#create-resource-with-setdefaultversionid-flag-via-versions">🔗</a></h3>
+<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<p><strong>Initial State:</strong></p>
+<pre><code>Empty
+</code></pre>
+<p><strong>Request:</strong></p>
+<pre><code>POST /dirs/d1/files/f1/versions?setdefaultversionid=v1
+
+{
+  &quot;v1&quot;: {&quot;name&quot;:&quot;abc&quot;},
+  &quot;v2&quot;: {}
+}
+</code></pre>
+</td><td valign=top>
+<p><strong>Final State:</strong></p>
+<pre><code>{
+  &quot;fileid&quot;: &quot;f1&quot;,
+  &quot;versionid&quot;: &quot;v1&quot;,
+  &quot;epoch&quot;: 1,
+  &quot;name&quot;: &quot;abc&quot;,
+  &quot;isdefault&quot;: true,
+  &quot;createdat&quot;: &quot;now&quot;,
+  &quot;modifiedat&quot;: &quot;now&quot;,
+  &quot;ancestor&quot;: &quot;v1&quot;,
+
+  &quot;meta&quot;: {
+    &quot;epoch&quot;: 1,
+    &quot;createdat&quot;: &quot;now&quot;,
+    &quot;modifiedat&quot;: &quot;now&quot;,
+    &quot;defaultversionid&quot;: &quot;v1&quot;,
+    &quot;defaultversionsticky&quot;: true
+  },
+  &quot;versions&quot;: {
+    &quot;v1&quot;: { see Resource.* attrs },
+    &quot;v2&quot;: {
+      &quot;epoch&quot;: 1,
+      &quot;createdat&quot;: &quot;now&quot;,
+      &quot;modifiedat&quot;: &quot;now&quot;,
+      &quot;ancestor&quot;: &quot;v1&quot;
+    },
+  }
+}
+</code></pre>
+</td></tr></table>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>Same net results as previous example.</li>
+</ul>
+
+</html>

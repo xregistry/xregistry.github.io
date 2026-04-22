@@ -48,27 +48,195 @@
 <h1 id="schema-registry-service---version-10-rc2">Schema Registry Service - Version 1.0-rc2 <a class="anchor" href="#schema-registry-service---version-10-rc2">🔗</a></h1>
 <h2 id="abstract">Abstract <a class="anchor" href="#abstract">🔗</a></h2>
 <p>This specification defines a Schema Registry extension to the xRegistry
-document format and API <a href="../core/spec.md">specification</a>. A Schema Registry
+document format and API <a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html">specification</a>. A Schema Registry
 allows for the storage, management and discovery of schema documents.</p>
 <h2 id="table-of-contents">Table of Contents <a class="anchor" href="#table-of-contents">🔗</a></h2>
 <ul>
-<li><a href="#overview">Overview</a></li>
-<li><a href="#notations-and-terminology">Notations and Terminology</a>
+<li><a href="#schema-registry-service---version-10-rc2">Schema Registry Service - Version 1.0-rc2</a>
 <ul>
-<li><a href="#notational-conventions">Notational Conventions</a></li>
-<li><a href="#terminology">Terminology</a></li>
+<li><a href="#abstract">Abstract</a></li>
+<li><a href="#table-of-contents">Table of Contents</a></li>
+<li><a href="#1-overview">1. Overview</a>
+<ul>
+<li><a href="#11-schemas">1.1. Schemas</a></li>
+<li><a href="#12-schema-references">1.2. Schema References</a></li>
+<li><a href="#13-versioning">1.3. Versioning</a></li>
+<li><a href="#14-document-store">1.4. Document Store</a></li>
 </ul>
 </li>
-<li><a href="#schema-registry-model">Schema Registry</a>
+<li><a href="#2-notations-and-terminology">2. Notations and Terminology</a>
 <ul>
-<li><a href="#schema-groups">Schema Groups</a></li>
-<li><a href="#schema-resources">Schema Resources</a></li>
+<li><a href="#21-notational-conventions">2.1. Notational Conventions</a></li>
+<li><a href="#22-terminology">2.2. Terminology</a>
+<ul>
+<li><a href="#221-schema">2.2.1. Schema</a></li>
+</ul>
+</li>
+<li><a href="#23-schema-group">2.3. Schema Group</a></li>
+</ul>
+</li>
+<li><a href="#3-schema-registry-model">3. Schema Registry Model</a></li>
+<li><a href="#4-schema-registry">4. Schema Registry</a>
+<ul>
+<li><a href="#41-schema-groups">4.1. Schema Groups</a></li>
+<li><a href="#42-schema-resources">4.2. Schema Resources</a></li>
+<li><a href="#43-schema-formats">4.3. Schema Formats</a>
+<ul>
+<li><a href="#431-json-schema">4.3.1. JSON Schema</a></li>
+<li><a href="#432-xml-schema">4.3.2. XML Schema</a></li>
+<li><a href="#433-apache-avro-schema">4.3.3. Apache Avro Schema</a></li>
+<li><a href="#434-protobuf-schema">4.3.4. Protobuf Schema</a></li>
 </ul>
 </li>
 </ul>
-<h2 id="overview">Overview <a class="anchor" href="#overview">🔗</a></h2>
-<p>This specification defines a Schema Registry extension to the xRegistry
-document format and API <a href="../core/spec.md">specification</a>.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="1-overview">1. Overview <a class="anchor" href="#1-overview">🔗</a></h2>
+<p>A schema registry provides a repository for managing serialization, validation,
+and data type definition schemas as they are commonly used in distributed
+systems. Common schema formats include JSON Schema, JSON Structure, Apache Avro
+Schema, Google Protobuf Schema, and XML Schema. However, this specification does
+not mandate, or limit, which schema formats are used.</p>
+<h3 id="11-schemas">1.1. Schemas <a class="anchor" href="#11-schemas">🔗</a></h3>
+<p>Schema registries are generally used to share such schemas amongst multiple
+parties.</p>
+<p>When schemas are used to drive the serialization and encoding of data, like in
+the cases of Apache Avro or Google Protobuf, the deserialization of structured
+data from its encoded form requires the schema to be available to the
+deserializer. The compactness of these serialization formats is achieved by
+externalizing type information into a schema document. The registry allows for a
+publisher of data to publish the schema document and pass a reference to it, and
+for a consumer of data to retrieve the schema document and use it to decode the
+data.</p>
+<p>Formats like XML and JSON do not require a schema to decode the data, but
+schemas are still very useful to establish a common understanding of the data
+structures that are exchanged, provide a foundation for code generation, allow
+for validation of the data, and provide an anchor for documentation and semantic
+information, like scientific units for numeric values, that goes beyond simple
+labels and data types. Generally, it is a best practice for data structures that
+are exchanged in a distributed system to be described by a schema, even if the
+data serialization model does not require one.</p>
+<h3 id="12-schema-references">1.2. Schema References <a class="anchor" href="#12-schema-references">🔗</a></h3>
+<p>In the <a href="https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md#dataschema">CloudEvents</a> specification, the <code>dataschema</code>
+attribute holds a URI and is specifically meant to reference a schema document
+residing in a registry. For example, a CloudEvent with a <code>dataschema</code> attribute
+pointing to a schema version in a schema registry might look like this, using
+the schema version's <a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html#self-attribute"><code>self</code></a> URL as the value of the
+<code>dataschema</code> attribute:</p>
+<pre><code class="language-json">{
+    &quot;specversion&quot;: &quot;1.0&quot;,
+    &quot;id&quot;: &quot;1234-5678-9012&quot;,
+    &quot;type&quot;: &quot;com.example.event&quot;,
+    &quot;source&quot;: &quot;https://example.com/source&quot;,
+    &quot;dataschema&quot;: &quot;https://example.com/registry/schemagroups/com.example.schemas/schemas/com.example.event/versions/1.0&quot;,
+    &quot;datacontenttype&quot;: &quot;application/vnd.google.protobuf&quot;,
+    &quot;data_base64&quot;: &quot;...base64-encoded-data...&quot;
+}
+</code></pre>
+<p>Since this URL might be a bit long, the xRegistry core specification allows for
+an implementation to provide an alternative, shorter, self-referencing URL that
+points to the same schema version, via the <a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html#shortself-attribute"><code>shortself</code></a>
+attribute. The specification is not prescriptive about the format of the shorter
+URL, but it might follow common URL-shortening practices. With that, the above
+example might look like this:</p>
+<pre><code class="language-json">{
+    &quot;specversion&quot;: &quot;1.0&quot;,
+    &quot;id&quot;: &quot;1234-5678-9012&quot;,
+    &quot;type&quot;: &quot;com.example.event&quot;,
+    &quot;source&quot;: &quot;https://example.com/source&quot;,
+    &quot;dataschema&quot;: &quot;https://example.com/$267shU79S&quot;,
+    &quot;datacontenttype&quot;: &quot;application/vnd.google.protobuf&quot;,
+    &quot;data_base64&quot;: &quot;...base64-encoded-data...&quot;
+}
+</code></pre>
+<h3 id="13-versioning">1.3. Versioning <a class="anchor" href="#13-versioning">🔗</a></h3>
+<p>When schemas are used in a system, they typically evolve over time. Data
+structures are extended or modified, with parts added or deprecated or even
+removed. Some of these changes are compatible with existing data, while others
+are not.</p>
+<p>Serialization generally occurs based on a specific schema version that the data
+publisher uses. Multiple versions of publishers might exist in the same system,
+using different schema versions, which is a common occurrence in systems that
+perform live updates. Once data has been published, data serialized based on
+several different versions might exist in a system, in queues, in databases, or
+in files.</p>
+<p>The schema registry therefore allows managing multiple versions of schemas,
+declares their lineage, and state their compatibility policy. The compatibility
+policy is used to determine whether a schema change is compatible with prior
+versions and whether data that has been serialized based on prior versions can
+still be deserialized and/or validated using the new schema. This compatibility
+check is important to ensure that changes to schemas do not inadvertently break
+the ability to read existing data, and MAY be enforced by implementations of the
+schema registry. The <a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html">xRegistry Core</a> specification defines the
+versioning and compatibility relationship mechanisms.</p>
+<h3 id="14-document-store">1.4. Document Store <a class="anchor" href="#14-document-store">🔗</a></h3>
+<p>The schema registry is a document store and therefore has the
+<a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html#hasdocument"><code>hasdocument</code></a> attribute defined in the xRegistry Core
+attribute (implicitly) defined as <code>true</code> for the <code>schema</code> Resource.</p>
+<p>This means that the schema registry yields a document with the stored
+content-type when a client issues a GET request to the <a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html#self-attribute"><code>self</code></a>
+URL of a schema. The associated metadata is returned in the HTTP headers. The
+<a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html#registry-design">default version</a> of the schema is returned when the
+client issues a GET request to the <a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html#self-attribute"><code>self</code></a> URL of the <code>schema</code>
+Resource.</p>
+<p>This enables the ability to provide external parties with a link that they can
+use without needing to know any details about xRegistry.</p>
+<p>Storing a new Version of a schema is similarly straightforward for clients that
+do not know xRegistry specifics, by simply using a POST against
+<a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html#self-attribute"><code>self</code></a> URL of the <code>schema</code> Resource in the simplest case.</p>
+<p>To access the metadata of the <code>schema</code>, or the schema version as a JSON
+document, the client can append a <code>$details</code> suffix to the URL, like
+<code>https://example.com/schemagroups/com.example.schemas/schemas/com.example.event/versions/1.0$details</code>
+or
+<code>https://example.com/schemagroups/com.example.schemas/schemas/com.example.event$details</code>.</p>
+<p>Beyond this, the <a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html">xRegistry Core</a> specification provides rich
+filtering and export/import capabilities, which can be used to retrieve schema
+documents in bulk, or to export/import schemas and schema Versions in a
+structured way. The <a href="https://xregistry.io/xreg/xregistryspecs/pagination-v1/docs/spec.html">xRegistry pagination</a> mechanism can
+be used to retrieve large sets of schemas or schema versions in a paginated
+manner.</p>
+<h2 id="2-notations-and-terminology">2. Notations and Terminology <a class="anchor" href="#2-notations-and-terminology">🔗</a></h2>
+<h3 id="21-notational-conventions">2.1. Notational Conventions <a class="anchor" href="#21-notational-conventions">🔗</a></h3>
+<p>The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;, &quot;SHOULD&quot;,
+&quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;, &quot;MAY&quot;, and &quot;OPTIONAL&quot; in this document are to be
+interpreted as described in <a href="https://tools.ietf.org/html/rfc2119">RFC 2119</a>.</p>
+<p>For clarity, OPTIONAL attributes (specification-defined and extensions) are
+OPTIONAL for clients to use, but the servers' responsibility will vary.
+Server-unknown extension attributes MUST be silently stored in the backing
+datastore. Specification-defined, and server-known extension, attributes MUST
+generate an error if the corresponding feature is not supported or enabled.
+However, as with all attributes, if accepting the attribute would result in a
+bad state (such as exceeding a size limit, or results in a security issue),
+then the server MAY choose to reject the request.</p>
+<p>In the pseudo JSON format snippets <code>?</code> means the preceding attribute is
+OPTIONAL, <code>*</code> means the preceding attribute MAY appear zero or more times,
+and <code>+</code> means the preceding attribute MUST appear at least once. The presence
+of the <code>#</code> character means the remaining portion of the line is a comment.
+Whitespace characters in the JSON snippets are used for readability and are
+not normative.</p>
+<h3 id="22-terminology">2.2. Terminology <a class="anchor" href="#22-terminology">🔗</a></h3>
+<p>This specification defines the following terms:</p>
+<h4 id="221-schema">2.2.1. Schema <a class="anchor" href="#221-schema">🔗</a></h4>
+<p>We use the term <strong>schema</strong> (or schema Resource) in this specification as a
+logical grouping of <strong>schema Versions</strong>. A <strong>schema Version</strong> is a concrete
+document. The <strong>schema</strong> Resource is a semantic umbrella formed around one or
+more concrete schema Version documents that represent iterations of the same
+logical schema. Per the definition of the <a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html#compatibility-attribute"><code>compatibility</code></a> attribute, all Versions of a single <strong>schema</strong> MUST adhere to the
+rules defined by the <code>compatibility</code> attribute. Any breaking change MUST result
+in a new <strong>schema</strong> Resource being created.</p>
+<p>In terms of versioning, you can think of a <strong>schema</strong> as a collection of
+versions that are compatible according to the selected <code>compatibility</code> mode.
+The <a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html#deprecated"><code>deprecated</code></a> attribute MAY be used to indicate the
+appropriate new schema to use following a breaking change.</p>
+<h3 id="23-schema-group">2.3. Schema Group <a class="anchor" href="#23-schema-group">🔗</a></h3>
+<p>A Schema Group is a container for schemas that are related to each other in
+some application-defined way. This specification does not impose any
+restrictions on what schemas can be contained in a Schema Group.</p>
+<h2 id="3-schema-registry-model">3. Schema Registry Model <a class="anchor" href="#3-schema-registry-model">🔗</a></h2>
+<p>The authoritative xRegistry extension model of the Schema Registry resides in
+the <a href="./model.json">model.json</a> file.</p>
 <p>For easy reference, the JSON serialization of a Schema Registry adheres to
 this form:</p>
 <pre><code class="language-yaml">{
@@ -123,18 +291,13 @@ this form:</p>
           &quot;modifiedat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
           &quot;ancestor&quot;: &quot;&lt;STRING&gt;&quot;,
 
-          &quot;format&quot;: &quot;&lt;STRING&gt;&quot;, ?                  # schema extension attr
-
           &quot;schemaurl&quot;: &quot;&lt;URL&gt;&quot;, ?
           &quot;schema&quot;: &lt;ANY&gt; ?
           &quot;schemabase64&quot;: &quot;&lt;STRING&gt;&quot;, ?
           #  End of default Version's attributes
 
           &quot;metaurl&quot;: &quot;&lt;URL&gt;&quot;,                      # Resource level attrs
-          &quot;meta&quot;: {
-            ... core spec metadata attributes ...
-            &quot;validation&quot;: &lt;BOOLEAN&gt; ?              # schema extension attr
-          }, ?
+          &quot;meta&quot;: { ... }, ?
 
           &quot;versionsurl&quot;: &quot;&lt;URL&gt;&quot;,
           &quot;versionscount&quot;: &lt;UINTEGER&gt;,
@@ -145,64 +308,25 @@ this form:</p>
   } ?
 }
 </code></pre>
-<h2 id="notations-and-terminology">Notations and Terminology <a class="anchor" href="#notations-and-terminology">🔗</a></h2>
-<h3 id="notational-conventions">Notational Conventions <a class="anchor" href="#notational-conventions">🔗</a></h3>
-<p>The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;, &quot;SHOULD&quot;,
-&quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;, &quot;MAY&quot;, and &quot;OPTIONAL&quot; in this document are to be
-interpreted as described in <a href="https://tools.ietf.org/html/rfc2119">RFC 2119</a>.</p>
-<p>For clarity, OPTIONAL attributes (specification-defined and extensions) are
-OPTIONAL for clients to use, but the servers' responsibility will vary.
-Server-unknown extension attributes MUST be silently stored in the backing
-datastore. Specification-defined, and server-known extension, attributes MUST
-generate an error if the corresponding feature is not supported or enabled.
-However, as with all attributes, if accepting the attribute would result in a
-bad state (such as exceeding a size limit, or results in a security issue),
-then the server MAY choose to reject the request.</p>
-<p>In the pseudo JSON format snippets <code>?</code> means the preceding attribute is
-OPTIONAL, <code>*</code> means the preceding attribute MAY appear zero or more times,
-and <code>+</code> means the preceding attribute MUST appear at least once. The presence
-of the <code>#</code> character means the remaining portion of the line is a comment.
-Whitespace characters in the JSON snippets are used for readability and are
-not normative.</p>
-<h3 id="terminology">Terminology <a class="anchor" href="#terminology">🔗</a></h3>
-<p>This specification defines the following terms:</p>
-<h4 id="schema">Schema <a class="anchor" href="#schema">🔗</a></h4>
-<p>A schema, in the sense of this specification, defines the structure of the
-body/payload of a serialized message, but also of a structured data element
-stored on disk or elsewhere. In self-describing serialization formats like
-JSON, XML, BSON, or MessagePack, schemas primarily help with validating
-whether a message body conforms with a set of rules defined in the schema and
-with generating code that can produce or consume the defined structure. For
-schema-dependent serialization formats like Protobuf or Apache Avro, a schema
-is needed to decode the structured data from its serialized, binary form.</p>
-<p>We use the term <strong>schema</strong> (or schema Resource) in this specification as a
-logical grouping of <strong>schema Versions</strong>. A <strong>schema Version</strong> is a concrete
-document. The <strong>schema</strong> Resource is a semantic umbrella formed around one or
-more concrete schema Version documents. Per the definition of the
-<a href="../core/spec.md#compatibility-attribute"><code>compatibility</code></a> attribute, all
-Versions of a single <strong>schema</strong> MUST adhere to the rules defined by the
-<code>compatibility</code> attribute. Any breaking change MUST result in a new <strong>schema</strong>
-Resource being created.</p>
-<p>In terms of versioning, you can think of a <strong>schema</strong> as a collection of
-versions that are compatible according to the selected <code>compatibility</code> mode.
-When that compatibility is broken across versions, a completely new <strong>schema</strong>
-MUST be created, to indicate the breaking change.</p>
-<h2 id="schema-registry-model">Schema Registry Model <a class="anchor" href="#schema-registry-model">🔗</a></h2>
-<p>The formal xRegistry extension model of the Schema Registry
-resides in the <a href="model.json">model.json</a> file.</p>
-<h4 id="schema-groups">Schema Groups <a class="anchor" href="#schema-groups">🔗</a></h4>
-<p>A schema Group is a container for schemas that are related to each other in
-some application-defined way. This specification does not impose any
-restrictions on what schemas can be contained in a schema Group.</p>
-<p>The Group plural name (<code>&lt;GROUPS.</code>) is <code>schemagroups</code>, and the Group singular
-name (<code>&lt;GROUP&gt;</code>) is <code>schemagroup</code>.</p>
-<p>The Group does not have any specific extension attributes.</p>
-<p>A schema Group is a collection of schemas that are related to each other in
-some application-defined way. A schema Group does not impose any restrictions
-on the contained schemas, meaning that a schema Group MAY contain schemas of
-different formats. Every schema Resource MUST reside inside a schema Group.</p>
+<h2 id="4-schema-registry">4. Schema Registry <a class="anchor" href="#4-schema-registry">🔗</a></h2>
+<p>The Schema Registry is a metadata store for organizing schemas and schema
+Versions of any kind; it is a document store.</p>
+<p>Implementations of this specification MAY include additional extension
+attributes, including the <code>*</code> attribute of type <code>any</code>.</p>
+<p>Since the Schema Registry is an application of the <a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html">xRegistry
+specification</a>, all attributes for Groups, Resources, and
+Resource Version objects are inherited from there.</p>
+<h3 id="41-schema-groups">4.1. Schema Groups <a class="anchor" href="#41-schema-groups">🔗</a></h3>
+<p>The Group (<code>&lt;GROUP&gt;</code>) name for the Schema Registry is <code>schemagroup</code> (singular).
+The plural, used as the collection name, is <code>schemagroups</code>. The Schema Group
+does not have any specific extension attributes.</p>
+<p>A schema group is a collection of schemas that are related to each other in
+some application-defined way. A Schema Group does not impose any restrictions
+on the contained schemas, meaning that a Schema Group MAY contain schemas of
+different formats.</p>
+<p>Every schema (i.e. the schema Resource) MUST reside inside a Schema Group.</p>
 <p>Example:</p>
-<p>The follow abbreviated Schema Registry's contents shows a single schema Group
+<p>The follow abbreviated Schema Registry's content shows a single Schema Group
 containing 5 schemas.</p>
 <pre><code class="language-yaml">{
   &quot;specversion&quot;: 1.0-rc2,
@@ -221,29 +345,20 @@ containing 5 schemas.</p>
   }
 }
 </code></pre>
-<h3 id="schema-resources">Schema Resources <a class="anchor" href="#schema-resources">🔗</a></h3>
-<p>The Resource plural name (<code>&lt;RESOURCES&gt;</code>) is <code>schemas</code>, and the Resource
-singular name (<code>&lt;RESOURCE&gt;</code>) is <code>schema</code>.</p>
-<p>Any single <code>schema</code> is a container for one or more <code>Versions</code>, which hold the
-concrete schema documents or schema document references.</p>
-<p>All Versions of a schema MUST adhere to the semantic rules of the schema's
-<code>compatibility</code> attribute. This specification defines &quot;compatibility&quot; for
-schemas as follows; version B of a schema is said to be compatible with
-version A of a schema if all of the following are true:</p>
-<ul>
-<li>Any document that adheres to the rules specified by schema A also adheres to
-rules specified by schema B.</li>
-<li>Any processing rules defined for schema A also apply for schema B.</li>
-<li>Any processing rules defined for schema B, that are not defined for schema
-A, do not conflict with the processing rules for schema A.</li>
-</ul>
+<h3 id="42-schema-resources">4.2. Schema Resources <a class="anchor" href="#42-schema-resources">🔗</a></h3>
+<p>The Resource (<code>&lt;RESOURCE&gt;</code>) inside of Schema Groups is named <code>schema</code>. The
+plural, used as the collection name, is <code>schemas</code>. Any single <code>schema</code> is a
+container for one or more <code>versions</code>, which hold the concrete schema documents
+or schema document references.</p>
+<p>All Versions of a single Schema Resource MUST adhere to the semantic rules of
+the schema's <a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html#compatibility-attribute"><code>compatibility</code></a> attribute, if specified.</p>
 <p>Implementations of this specification MAY choose to support any of the
-<a href="../core/spec.md#compatibility-attribute"><code>compatibility</code></a> values defined in
-the core xRegistry specification.</p>
-<p>Implementations of this specification SHOULD use the xRegistry default
-algorithm for generating new <code>versionid</code> values and for determining which is
-the latest Version. See <a href="../core/spec.md#version-ids">Version IDs</a> for more
-information, but in summary it means:</p>
+<a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html#compatibility-attribute"><code>compatibility</code></a> values defined in the core xRegistry
+specification.</p>
+<p>Implementations of this specification SHOULD use the xRegistry default algorithm
+for generating new <code>versionid</code> values and for determining which is the latest
+Version. See <a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html#version-ids">Version IDs</a> for more information, but in
+summary it means:</p>
 <ul>
 <li><code>versionid</code>s are unsigned integers starting with <code>1</code></li>
 <li>They monotonically increase by <code>1</code> with each new Version</li>
@@ -255,69 +370,18 @@ major version identifier in the <code>schemaid</code>, like <code>&quot;com.exam
 <code>&quot;com.example.event.2024-02&quot;</code>, so that incompatible, but historically related
 schemas can be more easily identified by users and developers. The schema
 <code>versionid</code> then functions as the semantic minor version identifier.</p>
-<p>The following extensions are defined for the <code>schema</code> Resource in addition to
-the core xRegistry Resource
-<a href="../core/spec.md#attributes-and-extensions">attributes</a>:</p>
-<h4 id="validation"><code>validation</code> <a class="anchor" href="#validation">🔗</a></h4>
+<p>The <a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html#ancestor-attribute"><code>ancestor</code></a> attribute permits multiple version branches
+to exist, and allows for implementations to determine the Version lineage. See
+the <a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html#ancestor-attribute"><code>ancestor</code></a> attribute in the core xRegistry
+specification for more information.</p>
+<h3 id="43-schema-formats">4.3. Schema Formats <a class="anchor" href="#43-schema-formats">🔗</a></h3>
+<p>This specification further refines the
+<a href="./../../core-v1/docs/spec.html#format-attribute">core specification's <code>format</code></a> for use
+in a Schema Registry by defining a set of common schema format names that MUST
+be used for the given formats, but applications MAY define extensions for
+other formats on their own.</p>
 <ul>
-<li>
-<p>Type: Boolean</p>
-</li>
-<li>
-<p>Description: Indicates whether or not the server will validate the Resource's
-document(s) against the specified <code>format</code> attribute. A value of <code>true</code>
-indicates that the server MUST reject any request that would cause any
-Version of this Resource to be invalid per the rules as defined by the
-<code>format</code> specification. Note, this includes a request to set this attribute
-to <code>true</code>. This means that before validation can be enabled, all existing
-Versions of the Resource MUST be compliant.</p>
-<p>A value of <code>false</code> indicates that the server MUST NOT do any validation.</p>
-<p>If <code>format</code> is not specified, or if the value is not known by the server
-(but is an allowable value), then the server MUST NOT perform any validation.</p>
-</li>
-<li>
-<p>Constraints:</p>
-<ul>
-<li>OPTIONAL.</li>
-<li>When not specified, the default value MUST be <code>false</code>.</li>
-</ul>
-</li>
-</ul>
-<h4 id="format"><code>format</code> <a class="anchor" href="#format">🔗</a></h4>
-<ul>
-<li>
-<p>Type: String</p>
-</li>
-<li>
-<p>Description: Identifies the schema format. In absence of formal media-type
-definitions for several important schema formats, we define a convention here
-to reference schema formats by name and version as <code>&lt;NAME&gt;/&lt;VERSION&gt;</code>. This
-specification defines a set of common <a href="#schema-formats">schema format names</a>
-that MUST be used for the given formats, but applications MAY define
-extensions for other formats on their own.</p>
-<p>For many schema registry use cases this attribute is important for schema
-validation purposes, and as such implementations can choose to modify the
-model to make this attribute mandatory.</p>
-<p>It is RECOMMENDED that the same schema format <code>&lt;NAME&gt;</code> be used for all
-Versions of a schema Resource.</p>
-<p>Managers of the xRegistry instance can set a default value for this
-attribute, making it a REQUIRED attribute.</p>
-</li>
-<li>
-<p>Constraints:</p>
-<ul>
-<li>OPTIONAL.</li>
-<li>If present, MUST be a non-empty case-insensitive string.</li>
-<li>MUST follow the naming convention <code>&lt;NAME&gt;/&lt;VERSION&gt;</code>, whereby <code>&lt;NAME&gt;</code> is
-the name of the schema format and <code>&lt;VERSION&gt;</code> is the Version of the schema
-format in the format defined by the schema format itself.</li>
-<li>MUST be present if the <code>compatibility</code> attribute is set to a value other
-than <code>None</code> and when the <code>compatibilityauthority</code> attribute is set to
-<code>server</code>, to enable validation of the schema document.</li>
-</ul>
-</li>
-<li>
-<p>Examples:</p>
+<li>Examples:
 <ul>
 <li><code>JsonSchema/draft-07</code></li>
 <li><code>Protobuf/3</code></li>
@@ -397,24 +461,19 @@ Versions for a schema named <code>com.example.telemetrydata</code>:</p>
   }
 }
 </code></pre>
-<h3 id="schema-formats">Schema Formats <a class="anchor" href="#schema-formats">🔗</a></h3>
-<p>This section defines a set of common schema <code>format</code> values that MUST be used
-for the given formats, but applications MAY define extensions for other
-formats on their own.</p>
-<h4 id="json-schema">JSON Schema <a class="anchor" href="#json-schema">🔗</a></h4>
-<p>The <a href="#format"><code>format</code></a> identifier for JSON Schema is <code>JsonSchema</code>.</p>
+<h4 id="431-json-schema">4.3.1. JSON Schema <a class="anchor" href="#431-json-schema">🔗</a></h4>
+<p>The <a href="./../../core-v1/docs/spec.html#format-attribute"><code>format</code></a> identifier for JSON Schema is
+<code>JsonSchema</code>.</p>
 <p>When the <code>format</code> attribute is set to <code>JsonSchema</code>, the <code>schema</code> attribute of
 the schema Resource is a JSON object representing a JSON Schema document
 conformant with the declared version.</p>
-<p>When a URI-reference, like <a href="../message/spec.md#dataschemauri"><code>schemauri</code></a>,
+<p>When a URI-reference, like <a href="./../../message-v1/docs/spec.html#dataschemauri"><code>schemauri</code></a>,
 points to a JSON Schema document it MAY use a <a href="https://www.rfc-editor.org/rfc/rfc6901">JSON pointer</a>
-expression to deep link into the schema document to reference a particular
-type definition. Otherwise the top-level object definition of the schema is
-used.</p>
-<p>The version of the JSON Schema format is the version of the JSON
-Schema specification that is used to define the schema. The version of the JSON
-Schema specification is defined in the <code>$schema</code> attribute of the schema
-document.</p>
+expression to deep link into the schema document to reference a particular type
+definition. Otherwise the top-level object definition of the schema is used.</p>
+<p>The version of the JSON Schema format is the version of the JSON Schema
+specification that is used to define the schema. The version of the JSON Schema
+specification is defined in the <code>$schema</code> attribute of the schema document.</p>
 <p>The identifiers for the following JSON Schema versions</p>
 <ul>
 <li>Draft 07: <code>http://json-schema.org/draft-07/schema</code></li>
@@ -430,18 +489,17 @@ document.</p>
 <p>which follows the exact convention as defined for JSON schema and expecting an
 eventually released version 1.0 of the JSON Schema specification using a plain
 version number.</p>
-<h4 id="xml-schema">XML Schema <a class="anchor" href="#xml-schema">🔗</a></h4>
-<p>The <a href="#format"><code>format</code></a> identifier for XML Schema is <code>XSD</code>. The
-version of the XML Schema format is the version of the W3C XML Schema
-specification that is used to define the schema.</p>
-<p>When the <code>format</code> attribute is set to <code>XSD</code>, the <code>schema</code> attribute of
-schema Resource is a string containing an XML Schema document conformant with
-the declared version.</p>
-<p>When a URI-reference, like <a href="../message/spec.md#dataschemauri"><code>schemauri</code></a>,
-points to a JSON Schema document it MAY use an XPath
-expression to deep link into the schema document to reference a particular
-type definition. Otherwise the top-level object definition of the schema is
-used.</p>
+<h4 id="432-xml-schema">4.3.2. XML Schema <a class="anchor" href="#432-xml-schema">🔗</a></h4>
+<p>The <a href="./../../core-v1/docs/spec.html#format-attribute"><code>format</code></a> identifier for XML Schema is
+<code>XSD</code>. The version of the XML Schema format is the version of the W3C XML
+Schema specification that is used to define the schema.</p>
+<p>When the <code>format</code> attribute is set to <code>XSD</code>, the <code>schema</code> attribute of schema
+Resource is a string containing an XML Schema document conformant with the
+declared version.</p>
+<p>When a URI-reference, like <a href="./../../message-v1/docs/spec.html#dataschemauri"><code>schemauri</code></a>,
+points to a JSON Schema document it MAY use an XPath expression to deep link
+into the schema document to reference a particular type definition. Otherwise
+the top-level object definition of the schema is used.</p>
 <p>The identifiers for the following XML Schema versions:</p>
 <ul>
 <li>1.0: <code>https://www.w3.org/TR/xmlschema-1/</code></li>
@@ -452,19 +510,19 @@ used.</p>
 <li><code>XSD/1.0</code></li>
 <li><code>XSD/1.1</code></li>
 </ul>
-<h4 id="apache-avro-schema">Apache Avro Schema <a class="anchor" href="#apache-avro-schema">🔗</a></h4>
-<p>The <a href="#format"><code>format</code></a> identifier for Apache Avro Schema is
-<code>Avro</code>. The version of the Apache Avro Schema format is the version of the
-Apache Avro Schema release that is used to define the schema.</p>
+<h4 id="433-apache-avro-schema">4.3.3. Apache Avro Schema <a class="anchor" href="#433-apache-avro-schema">🔗</a></h4>
+<p>The <a href="./../../core-v1/docs/spec.html#format-attribute"><code>format</code></a> identifier for Apache Avro
+Schema is <code>Avro</code>. The version of the Apache Avro Schema format is the version
+of the Apache Avro Schema release that is used to define the schema.</p>
 <p>When the <code>format</code> attribute is set to <code>Avro</code>, the <code>schema</code> attribute of the
-schema Resource is a JSON object representing an Avro schema document
-conformant with the declared version.</p>
+schema Resource is a JSON object representing an Avro schema document conformant
+with the declared version.</p>
 <p>Examples:</p>
 <ul>
 <li><code>Avro/1.8.2</code> is the identifier for the Apache Avro release 1.8.2.</li>
 <li><code>Avro/1.11.0</code> is the identifier for the Apache Avro release 1.11.0</li>
 </ul>
-<p>When a URI-reference, like <a href="../message/spec.md#dataschemauri"><code>schemauri</code></a>,
+<p>When a URI-reference, like <a href="./../../message-v1/docs/spec.html#dataschemauri"><code>schemauri</code></a>,
 points to a JSON Schema document it MAY use a URI fragment suffix
 <code>[:]{record-name}</code> to deep link into the schema document to reference a
 particular type definition. Otherwise the top-level object definition of the
@@ -478,13 +536,13 @@ contains a fragment.</p>
 record.</li>
 <li>If the Avro schema document is a local Schema Registry reference like
 <code>#/schemagroups/com.example.telemetry/schemas/com.example.telemetrydata</code>, in
-the which the reference is already in the form of a URI fragment, the suffix is
+which the reference is already in the form of a URI fragment, the suffix is
 appended separated with a colon, for instance
 <code>.../com.example.telemetrydata:TelemetryEvent</code>.</li>
 </ul>
-<h4 id="protobuf-schema">Protobuf Schema <a class="anchor" href="#protobuf-schema">🔗</a></h4>
-<p>The <a href="#format"><code>format</code></a> identifier for Protobuf Schema is
-<code>Protobuf</code>. The version of the Protobuf Schema format is the version of the
+<h4 id="434-protobuf-schema">4.3.4. Protobuf Schema <a class="anchor" href="#434-protobuf-schema">🔗</a></h4>
+<p>The <a href="./../../core-v1/docs/spec.html#format-attribute"><code>format</code></a> identifier for Protobuf Schema
+is <code>Protobuf</code>. The version of the Protobuf Schema format is the version of the
 Protobuf syntax that is used to define the schema.</p>
 <p>When the <code>format</code> attribute is set to <code>Protobuf</code>, the <code>schema</code> attribute of the
 schema Resource is a string containing a Protobuf schema document conformant
@@ -493,8 +551,7 @@ with the declared version.</p>
 <li><code>Protobuf/3</code> is the identifier for the Protobuf syntax version 3.</li>
 <li><code>Protobuf/2</code> is the identifier for the Protobuf syntax version 2.</li>
 </ul>
-<p>A URI-reference, like
-[<code>schemauri</code>](../message/spec.md#dataschemauri that points
+<p>A URI-reference, like [<code>schemauri</code>](../message/spec.md#dataschemauri that points
 to an Protobuf Schema document MUST reference an Protobuf <code>message</code> declaration
 contained in the schema document using a URI fragment suffix
 <code>[:]{message-name}</code>. The ':' character is used as a separator when the URI
@@ -511,5 +568,19 @@ the which the reference is already in the form of a URI fragment, the suffix
 is appended separated with a colon, for instance
 <code>.../com.example.telemetrydata:TelemetryEvent</code>.</li>
 </ul>
+<p>Like the <a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html">xRegistry Core</a> specification, this specification does
+not explicitly address authentication or authorization levels of users, nor how
+to securely protect the APIs.</p>
+<p>It is expected that any implementation of this specification will use
+authentication and authorization mechanisms that are appropriate for the
+application domain and the deployment environment. This MAY include, but is not
+limited to, OAuth 2.0, OpenID Connect, API keys, or other mechanisms appropriate
+for the use case.</p>
+<p>For authorization, the <code>schemagroup</code> concept provides a natural authorization
+boundary, where users can be granted access to specific schema groups, and
+therefore to the schemas contained within those groups. The <code>schema</code> Resource
+itself can be used to further restrict access to specific schema Versions within
+a schema, allowing for fine-grained access control.</p>
+<hr>
 
 </html>

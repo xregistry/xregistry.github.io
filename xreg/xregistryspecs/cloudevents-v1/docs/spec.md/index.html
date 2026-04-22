@@ -26,8 +26,8 @@ as well as a metadata service API for messaging and eventing schemas,
 metaschemas, and messaging and eventing endpoints.
 
 The registry is a composite xRegistry model that combines the [Schema
-Registry](../schema/spec.md), the [Message Definitions
-Registry](../message/spec.md), and the [Endpoint Registry](../endpoint/spec.md)
+Registry](./../../schema-v1/docs/spec.md), the [Message Definitions
+Registry](./../../message-v1/docs/spec.md), and the [Endpoint Registry](./../../endpoint-v1/docs/spec.md)
 into a single, unified metadata model. This model can be used to describe
 messaging and eventing endpoints, their messages, and the schemas of the
 messages' payloads in a single metadata document or via an API.
@@ -41,7 +41,7 @@ motivated by the development of CloudEvents-based event flows, but it is not
 limited to CloudEvents. It can be used to describe any asynchronous messaging or
 eventing endpoint and its messages, including endpoints that do not use
 CloudEvents at all. The [Message
-Formats](../message/spec.md#metadata-envelopes-and-message-protocols) section
+Formats](./../../message-v1/docs/spec.md#metadata-envelopes-and-message-protocols) section
 therefore describes not only the attribute meta-schema for CloudEvents, but also
 meta-schemas for the native message envelopes of MQTT, AMQP, and other messaging
 protocols.
@@ -79,7 +79,7 @@ metaschemas, and messaging and eventing endpoints.
 The CloudEvents registry model contains three separate registries that can be
 implemented separately or in combination.
 
-- The [Schema Registry](../schema/spec.md) specification describes the metadata
+- The [Schema Registry](./../../schema-v1/docs/spec.md) specification describes the metadata
   description of payload schemas for events and messages. The schema registry
   is universally applicable to any scenario where collaborating parties share
   structured data that is defined by formal schemas. For instance, when storing
@@ -87,7 +87,7 @@ implemented separately or in combination.
   schema registry in file form in the parent directory, which formally
   organizes and documents all versions of all Protobuf schemas that are used
   in the directory.
-- The [Message Definitions Registry](../message/spec.md) specification
+- The [Message Definitions Registry](./../../message-v1/docs/spec.md) specification
   describes the metadata description of events and messages. The payload
   schemas for events and messages can be embedded in the definition, reference
   an external schema document, or can be referenced into the schema registry.
@@ -99,7 +99,7 @@ implemented separately or in combination.
   in your eventing or messaging infrastructure. That association might be a
   metadata attribute on the topic or queue in the messaging infrastructure
   that embeds the metadata or points to it.
-- The [Endpoint Registry](../endpoint/spec.md) specification defines the
+- The [Endpoint Registry](./../../endpoint-v1/docs/spec.md) specification defines the
   metadata description of network endpoints that accept or emit events and
   messages. The endpoint registry is a formal description of associations of
   message definitions and network endpoints, which can be used to discover
@@ -425,14 +425,14 @@ of CloudEvents-based event flows, the registry is not limited to CloudEvents.
 It can be used to describe any asynchronous messaging or eventing endpoint and
 its messages, including endpoints that do not use CloudEvents at all. The
 [Message
-Formats](../message/spec.md#metadata-envelopes-and-message-protocols) section
+Formats](./../../message-v1/docs/spec.md#metadata-envelopes-and-message-protocols) section
 therefore not only describes the attribute meta-schema for CloudEvents, but
 also meta-schemas for the native message envelopes of MQTT, AMQP, and other
 messaging protocols.
 
 The registry is designed to be extensible to support any structured data
 encoding and related schemas for message or event payloads. The [Schema
-Formats](../schema/spec.md#schema-formats) section describes the meta-schema
+Formats](./../../schema-v1/docs/spec.md#43-schema-formats) section describes the meta-schema
 for JSON Schema, XML Schema, Apache Avro schema, and Protobuf schema.
 
 ### File format
@@ -444,7 +444,7 @@ When using the file-based model, files with the extension `.cereg` use JSON
 encoding. Files with the extension `.cereg.yaml` or `.cereg.yml` use YAML
 encoding. The formal JSON schema for the file format is defined in the
 [CloudEvents Registry Document
-Schema](../cloudevents/schemas/document-schema.json),
+Schema](./../schemas/document-schema.json),
 which implements the Registry format and the CloudEvents Registry format.
 
 The media-type for the file format is `application/cloudevents-registry+json`

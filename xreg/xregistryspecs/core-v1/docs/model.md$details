@@ -1,0 +1,14 @@
+{
+  "ancestor": "v1.0-rc1",
+  "createdat": "2026-04-22T17:24:33.956160894Z",
+  "docid": "model.md",
+  "epoch": 1,
+  "isdefault": true,
+  "metaurl": "http://ubuntu:7070/xregistryspecs/core-v1/docs/model.md/meta",
+  "modifiedat": "2026-04-22T17:24:33.956160894Z",
+  "self": "http://ubuntu:7070/xregistryspecs/core-v1/docs/model.md",
+  "versionid": "v1.0-rc1",
+  "versionscount": 1,
+  "versionsurl": "http://ubuntu:7070/xregistryspecs/core-v1/docs/model.md/versions",
+  "xid": "/xregistryspecs/core-v1/docs/model.md"
+}

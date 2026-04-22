@@ -46,6 +46,8 @@
 </style>
 </head>
 <h1 id="xregistry-primer">xRegistry Primer <a class="anchor" href="#xregistry-primer">🔗</a></h1>
+<!-- words: validatecompatibility validateformat strickvalidation -->
+<!-- words: strictvalidation -->
 <!-- no verify-specs -->
 <h2 id="abstract">Abstract <a class="anchor" href="#abstract">🔗</a></h2>
 <p>This non-normative document provides an overview of the <a href="https://github.com/xregistry/spec/blob/main/core/spec.md">xRegistry
@@ -90,8 +92,8 @@ helps facilitate the interaction between systems. The use cases for xRegistry
 are therefore very broad. See
 <a href="#possible-use-cases">possible use cases</a> for more examples.</p>
 <p>In addition to the core specification, xRegistry provides secondary
-specifications for <a href="../endpoint/spec.md">endpoints</a>,
-<a href="../schema/spec.md">schemas</a>, and <a href="../message/spec.md">messages</a>, that further
+specifications for <a href="./../../endpoint-v1/docs/spec.html">endpoints</a>,
+<a href="./../../schema-v1/docs/spec.html">schemas</a>, and <a href="./../../message-v1/docs/spec.html">messages</a>, that further
 build upon the core to provide more domain-specific standardization in the
 context of event-driven systems. The following subsections provide a more
 specific overview of how xRegistry can be used to address common challenges in
@@ -415,8 +417,8 @@ So GET resource?meta or GET group?inline both ask for metadata</p>
 </li>
 <li>
 <p>xRegistry- headers: first &quot;-&quot; separates xRegistry from attribute name,
-next &quot;-&quot; separates attribute name from key, any subsequent &quot;-&quot; is part
-of the key name. E.g. xRegistry-labels-abc-def:xxx =&gt; labels[&quot;abc-def&quot;]=xxx</p>
+next &quot;.&quot; separates attribute name from key, any subsequent &quot;.&quot; is part
+of the key name. E.g. xRegistry-labels.abc.def:xxx =&gt; labels[&quot;abc.def&quot;]=xxx</p>
 </li>
 <li>
 <p>impact of &quot;*required&quot; flags at multiple levels</p>
@@ -618,14 +620,14 @@ unexpected casing and could be confused or believe there was an error.</p>
 in case insensitively.</p>
 </li>
 </ul>
-<h1 id="why-the-lower-character-limit-on-some-group-and-resource-names">Why the lower character limit on some Group and Resource names? <a class="anchor" href="#why-the-lower-character-limit-on-some-group-and-resource-names">🔗</a></h1>
+<h1 id="why-the-lower-character-limit-on-some-group-and-resource-type-names">Why the lower character limit on some Group and Resource type names? <a class="anchor" href="#why-the-lower-character-limit-on-some-group-and-resource-type-names">🔗</a></h1>
 <p>Attribute names and key names are limited to 63 characters, so why are some
 Group and Resource names limited to less? Because when they appear as part of
 attribute names and they can be appended with phrases like <code>url</code>, <code>count</code>
 or <code>base64</code>, and they still have to fit within the 63-character limit, and so
-we need to take into account the length of those phrases.</p>
-<p>Note that Resource names are limited to 57 characters because they may be
-appended with <code>base64</code>, if their <code>hasdocument</code> model aspect is <code>true</code>.</p>
+we need to take into account the length of those phrases. As a result, both
+Group and Resource type names (both singular and plural) are limited to
+57 characters.</p>
 <h1 id="why-must-group-type-and-resource-type-names-be-valid-attribute-names">Why must Group type and Resource type names be valid attribute names? <a class="anchor" href="#why-must-group-type-and-resource-type-names-be-valid-attribute-names">🔗</a></h1>
 <p>Since Group type and Resource type names will appear as attribute names (e.g.
 <code>&lt;GROUPS&gt;count</code> and <code>&lt;RESOURCE&gt;url</code>), the character set (and length) of their
@@ -675,13 +677,13 @@ in the entity in order to be model compliant.</p>
 <p>Likewise, implementations of the server must validate the entire entity
 against the new model, not just a subset of the entity's attributes.</p>
 <h1 id="multi-root-ancestor-hierarchies">Multi-root ancestor hierarchies <a class="anchor" href="#multi-root-ancestor-hierarchies">🔗</a></h1>
-<p>The <a href="./spec.md#ancestor-attribute"><code>ancestor</code> attribute</a> is used to build a
+<p>The <a href="./spec.html#ancestor-attribute"><code>ancestor</code> attribute</a> is used to build a
 hierarchy of Versions to facilitate compatibility checking when the
-<a href="./spec.md#compatibility-attribute"><code>compatibility</code> attribute</a> is set. There
+<a href="./spec.html#compatibility-attribute"><code>compatibility</code> attribute</a> is set. There
 are cases in which it's desirable to create multiple roots. In some
 cases it may even be unavoidable, for example when the <code>maxversions</code>
 attribute (see <code>groups.resources.maxversions</code> under
-<a href="./model.md#registry-model">Resource Model</a>) is set to a value that forces
+<a href="./model.html#registry-model">Resource Model</a>) is set to a value that forces
 pruning of the Version tree. In such cases, when deleting the oldest Version,
 this could result in a new root being created when there are multiple
 decedents of the deleted Version.</p>
@@ -692,7 +694,7 @@ value such as null which, based on the scenario, could mean &quot;no ancestor&qu
 &quot;default to the newest&quot;.</p>
 <h1 id="singleversionroot-policy-enforcement"><code>singleversionroot</code> Policy Enforcement <a class="anchor" href="#singleversionroot-policy-enforcement">🔗</a></h1>
 <p>Related to the previous discussions concerning the <code>ancestor</code> attribute,
-the <a href="./model.md#registry-model">Resource Model</a> <code>singleversionroot</code> attribute
+the <a href="./model.html#registry-model">Resource Model</a> <code>singleversionroot</code> attribute
 controls whether a Resource is allowed to have more than one &quot;root&quot; Version,
 or whether all Versions of that Resource must be a descendant of the same
 &quot;root&quot; Version.</p>
@@ -727,11 +729,11 @@ for their needs.</p>
 <p>There are cases in which the server will need to prune Versions. For
 example, this can happen when attempting to create a new Version that would
 exceed the value set on the <code>groups.resources.maxversions</code> attribute of the
-<a href="./model.md#registry-model">Resource Model</a>, or when adjusting this attribute's
+<a href="./model.html#registry-model">Resource Model</a>, or when adjusting this attribute's
 value that is smaller than the number of existing Versions. In such
 scenarios, the server may be unable to prune Versions, when the
 <code>groups.resources.singleversionroot</code> attribute of the
-<a href="./model.md#registry-model">Resource Model</a> is set to <code>true</code> and the request
+<a href="./model.html#registry-model">Resource Model</a> is set to <code>true</code> and the request
 must be rejected.</p>
 <p>Consider a scenario in which 3 Versions exist: v1 is the root (and therefore
 has its <code>ancestor</code> attribute set to v1), and v2 and v3 both have
@@ -760,19 +762,16 @@ one with the newest <code>createdat</code> timestamp. In the case that multiple
 Versions exist with the same <code>createdat</code> timestamp, those Versions are
 sorted in an descending alphabetical order, and the first is the newest
 Version.</p>
-<h1 id="what-does-the-compatibilityauthority-attribute-convey">What does the <code>compatibilityauthority</code> attribute convey? <a class="anchor" href="#what-does-the-compatibilityauthority-attribute-convey">🔗</a></h1>
-<p>The <a href="./spec.md#compatibility-attribute"><code>compatibility</code> attribute</a> is a
-statement made by the authority managing the registry about the
-compatibility guarantees between Versions of the Resource. The authority is
-expected to guarantee the configured <code>compatibility</code>. The
-<a href="./spec.md#compatibilityauthority-attribute"><code>compatibilityauthority</code> attribute</a>
-represents who the enforcing authority is. Any requests to set the authority
-to the server when the server cannot perform compatibility checking will be
-refused. In cases where the hosting service isn't backed by an xRegistry
-implementation (e.g. blob-store), it is recommended that
-<code>compatibilityauthority</code> is set to <code>external</code> to accurately reflect the
-situation. However, there may be cases where it is appropriate to set it to
-<code>server</code>. For example, if the file-server based xRegistry is an alternative
+<h1 id="can-validatecompatibility-and-validateformat-be-true-for-file-servers">Can <code>validatecompatibility</code> and <code>validateformat</code> be <code>true</code> for file-servers? <a class="anchor" href="#can-validatecompatibility-and-validateformat-be-true-for-file-servers">🔗</a></h1>
+<p>In general, the <code>validatecompatibility</code> and <code>validateformat</code> attributes are
+meant to enable server-side policy validation. However, they also convey to
+clients that the data within the Registry adheres to the specified
+<code>compatibility</code> and <code>format</code> values. In cases where the xRegistry is being
+hosted by a file-server, where such validation code does not exist, but the
+server would still like to indicate to its clients that the data has in fact
+been validated, it is appropriate for the xRegistry metadata to reflect this
+situation by exposing these attributes with a value of <code>true</code>.</p>
+<p>For example, if the file-server based xRegistry is an alternative
 mechanism to retrieve data from another xRegistry service that did validate
 the data (i.e. it was exported to the file-server), and there's a desire to
 not expose this implementation/deployment choice to the end-user. In other
@@ -835,7 +834,7 @@ at the Group-level. However, for those cases, custom models may define
 an extension at the appropriate location in the model to meet their needs.
 When doing so it is recommended to use the same attribute definition as
 defined in the core specification for consistency. It is worth noting that
-the Endpoint <a href="../endpoint/spec.md">specification</a> does exactly this to
+the Endpoint <a href="./../../endpoint-v1/docs/spec.html">specification</a> does exactly this to
 indicate when an Endpoint (i.e. a Group) is deprecated.</p>
 <h2 id="the-format-attribute-in-the-schema-spec">The <code>format</code> attribute in the Schema spec <a class="anchor" href="#the-format-attribute-in-the-schema-spec">🔗</a></h2>
 <p>The <code>format</code> attribute in the Schema spec is required when the
@@ -932,7 +931,7 @@ aspect set to <code>false</code> then the <code>meta.defaultversionid</code> att
 of that Resource becomes &quot;read-only&quot;. And any attempt to update it will result
 in an error being generated.</p>
 <h2 id="why-isnt-put-idempotent">Why isn't <code>PUT</code> idempotent? <a class="anchor" href="#why-isnt-put-idempotent">🔗</a></h2>
-<p>As stated in the <a href="./spec.md">core</a> specification, the <code>PUT</code> operations are
+<p>As stated in the <a href="./spec.html">core</a> specification, the <code>PUT</code> operations are
 almost idempotent, per the HTTP specification. For the most part, multiple
 similar <code>PUT</code> requests will have the same effect as a single one, with the
 exception that <code>epoch</code> and <code>modifiedat</code> will be updated each time. This is
@@ -948,5 +947,16 @@ new APIs), care should be taken to limit the possibility of overlapping with
 any future xRegistry work. While it is impossible to predict the future, some
 steps can be taken to lessen the concern. For example, using domain, or
 company, specific terms when naming things.</p>
+<h2 id="validation">Validation <a class="anchor" href="#validation">🔗</a></h2>
+<p>There is one scenario worth pointing out with respect to <code>format</code> and
+<code>compatibility</code> validation. If a Resource's model definition has both the
+<code>validateformat</code> and <code>strictvalidation</code> aspects set to <code>true</code>, and the
+Registry's <code>capabilities</code> does not define any <code>format</code> values, then any
+attempt to create a Resource of that Resource type with a non-empty <code>format</code>
+value will always be rejected with an &quot;unknown format&quot; type of error.</p>
+<p>This is being called out because for light-weight server implementations that
+do not support validation checks, a user might define a Resource type with
+those aspects enabled without realizing they're defining a potentially
+unusable Resource type - if clients use the <code>format</code> attribute.</p>
 
 </html>

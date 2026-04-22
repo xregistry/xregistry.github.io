@@ -1,0 +1,12 @@
+{
+  "createdat": "2026-04-22T17:24:31.837113389Z",
+  "defaultversionid": "v1.0-rc1",
+  "defaultversionsticky": false,
+  "defaultversionurl": "http://ubuntu:7070/xregistryspecs/core-v1/docs/model.schema.json/versions/v1.0-rc1",
+  "docid": "model.schema.json",
+  "epoch": 1,
+  "modifiedat": "2026-04-22T17:24:31.837113389Z",
+  "readonly": false,
+  "self": "http://ubuntu:7070/xregistryspecs/core-v1/docs/model.schema.json/meta",
+  "xid": "/xregistryspecs/core-v1/docs/model.schema.json/meta"
+}

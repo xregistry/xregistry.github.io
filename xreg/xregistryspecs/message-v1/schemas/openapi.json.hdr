@@ -1,15 +1,15 @@
 content-disposition:openapi.json
-content-location:https://xregistry.io/xreg/xregistryspecs/message-v1/schemas/openapi.json/versions/v1.0-rc1
+content-location:http://ubuntu:7070/xregistryspecs/message-v1/schemas/openapi.json/versions/v1.0-rc1
 content-type:text/plain; charset=utf-8
 xregistry-ancestor:v1.0-rc1
-xregistry-createdat:2025-10-17T19:19:45.868077545Z
+xregistry-createdat:2026-04-22T17:24:38.429350804Z
 xregistry-epoch:1
 xregistry-isdefault:true
-xregistry-metaurl:https://xregistry.io/xreg/xregistryspecs/message-v1/schemas/openapi.json/meta
-xregistry-modifiedat:2025-10-17T19:19:45.868077545Z
+xregistry-metaurl:http://ubuntu:7070/xregistryspecs/message-v1/schemas/openapi.json/meta
+xregistry-modifiedat:2026-04-22T17:24:38.429350804Z
 xregistry-schemaid:openapi.json
-xregistry-self:https://xregistry.io/xreg/xregistryspecs/message-v1/schemas/openapi.json
+xregistry-self:http://ubuntu:7070/xregistryspecs/message-v1/schemas/openapi.json
 xregistry-versionid:v1.0-rc1
 xregistry-versionscount:1
-xregistry-versionsurl:https://xregistry.io/xreg/xregistryspecs/message-v1/schemas/openapi.json/versions
+xregistry-versionsurl:http://ubuntu:7070/xregistryspecs/message-v1/schemas/openapi.json/versions
 xregistry-xid:/xregistryspecs/message-v1/schemas/openapi.json

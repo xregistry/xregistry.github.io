@@ -48,8 +48,8 @@
 <h1 id="message-definitions-registry-service---version-10-rc2">Message Definitions Registry Service - Version 1.0-rc2 <a class="anchor" href="#message-definitions-registry-service---version-10-rc2">🔗</a></h1>
 <h2 id="abstract">Abstract <a class="anchor" href="#abstract">🔗</a></h2>
 <p>This specification defines a message and event catalog extension to the
-xRegistry document format and API <a href="../core/spec.md">specification</a>. The
-message definitions registry service (or “message catalog”) allows for
+xRegistry document format and API <a href="./../../core-v1/docs/spec.html">specification</a>. The
+message definitions registry service (or &quot;message catalog&quot;) allows for
 declaring the metadata (headers, properties, attributes) of messages and/or
 events and their relationships to schemas, and for grouping those declarations
 such that they can be associated with endpoints. With the help of this
@@ -58,26 +58,97 @@ precisely which messages or events are permitted to be sent or can be expected
 to be received, and how these messages can be distinguished.</p>
 <h2 id="table-of-contents">Table of Contents <a class="anchor" href="#table-of-contents">🔗</a></h2>
 <ul>
-<li><a href="#overview">Overview</a></li>
+<li><a href="#message-definitions-registry-service---version-10-rc2">Message Definitions Registry Service - Version 1.0-rc2</a>
+<ul>
+<li><a href="#abstract">Abstract</a></li>
+<li><a href="#table-of-contents">Table of Contents</a></li>
+<li><a href="#overview">Overview</a>
+<ul>
 <li><a href="#message-definitions">Message Definitions</a></li>
 <li><a href="#message-metadata">Message Metadata</a></li>
+<li><a href="#context-attributes">Context Attributes</a></li>
 <li><a href="#reusing-message-definitions">Reusing Message Definitions</a></li>
+<li><a href="#message-definition-matching">Message Definition Matching</a></li>
+</ul>
+</li>
+<li><a href="#message-groups">Message Groups</a></li>
 <li><a href="#notations-and-terminology">Notations and Terminology</a>
 <ul>
 <li><a href="#notational-conventions">Notational Conventions</a></li>
-<li><a href="#terminology">Terminology</a></li>
+<li><a href="#terminology">Terminology</a>
+<ul>
+<li><a href="#message-and-event">Message and Event</a></li>
+<li><a href="#envelopes-and-protocols">Envelopes and Protocols</a></li>
 </ul>
 </li>
-<li><a href="#message-definition-registry-model">Message Definitions Registry Model</a>
+</ul>
+</li>
+<li><a href="#message-definition-registry-model">Message Definition Registry Model</a>
 <ul>
-<li><a href="#message-definition-groups">Message Definition Groups</a></li>
-<li><a href="#message-definitions">Message Definitions</a></li>
-<li><a href="#metadata-envelopes-and-message-protocols">Metadata Envelopes and Message Protocols</a></li>
+<li><a href="#message-definition-groups">Message Definition Groups</a>
+<ul>
+<li><a href="#envelope-message-group"><code>envelope</code> (Message Group)</a></li>
+<li><a href="#protocol-message-group"><code>protocol</code> (Message Group)</a></li>
+</ul>
+</li>
+<li><a href="#message-definitions-message-group">Message Definitions</a>
+<ul>
+<li><a href="#basemessage"><code>basemessage</code></a></li>
+<li><a href="#envelope"><code>envelope</code></a></li>
+<li><a href="#envelopemetadata"><code>envelopemetadata</code></a></li>
+<li><a href="#envelopeoptions"><code>envelopeoptions</code></a></li>
+<li><a href="#protocol"><code>protocol</code></a></li>
+<li><a href="#protocoloptions"><code>protocoloptions</code></a></li>
+<li><a href="#dataschemaformat"><code>dataschemaformat</code></a></li>
+<li><a href="#dataschema"><code>dataschema</code></a></li>
+<li><a href="#dataschemauri"><code>dataschemauri</code></a></li>
+<li><a href="#dataschemaxid"><code>dataschemaxid</code></a></li>
+<li><a href="#datacontenttype"><code>datacontenttype</code></a></li>
+</ul>
+</li>
+<li><a href="#metadata-envelopes-and-message-protocols">Metadata Envelopes and Message Protocols</a>
+<ul>
+<li><a href="#property-definitions">Property Definitions</a>
+<ul>
+<li><a href="#description"><code>description</code></a></li>
+<li><a href="#required"><code>required</code></a></li>
+<li><a href="#specurl"><code>specurl</code></a></li>
+<li><a href="#type"><code>type</code></a></li>
+<li><a href="#value"><code>value</code></a></li>
+</ul>
+</li>
+<li><a href="#metadata-envelopes">Metadata Envelopes</a>
+<ul>
+<li><a href="#cloudevents10">CloudEvents/1.0</a></li>
+</ul>
+</li>
+<li><a href="#message-protocols">Message Protocols</a>
+<ul>
+<li><a href="#http11-http2-http3-protocols">&quot;HTTP/1.1&quot;, &quot;HTTP/2&quot;, &quot;HTTP/3&quot; protocols</a></li>
+<li><a href="#amqp10-protocol">&quot;AMQP/1.0&quot; protocol</a></li>
+<li><a href="#properties-amqp-10"><code>properties</code> (AMQP 1.0)</a></li>
+<li><a href="#application-properties-amqp-10"><code>application-properties</code> (AMQP 1.0)</a></li>
+<li><a href="#message-annotations-amqp-10"><code>message-annotations</code> (AMQP 1.0)</a></li>
+<li><a href="#delivery-annotations-amqp-10"><code>delivery-annotations</code> (AMQP 1.0)</a>
+<ul>
+<li><a href="#header-amqp-10"><code>header</code> (AMQP 1.0)</a></li>
+<li><a href="#footer-amqp-10"><code>footer</code> (AMQP 1.0)</a></li>
+</ul>
+</li>
+<li><a href="#mqtt311-and-mqtt50-protocols">&quot;MQTT/3.1.1&quot; and &quot;MQTT/5.0&quot; protocols</a></li>
+<li><a href="#kafka-protocol">&quot;KAFKA&quot; protocol</a></li>
+<li><a href="#nats-protocol">&quot;NATS&quot; protocol</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 <h2 id="overview">Overview <a class="anchor" href="#overview">🔗</a></h2>
-<p>The goal of this message metadata model, in conjunction with the <a href="../endpoint/spec.md">endpoint
+<p>The goal of this message metadata model, in conjunction with the <a href="./../../endpoint-v1/docs/spec.html">endpoint
 model</a>, is to provide metadata structure to asynchronous
 topics, streams and queues in a way that is similar to how table and column
 definitions provide structure to databases. Database schemas structure data
@@ -90,16 +161,18 @@ tables. The schema associated with a message definition determines the column
 layout of the table. As event streams often end up landing in databases for
 long-term archival and analysis, this structural alignment is very helpful.</p>
 <p>Managing the description of the payloads of those messages and events is not in
-scope, but delegated to the <a href="../schema/spec.md">schema registry extension</a> for
+scope, but delegated to the <a href="./../../schema-v1/docs/spec.html">schema registry extension</a> for
 xRegistry. Schemas are linked from messages and event declarations through a
 URI Reference.</p>
-<h2 id="message-definitions">Message Definitions <a class="anchor" href="#message-definitions">🔗</a></h2>
-<p>A Message Definition (“message”) describes constraints for the metadata of a
+<h3 id="message-definitions">Message Definitions <a class="anchor" href="#message-definitions">🔗</a></h3>
+<p>A Message Definition (&quot;message&quot;) describes constraints for the metadata of a
 message or event. It declares, for instance, the concrete values or
 permissible value patterns for the <code>type</code>, <code>source</code>, and <code>subject</code> attributes
 of a CloudEvent.</p>
 <p>A message definition has two key purposes:</p>
-<p>1 - A message definition is a template. When an application needs to raise an
+<ol>
+<li>
+<p>A message definition is a template. When an application needs to raise an
 event, the message definition declares precisely, which attributes,
 headers or properties need to be set on the event envelope or on the
 protocol message, and which constant values are to be set, or which type of
@@ -107,7 +180,9 @@ pattern constraints apply. Such templates can be evaluated by tools and
 code generators, which can then create an interface or event factory for
 the application programmer that minimizes opportunities to introduce
 mapping errors.</p>
-<p>2 - A message definition is a filter condition. When an application needs to
+</li>
+<li>
+<p>A message definition is a filter condition. When an application needs to
 demultiplex an incoming stream, messages, or events that come through the
 same channel, it can use a collection of message definitions as a set of
 candidate messages that are expected and can be handled. The metadata of
@@ -118,6 +193,8 @@ message is unexpected and will likely be sidelined. If there is one match,
 the message can be passed on to the application. If there are multiple
 matches, the message might be evaluated further by matching the body
 content against the associated data schema.</p>
+</li>
+</ol>
 <p>For message and event producers, the template aspect is the primary concern.
 Following the declared rules, including validating the payload against the
 associated schema, ensures that all consumers receive messages with the
@@ -126,46 +203,94 @@ expected content.</p>
 Consumer applications and frameworks can rely on the declared message metadata
 to demultiplex and dispatch messages and events to handlers and they can
 sideline non-conformant messages, for instance into dead-letter queues.</p>
-<h2 id="message-metadata">Message Metadata <a class="anchor" href="#message-metadata">🔗</a></h2>
+<h3 id="message-metadata">Message Metadata <a class="anchor" href="#message-metadata">🔗</a></h3>
 <p>Any message definition covers up to three aspects:</p>
-<p>1 - Envelope: An “envelope” is a transport independent metadata convention that
+<ol>
+<li>
+<p>Envelope: An <code>envelope</code> is a transport independent metadata convention that
 lets a producer convey the context of an event or message to consumers or
 intermediaries (like publish/subscribe routers) without them having to
 understand the particular payload format or having to read the payload. The
 only predefined envelope model in this specification is CNCF CloudEvents
-1.0. Once the “envelope” selector is set, constraints for the attributes
-of the CloudEvents envelope can be defined in the “envelopeoptions”.</p>
-<p>2 - Protocol: The “protocol” selector picks a specific application protocol to
+1.0. Once the <code>envelope</code> selector is set, constraints for the attributes
+of the CloudEvents envelope can be defined in the <code>envelopeoptions</code>.</p>
+</li>
+<li>
+<p>Protocol: The <code>protocol</code> selector picks a specific application protocol to
 which the given message is bound. If a protocol is chosen, constraints for
-the protocol-specific message model can be defined in “protocoloptions”.
-For instance, if you choose the “MQTT/5.0” protocol, you can constrain the
+the protocol-specific message model can be defined in <code>protocoloptions</code>.
+For instance, if you choose the <code>MQTT/5.0</code> protocol, you can constrain the
 topic path to which this message can be sent and/or the quality-of-service
 QoS level that is to be used. This specification covers the full metadata
 set of the application protocols AMQP/1.0, MQTT/3.1.1, MQTT/5.0, Kafka,
 NATS, and HTTP.</p>
-<p>3 - Payload: The “dataschema*” and “datacontenttype” attributes declare the
+</li>
+<li>
+<p>Payload: The <code>dataschema*</code> and <code>datacontenttype</code> attributes declare the
 content type of the payload and a schema that can be used to construct,
-validate, decode and/or encode the payload. The “dataschemaformat”
+validate, decode and/or encode the payload. The <code>dataschemaformat</code>
 declaration selects the kind of schema (e.g. XML Schema, Protobuf, Avro or
-others) that is embedded at or referenced by the chosen “dataschema*”
+others) that is embedded at or referenced by the chosen <code>dataschema*</code>
 attribute.</p>
-<p>A message definition MAY contain any combination of envelope, protocol, and
-payload declarations. A payload-only declaration can be useful if messages are
-sent through varying protocols without a fixed envelope model and are
-distinguished by content-type (including parameters) or even only through
+</li>
+</ol>
+<p>A <code>message</code> definition MAY contain any combination of <code>envelope</code>, <code>protocol</code>,
+and data payload declarations. A payload-only declaration can be useful if
+messages are sent through varying protocols without a fixed envelope model and
+are distinguished by content-type (including parameters) or even only through
 whether payload schema definitions match an incoming message.</p>
-<p>While attributes (or properties or headers; depending on protocol nomenclature)
+<p>Where attributes (or properties or headers; depending on protocol nomenclature)
 can be defined in the <code>envelopeoptions</code> and <code>protocoloptions</code>, the general
 pattern used in this model is that the attribute can have a name, a
 description, a type and a value. Setting a value makes that value constant for
 all instances of that message, which is useful for discriminators like AMQP’s
 subject property or CloudEvents’ type attribute.</p>
-<p>The “uritemplate” type permits the values to have embedded placeholders (Level
+<p>The <code>uritemplate</code> type permits the values to have embedded placeholders (Level
 1 URI templates), which turns the values into templates for publishers where
 the application inserts context information into designated places. For
 consumers, the templates act as pattern matching filters and to extract
 context values into named variables.</p>
-<h2 id="reusing-message-definitions">Reusing Message Definitions <a class="anchor" href="#reusing-message-definitions">🔗</a></h2>
+<h3 id="context-attributes">Context Attributes <a class="anchor" href="#context-attributes">🔗</a></h3>
+<p>The embedded placeholders in values of the <code>uritemplate</code> type can refer to
+context attributes provided by the application environment in which the metadata
+is evaluated. For instance, a message definition might declare a <code>source</code>
+attribute in the <code>envelopeoptions</code> of a CloudEvent, with a <code>uritemplate</code> type
+and a <code>value</code> definition <code>/vehicles/{vin}/systems/{system}/sensor/{sensor}</code>.</p>
+<p>If the application environment from which the message is published provides values
+for the <code>vin</code>, <code>system</code>, and <code>sensor</code> context attributes, those values can be
+easily inserted into the URI template when the message is published. Reversely,
+if a message is received with a URI that matches the template, the values can
+be extracted and made available as context attributes.</p>
+<p>A further use of such context attributes is the mapping of protocol-native
+messages to CloudEvents. An application evaluating message definitions that
+contain both, a <code>protocol</code> and an <code>envelope</code> definition might nevertheless
+choose to accept protocol-native messages that are not CloudEvents and then
+use context attributes to map them to the CloudEvents model.</p>
+<p>For example, let there be this definition:</p>
+<pre><code class="language-json">{
+  &quot;protocol&quot;: &quot;MQTT/5.0&quot;,
+  &quot;protocoloptions&quot;: {
+    &quot;topic_name&quot;: &quot;/store/{storeid}/cashierdesk/{cdid}&quot;
+    &quot;user_properties&quot; : [
+      { &quot;name&quot;: &quot;eventType&quot;, &quot;type&quot;: &quot;uritemplate&quot;, &quot;value&quot;: &quot;{eventType}&quot; }
+    ]
+  },
+  &quot;envelope&quot;: &quot;CloudEvents/1.0&quot;,
+  &quot;envelopeoptions&quot;: {
+    &quot;type&quot;: { &quot;type&quot;: &quot;uritemplate&quot;, &quot;value&quot;: &quot;{eventType}&quot; },
+    &quot;source&quot;: { &quot;type&quot;: &quot;uritemplate&quot;, &quot;value&quot;: &quot;{storeid}&quot; },
+    &quot;subject&quot;: { &quot;type&quot;: &quot;uritemplate&quot;, &quot;value&quot;: &quot;{cdid}&quot; }
+  }
+}
+</code></pre>
+<p>An application might use this definition to match incoming MQTT messages only
+against the <code>protocol</code>/<code>protocoloptions</code> part of the definition. If an incoming
+message matches this part, the application can then use the <code>envelope</code> and
+<code>envelopeoptions</code> definitions to transform the message into a CloudEvent, with
+the context attributes carrying the values.</p>
+<p>Context attributes and their handling are not covered by the following normative
+part of this specification.</p>
+<h3 id="reusing-message-definitions">Reusing Message Definitions <a class="anchor" href="#reusing-message-definitions">🔗</a></h3>
 <p>In complex event-driven enterprise applications it might be desirable to reuse
 common definitions across different applications. There might also be a need
 to route the same set of CloudEvents through a specific protocol route, like
@@ -178,12 +303,63 @@ another message definition as its base, which effects a copy of the base
 message’s definitions into the message that defines it. The mechanism is
 transitive, which means that <code>basemessage</code> relationships MUST be resolved
 recursively as long as they do not result in circular references.</p>
-<p>All aspects of the collected base message are “shadowed” by the definitions of
-the message that references it. If the base message defines an “envelope” but
-no “protocol”, the new definition can add the aforementioned MQTT aspects with
-a new “protocol” selector and corresponding options.</p>
-<p>The <code>xref</code> attribute from xRegistry Core allows aliasing of message definitions
-across message groups, which will be further discussed in the next section.</p>
+<p>All aspects of the collected base message are &quot;shadowed&quot; by the definitions of
+the message that references it. If the base message defines an &quot;envelope&quot; but
+no &quot;protocol&quot;, the new definition can add the aforementioned MQTT aspects with
+a new &quot;protocol&quot; selector and corresponding options.</p>
+<pre><code class="language-mermaid">flowchart TB
+  %% Accessibility: Derived definitions (A', B', C') reference base definitions (A, B, C) via basemessage links.
+  subgraph DerivedMqtt[&quot;myEventsMqtt group&quot;]
+    direction TB
+    APrime[&quot;A' protocol: MQTT/5.0,
+    envelope: CloudEvents/1.0&quot;]
+    BPrime[&quot;B' protocol: MQTT/5.0,
+    envelope: CloudEvents/1.0&quot;]
+  end
+
+  subgraph Base[&quot;myEvents group&quot;]
+    direction TB
+    ABase[&quot;A
+    envelope: CloudEvents/1.0&quot;]
+    BBase[&quot;B
+    envelope: CloudEvents/1.0&quot;]
+  end
+
+  APrime -- &quot;basemessage&quot; --&gt; ABase
+  BPrime -- &quot;basemessage&quot; --&gt; BBase
+</code></pre>
+<h3 id="message-definition-matching">Message Definition Matching <a class="anchor" href="#message-definition-matching">🔗</a></h3>
+<p>One popular use of a Message Registry is to be a catalog of Message definitions
+that are used to validate incoming messages. In these scenarios, the receiver
+of a message might need to &quot;match&quot; it to the corresponding Message definition
+that the message is meant to adhere to. This specification does not mandate how
+this &quot;matching&quot; is done. For example, matching headers or schema of the
+incoming message to the Message definitions in the Registry is one option.</p>
+<p>In a Registry with many Message definitions, and each one of those having
+potentially multiple Versions, results in a 2-dimensional collection of
+Message definitions to match against, which could make finding the exact
+Message definition complex, non-deterministic or very slow. To help with these
+situations, this specification provides the following guidance:</p>
+<ul>
+<li>Use of CloudEvents is RECOMMENDED as it will provide well-defined
+metadata that will appear in each Message to help differentiate Message
+definitions.</li>
+<li>Messages definitions SHOULD have a <code>messageid</code> value that is the same as the
+CloudEvents' <code>type</code> context attribute defined for that Message. This will
+allow for an exact mapping from the incoming Message's <code>type</code> attribute to
+its related Message definition.</li>
+<li>Message Resource types SHOULD be defined with a <code>maxversions</code> of <code>1</code>. This
+eliminates the need for each incoming Message to include some unique
+Version discriminator.</li>
+<li>Modifications to Message definitions SHOULD NOT result in &quot;on the wire&quot;
+changes to the resulting messages as that could break existing systems.
+Rather, new Messages definitions SHOULD be created, with new <code>type</code> and
+<code>messageid</code> values, and referenced through the use of the <code>deprecated</code>
+attribute.</li>
+</ul>
+<p>Implementations, and Registry model authors, MAY deviate from these
+recommendations however they are then responsible for defining the mechanisms
+by which a unique Message definition is matched to incoming messages.</p>
 <h2 id="message-groups">Message Groups <a class="anchor" href="#message-groups">🔗</a></h2>
 <p>All message definitions MUST be contained in a group. A message group can be
 formed for many reasons. At a minimum, the group will be an access control
@@ -191,15 +367,15 @@ boundary in many implementations of this specification even though none is
 mandated.</p>
 <p>In many cases, message groups will be a logical boundary around a set of
 related events that are commonly routed through the channel. A (primitive) air
-travel luggage handling system might have “checkedin”, “loaded”, “unloaded”,
-and “delivered” events related to items it moves. If those are reported to
+travel luggage handling system might have &quot;checkedin&quot;, &quot;loaded&quot;, &quot;unloaded&quot;,
+and &quot;delivered&quot; events related to items it moves. If those are reported to
 external parties through the same channels, it likely makes sense to group
 them.</p>
-<p>A benefit of message groups is that they are very similar to “interfaces” in
+<p>A benefit of message groups is that they are very similar to &quot;interfaces&quot; in
 common programming languages. When a message group is associated with a
 channel, like a queue, the messages contained in the group form the permitted
 and expected message set. The association becomes a contract.</p>
-<p>This association is formalized in the <a href="../endpoint/spec.md">Endpoint Registry</a>,
+<p>This association is formalized in the <a href="./../../endpoint-v1/docs/spec.html">Endpoint Registry</a>,
 a related registry that allows associating one or more message definition
 groups with an endpoint, thus effectively defining a contract for the endpoint.
 An &quot;endpoint&quot; as defined in that specification is also a message definition
@@ -209,11 +385,11 @@ specification.</p>
 original message definitions can be referenced instead of copied. For
 instance, a pubsub topic might take 4 messages as input but a filtering
 subscription might only yield 1 of those messages as output. In this case, one
-would create a distinct message group for the subscription and “xref” the
+would create a distinct message group for the subscription and &quot;xref&quot; the
 message definition from the input group (sample to follow in the merged doc).</p>
 <p>Similarly, one could create a new message group to be associated with an MQTT
 endpoint if the messages annotate CloudEvent definitions with MQTT protocol
-options using the “basemessage” mechanism. (sample also to follow)</p>
+options using the &quot;basemessage&quot; mechanism. (sample also to follow)</p>
 <h2 id="notations-and-terminology">Notations and Terminology <a class="anchor" href="#notations-and-terminology">🔗</a></h2>
 <h3 id="notational-conventions">Notational Conventions <a class="anchor" href="#notational-conventions">🔗</a></h3>
 <p>The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;, &quot;SHOULD&quot;,
@@ -260,7 +436,7 @@ the <code>protocoloptions</code> section MAY contain constraints for the
 protocol-specific metadata.</p>
 <h2 id="message-definition-registry-model">Message Definition Registry Model <a class="anchor" href="#message-definition-registry-model">🔗</a></h2>
 <p>The formal xRegistry extension model of the Message Definitions Registry
-resides in the <a href="model.json">model.json</a> file.</p>
+resides in the <a href="./model.json">model.json</a> file.</p>
 <p>For easy reference, the JSON serialization of a Message Registry adheres to
 this form:</p>
 <pre><code class="language-yaml">{
@@ -367,7 +543,7 @@ this form:</p>
 name (<code>&lt;GROUP&gt;</code>) is <code>messagegroup</code>.</p>
 <p>The following attributes are defined for the <code>messagegroup</code> object in addition
 to the xRegistry-defined core
-<a href="../core/spec.md#attributes-and-extensions">attributes</a>:</p>
+<a href="./../../core-v1/docs/spec.html#attributes-and-extensions">attributes</a>:</p>
 <h4 id="envelope-message-group"><code>envelope</code> (Message Group) <a class="anchor" href="#envelope-message-group">🔗</a></h4>
 <ul>
 <li>Type: String</li>
@@ -418,7 +594,7 @@ protocol options differ between versions.</li>
 </ul>
 </li>
 </ul>
-<h3 id="message-definitions-1">Message Definitions <a class="anchor" href="#message-definitions-1">🔗</a></h3>
+<h3 id="message-definitions-message-group">Message Definitions (Message Group) <a class="anchor" href="#message-definitions-message-group">🔗</a></h3>
 <p>The Resource plural name (<code>&lt;RESOURCES&gt;</code>) is <code>messages</code>, and the Resource
 singular name (<code>&lt;RESOURCE&gt;</code>) is <code>message</code>.</p>
 <p>Different from schemas, message definitions do not contain a
@@ -432,7 +608,7 @@ Doing so makes for easier management of the meta-model by correlating
 the look-up value (id) of messages with their related events.</p>
 <p>The following extensions are defined for the <code>message</code> Resource in addition to
 the core xRegistry Resource
-<a href="../core/spec.md#attributes-and-extensions">attributes</a>:</p>
+<a href="./../../core-v1/docs/spec.html#attributes-and-extensions">attributes</a>:</p>
 <h4 id="basemessage"><code>basemessage</code> <a class="anchor" href="#basemessage">🔗</a></h4>
 <ul>
 <li>
@@ -498,13 +674,13 @@ embedded or referenced.</p>
       &quot;com.example.abc.event1&quot;: {
         &quot;messageid&quot;: &quot;com.example.abc.event1&quot;,
         &quot;envelope&quot;: &quot;CloudEvents/1.0&quot;,
-         # ... details ...
+         # details ...
         }
       },
       &quot;com.example.abc.event2&quot;: {
         &quot;messageid&quot;: &quot;com.example.abc.event1&quot;,
         &quot;envelope&quot;: &quot;CloudEvents/1.0&quot;,
-        # ... details ...
+        # details ...
       }
   },
   &quot;com.example.def&quot;: {
@@ -516,7 +692,7 @@ embedded or referenced.</p>
     &quot;messages&quot;: {
       &quot;com.example.abc.event1&quot;: {
         &quot;uri&quot;: &quot;#/messagegroups/com.example.abc/messages/com.example.abc.event1&quot;,
-        # ... details ...
+        # details ...
       }
     }
   }
@@ -579,7 +755,7 @@ constraints defined for their metadata headers, properties or attributes.</li>
 <ul>
 <li>Type: String</li>
 <li>Description: Identifies the schema format applicable to the message payload,
-equivalent to the schema <a href="../schema/spec.md#format">'format'</a>
+equivalent to the schema <a href="./../../core-v1/docs/spec.html#format-attribute">'format'</a>
 attribute.</li>
 <li>Constraints:
 <ul>
@@ -603,7 +779,7 @@ the schema format in the format defined by the schema format itself.</li>
 <li>Type: Any</li>
 <li>Description: Contains the inline schema for the message payload. The schema
 format is identified by the <code>dataschemaformat</code> attribute. Equivalent to the
-<a href="../schema/spec.md#schema">'schema'</a> attribute.</li>
+<a href="./../../schema-v1/docs/spec.html#221-schema">'schema'</a> attribute.</li>
 <li>Constraints:
 <ul>
 <li>OPTIONAL.</li>
@@ -613,7 +789,7 @@ format is identified by the <code>dataschemaformat</code> attribute. Equivalent 
 </li>
 <li>Examples:
 <ul>
-<li>See <a href="../schema/spec.md#schema-formats">Schema Formats</a></li>
+<li>See <a href="./../../schema-v1/docs/spec.html#43-schema-formats">Schema Formats</a></li>
 </ul>
 </li>
 </ul>
@@ -623,7 +799,7 @@ format is identified by the <code>dataschemaformat</code> attribute. Equivalent 
 <li>Description: Contains a relative or absolute URI that points to the schema
 object to use for the message payload. The schema format is identified by the
 <code>dataschemaformat</code> attribute. See
-<a href="../schema/spec.md#schema-formats">Schema Formats</a> for details on
+<a href="./../../schema-v1/docs/spec.html#43-schema-formats">Schema Formats</a> for details on
 how to reference specific schema objects for the message payload. It is not
 sufficient for the URI-reference to point to a schema document; it MUST
 resolve to a concrete schema object.</li>
@@ -884,7 +1060,7 @@ placeholders using the <a href="https://www.rfc-editor.org/rfc/rfc6570">RFC6570<
 same placeholder is used in multiple properties, the value of the placeholder
 is assumed to be identical.</p>
 <p>The following shows the format of a CloudEvents &quot;envelopemetadata&quot; section for
-a message (see the <a href="model.json">model file</a> for the complete definition):</p>
+a message (see the <a href="./model.json">model file</a> for the complete definition):</p>
 <pre><code class="language-yaml">&quot;envelope&quot;: &quot;CloudEvents/1.0&quot;,
 &quot;envelopemetadata&quot; {
   # &quot;CloudEvents/1.0&quot; envelope metadata
@@ -1300,7 +1476,7 @@ indicate whether the property is supported for the respective MQTT version.</p>
 </tr>
 <tr>
 <td><code>topic_name</code></td>
-<td><code>string</code></td>
+<td><code>uritemplate</code></td>
 <td>yes</td>
 <td>yes</td>
 <td>Topic name</td>

@@ -1,11 +1,11 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2025-10-17T19:19:44.0701608Z",
+  "createdat": "2026-04-22T17:24:30.873100935Z",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2025-10-17T19:19:44.0701608Z",
+  "modifiedat": "2026-04-22T17:24:30.873100935Z",
   "sampleid": "smartoven-xsd.xreg.json",
-  "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/smartoven-xsd.xreg.json/versions/v1.0-rc1",
+  "self": "http://ubuntu:7070/xregistryspecs/cloudevents-v1/samples/smartoven-xsd.xreg.json/versions/v1.0-rc1",
   "versionid": "v1.0-rc1",
   "xid": "/xregistryspecs/cloudevents-v1/samples/smartoven-xsd.xreg.json/versions/v1.0-rc1"
 }

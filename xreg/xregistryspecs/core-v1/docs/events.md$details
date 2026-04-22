@@ -1,0 +1,14 @@
+{
+  "ancestor": "v1.0-rc1",
+  "createdat": "2026-04-22T17:24:32.120932899Z",
+  "docid": "events.md",
+  "epoch": 1,
+  "isdefault": true,
+  "metaurl": "http://ubuntu:7070/xregistryspecs/core-v1/docs/events.md/meta",
+  "modifiedat": "2026-04-22T17:24:32.120932899Z",
+  "self": "http://ubuntu:7070/xregistryspecs/core-v1/docs/events.md",
+  "versionid": "v1.0-rc1",
+  "versionscount": 1,
+  "versionsurl": "http://ubuntu:7070/xregistryspecs/core-v1/docs/events.md/versions",
+  "xid": "/xregistryspecs/core-v1/docs/events.md"
+}

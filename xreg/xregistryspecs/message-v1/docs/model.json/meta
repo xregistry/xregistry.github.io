@@ -1,13 +1,12 @@
 {
-  "compatibility": "none",
-  "createdat": "2025-10-17T19:19:45.610588205Z",
+  "createdat": "2026-04-22T17:24:37.602214165Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
-  "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/message-v1/docs/model.json/versions/v1.0-rc1",
+  "defaultversionurl": "http://ubuntu:7070/xregistryspecs/message-v1/docs/model.json/versions/v1.0-rc1",
   "docid": "model.json",
   "epoch": 1,
-  "modifiedat": "2025-10-17T19:19:45.610588205Z",
+  "modifiedat": "2026-04-22T17:24:37.602214165Z",
   "readonly": false,
-  "self": "https://xregistry.io/xreg/xregistryspecs/message-v1/docs/model.json/meta",
+  "self": "http://ubuntu:7070/xregistryspecs/message-v1/docs/model.json/meta",
   "xid": "/xregistryspecs/message-v1/docs/model.json/meta"
 }

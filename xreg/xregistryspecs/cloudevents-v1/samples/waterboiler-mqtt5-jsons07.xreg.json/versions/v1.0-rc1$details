@@ -1,11 +1,11 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2025-10-17T19:19:44.247748416Z",
+  "createdat": "2026-04-22T17:24:31.080425486Z",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2025-10-17T19:19:44.247748416Z",
+  "modifiedat": "2026-04-22T17:24:31.080425486Z",
   "sampleid": "waterboiler-mqtt5-jsons07.xreg.json",
-  "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/waterboiler-mqtt5-jsons07.xreg.json/versions/v1.0-rc1",
+  "self": "http://ubuntu:7070/xregistryspecs/cloudevents-v1/samples/waterboiler-mqtt5-jsons07.xreg.json/versions/v1.0-rc1",
   "versionid": "v1.0-rc1",
   "xid": "/xregistryspecs/cloudevents-v1/samples/waterboiler-mqtt5-jsons07.xreg.json/versions/v1.0-rc1"
 }

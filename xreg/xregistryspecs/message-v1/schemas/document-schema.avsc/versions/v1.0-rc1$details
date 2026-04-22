@@ -1,11 +1,11 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2025-10-17T19:19:45.744840643Z",
+  "createdat": "2026-04-22T17:24:38.008047315Z",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2025-10-17T19:19:45.744840643Z",
+  "modifiedat": "2026-04-22T17:24:38.008047315Z",
   "schemaid": "document-schema.avsc",
-  "self": "https://xregistry.io/xreg/xregistryspecs/message-v1/schemas/document-schema.avsc/versions/v1.0-rc1",
+  "self": "http://ubuntu:7070/xregistryspecs/message-v1/schemas/document-schema.avsc/versions/v1.0-rc1",
   "versionid": "v1.0-rc1",
   "xid": "/xregistryspecs/message-v1/schemas/document-schema.avsc/versions/v1.0-rc1"
 }

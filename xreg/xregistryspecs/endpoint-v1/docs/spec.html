@@ -48,7 +48,7 @@
 <h1 id="endpoint-registry-service---version-10-rc2">Endpoint Registry Service - Version 1.0-rc2 <a class="anchor" href="#endpoint-registry-service---version-10-rc2">🔗</a></h1>
 <h2 id="abstract">Abstract <a class="anchor" href="#abstract">🔗</a></h2>
 <p>This specification defines an endpoint registry extension to the xRegistry
-document format and API <a href="../core/spec.md">specification</a>. An endpoint registry
+document format and API <a href="./../../core-v1/docs/spec.html">specification</a>. An endpoint registry
 allows for publishing and discovery of asynchronous event sources, sinks, and
 subscription points in the scope of a system, along with important
 configuration parameters.</p>
@@ -141,17 +141,17 @@ available to define for the endpoint. The protocol-specific options are
 enumerated and explained in <a href="#protocol-options">protocol options</a>.</p>
 <p>Each endpoint MAY also define an <code>envelope</code> selector which allows for defining
 particular <code>envelopeoptions</code> at the endpoint level. For CloudEvents, this
-permits definition the serialization mode (binary or structured) and the event
-format for structured mode.</p>
+permits the definition of the serialization mode (binary or structured) and the
+event format for structured mode.</p>
 <h3 id="message-groups">Message Groups <a class="anchor" href="#message-groups">🔗</a></h3>
 <p>The Endpoint is an xRegistry group-level construct that is conceptually an
-extension of the <a href="../message/spec.md">message definition group</a>, meaning there
+extension of the <a href="./../../message-v1/docs/spec.html">message definition group</a>, meaning there
 are no “groups of endpoints”. An endpoint MAY contain directly embedded
 message definitions. In the simplest case, an endpoint MAY embed its message
 definitions locally which in turn MAY embed their data schema definitions
 locally, all in one compact construct.</p>
 <p>More commonly, Endpoints will reference one or more
-<a href="../message/spec.md">message definition groups</a> that are defined externally in
+<a href="./../../message-v1/docs/spec.html">message definition groups</a> that are defined externally in
 a message registry, and which have the advantage of being shareable across
 multiple Endpoints.</p>
 <p>For describing a message broker queue, the best approach is to define a
@@ -175,7 +175,7 @@ endpoint patterns as they are common for applications of the MQTT protocol.
 For instance, the <a href="https://sparkplug.eclipse.org/">Eclipse Sparkplug</a> protocol
 is a convention that defines endpoint roles and messages and schemas for MQTT,
 and the
-<a href="../cloudevents/samples/scenarios/mqtt-sparkplugB.xreg.json">SparkPlugB</a>
+<a href="./../../cloudevents-v1/samples/mqtt-sparkplugB.xreg.json">SparkPlugB</a>
 example that illustrates how Registry Endpoints can model the convention in
 formal terms.</p>
 <h2 id="notations-and-terminology">Notations and Terminology <a class="anchor" href="#notations-and-terminology">🔗</a></h2>
@@ -187,7 +187,7 @@ interpreted as described in <a href="https://tools.ietf.org/html/rfc2119">RFC 21
 OPTIONAL for clients to use, but the servers' responsibility will vary.
 Server-unknown extension attributes MUST be silently stored in the backing
 datastore. Specification-defined, and server-known extension, attributes MUST
-generate an error if corresponding feature is not supported or enabled.
+generate an error if the corresponding feature is not supported or enabled.
 However, as with all attributes, if accepting the attribute would result in a
 bad state (such as exceeding a size limit, or results in a security issue),
 then the server MAY choose to reject the request.</p>
@@ -208,14 +208,14 @@ available via subscription for delivery to a consumer-designated endpoint.</p>
 concrete network endpoints to which messages can be produced, from which
 messages can be consumed, or which makes messages available via subscription
 and delivery to a consumer-designated endpoint.</p>
-<p>As discussed in the <a href="../cloudevents/spec.md">CloudEvents Registry overview</a>,
+<p>As discussed in the <a href="./../../cloudevents-v1/docs/spec.html">CloudEvents Registry overview</a>,
 endpoints are supersets of
-<a href="../message/spec.md#message-definition-groups">message definition groups</a> and
+<a href="./../../message-v1/docs/spec.html#message-definition-groups">message definition groups</a> and
 MAY contain inlined messages. Therefore, the Resources in the meta-model for
 the Endpoint Registry are likewise <code>messages</code> as defined in the
-<a href="../message/spec.md">message catalog specification</a>.</p>
+<a href="./../../message-v1/docs/spec.html">message catalog specification</a>.</p>
 <p>The formal xRegistry extension model of the Endpoints Registry
-resides in the <a href="model.json">model.json</a> file.</p>
+resides in the <a href="./model.json">model.json</a> file.</p>
 <p>For easy reference, the JSON serialization of an Endpoint Registry adheres to
 this form:</p>
 <pre><code class="language-yaml">{
@@ -341,7 +341,7 @@ this form:</p>
 name (<code>&lt;GROUP&gt;</code>) is <code>endpoint</code>.</p>
 <p>The following attributes are defined for the <code>endpoint</code> object in addition
 to the xRegistry-defined core
-<a href="../core/spec.md#attributes-and-extensions">attributes</a>:</p>
+<a href="./../../core-v1/docs/spec.html#attributes-and-extensions">attributes</a>:</p>
 <h4 id="usage"><code>usage</code> <a class="anchor" href="#usage">🔗</a></h4>
 <ul>
 <li>
@@ -785,9 +785,9 @@ message definition groups that are not inlined in the endpoint definition.</p>
 </code></pre>
 <h4 id="messages"><code>messages</code> <a class="anchor" href="#messages">🔗</a></h4>
 <p>Endpoints are supersets of
-<a href="../message/spec.md#message-definition-groups">message definition groups</a> and
+<a href="./../../message-v1/docs/spec.html#message-definition-groups">message definition groups</a> and
 MAY contain inlined messages. See
-<a href="../message/spec.md#message-definitions">Message Definitions</a>.</p>
+<a href="./../../message-v1/docs/spec.html#message-definitions">Message Definitions</a>.</p>
 <p>Example:</p>
 <pre><code class="language-yaml">{
   &quot;protocol&quot;: &quot;HTTP/1.1&quot;,
@@ -811,7 +811,7 @@ MAY contain inlined messages. See
   }
 }
 </code></pre>
-<p>When this specification, and the <a href="../message/spec.md">message specification</a>,
+<p>When this specification, and the <a href="./../../message-v1/docs/spec.html">message specification</a>,
 are used with specifications such as <a href="https://cloudevents.io">CloudEvents</a>,
 where a semantically unique identifier is used in a runtime message (e.g.
 CloudEvent's <code>type</code> attribute), it is STRONGLY RECOMMENDED that the
@@ -961,13 +961,13 @@ URI Template syntax.</li>
 <li>The value MUST be an integer between 0 and 2.</li>
 <li>When not specified, the default value MUST be 0.</li>
 <li>The value is overidden by the <code>qos</code> property of the
-<a href="../message/spec.md#mqtt311-and-mqtt50-protocols">MQTT message format</a>.</li>
+<a href="./../../message-v1/docs/spec.html#mqtt311-and-mqtt50-protocols">MQTT message format</a>.</li>
 </ul>
 </li>
 <li><code>retain</code>: If <code>true</code>, the MQTT <code>retain</code> flag is set on transfers.
 <ul>
 <li>When not specified, the default value is <code>false</code>.</li>
-<li>The value is overidden by the <code>retain</code> property of the <a href="../message/spec.md#mqtt311-and-mqtt50-protocols">MQTT
+<li>The value is overidden by the <code>retain</code> property of the <a href="./../../message-v1/docs/spec.html#mqtt311-and-mqtt50-protocols">MQTT
 message format</a>. This
 option only applies to <code>usage:producer</code> endpoints.</li>
 </ul>
@@ -990,11 +990,11 @@ the endpoint.
 <ul>
 <li>The value MUST be a non-empty XID.</li>
 <li>It MUST point to a valid
-<a href="../message/spec.md#message-definitions">´message´</a> that MUST either
-use the <a href="../message/spec.md#cloudevents10">&quot;CloudEvents/1.0&quot;</a> or
-<a href="../message/spec.md#mqtt311-and-mqtt50-protocols">&quot;MQTT/3.1.1.&quot; or
+<a href="./../../message-v1/docs/spec.html#message-definitions">´message´</a> that MUST either
+use the <a href="./../../message-v1/docs/spec.html#cloudevents10">&quot;CloudEvents/1.0&quot;</a> or
+<a href="./../../message-v1/docs/spec.html#mqtt311-and-mqtt50-protocols">&quot;MQTT/3.1.1.&quot; or
 &quot;MQTT/5.0&quot;</a>
-<a href="../message/spec.md#envelope"><code>envelope</code></a>.</li>
+<a href="./../../message-v1/docs/spec.html#envelope"><code>envelope</code></a>.</li>
 </ul>
 </li>
 </ul>

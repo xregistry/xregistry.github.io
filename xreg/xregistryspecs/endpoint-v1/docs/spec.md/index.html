@@ -3,7 +3,7 @@
 ## Abstract
 
 This specification defines an endpoint registry extension to the xRegistry
-document format and API [specification](../core/spec.md). An endpoint registry
+document format and API [specification](./../../core-v1/docs/spec.md). An endpoint registry
 allows for publishing and discovery of asynchronous event sources, sinks, and
 subscription points in the scope of a system, along with important
 configuration parameters.
@@ -98,20 +98,20 @@ enumerated and explained in [protocol options](#protocol-options).
 
 Each endpoint MAY also define an `envelope` selector which allows for defining
 particular `envelopeoptions` at the endpoint level. For CloudEvents, this
-permits definition the serialization mode (binary or structured) and the event
-format for structured mode.
+permits the definition of the serialization mode (binary or structured) and the
+event format for structured mode.
 
 ### Message Groups
 
 The Endpoint is an xRegistry group-level construct that is conceptually an
-extension of the [message definition group](../message/spec.md), meaning there
+extension of the [message definition group](./../../message-v1/docs/spec.md), meaning there
 are no “groups of endpoints”. An endpoint MAY contain directly embedded
 message definitions. In the simplest case, an endpoint MAY embed its message
 definitions locally which in turn MAY embed their data schema definitions
 locally, all in one compact construct.
 
 More commonly, Endpoints will reference one or more
-[message definition groups](../message/spec.md) that are defined externally in
+[message definition groups](./../../message-v1/docs/spec.md) that are defined externally in
 a message registry, and which have the advantage of being shareable across
 multiple Endpoints.
 
@@ -140,7 +140,7 @@ endpoint patterns as they are common for applications of the MQTT protocol.
 For instance, the [Eclipse Sparkplug](https://sparkplug.eclipse.org/) protocol
 is a convention that defines endpoint roles and messages and schemas for MQTT,
 and the
-[SparkPlugB](../cloudevents/samples/scenarios/mqtt-sparkplugB.xreg.json)
+[SparkPlugB](./../../cloudevents-v1/samples/mqtt-sparkplugB.xreg.json)
 example that illustrates how Registry Endpoints can model the convention in
 formal terms.
 
@@ -156,7 +156,7 @@ For clarity, OPTIONAL attributes (specification-defined and extensions) are
 OPTIONAL for clients to use, but the servers' responsibility will vary.
 Server-unknown extension attributes MUST be silently stored in the backing
 datastore. Specification-defined, and server-known extension, attributes MUST
-generate an error if corresponding feature is not supported or enabled.
+generate an error if the corresponding feature is not supported or enabled.
 However, as with all attributes, if accepting the attribute would result in a
 bad state (such as exceeding a size limit, or results in a security issue),
 then the server MAY choose to reject the request.
@@ -185,15 +185,15 @@ concrete network endpoints to which messages can be produced, from which
 messages can be consumed, or which makes messages available via subscription
 and delivery to a consumer-designated endpoint.
 
-As discussed in the [CloudEvents Registry overview](../cloudevents/spec.md),
+As discussed in the [CloudEvents Registry overview](./../../cloudevents-v1/docs/spec.md),
 endpoints are supersets of
-[message definition groups](../message/spec.md#message-definition-groups) and
+[message definition groups](./../../message-v1/docs/spec.md#message-definition-groups) and
 MAY contain inlined messages. Therefore, the Resources in the meta-model for
 the Endpoint Registry are likewise `messages` as defined in the
-[message catalog specification](../message/spec.md).
+[message catalog specification](./../../message-v1/docs/spec.md).
 
 The formal xRegistry extension model of the Endpoints Registry
-resides in the [model.json](model.json) file.
+resides in the [model.json](./model.json) file.
 
 For easy reference, the JSON serialization of an Endpoint Registry adheres to
 this form:
@@ -325,7 +325,7 @@ name (`<GROUP>`) is `endpoint`.
 
 The following attributes are defined for the `endpoint` object in addition
 to the xRegistry-defined core
-[attributes](../core/spec.md#attributes-and-extensions):
+[attributes](./../../core-v1/docs/spec.md#attributes-and-extensions):
 
 #### `usage`
 
@@ -673,9 +673,9 @@ Example:
 #### `messages`
 
 Endpoints are supersets of
-[message definition groups](../message/spec.md#message-definition-groups) and
+[message definition groups](./../../message-v1/docs/spec.md#message-definition-groups) and
 MAY contain inlined messages. See
-[Message Definitions](../message/spec.md#message-definitions).
+[Message Definitions](./../../message-v1/docs/spec.md#message-definitions).
 
 Example:
 
@@ -703,7 +703,7 @@ Example:
 }
 ```
 
-When this specification, and the [message specification](../message/spec.md),
+When this specification, and the [message specification](./../../message-v1/docs/spec.md),
 are used with specifications such as [CloudEvents](https://cloudevents.io),
 where a semantically unique identifier is used in a runtime message (e.g.
 CloudEvent's `type` attribute), it is STRONGLY RECOMMENDED that the
@@ -847,11 +847,11 @@ The following options are defined for MQTT endpoints.
   - The value MUST be an integer between 0 and 2.
   - When not specified, the default value MUST be 0.
   - The value is overidden by the `qos` property of the
-    [MQTT message format](../message/spec.md#mqtt311-and-mqtt50-protocols).
+    [MQTT message format](./../../message-v1/docs/spec.md#mqtt311-and-mqtt50-protocols).
 - `retain`: If `true`, the MQTT `retain` flag is set on transfers.
   - When not specified, the default value is `false`.
   - The value is overidden by the `retain` property of the [MQTT
-    message format](../message/spec.md#mqtt311-and-mqtt50-protocols). This
+    message format](./../../message-v1/docs/spec.md#mqtt311-and-mqtt50-protocols). This
     option only applies to `usage:producer` endpoints.
 - `cleansession`: If `true`, the MQTT `cleansession` flag is set on
   connections.
@@ -864,11 +864,11 @@ The following options are defined for MQTT endpoints.
   the endpoint.
   - The value MUST be a non-empty XID.
   - It MUST point to a valid
-  [´message´](../message/spec.md#message-definitions) that MUST either
-  use the ["CloudEvents/1.0"](../message/spec.md#cloudevents10) or
+  [´message´](./../../message-v1/docs/spec.md#message-definitions) that MUST either
+  use the ["CloudEvents/1.0"](./../../message-v1/docs/spec.md#cloudevents10) or
   ["MQTT/3.1.1." or
-  "MQTT/5.0"](../message/spec.md#mqtt311-and-mqtt50-protocols)
-  [`envelope`](../message/spec.md#envelope).
+  "MQTT/5.0"](./../../message-v1/docs/spec.md#mqtt311-and-mqtt50-protocols)
+  [`envelope`](./../../message-v1/docs/spec.md#envelope).
 
 Example:
 

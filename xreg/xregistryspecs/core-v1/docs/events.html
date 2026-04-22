@@ -1,0 +1,980 @@
+<html>
+<head>
+<style>
+  .anchor {
+    font-size: 12px ;
+    vertical-align: middle ;
+    text-decoration: none ;
+  }
+  body {
+    font-family: sans-serif ;
+    font-size: 16px ;
+    line-height: 1.5 ;
+    padding: 5% 10% 5% 10% ;
+  }
+  pre {
+    font-size: 80% ;
+    background-color: #f2f2f2 ;
+    padding: 12px ;
+  }
+  code {
+    font-size: 85% ;
+    background-color: #f2f2f2 ;
+    padding: .2em .4em ;
+  }
+  pre code {
+    font-size: inherit ;
+    background-color: inherit ;
+    padding: 0px ;
+  }
+  table {
+    border: 1px solid lightgray ;
+    border-collapse: collapse ;
+    border-spacing: 0px ;
+    line-height: 24px ;
+  }
+  tr:nth-child(even) {
+    background-color: #f2f2f2 ;
+  }
+  td,th {
+    border: 1px solid lightgray ;
+    padding: 5px ;
+  }
+  td code, th code {
+    font-size: inherit ;
+  }
+</style>
+</head>
+<h1 id="xregistry-events">xRegistry Events <a class="anchor" href="#xregistry-events">🔗</a></h1>
+<h2 id="abstract">Abstract <a class="anchor" href="#abstract">🔗</a></h2>
+<p>This specification defines the events that an xRegistry server MAY generate.</p>
+<h2 id="table-of-contents">Table of Contents <a class="anchor" href="#table-of-contents">🔗</a></h2>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#notations-and-terminology">Notations and Terminology</a>
+<ul>
+<li><a href="#notational-conventions">Notational Conventions</a></li>
+</ul>
+</li>
+<li><a href="#event-definition">Event Definition</a></li>
+<li><a href="#entity-events">Entity Events</a></li>
+<li><a href="#sample-xregistry-interactions">Sample xRegistry Interactions</a></li>
+</ul>
+<h2 id="overview">Overview <a class="anchor" href="#overview">🔗</a></h2>
+<p>As updates are made to entities within an xRegistry instance, events SHOULD
+be generated to notify interested parties of those changes. This specification
+defines the metadata associated with each event as
+[CloudEvent][https://cloudevents.io) context attributes. Whether CloudEvents
+are used in the generation/serialization of the events is OPTIONAL, but it is
+RECOMMENDED.</p>
+<p>This specification does not mandate the mechanisms by which events are sent
+to consumers, nor does it mandate how consumers register interest in receiving
+events.</p>
+<p>Below is a sample event serialized as a &quot;structured&quot; JSON CloudEvent due to a
+Group's <code>name</code> being changed:</p>
+<pre><code class="language-yaml">{
+  &quot;specversion&quot;: &quot;1.0&quot;,
+  &quot;type&quot;: &quot;io.xregistry.group.updated&quot;,
+  &quot;source&quot;: &quot;https://example.com&quot;,
+  &quot;subject&quot;: &quot;/dirs/d1&quot;,
+  &quot;id&quot;: &quot;A234-1234-1234&quot;,
+  &quot;time&quot;: &quot;2025-09-01T12:01:02Z&quot;,
+  &quot;xregcorrelationid&quot;: &quot;B9282-129301&quot;,
+  &quot;data&quot;: {
+    &quot;changed&quot;: [ &quot;epoch&quot;, &quot;modifiedat&quot;, &quot;name&quot; ]
+  }
+}
+</code></pre>
+<h2 id="notations-and-terminology">Notations and Terminology <a class="anchor" href="#notations-and-terminology">🔗</a></h2>
+<h3 id="notational-conventions">Notational Conventions <a class="anchor" href="#notational-conventions">🔗</a></h3>
+<p>The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;, &quot;SHOULD&quot;,
+&quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;, &quot;MAY&quot;, and &quot;OPTIONAL&quot; in this document are to be
+interpreted as described in <a href="https://tools.ietf.org/html/rfc2119">RFC 2119</a>.</p>
+<p>In the pseudo JSON format snippets <code>?</code> means the preceding item is OPTIONAL,
+<code>*</code> means the preceding item MAY appear zero or more times, and <code>+</code> means the
+preceding item MUST appear at least once. The presence of the <code>#</code> character
+means the remaining portion of the line is a comment. Whitespace characters in
+the JSON snippets are used for readability and are not normative.</p>
+<p>Use of <code>&lt;...&gt;</code> the notation indicates a substitutable value where that is
+meant to be replaced with a runtime situational-specific value as defined by
+the word/phase in the angled brackets. For example <code>&lt;NAME&gt;</code> might be expected
+to be replaced by the &quot;name&quot; of the item being discussed.</p>
+<h2 id="event-definition">Event Definition <a class="anchor" href="#event-definition">🔗</a></h2>
+<p>Notification of changes to the entities within an xRegistry instance SHOULD be
+exposed as events. These changes could be the result of an end-user interaction
+with the Registry, or due to some other (possibly internal) processing of
+the Registry data.</p>
+<p>A single interaction with the Registry MAY result in multiple events, however,
+within the scope of one interaction (see
+<a href="#xregcorrelationid-extension-context-attribute"><code>xregcorrelationid</code></a>) the
+following constraints apply:</p>
+<ul>
+<li>Only one of <code>created</code>, <code>updated</code> or <code>deleted</code> event MUST be generated per
+<code>subject</code>.</li>
+<li>If the interaction involved more than one of those actions, then the single
+event generated MUST be chosen in the following order of precedence:
+<code>deleted</code>, <code>created</code>, <code>updated</code>.</li>
+<li>Only one event with the same <code>type</code> and <code>subject</code> combination MUST be
+generated.</li>
+</ul>
+<p>The following sections specify the metadata defined for xRegistry events.
+Implementations MAY define additional metadata.</p>
+<h3 id="cloudevent-typehttpsgithubcomcloudeventsspecblobmaincloudeventsspecmdtype-core-context-attribute">CloudEvent <a href="https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md#type"><code>type</code></a> Core Context Attribute <a class="anchor" href="#cloudevent-typehttpsgithubcomcloudeventsspecblobmaincloudeventsspecmdtype-core-context-attribute">🔗</a></h3>
+<p>The type of action taken on the entity. The value MUST be of the form:
+<code>io.xregistry.&lt;ENTITY&gt;.&lt;ACTION&gt;</code>
+where:</p>
+<ul>
+<li>
+<p><code>&lt;ENTITY&gt;</code> is the type of xRegistry entity
+(<a href="#cloudevent-subject-core-context-attribute"><code>subject</code></a>) that was acted
+upon. It MUST be one of:</p>
+<ul>
+<li><code>registry</code></li>
+<li><code>model</code></li>
+<li><code>modelsource</code></li>
+<li><code>capabilities</code></li>
+<li><code>group</code></li>
+<li><code>resource</code></li>
+<li><code>version</code></li>
+</ul>
+</li>
+<li>
+<p><code>&lt;ACTION&gt;</code> is the operation performed on the entity. It MUST be one of:</p>
+<ul>
+<li><code>created</code></li>
+<li><code>updated</code></li>
+<li><code>deprecation</code></li>
+<li><code>deleted</code></li>
+</ul>
+<p>Not all <code>&lt;ACTION&gt;</code> values are applicable to all entities. See the
+<a href="#entity-events">Entity Events</a> section for more information.</p>
+</li>
+</ul>
+<p>This context attribute MUST be present in each event.</p>
+<h3 id="cloudevent-sourcehttpsgithubcomcloudeventsspecblobmaincloudeventsspecmdsource-1-core-context-attribute">CloudEvent <a href="https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md#source-1"><code>source</code></a> Core Context Attribute <a class="anchor" href="#cloudevent-sourcehttpsgithubcomcloudeventsspecblobmaincloudeventsspecmdsource-1-core-context-attribute">🔗</a></h3>
+<p>The xRegistry in which the entity exists. The value MUST be an absolute URL
+to the root of the xRegistry instance.</p>
+<p>This context attribute MUST be present in each event.</p>
+<h3 id="cloudevent-subjecthttpsgithubcomcloudeventsspecblobmaincloudeventsspecmdsubject-core-context-attribute">CloudEvent <a href="https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md#subject"><code>subject</code></a> Core Context Attribute <a class="anchor" href="#cloudevent-subjecthttpsgithubcomcloudeventsspecblobmaincloudeventsspecmdsubject-core-context-attribute">🔗</a></h3>
+<p>The <code>xid</code> of the entity acted upon. While this attribute is OPTIONAL in the
+CloudEvents specification, it is REQUIRED to be present in an xRegistry event.</p>
+<p>Note: constructing a URL by appending the <code>subject</code> value to the <code>source</code>
+value MUST result in an absolute URL to the entity (assuming any trailing <code>/</code>
+on <code>source</code> is removed since XIDs always start with <code>/</code>).</p>
+<p>This context attribute MUST be present in each event.</p>
+<h3 id="cloudevent-timehttpsgithubcomcloudeventsspecblobmaincloudeventsspecmdtime-core-context-attribute">CloudEvent <a href="https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md#time"><code>time</code></a> Core Context Attribute <a class="anchor" href="#cloudevent-timehttpsgithubcomcloudeventsspecblobmaincloudeventsspecmdtime-core-context-attribute">🔗</a></h3>
+<p>The time of when the interaction occurred. This value MUST be the same for
+all events generated within the same interaction.</p>
+<p>Its value MUST be an <a href="https://tools.ietf.org/html/rfc3339">RFC3339</a> timestamp
+normalized to UTC. Use of a <code>time-zone</code> notation is RECOMMENDED. The value
+used SHOULD match the current date/time used by the Registry during the
+processing of the interaction. Typically, this will be the <code>modifiedat</code> value
+assigned to the entities being processed.</p>
+<p>This context attribute is NOT REQUIRED to be present in the event, but is
+RECOMMENDED.</p>
+<h3 id="xregcorrelationid-extension-context-attribute"><code>xregcorrelationid</code> Extension Context Attribute <a class="anchor" href="#xregcorrelationid-extension-context-attribute">🔗</a></h3>
+<p>A value that uniquely identifies the interaction in which one or more events
+occurred. This value has the following constraints:</p>
+<ul>
+<li>MUST be a non-empty string.</li>
+<li>MUST be case-insensitively unique within the scope of the Registry instance,
+for the lifetime of the Registry.</li>
+<li>All events generated from the same interaction MUST have the same
+<code>xregcorrelationid</code> value. Conceptually, this can be thought of as the
+&quot;transaction ID&quot; of the interaction.</li>
+</ul>
+<p>When an interaction has a request-response message exchange pattern, and
+<code>xregcorrelationid</code> values are included in resulting events, then the response
+message for the interaction MUST include this value. In the case of an HTTP
+interaction, the following HTTP header MUST be present in the response flow:</p>
+<pre><code class="language-yaml">xRegistry-xregcorrelationid: &lt;STRING&gt;
+</code></pre>
+<p>This allows for clients to identify which events were generated as a result of
+each request-response operation.</p>
+<p>This context attribute is NOT REQUIRED to be present in the event, but is
+RECOMMENDED.</p>
+<h3 id="cloudevent-datahttpsgithubcomcloudeventsspecblobmaincloudeventsspecmdevent-data">CloudEvent <a href="https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md#event-data"><code>data</code></a> <a class="anchor" href="#cloudevent-datahttpsgithubcomcloudeventsspecblobmaincloudeventsspecmdevent-data">🔗</a></h3>
+<p>When present, and serialized in JSON, the <code>data</code> MUST be of the form:</p>
+<pre><code class="language-yaml">{
+  &quot;changed&quot;: [ &quot;&lt;STRING&gt;&quot;, * ] ?
+}
+</code></pre>
+<p>The <code>changed</code> attribute, when present, has the following constraints:</p>
+<ul>
+<li>
+<p>MUST be a list of the top-level attribute names (not values) that were
+added, modified, or deleted for the <code>subject</code> entity.</p>
+</li>
+<li>
+<p>In the case of changing a Resource's default Version pointer, the list MUST
+include all attributes from the previous default Version that have non-<code>null</code>
+values, and all attributes from the new default Version that have non-<code>null</code>
+values. Any duplicate attribute names MUST be removed.</p>
+</li>
+<li>
+<p>This attribute MUST NOT appear on the <code>created</code> or <code>deleted</code> events.</p>
+</li>
+<li>
+<p>This specification does not mandate any particular order to the attribute
+names in the array.</p>
+</li>
+</ul>
+<p>There are certain events where non-top-level attributes are included, and
+those will be noted in the <a href="#entity-events">Entity Events</a> sections below.
+When they do appear they MUST use the JSONPath dot (<code>.</code>) notation to express
+the traversal to the attribute of interest.</p>
+<p>If an entity is updated for multiple reasons during the processing of an
+interaction, per the rules previously stated, only one <code>updated</code> event
+will be generated. This means the attribute names of all impacted attributes
+MUST be merged into one <code>changed</code> list.</p>
+<p>While <code>changed</code> is OPTIONAL, it is RECOMMENDED to be present on event where
+it is permitted due to its usefulness for consumers. However, if exposure of
+this information would be inappropriate for some scenarios then it MAY be
+excluded. For example, for privacy/security reasons.</p>
+<p>While this specification only shows <code>data</code> being present when <code>changed</code> is
+permitted, implementations MAY define their own metadata to be included
+in the <code>data</code> of a CloudEvent.</p>
+<p>This metadata (<code>data</code>) is NOT REQUIRED to be present in the event, but is
+RECOMMENDED.</p>
+<h2 id="entity-events">Entity Events <a class="anchor" href="#entity-events">🔗</a></h2>
+<p>This section defines which <code>&lt;ACTION&gt;</code> values are applicable for each <code>&lt;ENTITY&gt;</code>
+value.</p>
+<h3 id="registry-events"><code>registry</code> Events <a class="anchor" href="#registry-events">🔗</a></h3>
+<ul>
+<li>Action: <code>updated</code>
+<ul>
+<li>
+<p>MUST be generated when a Registry's attribute is updated, where each
+modified attribute MUST be included in <code>changed</code>, if present.</p>
+</li>
+<li>
+<p>MUST be generated when a Group is created or deleted, where <code>changed</code>, if
+present, includes (at least) <code>epoch</code>, <code>modifiedat</code>, <code>&lt;GROUPS&gt;</code> and
+<code>&lt;GROUPS&gt;count</code> attributes names.</p>
+<p>While the <code>&lt;GROUPS&gt;</code> attribute is present in <code>changed</code> due to the child
+collection changing, in order to see which specific Groups were impacted
+the <code>io.xregistry.group.created</code> and <code>io.xregistry.group.deleted</code> events
+would need to be examined.</p>
+</li>
+<li>
+<p>MUST be generated when <code>model</code>, <code>modelsource</code> or <code>capabilities</code> are
+updated and the appropriate attribute MUST appear in <code>changed</code>, if present.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>The <code>io.xregistry.registry.created</code> and <code>io.xregistry.registry.updated</code> events
+are not defined as part of this specification as those operations are not
+defined in the xRegistry specification. It is expected that the tooling that
+performs those operations will define those events, if needed.</p>
+<h3 id="model-events"><code>model</code> Events <a class="anchor" href="#model-events">🔗</a></h3>
+<ul>
+<li>Action: <code>updated</code>
+<ul>
+<li>
+<p>MUST be generated when the Registry's model is updated. This might occur
+due to a user action (e.g. updating <code>modelsource</code>) or an internal (system)
+action.</p>
+</li>
+<li>
+<p>MUST NOT include a <code>changed</code> list.</p>
+</li>
+<li>
+<p>A <code>io.xregistry.registry.updated</code> event will also be generated where the
+<code>model</code> attribute will be included in <code>changed</code>, if present.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>Often <code>io.xregistry.model.updated</code> and <code>io.xregistry.modelsource.updated</code>
+will be generated at the same time since model updates are most likely done
+by changing the <code>modelsource</code> attribute. However, since the <code>model</code> might
+change for other reasons, users who are interested in all <code>model</code> changes need
+to watch for <code>io.xregistry.model.update</code> events, not
+<code>io.xregistry.modelsource.updated</code> events.</p>
+<h3 id="modelsource-events"><code>modelsource</code> Events <a class="anchor" href="#modelsource-events">🔗</a></h3>
+<ul>
+<li>Action: <code>updated</code>
+<ul>
+<li>
+<p>MUST be generated when the Registry's <code>modelsource</code> attribute is updated.</p>
+</li>
+<li>
+<p>MUST NOT include a <code>changed</code> list.</p>
+</li>
+<li>
+<p>A <code>io.xregistry.registry.updated</code> event will also be generated where the
+<code>modelsource</code> attribute will be included in <code>changed</code>, if present.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>Often <code>io.xregistry.model.updated</code> and <code>io.xregistry.modelsource.updated</code>
+will be generated at the same time since model updates are most likely done
+by changing the <code>modelsource</code> attribute. However, since the <code>model</code> might
+change for other reasons, users who are only interested in changes related
+to user modifications of the model need to watch for
+<code>io.xregistry.modelsource.update</code> events, not <code>io.xregistry.model.updated</code>
+events.</p>
+<h3 id="capabilities-events"><code>capabilities</code> Events <a class="anchor" href="#capabilities-events">🔗</a></h3>
+<ul>
+<li>Action: <code>updated</code>
+<ul>
+<li>
+<p>MUST be generated when a Registry's capabilities are updated, where
+the top-level capability names are included in <code>changed</code>, if present.</p>
+</li>
+<li>
+<p>A <code>io.xregistry.registry.updated</code> event will also be generated where the
+<code>capabilities</code> attribute will be included in <code>changed</code>, if present.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="group-events"><code>group</code> Events <a class="anchor" href="#group-events">🔗</a></h3>
+<ul>
+<li>
+<p>Action: <code>created</code></p>
+<ul>
+<li>
+<p>MUST be generated when a new Group is created.</p>
+</li>
+<li>
+<p>A <code>io.xregistry.registry.updated</code> event will also be generated where the
+<code>&lt;GROUPS&gt;</code> and <code>&lt;GROUPS&gt;count</code> attributes will be included in <code>changed</code>,
+if present.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Action: <code>updated</code></p>
+<ul>
+<li>
+<p>MUST be generated when a Group's attribute is updated, where each modified
+attribute MUST be included in <code>changed</code>, if present.</p>
+</li>
+<li>
+<p>MUST be generated when a Resource is created or deleted, where <code>changed</code>,
+if present, includes (at least) <code>epoch</code>, <code>modifiedat</code>, <code>&lt;RESOURCES&gt;</code> and
+<code>&lt;RESOURCES&gt;count</code> attributes names.</p>
+<p>While the <code>&lt;RESOURCES&gt;</code> attribute is present due to the child
+collection changing, in order to see which specific Resources were impacted
+the <code>io.xregistry.resource.created</code> and <code>io.xregistry.resource.deleted</code>
+events would need to be examined.</p>
+<p>This includes any updates to the <code>deprecated</code> sub-object, even
+though a <code>io.xregistry.group.deprecation</code> event is also generated. And
+in that situation just <code>deprecated</code> would be included in <code>changed</code>,
+if present. To see which specific top-level <code>deprecated</code> attributes were
+changed, the <code>io.xregistry.group.deprecation</code> event would need to be
+examined.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Action: <code>deprecation</code></p>
+<ul>
+<li>
+<p>MUST be generated when a Group's <code>deprecated</code> sub-object is set,
+deleted or any of its attributes updated, where &quot;changed&quot;, if present,
+includes the list of top-level attribute names from the <code>deprecated</code>
+sub-object that were modified.</p>
+</li>
+<li>
+<p>A <code>io.xregistry.group.updated</code> event will also be generated where the
+<code>deprecated</code> attribute will be included in <code>changed</code>, if present.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Action: <code>deleted</code></p>
+<ul>
+<li>
+<p>MUST be generated when a Group is deleted.</p>
+</li>
+<li>
+<p>A <code>io.xregistry.registry.updated</code> event will also be generated where the
+<code>&lt;GROUPS&gt;</code> and <code>&lt;GROUPS&gt;count</code> attributes will be included in <code>changed</code>, if
+present.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="resource-events"><code>resource</code> Events <a class="anchor" href="#resource-events">🔗</a></h3>
+<ul>
+<li>
+<p>Action: <code>created</code></p>
+<ul>
+<li>
+<p>MUST be generated when a new Resource is created, where each modified
+attribute MUST be included in <code>changed</code>, if present.</p>
+</li>
+<li>
+<p>At least one <code>io.xregistry.version.created</code> event will also be
+generated since at least one Version will also be created.</p>
+</li>
+<li>
+<p>A <code>io.xregistry.registry.updated</code> event will also be generated where the
+<code>&lt;RESOURCES&gt;</code> and <code>&lt;RESOURCES&gt;count</code> attributes will be included in
+<code>changed</code>, if present.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Action: <code>updated</code></p>
+<ul>
+<li>
+<p>MUST be generated when a Resource's (default Version) attribute is updated,
+where each modified attribute MUST be included in <code>changed</code>, if present.</p>
+</li>
+<li>
+<p>MUST be generated when a Resource's <code>meta</code> attribute is updated, where
+<code>changed</code>, if present, includes (at least) the changed top-level <code>meta</code>
+attributes names prefixed with <code>meta.</code>. For example,
+<code>meta.defaultversionid</code>.</p>
+<p>This includes any updates to the <code>deprecated</code> sub-object, even
+though a <code>io.xregistry.resource.deprecation</code> event is also generated. And
+in that situation just <code>meta.deprecated</code> would be included in <code>changed</code>,
+if present. To see which specific top-level <code>deprecated</code> attributes were
+changed, the <code>io.xregistry.resource.deprecation</code> event would need to be
+examined.</p>
+</li>
+<li>
+<p>MUST be generated when a Version is created or deleted, where <code>changed</code>,
+if present, includes (at least) <code>meta.epoch</code>, <code>meta.modifiedat</code>,
+<code>versions</code> and <code>versionscount</code> attributes names.</p>
+<p>While the <code>version</code> attribute is present due to the child
+collection changing, in order to see which specific Versions were impacted
+the <code>io.xregistry.version.created</code> and <code>io.xregistry.version.deleted</code>
+events would need to be examined.</p>
+</li>
+<li>
+<p>Updating a Resource's <code>meta.defaultversionid</code> attribute will
+generate a <code>io.xregistry.resource.updated</code> event but it MUST NOT generate
+a <code>io.xregistry.version.updated</code> event for either the prior or new default
+Version.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Action: <code>deprecation</code></p>
+<ul>
+<li>
+<p>MUST be generated when a Resource's <code>meta.deprecated</code> sub-object is set,
+deleted or any of its attributes updated, where &quot;changed&quot;, if present,
+includes the list of top-level attribute names from the <code>deprecated</code>
+sub-object that were modified.</p>
+</li>
+<li>
+<p>A <code>io.xregistry.resource.updated</code> event will also be generated where the
+<code>deprecated</code> attribute will be included in <code>changed</code>, if present.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Action: <code>deleted</code></p>
+<ul>
+<li>
+<p>MUST be generated when a Resource is deleted.</p>
+</li>
+<li>
+<p>A <code>io.xregistry.version.deleted</code> event will also be generated for
+each Version.</p>
+</li>
+<li>
+<p>A <code>io.xregistry.registry.updated</code> event will also be generated where the
+<code>&lt;RESOURCES&gt;</code> and <code>&lt;RESOURCES&gt;count</code> attributes will be included in
+<code>changed</code>, if present.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="version-events"><code>version</code> Events <a class="anchor" href="#version-events">🔗</a></h3>
+<ul>
+<li>
+<p>Action: <code>created</code></p>
+<ul>
+<li>
+<p>MUST be generated when a new Version is created.</p>
+</li>
+<li>
+<p>A <code>io.xregistry.resource.updated</code> event will also be generated where the
+<code>versions</code> and <code>versionscount</code> attributes will be included in <code>changed</code>, if
+present.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Action: <code>updated</code></p>
+<ul>
+<li>MUST be generated when a Version attribute is updated, where each modified
+attribute MUST be included in <code>changed</code>, if present.</li>
+</ul>
+</li>
+<li>
+<p>Action: <code>deleted</code></p>
+<ul>
+<li>
+<p>MUST be generated when a Version is deleted.</p>
+</li>
+<li>
+<p>A <code>io.xregistry.resource.updated</code> event will also be generated where the
+<code>versions</code> and <code>versionscount</code> attributes will be included in <code>changed</code>, if
+present.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="sample-xregistry-interactions">Sample xRegistry Interactions <a class="anchor" href="#sample-xregistry-interactions">🔗</a></h2>
+<p>In these examples, unless otherwise stated, assume that the Registry has
+the following model definition:</p>
+<pre><code class="language-yaml">{
+  &quot;groups&quot;: {
+    &quot;dirs&quot;: {
+      &quot;singular&quot;: &quot;dir&quot;,
+      &quot;resources&quot;: {
+        &quot;files&quot;: {
+          &quot;singular&quot;: &quot;file&quot;
+        }
+      }
+    }
+  }
+}
+</code></pre>
+<h3 id="update-a-registry-attribute">Update a Registry attribute <a class="anchor" href="#update-a-registry-attribute">🔗</a></h3>
+<ul>
+<li>Interaction:
+<ul>
+<li><code>PATCH /</code></li>
+<li>Body: <code>{ &quot;name&quot;: &quot;foo&quot; }</code></li>
+</ul>
+</li>
+<li>Events:
+<ul>
+<li><code>io.xregistry.registry.updated</code>
+<ul>
+<li>Subject: <code>/</code></li>
+<li>Changed: <code>epoch</code>, <code>modifiedat</code>, <code>name</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="create-a-tree-of-entities">Create a tree of entities <a class="anchor" href="#create-a-tree-of-entities">🔗</a></h3>
+<ul>
+<li>Empty Registry</li>
+<li>Interaction:
+<ul>
+<li><code>PUT /dirs/d1/files/f1/versions/v1</code></li>
+<li>Body: <code>{}</code></li>
+</ul>
+</li>
+<li>Events:
+<ul>
+<li><code>io.xregistry.registry.updated</code>
+<ul>
+<li>Subject: <code>/</code></li>
+<li>Changed: <code>epoch</code>, <code>modifiedat</code>, <code>dirs</code>, <code>dirscount</code></li>
+</ul>
+</li>
+<li><code>io.xregistry.group.created</code>
+<ul>
+<li>Subject: <code>/dirs/d1</code></li>
+</ul>
+</li>
+<li><code>io.xregistry.resource.created</code>
+<ul>
+<li>Subject: <code>/dirs/d1/files/f1</code></li>
+</ul>
+</li>
+<li><code>io.xregistry.version.created</code>
+<ul>
+<li>Subject: <code>/dirs/d1/files/f1/versions/v1</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="update-a-resource-attribute-a-default-version-attribute">Update a Resource attribute (a default Version attribute) <a class="anchor" href="#update-a-resource-attribute-a-default-version-attribute">🔗</a></h3>
+<ul>
+<li>Current default Version is <code>v1</code></li>
+<li>Interaction:
+<ul>
+<li><code>PATCH /dirs/d1/files/f1</code></li>
+<li>Body: <code>{ &quot;name&quot;: &quot;foo&quot; }</code></li>
+</ul>
+</li>
+<li>Events:
+<ul>
+<li><code>io.xregistry.resource.updated</code>
+<ul>
+<li>Subject: <code>/dirs/d1/files/f1</code></li>
+<li>Changed: <code>epoch</code>, <code>modifiedat</code>, <code>name</code></li>
+</ul>
+</li>
+<li><code>io.xregistry.version.updated</code>
+<ul>
+<li>Subject: <code>/dirs/d1/files/f1/version/v1</code></li>
+<li>Changed: <code>epoch</code>, <code>modifiedat</code>, <code>name</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="update-a-resources-meta-sub-object">Update a Resource's meta sub-object <a class="anchor" href="#update-a-resources-meta-sub-object">🔗</a></h3>
+<ul>
+<li>Interaction:
+<ul>
+<li><code>PATCH /dirs/d1/files/f1/meta</code></li>
+<li>Body: <code>{ &quot;compatibilityauthority&quot;: &quot;server&quot; }</code></li>
+</ul>
+</li>
+<li>Events:
+<ul>
+<li><code>io.xregistry.resource.updated</code>
+<ul>
+<li>Subject: <code>/dirs/d1/files/f1</code></li>
+<li>Changed: <code>meta.epoch</code>, <code>meta.modifiedat</code>, <code>meta.compatibilityauthority</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="update-a-resources-meta-sub-object-and-deprecate-the-resource">Update a Resource's meta sub-object and deprecate the Resource <a class="anchor" href="#update-a-resources-meta-sub-object-and-deprecate-the-resource">🔗</a></h3>
+<ul>
+<li>Interaction:
+<ul>
+<li><code>PATCH /dirs/d1/files/f1/meta</code></li>
+<li>Body: <code>{ &quot;compatibilityauthority&quot;: &quot;server&quot;, &quot;deprecated&quot;: {...} }</code></li>
+</ul>
+</li>
+<li>Events:
+<ul>
+<li><code>io.xregistry.resource.updated</code>
+<ul>
+<li>Subject: <code>/dirs/d1/files/f1</code></li>
+<li>Changed: <code>meta.epoch</code>, <code>meta.modifiedat</code>, <code>meta.compatibilityauthority</code>,
+<code>meta.deprecated</code></li>
+</ul>
+</li>
+<li><code>io.xregistry.resource.deprecation</code>
+<ul>
+<li>Subject: <code>/dirs/d1/files/f1</code></li>
+<li>Changed: <code>&lt;DEPRECATED-ATTRIBUTES-CHANGED-IF-ANY&gt;</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="import-an-entire-registry">Import an entire Registry <a class="anchor" href="#import-an-entire-registry">🔗</a></h3>
+<ul>
+<li>Empty Registry</li>
+<li>Interaction:
+<ul>
+<li><code>PUT /</code></li>
+<li>Body: Registry attributes, <code>modelsource</code>, <code>capabilities</code>, Groups,
+Resources, Versions</li>
+</ul>
+</li>
+<li>Events:
+<ul>
+<li><code>io.xregistry.registry.updated</code>
+<ul>
+<li>Subject: <code>/</code></li>
+<li>Changed: <code>epoch</code>, <code>modifiedat</code>, <code>model</code>, <code>modelsource</code>, <code>capabilities</code>,
+<code>&lt;GROUPS&gt;</code>, <code>&lt;GROUPS&gt;count</code>, <code>&lt;OTHER-REGISTRY-ATTRIBUTES&gt;</code></li>
+</ul>
+</li>
+<li><code>io.xregistry.model.updated</code>
+<ul>
+<li>Subject: <code>/model</code></li>
+</ul>
+</li>
+<li><code>io.xregistry.modelsource.updated</code>
+<ul>
+<li>Subject: <code>/modelsource</code></li>
+</ul>
+</li>
+<li><code>io.xregistry.capabilities.updated</code>
+<ul>
+<li>Subject: <code>/capabilities</code></li>
+</ul>
+</li>
+<li><code>io.xregistry.group.created</code> for each new Group
+<ul>
+<li>Subject: <code>/dirs/d1</code></li>
+</ul>
+</li>
+<li><code>io.xregistry.resource.created</code> for each new Resource
+<ul>
+<li>Subject: <code>/dirs/d1/files/f1</code></li>
+</ul>
+</li>
+<li><code>io.xregistry.version.created</code> for each new Version
+<ul>
+<li>Subject: <code>/dirs/d1/files/f1/versions/v1</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="create-a-new-version---non-sticky">Create a new Version - non-sticky <a class="anchor" href="#create-a-new-version---non-sticky">🔗</a></h3>
+<ul>
+<li>Current default Version (v1) is not &quot;sticky&quot;</li>
+<li>Interaction:
+<ul>
+<li><code>PUT /dirs/d1/files/f1/versions/v2</code></li>
+<li>Body: <code>{}</code></li>
+</ul>
+</li>
+<li>Events:
+<ul>
+<li><code>io.xregistry.resource.updated</code>
+<ul>
+<li>Subject: <code>/dirs/d1/files/f1</code></li>
+<li>Changed: <code>meta.defaultversionid</code>, <code>meta.epoch</code>, <code>meta.modifiedat</code>,
+<code>versions</code>, <code>versionscount</code>,
+<code>&lt;ALL-OLD-AND-NEW-DEFAULT-VERSION-ATTRIBUTES&gt;</code>,</li>
+</ul>
+</li>
+<li><code>io.xregistry.version.created</code>
+<ul>
+<li>Subject: <code>/dirs/d1/files/f1/versions/v2</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="create-a-new-version---sticky">Create a new Version - sticky <a class="anchor" href="#create-a-new-version---sticky">🔗</a></h3>
+<ul>
+<li>Current default Version (v1) is &quot;sticky&quot;</li>
+<li>Interaction:
+<ul>
+<li><code>PUT /dirs/d1/files/f1/versions/v2</code></li>
+<li>Body: <code>{}</code></li>
+</ul>
+</li>
+<li>Events:
+<ul>
+<li><code>io.xregistry.resource.updated</code>
+<ul>
+<li>Subject: <code>/dirs/d1/files/f1</code></li>
+<li>Changed: <code>meta.epoch</code>, <code>meta.modifiedat</code>, <code>versions</code>, <code>versionscount</code></li>
+</ul>
+</li>
+<li><code>io.xregistry.version.created</code>
+<ul>
+<li>Subject: <code>/dirs/d1/files/f1/versions/v2</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="change-defaultversionid-pointer">Change <code>defaultversionid</code> pointer <a class="anchor" href="#change-defaultversionid-pointer">🔗</a></h3>
+<ul>
+<li>
+<p>Current default Version is <code>v1</code></p>
+</li>
+<li>
+<p>Interaction:</p>
+<ul>
+<li><code>PATCH /dirs/d1/files/f1/meta</code></li>
+<li>Body: <code>{ &quot;defaultversionid&quot;: &quot;v2&quot; }</code></li>
+</ul>
+</li>
+<li>
+<p>Events:</p>
+<ul>
+<li><code>io.xregistry.resource.updated</code>
+<ul>
+<li>Subject: <code>/dirs/d1/files/f1</code></li>
+<li>Changed: <code>meta.defaultversionid</code>, <code>meta.epoch</code>, <code>meta.modifiedat</code>,
+<code>&lt;ALL-OLD-AND-NEW-DEFAULT-VERSION-ATTRIBUTES&gt;</code></li>
+</ul>
+</li>
+</ul>
+<p>Note the no <code>io.xregistry.version.updated</code> event is generated.</p>
+</li>
+</ul>
+<h3 id="update-a-version-attribute-the-default-version">Update a Version attribute (the default Version) <a class="anchor" href="#update-a-version-attribute-the-default-version">🔗</a></h3>
+<ul>
+<li>Current default Version is <code>v1</code></li>
+<li>Interaction:
+<ul>
+<li><code>PATCH /dirs/d1/files/f1/versions/v1</code></li>
+<li>Body: <code>{ &quot;name&quot;: &quot;foo&quot; }</code></li>
+</ul>
+</li>
+<li>Events:
+<ul>
+<li><code>io.xregistry.resource.updated</code>
+<ul>
+<li>Subject: <code>/dirs/d1/files/f1</code></li>
+<li>Changed: <code>epoch</code>, <code>modifiedat</code>, <code>name</code></li>
+</ul>
+</li>
+<li><code>io.xregistry.version.updated</code>
+<ul>
+<li>Subject: <code>/dirs/d1/files/f1/version/v1</code></li>
+<li>Changed: <code>epoch</code>, <code>modifiedat</code>, <code>name</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="update-a-version-attribute-not-the-default-version">Update a Version attribute (not the default Version) <a class="anchor" href="#update-a-version-attribute-not-the-default-version">🔗</a></h3>
+<ul>
+<li>Current default Version is <code>v1</code></li>
+<li>Interaction:
+<ul>
+<li><code>PATCH /dirs/d1/files/f1/versions/v2</code></li>
+<li>Body: <code>{ &quot;name&quot;: &quot;foo&quot; }</code></li>
+</ul>
+</li>
+<li>Events:
+<ul>
+<li><code>io.xregistry.version.updated</code>
+<ul>
+<li>Subject: <code>/dirs/d1/files/f1/version/v2</code></li>
+<li>Changed: <code>epoch</code>, <code>modifiedat</code>, <code>name</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="create-a-new-version---not-sticky">Create a new Version - not sticky <a class="anchor" href="#create-a-new-version---not-sticky">🔗</a></h3>
+<ul>
+<li>Current default Version is <code>v1</code></li>
+<li>Interaction:
+<ul>
+<li><code>POST /dirs/d1/files/f1</code></li>
+<li>Body: <code>{}</code></li>
+</ul>
+</li>
+<li>Events:
+<ul>
+<li><code>io.xregistry.resource.updated</code>
+<ul>
+<li>Subject: <code>/dirs/d1/files/f1</code></li>
+<li>Changed: <code>meta.defaultversionid</code>, <code>meta.epoch</code>, <code>meta.modifiedat</code>,
+<code>versions</code>, <code>versionscount</code>,
+<code>&lt;ALL-OLD-AND-NEW-DEFAULT-VERSION-ATTRIBUTES&gt;</code>,</li>
+</ul>
+</li>
+<li><code>io.xregistry.version.created</code>
+<ul>
+<li>Subject: <code>/dirs/d1/files/f1/version/v2</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="create-a-new-version---sticky-1">Create a new Version - sticky <a class="anchor" href="#create-a-new-version---sticky-1">🔗</a></h3>
+<ul>
+<li>Current default Version is <code>v1</code></li>
+<li>Interaction:
+<ul>
+<li><code>POST /dirs/d1/files/f1</code></li>
+<li>Body: <code>{}</code></li>
+</ul>
+</li>
+<li>Events:
+<ul>
+<li><code>io.xregistry.resource.updated</code>
+<ul>
+<li>Subject: <code>/dirs/d1/files/f1</code></li>
+<li>Changed: <code>meta.epoch</code>, <code>meta.modifiedat</code>, <code>versions</code>, <code>versionscount</code></li>
+</ul>
+</li>
+<li><code>io.xregistry.version.created</code>
+<ul>
+<li>Subject: <code>/dirs/d1/files/f1/version/v2</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="delete-a-group">Delete a Group <a class="anchor" href="#delete-a-group">🔗</a></h3>
+<ul>
+<li>Interaction:
+<ul>
+<li><code>DELETE /dirs/d1</code></li>
+</ul>
+</li>
+<li>Events:
+<ul>
+<li><code>io.xregistry.registry.updated</code>
+<ul>
+<li>Subject: <code>/</code></li>
+<li>Changed: <code>dirs</code>, <code>dirscount</code>, <code>epoch</code>, <code>modifiedat</code></li>
+</ul>
+</li>
+<li><code>io.xregistry.group.deleted</code>
+<ul>
+<li>Subject: <code>/dirs/d1</code></li>
+</ul>
+</li>
+<li><code>io.xregistry.resource.deleted</code> for each deleted Resource
+<ul>
+<li>Subject: <code>/dirs/d1/files/f1</code></li>
+</ul>
+</li>
+<li><code>io.xregistry.version.deleted</code> for each deleted Version
+<ul>
+<li>Subject: <code>/dirs/d1/files/f1/versions/v1</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="creating-a-group-with-complete-client-http-message-exchange">Creating a Group with complete client HTTP message exchange <a class="anchor" href="#creating-a-group-with-complete-client-http-message-exchange">🔗</a></h3>
+<p>Client Request:</p>
+<pre><code class="language-yaml">PUT /dirs/d1
+Host: example.com
+Content-Type: application/json
+
+{}
+</code></pre>
+<p>xRegistry Response:</p>
+<pre><code class="language-yaml">HTTP/1.1 200 OK
+Content-Type: application/json
+Date: Wed, 02 Jul 2025 12:00:01 GMT
+xRegistry-xregcorrelationid: B9282-129301
+
+{
+  &quot;dirid&quot;: &quot;d1&quot;,
+  &quot;self&quot;: &quot;http://example.com/dirs/d1&quot;,
+  &quot;xid&quot;: &quot;/dirs/d1&quot;,
+  &quot;epoch&quot;: 1,
+  &quot;createdat&quot;: &quot;2025-07-02T12:00:01Z&quot;,
+  &quot;modifiedat&quot;: &quot;2025-07-02T12:00:01Z&quot;,
+
+  &quot;filesurl&quot;: &quot;http://example.com/dirs/d1/files&quot;,
+  &quot;filescount&quot;: 0
+}
+</code></pre>
+<p>Events Generated:</p>
+<pre><code class="language-yaml">{
+  &quot;specversion&quot;: &quot;1.0&quot;,
+  &quot;type&quot;: &quot;io.xregistry.registry.updated&quot;,
+  &quot;source&quot;: &quot;https://example.com&quot;,
+  &quot;subject&quot;: &quot;/&quot;,
+  &quot;id&quot;: &quot;A234-1234-1234&quot;,
+  &quot;time&quot;: &quot;2025-07-02T12:00:01Z&quot;,
+  &quot;xregcorrelationid&quot;: &quot;B9282-129301&quot;,
+  &quot;data&quot;: {
+    &quot;changed&quot;: [ &quot;dirs&quot;, &quot;dirscount&quot;, &quot;epoch&quot;, &quot;modifiedat&quot; ]
+  }
+}
+</code></pre>
+<pre><code class="language-yaml">{
+  &quot;specversion&quot;: &quot;1.0&quot;,
+  &quot;type&quot;: &quot;io.xregistry.group.created&quot;,
+  &quot;source&quot;: &quot;https://example.com&quot;,
+  &quot;subject&quot;: &quot;/dirs/d1&quot;,
+  &quot;id&quot;: &quot;A432-4321-4321&quot;,
+  &quot;time&quot;: &quot;2025-07-02T12:00:01Z&quot;,
+  &quot;xregcorrelationid&quot;: &quot;B9282-129301&quot;
+}
+</code></pre>
+
+</html>

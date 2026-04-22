@@ -1,12 +1,12 @@
 content-disposition:inkjet-proto3.xreg.json
-content-location:https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/inkjet-proto3.xreg.json/versions/v1.0-rc1
+content-location:http://ubuntu:7070/xregistryspecs/cloudevents-v1/samples/inkjet-proto3.xreg.json/versions/v1.0-rc1
 content-type:text/plain; charset=utf-8
 xregistry-ancestor:v1.0-rc1
-xregistry-createdat:2025-10-17T19:19:43.888789625Z
+xregistry-createdat:2026-04-22T17:24:30.652466949Z
 xregistry-epoch:1
 xregistry-isdefault:true
-xregistry-modifiedat:2025-10-17T19:19:43.888789625Z
+xregistry-modifiedat:2026-04-22T17:24:30.652466949Z
 xregistry-sampleid:inkjet-proto3.xreg.json
-xregistry-self:https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/inkjet-proto3.xreg.json/versions/v1.0-rc1
+xregistry-self:http://ubuntu:7070/xregistryspecs/cloudevents-v1/samples/inkjet-proto3.xreg.json/versions/v1.0-rc1
 xregistry-versionid:v1.0-rc1
 xregistry-xid:/xregistryspecs/cloudevents-v1/samples/inkjet-proto3.xreg.json/versions/v1.0-rc1

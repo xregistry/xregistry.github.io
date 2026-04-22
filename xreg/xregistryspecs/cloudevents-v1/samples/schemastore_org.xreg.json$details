@@ -1,14 +1,14 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2025-10-17T19:19:44.367131754Z",
+  "createdat": "2026-04-22T17:24:31.681402476Z",
   "epoch": 1,
   "isdefault": true,
-  "metaurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/schemastore_org.xreg.json/meta",
-  "modifiedat": "2025-10-17T19:19:44.367131754Z",
+  "metaurl": "http://ubuntu:7070/xregistryspecs/cloudevents-v1/samples/schemastore_org.xreg.json/meta",
+  "modifiedat": "2026-04-22T17:24:31.681402476Z",
   "sampleid": "schemastore_org.xreg.json",
-  "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/schemastore_org.xreg.json",
+  "self": "http://ubuntu:7070/xregistryspecs/cloudevents-v1/samples/schemastore_org.xreg.json",
   "versionid": "v1.0-rc1",
   "versionscount": 1,
-  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/schemastore_org.xreg.json/versions",
+  "versionsurl": "http://ubuntu:7070/xregistryspecs/cloudevents-v1/samples/schemastore_org.xreg.json/versions",
   "xid": "/xregistryspecs/cloudevents-v1/samples/schemastore_org.xreg.json"
 }

@@ -2867,6 +2867,15 @@
             "default": [],
             "description": "List of supported flags (query parameters)."
           },
+          "ignore": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "An ignore flag value. Values are case insensitive and may include extension values."
+            },
+            "default": [],
+            "description": "List of supported ignore flag values."
+          },
           "mutable": {
             "type": "array",
             "items": {
@@ -3083,6 +3092,14 @@
             "type": "integer",
             "minimum": 0,
             "description": "The epoch value for the meta sub-object."
+          },
+          "labels": {
+            "type": "object",
+            "description": "A map of label key/value pairs.",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "nullable": true
           },
           "createdat": {
             "type": "string",
@@ -3801,13 +3818,17 @@
             "description": "The schema format applicable to the message payload, equivalent to the 'format' attribute of the schema registry"
           },
           "dataschema": {
-            "type": "object",
             "description": "The inline schema for the message payload, equivalent to the 'schema' attribute of the schema registry"
           },
           "dataschemauri": {
             "type": "string",
             "format": "uri",
             "description": "The URI of the schema for the message payload, equivalent to the 'schemauri' attribute of the schema registry"
+          },
+          "dataschemaxid": {
+            "type": "string",
+            "format": "uri",
+            "description": "Contains the xid of the xRegistry schema Resource entity associated with the dataschemauri referenced schema document. Note that this means the entity MUST be located within the same Registry."
           },
           "datacontenttype": {
             "type": "string",
@@ -3942,7 +3963,12 @@
             "type": "array",
             "description": "Client's expected usage of this endpoint",
             "items": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "subscriber",
+                "consumer",
+                "producer"
+              ]
             }
           },
           "channel": {

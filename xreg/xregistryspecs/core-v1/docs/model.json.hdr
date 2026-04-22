@@ -1,16 +1,16 @@
 content-disposition:model.json
-content-length:1623
-content-location:https://xregistry.io/xreg/xregistryspecs/core-v1/docs/model.json/versions/v1.0-rc1
+content-length:1648
+content-location:http://ubuntu:7070/xregistryspecs/core-v1/docs/model.json/versions/v1.0-rc1
 content-type:text/plain; charset=utf-8
 xregistry-ancestor:v1.0-rc1
-xregistry-createdat:2025-10-17T19:19:44.440685535Z
+xregistry-createdat:2026-04-22T17:24:31.766497719Z
 xregistry-docid:model.json
 xregistry-epoch:1
 xregistry-isdefault:true
-xregistry-metaurl:https://xregistry.io/xreg/xregistryspecs/core-v1/docs/model.json/meta
-xregistry-modifiedat:2025-10-17T19:19:44.440685535Z
-xregistry-self:https://xregistry.io/xreg/xregistryspecs/core-v1/docs/model.json
+xregistry-metaurl:http://ubuntu:7070/xregistryspecs/core-v1/docs/model.json/meta
+xregistry-modifiedat:2026-04-22T17:24:31.766497719Z
+xregistry-self:http://ubuntu:7070/xregistryspecs/core-v1/docs/model.json
 xregistry-versionid:v1.0-rc1
 xregistry-versionscount:1
-xregistry-versionsurl:https://xregistry.io/xreg/xregistryspecs/core-v1/docs/model.json/versions
+xregistry-versionsurl:http://ubuntu:7070/xregistryspecs/core-v1/docs/model.json/versions
 xregistry-xid:/xregistryspecs/core-v1/docs/model.json

@@ -1,15 +1,15 @@
 content-disposition:waterboiler-mqtt5-jsons07.xreg.json
-content-location:https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/waterboiler-mqtt5-jsons07.xreg.json/versions/v1.0-rc1
+content-location:http://ubuntu:7070/xregistryspecs/cloudevents-v1/samples/waterboiler-mqtt5-jsons07.xreg.json/versions/v1.0-rc1
 content-type:text/plain; charset=utf-8
 xregistry-ancestor:v1.0-rc1
-xregistry-createdat:2025-10-17T19:19:44.247748416Z
+xregistry-createdat:2026-04-22T17:24:31.080425486Z
 xregistry-epoch:1
 xregistry-isdefault:true
-xregistry-metaurl:https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/waterboiler-mqtt5-jsons07.xreg.json/meta
-xregistry-modifiedat:2025-10-17T19:19:44.247748416Z
+xregistry-metaurl:http://ubuntu:7070/xregistryspecs/cloudevents-v1/samples/waterboiler-mqtt5-jsons07.xreg.json/meta
+xregistry-modifiedat:2026-04-22T17:24:31.080425486Z
 xregistry-sampleid:waterboiler-mqtt5-jsons07.xreg.json
-xregistry-self:https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/waterboiler-mqtt5-jsons07.xreg.json
+xregistry-self:http://ubuntu:7070/xregistryspecs/cloudevents-v1/samples/waterboiler-mqtt5-jsons07.xreg.json
 xregistry-versionid:v1.0-rc1
 xregistry-versionscount:1
-xregistry-versionsurl:https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/waterboiler-mqtt5-jsons07.xreg.json/versions
+xregistry-versionsurl:http://ubuntu:7070/xregistryspecs/cloudevents-v1/samples/waterboiler-mqtt5-jsons07.xreg.json/versions
 xregistry-xid:/xregistryspecs/cloudevents-v1/samples/waterboiler-mqtt5-jsons07.xreg.json

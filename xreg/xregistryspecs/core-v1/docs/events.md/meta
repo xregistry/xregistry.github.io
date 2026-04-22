@@ -1,0 +1,12 @@
+{
+  "createdat": "2026-04-22T17:24:32.120932899Z",
+  "defaultversionid": "v1.0-rc1",
+  "defaultversionsticky": false,
+  "defaultversionurl": "http://ubuntu:7070/xregistryspecs/core-v1/docs/events.md/versions/v1.0-rc1",
+  "docid": "events.md",
+  "epoch": 1,
+  "modifiedat": "2026-04-22T17:24:32.120932899Z",
+  "readonly": false,
+  "self": "http://ubuntu:7070/xregistryspecs/core-v1/docs/events.md/meta",
+  "xid": "/xregistryspecs/core-v1/docs/events.md/meta"
+}

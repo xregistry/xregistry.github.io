@@ -4,7 +4,7 @@
     "messagegroups": {
       "singular": "messagegroup",
       "modelversion": "1.0-rc2",
-      "compatiblewith": "https://xregistry.io/xreg/domains/message/specs/model.json",
+      "modelcompatiblewith": "https://xregistry.io/xreg/domains/message/specs/model.json",
       "attributes": {
         "envelope": {
           "name": "envelope",
@@ -29,7 +29,7 @@
           "setdefaultversionsticky": false,
           "hasdocument": false,
           "modelversion": "1.0-rc2",
-          "compatiblewith": "https://xregistry.io/xreg/domains/message/specs/model.json",
+          "modelcompatiblewith": "https://xregistry.io/xreg/domains/message/specs/model.json",
           "attributes": {
             "basemessageurl": {
               "name": "basemessageurl",
@@ -1356,6 +1356,11 @@
               "name": "dataschemauri",
               "description": "The URI of the schema for the message payload, equivalent to the 'schemauri' attribute of the schema registry",
               "type": "uri"
+            },
+            "dataschemaxid": {
+              "name": "dataschemaxid",
+              "description": "Contains the xid of the xRegistry schema Resource entity associated with the dataschemauri referenced schema document. Note that this means the entity MUST be located within the same Registry.",
+              "type": "xid"
             },
             "datacontenttype": {
               "name": "datacontenttype",

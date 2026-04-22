@@ -1798,6 +1798,15 @@
             "default": [],
             "description": "List of supported flags (query parameters)."
           },
+          "ignore": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "An ignore flag value. Values are case insensitive and may include extension values."
+            },
+            "default": [],
+            "description": "List of supported ignore flag values."
+          },
           "mutable": {
             "type": "array",
             "items": {
@@ -1997,6 +2006,14 @@
             "minimum": 0,
             "description": "The epoch value for the meta sub-object."
           },
+          "labels": {
+            "type": "object",
+            "description": "A map of label key/value pairs.",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "nullable": true
+          },
           "createdat": {
             "type": "string",
             "format": "date-time",
@@ -2097,8 +2114,7 @@
             "description": "Time of the object modification"
           },
           "format": {
-            "type": "string",
-            "description": "Schema format identifier for this schema version"
+            "type": "string"
           }
         },
         "oneOf": [
@@ -2144,6 +2160,9 @@
               "schemaurl"
             ]
           }
+        ],
+        "required": [
+          "format"
         ]
       },
       "schema": {

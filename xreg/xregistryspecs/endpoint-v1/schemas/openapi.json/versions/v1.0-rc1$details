@@ -1,11 +1,11 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2025-10-17T19:19:45.539247869Z",
+  "createdat": "2026-04-22T17:24:37.406048755Z",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2025-10-17T19:19:45.539247869Z",
+  "modifiedat": "2026-04-22T17:24:37.406048755Z",
   "schemaid": "openapi.json",
-  "self": "https://xregistry.io/xreg/xregistryspecs/endpoint-v1/schemas/openapi.json/versions/v1.0-rc1",
+  "self": "http://ubuntu:7070/xregistryspecs/endpoint-v1/schemas/openapi.json/versions/v1.0-rc1",
   "versionid": "v1.0-rc1",
   "xid": "/xregistryspecs/endpoint-v1/schemas/openapi.json/versions/v1.0-rc1"
 }
