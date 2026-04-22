@@ -1,14 +1,14 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2026-04-22T17:24:32.120932899Z",
+  "createdat": "2026-04-22T17:32:52.361206576Z",
   "docid": "events.md",
   "epoch": 1,
   "isdefault": true,
-  "metaurl": "http://ubuntu:7070/xregistryspecs/core-v1/docs/events.md/meta",
-  "modifiedat": "2026-04-22T17:24:32.120932899Z",
-  "self": "http://ubuntu:7070/xregistryspecs/core-v1/docs/events.md",
+  "metaurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/events.md/meta",
+  "modifiedat": "2026-04-22T17:32:52.361206576Z",
+  "self": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/events.md",
   "versionid": "v1.0-rc1",
   "versionscount": 1,
-  "versionsurl": "http://ubuntu:7070/xregistryspecs/core-v1/docs/events.md/versions",
+  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/events.md/versions",
   "xid": "/xregistryspecs/core-v1/docs/events.md"
 }

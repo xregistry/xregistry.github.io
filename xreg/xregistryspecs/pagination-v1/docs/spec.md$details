@@ -1,14 +1,14 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2026-04-22T17:24:39.097247906Z",
+  "createdat": "2026-04-22T17:32:59.245392594Z",
   "docid": "spec.md",
   "epoch": 1,
   "isdefault": true,
-  "metaurl": "http://ubuntu:7070/xregistryspecs/pagination-v1/docs/spec.md/meta",
-  "modifiedat": "2026-04-22T17:24:39.097247906Z",
-  "self": "http://ubuntu:7070/xregistryspecs/pagination-v1/docs/spec.md",
+  "metaurl": "https://xregistry.io/xreg/xregistryspecs/pagination-v1/docs/spec.md/meta",
+  "modifiedat": "2026-04-22T17:32:59.245392594Z",
+  "self": "https://xregistry.io/xreg/xregistryspecs/pagination-v1/docs/spec.md",
   "versionid": "v1.0-rc1",
   "versionscount": 1,
-  "versionsurl": "http://ubuntu:7070/xregistryspecs/pagination-v1/docs/spec.md/versions",
+  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/pagination-v1/docs/spec.md/versions",
   "xid": "/xregistryspecs/pagination-v1/docs/spec.md"
 }

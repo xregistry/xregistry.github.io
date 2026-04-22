@@ -1,12 +1,12 @@
 {
-  "createdat": "2026-04-22T17:24:36.314317699Z",
+  "createdat": "2026-04-22T17:32:56.510726875Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
-  "defaultversionurl": "http://ubuntu:7070/xregistryspecs/core-v1/samples/contoso-crm.cereg/versions/v1.0-rc1",
+  "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/samples/contoso-crm.cereg/versions/v1.0-rc1",
   "epoch": 1,
-  "modifiedat": "2026-04-22T17:24:36.314317699Z",
+  "modifiedat": "2026-04-22T17:32:56.510726875Z",
   "readonly": false,
   "sampleid": "contoso-crm.cereg",
-  "self": "http://ubuntu:7070/xregistryspecs/core-v1/samples/contoso-crm.cereg/meta",
+  "self": "https://xregistry.io/xreg/xregistryspecs/core-v1/samples/contoso-crm.cereg/meta",
   "xid": "/xregistryspecs/core-v1/samples/contoso-crm.cereg/meta"
 }

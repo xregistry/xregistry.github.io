@@ -1,12 +1,12 @@
 {
-  "createdat": "2026-04-22T17:24:29.616892951Z",
+  "createdat": "2026-04-22T17:32:49.884452488Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
-  "defaultversionurl": "http://ubuntu:7070/xregistryspecs/cloudevents-v1/docs/spec.md/versions/v1.0-rc1",
+  "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/docs/spec.md/versions/v1.0-rc1",
   "docid": "spec.md",
   "epoch": 1,
-  "modifiedat": "2026-04-22T17:24:29.616892951Z",
+  "modifiedat": "2026-04-22T17:32:49.884452488Z",
   "readonly": false,
-  "self": "http://ubuntu:7070/xregistryspecs/cloudevents-v1/docs/spec.md/meta",
+  "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/docs/spec.md/meta",
   "xid": "/xregistryspecs/cloudevents-v1/docs/spec.md/meta"
 }

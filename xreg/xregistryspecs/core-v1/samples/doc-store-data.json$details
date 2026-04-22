@@ -1,14 +1,14 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2026-04-22T17:24:36.071607775Z",
+  "createdat": "2026-04-22T17:32:56.276251081Z",
   "epoch": 1,
   "isdefault": true,
-  "metaurl": "http://ubuntu:7070/xregistryspecs/core-v1/samples/doc-store-data.json/meta",
-  "modifiedat": "2026-04-22T17:24:36.071607775Z",
+  "metaurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/samples/doc-store-data.json/meta",
+  "modifiedat": "2026-04-22T17:32:56.276251081Z",
   "sampleid": "doc-store-data.json",
-  "self": "http://ubuntu:7070/xregistryspecs/core-v1/samples/doc-store-data.json",
+  "self": "https://xregistry.io/xreg/xregistryspecs/core-v1/samples/doc-store-data.json",
   "versionid": "v1.0-rc1",
   "versionscount": 1,
-  "versionsurl": "http://ubuntu:7070/xregistryspecs/core-v1/samples/doc-store-data.json/versions",
+  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/samples/doc-store-data.json/versions",
   "xid": "/xregistryspecs/core-v1/samples/doc-store-data.json"
 }

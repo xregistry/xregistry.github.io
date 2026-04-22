@@ -1,12 +1,12 @@
 {
-  "createdat": "2026-04-22T17:24:30.791069801Z",
+  "createdat": "2026-04-22T17:32:51.042856034Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
-  "defaultversionurl": "http://ubuntu:7070/xregistryspecs/cloudevents-v1/samples/mqtt-sparkplugB.xreg.json/versions/v1.0-rc1",
+  "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/mqtt-sparkplugB.xreg.json/versions/v1.0-rc1",
   "epoch": 1,
-  "modifiedat": "2026-04-22T17:24:30.791069801Z",
+  "modifiedat": "2026-04-22T17:32:51.042856034Z",
   "readonly": false,
   "sampleid": "mqtt-sparkplugB.xreg.json",
-  "self": "http://ubuntu:7070/xregistryspecs/cloudevents-v1/samples/mqtt-sparkplugB.xreg.json/meta",
+  "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/mqtt-sparkplugB.xreg.json/meta",
   "xid": "/xregistryspecs/cloudevents-v1/samples/mqtt-sparkplugB.xreg.json/meta"
 }

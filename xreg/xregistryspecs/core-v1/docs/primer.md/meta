@@ -1,12 +1,12 @@
 {
-  "createdat": "2026-04-22T17:24:34.214024535Z",
+  "createdat": "2026-04-22T17:32:54.477854192Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
-  "defaultversionurl": "http://ubuntu:7070/xregistryspecs/core-v1/docs/primer.md/versions/v1.0-rc1",
+  "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/primer.md/versions/v1.0-rc1",
   "docid": "primer.md",
   "epoch": 1,
-  "modifiedat": "2026-04-22T17:24:34.214024535Z",
+  "modifiedat": "2026-04-22T17:32:54.477854192Z",
   "readonly": false,
-  "self": "http://ubuntu:7070/xregistryspecs/core-v1/docs/primer.md/meta",
+  "self": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/primer.md/meta",
   "xid": "/xregistryspecs/core-v1/docs/primer.md/meta"
 }

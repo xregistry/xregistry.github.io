@@ -1,12 +1,12 @@
 {
-  "createdat": "2026-04-22T17:24:31.080425486Z",
+  "createdat": "2026-04-22T17:32:51.338731351Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
-  "defaultversionurl": "http://ubuntu:7070/xregistryspecs/cloudevents-v1/samples/waterboiler-mqtt5-jsons07.xreg.json/versions/v1.0-rc1",
+  "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/waterboiler-mqtt5-jsons07.xreg.json/versions/v1.0-rc1",
   "epoch": 1,
-  "modifiedat": "2026-04-22T17:24:31.080425486Z",
+  "modifiedat": "2026-04-22T17:32:51.338731351Z",
   "readonly": false,
   "sampleid": "waterboiler-mqtt5-jsons07.xreg.json",
-  "self": "http://ubuntu:7070/xregistryspecs/cloudevents-v1/samples/waterboiler-mqtt5-jsons07.xreg.json/meta",
+  "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/waterboiler-mqtt5-jsons07.xreg.json/meta",
   "xid": "/xregistryspecs/cloudevents-v1/samples/waterboiler-mqtt5-jsons07.xreg.json/meta"
 }

@@ -1,15 +1,15 @@
 content-disposition:document-schema.avsc
-content-location:http://ubuntu:7070/xregistryspecs/schema-v1/schemas/document-schema.avsc/versions/v1.0-rc1
+content-location:https://xregistry.io/xreg/xregistryspecs/schema-v1/schemas/document-schema.avsc/versions/v1.0-rc1
 content-type:text/plain; charset=utf-8
 xregistry-ancestor:v1.0-rc1
-xregistry-createdat:2026-04-22T17:24:38.757130112Z
+xregistry-createdat:2026-04-22T17:32:58.91790107Z
 xregistry-epoch:1
 xregistry-isdefault:true
-xregistry-metaurl:http://ubuntu:7070/xregistryspecs/schema-v1/schemas/document-schema.avsc/meta
-xregistry-modifiedat:2026-04-22T17:24:38.757130112Z
+xregistry-metaurl:https://xregistry.io/xreg/xregistryspecs/schema-v1/schemas/document-schema.avsc/meta
+xregistry-modifiedat:2026-04-22T17:32:58.91790107Z
 xregistry-schemaid:document-schema.avsc
-xregistry-self:http://ubuntu:7070/xregistryspecs/schema-v1/schemas/document-schema.avsc
+xregistry-self:https://xregistry.io/xreg/xregistryspecs/schema-v1/schemas/document-schema.avsc
 xregistry-versionid:v1.0-rc1
 xregistry-versionscount:1
-xregistry-versionsurl:http://ubuntu:7070/xregistryspecs/schema-v1/schemas/document-schema.avsc/versions
+xregistry-versionsurl:https://xregistry.io/xreg/xregistryspecs/schema-v1/schemas/document-schema.avsc/versions
 xregistry-xid:/xregistryspecs/schema-v1/schemas/document-schema.avsc

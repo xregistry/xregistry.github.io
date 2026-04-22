@@ -1,12 +1,12 @@
 {
-  "createdat": "2026-04-22T17:24:39.0192664Z",
+  "createdat": "2026-04-22T17:32:59.164555847Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
-  "defaultversionurl": "http://ubuntu:7070/xregistryspecs/schema-v1/schemas/openapi.json/versions/v1.0-rc1",
+  "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/schema-v1/schemas/openapi.json/versions/v1.0-rc1",
   "epoch": 1,
-  "modifiedat": "2026-04-22T17:24:39.0192664Z",
+  "modifiedat": "2026-04-22T17:32:59.164555847Z",
   "readonly": false,
   "schemaid": "openapi.json",
-  "self": "http://ubuntu:7070/xregistryspecs/schema-v1/schemas/openapi.json/meta",
+  "self": "https://xregistry.io/xreg/xregistryspecs/schema-v1/schemas/openapi.json/meta",
   "xid": "/xregistryspecs/schema-v1/schemas/openapi.json/meta"
 }

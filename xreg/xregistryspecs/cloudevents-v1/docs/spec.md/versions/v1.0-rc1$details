@@ -1,11 +1,11 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2026-04-22T17:24:29.616892951Z",
+  "createdat": "2026-04-22T17:32:49.884452488Z",
   "docid": "spec.md",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2026-04-22T17:24:29.616892951Z",
-  "self": "http://ubuntu:7070/xregistryspecs/cloudevents-v1/docs/spec.md/versions/v1.0-rc1",
+  "modifiedat": "2026-04-22T17:32:49.884452488Z",
+  "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/docs/spec.md/versions/v1.0-rc1",
   "versionid": "v1.0-rc1",
   "xid": "/xregistryspecs/cloudevents-v1/docs/spec.md/versions/v1.0-rc1"
 }

@@ -1,14 +1,14 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2026-04-22T17:24:30.652466949Z",
+  "createdat": "2026-04-22T17:32:50.906580549Z",
   "epoch": 1,
   "isdefault": true,
-  "metaurl": "http://ubuntu:7070/xregistryspecs/cloudevents-v1/samples/inkjet-proto3.xreg.json/meta",
-  "modifiedat": "2026-04-22T17:24:30.652466949Z",
+  "metaurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/inkjet-proto3.xreg.json/meta",
+  "modifiedat": "2026-04-22T17:32:50.906580549Z",
   "sampleid": "inkjet-proto3.xreg.json",
-  "self": "http://ubuntu:7070/xregistryspecs/cloudevents-v1/samples/inkjet-proto3.xreg.json",
+  "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/inkjet-proto3.xreg.json",
   "versionid": "v1.0-rc1",
   "versionscount": 1,
-  "versionsurl": "http://ubuntu:7070/xregistryspecs/cloudevents-v1/samples/inkjet-proto3.xreg.json/versions",
+  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/inkjet-proto3.xreg.json/versions",
   "xid": "/xregistryspecs/cloudevents-v1/samples/inkjet-proto3.xreg.json"
 }

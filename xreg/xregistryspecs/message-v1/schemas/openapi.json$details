@@ -1,14 +1,14 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2026-04-22T17:24:38.429350804Z",
+  "createdat": "2026-04-22T17:32:58.591486914Z",
   "epoch": 1,
   "isdefault": true,
-  "metaurl": "http://ubuntu:7070/xregistryspecs/message-v1/schemas/openapi.json/meta",
-  "modifiedat": "2026-04-22T17:24:38.429350804Z",
+  "metaurl": "https://xregistry.io/xreg/xregistryspecs/message-v1/schemas/openapi.json/meta",
+  "modifiedat": "2026-04-22T17:32:58.591486914Z",
   "schemaid": "openapi.json",
-  "self": "http://ubuntu:7070/xregistryspecs/message-v1/schemas/openapi.json",
+  "self": "https://xregistry.io/xreg/xregistryspecs/message-v1/schemas/openapi.json",
   "versionid": "v1.0-rc1",
   "versionscount": 1,
-  "versionsurl": "http://ubuntu:7070/xregistryspecs/message-v1/schemas/openapi.json/versions",
+  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/message-v1/schemas/openapi.json/versions",
   "xid": "/xregistryspecs/message-v1/schemas/openapi.json"
 }

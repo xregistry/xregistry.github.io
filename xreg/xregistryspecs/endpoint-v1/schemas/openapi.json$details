@@ -1,14 +1,14 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2026-04-22T17:24:37.406048755Z",
+  "createdat": "2026-04-22T17:32:57.58712519Z",
   "epoch": 1,
   "isdefault": true,
-  "metaurl": "http://ubuntu:7070/xregistryspecs/endpoint-v1/schemas/openapi.json/meta",
-  "modifiedat": "2026-04-22T17:24:37.406048755Z",
+  "metaurl": "https://xregistry.io/xreg/xregistryspecs/endpoint-v1/schemas/openapi.json/meta",
+  "modifiedat": "2026-04-22T17:32:57.58712519Z",
   "schemaid": "openapi.json",
-  "self": "http://ubuntu:7070/xregistryspecs/endpoint-v1/schemas/openapi.json",
+  "self": "https://xregistry.io/xreg/xregistryspecs/endpoint-v1/schemas/openapi.json",
   "versionid": "v1.0-rc1",
   "versionscount": 1,
-  "versionsurl": "http://ubuntu:7070/xregistryspecs/endpoint-v1/schemas/openapi.json/versions",
+  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/endpoint-v1/schemas/openapi.json/versions",
   "xid": "/xregistryspecs/endpoint-v1/schemas/openapi.json"
 }

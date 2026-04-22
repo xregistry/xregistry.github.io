@@ -1,14 +1,14 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2026-04-22T17:24:35.847094238Z",
+  "createdat": "2026-04-22T17:32:56.051482842Z",
   "docid": "xregfullmodel.png",
   "epoch": 1,
   "isdefault": true,
-  "metaurl": "http://ubuntu:7070/xregistryspecs/core-v1/docs/xregfullmodel.png/meta",
-  "modifiedat": "2026-04-22T17:24:35.847094238Z",
-  "self": "http://ubuntu:7070/xregistryspecs/core-v1/docs/xregfullmodel.png",
+  "metaurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/xregfullmodel.png/meta",
+  "modifiedat": "2026-04-22T17:32:56.051482842Z",
+  "self": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/xregfullmodel.png",
   "versionid": "v1.0-rc1",
   "versionscount": 1,
-  "versionsurl": "http://ubuntu:7070/xregistryspecs/core-v1/docs/xregfullmodel.png/versions",
+  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/xregfullmodel.png/versions",
   "xid": "/xregistryspecs/core-v1/docs/xregfullmodel.png"
 }

@@ -1,16 +1,16 @@
 content-disposition:doc-store-model.json
 content-length:155
-content-location:http://ubuntu:7070/xregistryspecs/core-v1/samples/doc-store-model.json/versions/v1.0-rc1
+content-location:https://xregistry.io/xreg/xregistryspecs/core-v1/samples/doc-store-model.json/versions/v1.0-rc1
 content-type:text/plain; charset=utf-8
 xregistry-ancestor:v1.0-rc1
-xregistry-createdat:2026-04-22T17:24:36.119397741Z
+xregistry-createdat:2026-04-22T17:32:56.323713265Z
 xregistry-epoch:1
 xregistry-isdefault:true
-xregistry-metaurl:http://ubuntu:7070/xregistryspecs/core-v1/samples/doc-store-model.json/meta
-xregistry-modifiedat:2026-04-22T17:24:36.119397741Z
+xregistry-metaurl:https://xregistry.io/xreg/xregistryspecs/core-v1/samples/doc-store-model.json/meta
+xregistry-modifiedat:2026-04-22T17:32:56.323713265Z
 xregistry-sampleid:doc-store-model.json
-xregistry-self:http://ubuntu:7070/xregistryspecs/core-v1/samples/doc-store-model.json
+xregistry-self:https://xregistry.io/xreg/xregistryspecs/core-v1/samples/doc-store-model.json
 xregistry-versionid:v1.0-rc1
 xregistry-versionscount:1
-xregistry-versionsurl:http://ubuntu:7070/xregistryspecs/core-v1/samples/doc-store-model.json/versions
+xregistry-versionsurl:https://xregistry.io/xreg/xregistryspecs/core-v1/samples/doc-store-model.json/versions
 xregistry-xid:/xregistryspecs/core-v1/samples/doc-store-model.json

@@ -1,11 +1,11 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2026-04-22T17:24:31.681402476Z",
+  "createdat": "2026-04-22T17:32:51.919205112Z",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2026-04-22T17:24:31.681402476Z",
+  "modifiedat": "2026-04-22T17:32:51.919205112Z",
   "sampleid": "schemastore_org.xreg.json",
-  "self": "http://ubuntu:7070/xregistryspecs/cloudevents-v1/samples/schemastore_org.xreg.json/versions/v1.0-rc1",
+  "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/schemastore_org.xreg.json/versions/v1.0-rc1",
   "versionid": "v1.0-rc1",
   "xid": "/xregistryspecs/cloudevents-v1/samples/schemastore_org.xreg.json/versions/v1.0-rc1"
 }

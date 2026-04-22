@@ -1,12 +1,12 @@
 {
-  "createdat": "2026-04-22T17:24:31.911799663Z",
+  "createdat": "2026-04-22T17:32:52.158002465Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
-  "defaultversionurl": "http://ubuntu:7070/xregistryspecs/core-v1/docs/sample-model-full.json/versions/v1.0-rc1",
+  "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/sample-model-full.json/versions/v1.0-rc1",
   "docid": "sample-model-full.json",
   "epoch": 1,
-  "modifiedat": "2026-04-22T17:24:31.911799663Z",
+  "modifiedat": "2026-04-22T17:32:52.158002465Z",
   "readonly": false,
-  "self": "http://ubuntu:7070/xregistryspecs/core-v1/docs/sample-model-full.json/meta",
+  "self": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/sample-model-full.json/meta",
   "xid": "/xregistryspecs/core-v1/docs/sample-model-full.json/meta"
 }

@@ -1,16 +1,16 @@
 content-disposition:sample-model.json
 content-length:154
-content-location:http://ubuntu:7070/xregistryspecs/core-v1/docs/sample-model.json/versions/v1.0-rc1
+content-location:https://xregistry.io/xreg/xregistryspecs/core-v1/docs/sample-model.json/versions/v1.0-rc1
 content-type:text/plain; charset=utf-8
 xregistry-ancestor:v1.0-rc1
-xregistry-createdat:2026-04-22T17:24:31.961379327Z
+xregistry-createdat:2026-04-22T17:32:52.206633979Z
 xregistry-docid:sample-model.json
 xregistry-epoch:1
 xregistry-isdefault:true
-xregistry-metaurl:http://ubuntu:7070/xregistryspecs/core-v1/docs/sample-model.json/meta
-xregistry-modifiedat:2026-04-22T17:24:31.961379327Z
-xregistry-self:http://ubuntu:7070/xregistryspecs/core-v1/docs/sample-model.json
+xregistry-metaurl:https://xregistry.io/xreg/xregistryspecs/core-v1/docs/sample-model.json/meta
+xregistry-modifiedat:2026-04-22T17:32:52.206633979Z
+xregistry-self:https://xregistry.io/xreg/xregistryspecs/core-v1/docs/sample-model.json
 xregistry-versionid:v1.0-rc1
 xregistry-versionscount:1
-xregistry-versionsurl:http://ubuntu:7070/xregistryspecs/core-v1/docs/sample-model.json/versions
+xregistry-versionsurl:https://xregistry.io/xreg/xregistryspecs/core-v1/docs/sample-model.json/versions
 xregistry-xid:/xregistryspecs/core-v1/docs/sample-model.json

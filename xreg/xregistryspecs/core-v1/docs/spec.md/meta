@@ -1,12 +1,12 @@
 {
-  "createdat": "2026-04-22T17:24:35.704898405Z",
+  "createdat": "2026-04-22T17:32:55.911226592Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
-  "defaultversionurl": "http://ubuntu:7070/xregistryspecs/core-v1/docs/spec.md/versions/v1.0-rc1",
+  "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.md/versions/v1.0-rc1",
   "docid": "spec.md",
   "epoch": 1,
-  "modifiedat": "2026-04-22T17:24:35.704898405Z",
+  "modifiedat": "2026-04-22T17:32:55.911226592Z",
   "readonly": false,
-  "self": "http://ubuntu:7070/xregistryspecs/core-v1/docs/spec.md/meta",
+  "self": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.md/meta",
   "xid": "/xregistryspecs/core-v1/docs/spec.md/meta"
 }

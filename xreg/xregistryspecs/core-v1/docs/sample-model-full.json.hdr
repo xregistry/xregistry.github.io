@@ -1,15 +1,15 @@
 content-disposition:sample-model-full.json
-content-location:http://ubuntu:7070/xregistryspecs/core-v1/docs/sample-model-full.json/versions/v1.0-rc1
+content-location:https://xregistry.io/xreg/xregistryspecs/core-v1/docs/sample-model-full.json/versions/v1.0-rc1
 content-type:text/plain; charset=utf-8
 xregistry-ancestor:v1.0-rc1
-xregistry-createdat:2026-04-22T17:24:31.911799663Z
+xregistry-createdat:2026-04-22T17:32:52.158002465Z
 xregistry-docid:sample-model-full.json
 xregistry-epoch:1
 xregistry-isdefault:true
-xregistry-metaurl:http://ubuntu:7070/xregistryspecs/core-v1/docs/sample-model-full.json/meta
-xregistry-modifiedat:2026-04-22T17:24:31.911799663Z
-xregistry-self:http://ubuntu:7070/xregistryspecs/core-v1/docs/sample-model-full.json
+xregistry-metaurl:https://xregistry.io/xreg/xregistryspecs/core-v1/docs/sample-model-full.json/meta
+xregistry-modifiedat:2026-04-22T17:32:52.158002465Z
+xregistry-self:https://xregistry.io/xreg/xregistryspecs/core-v1/docs/sample-model-full.json
 xregistry-versionid:v1.0-rc1
 xregistry-versionscount:1
-xregistry-versionsurl:http://ubuntu:7070/xregistryspecs/core-v1/docs/sample-model-full.json/versions
+xregistry-versionsurl:https://xregistry.io/xreg/xregistryspecs/core-v1/docs/sample-model-full.json/versions
 xregistry-xid:/xregistryspecs/core-v1/docs/sample-model-full.json

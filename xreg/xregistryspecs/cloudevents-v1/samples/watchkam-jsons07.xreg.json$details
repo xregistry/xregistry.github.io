@@ -1,14 +1,14 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2026-04-22T17:24:31.023324943Z",
+  "createdat": "2026-04-22T17:32:51.279888757Z",
   "epoch": 1,
   "isdefault": true,
-  "metaurl": "http://ubuntu:7070/xregistryspecs/cloudevents-v1/samples/watchkam-jsons07.xreg.json/meta",
-  "modifiedat": "2026-04-22T17:24:31.023324943Z",
+  "metaurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/watchkam-jsons07.xreg.json/meta",
+  "modifiedat": "2026-04-22T17:32:51.279888757Z",
   "sampleid": "watchkam-jsons07.xreg.json",
-  "self": "http://ubuntu:7070/xregistryspecs/cloudevents-v1/samples/watchkam-jsons07.xreg.json",
+  "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/watchkam-jsons07.xreg.json",
   "versionid": "v1.0-rc1",
   "versionscount": 1,
-  "versionsurl": "http://ubuntu:7070/xregistryspecs/cloudevents-v1/samples/watchkam-jsons07.xreg.json/versions",
+  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/watchkam-jsons07.xreg.json/versions",
   "xid": "/xregistryspecs/cloudevents-v1/samples/watchkam-jsons07.xreg.json"
 }

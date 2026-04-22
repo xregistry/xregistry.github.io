@@ -1,14 +1,14 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2026-04-22T17:24:31.766497719Z",
+  "createdat": "2026-04-22T17:32:52.013113052Z",
   "docid": "model.json",
   "epoch": 1,
   "isdefault": true,
-  "metaurl": "http://ubuntu:7070/xregistryspecs/core-v1/docs/model.json/meta",
-  "modifiedat": "2026-04-22T17:24:31.766497719Z",
-  "self": "http://ubuntu:7070/xregistryspecs/core-v1/docs/model.json",
+  "metaurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/model.json/meta",
+  "modifiedat": "2026-04-22T17:32:52.013113052Z",
+  "self": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/model.json",
   "versionid": "v1.0-rc1",
   "versionscount": 1,
-  "versionsurl": "http://ubuntu:7070/xregistryspecs/core-v1/docs/model.json/versions",
+  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/model.json/versions",
   "xid": "/xregistryspecs/core-v1/docs/model.json"
 }

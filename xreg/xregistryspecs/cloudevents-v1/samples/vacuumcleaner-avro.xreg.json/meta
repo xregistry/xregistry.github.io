@@ -1,12 +1,12 @@
 {
-  "createdat": "2026-04-22T17:24:30.953760599Z",
+  "createdat": "2026-04-22T17:32:51.20976987Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
-  "defaultversionurl": "http://ubuntu:7070/xregistryspecs/cloudevents-v1/samples/vacuumcleaner-avro.xreg.json/versions/v1.0-rc1",
+  "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/vacuumcleaner-avro.xreg.json/versions/v1.0-rc1",
   "epoch": 1,
-  "modifiedat": "2026-04-22T17:24:30.953760599Z",
+  "modifiedat": "2026-04-22T17:32:51.20976987Z",
   "readonly": false,
   "sampleid": "vacuumcleaner-avro.xreg.json",
-  "self": "http://ubuntu:7070/xregistryspecs/cloudevents-v1/samples/vacuumcleaner-avro.xreg.json/meta",
+  "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/vacuumcleaner-avro.xreg.json/meta",
   "xid": "/xregistryspecs/cloudevents-v1/samples/vacuumcleaner-avro.xreg.json/meta"
 }

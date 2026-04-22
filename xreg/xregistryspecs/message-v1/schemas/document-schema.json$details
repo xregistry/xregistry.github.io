@@ -1,14 +1,14 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2026-04-22T17:24:38.151411681Z",
+  "createdat": "2026-04-22T17:32:58.323659471Z",
   "epoch": 1,
   "isdefault": true,
-  "metaurl": "http://ubuntu:7070/xregistryspecs/message-v1/schemas/document-schema.json/meta",
-  "modifiedat": "2026-04-22T17:24:38.151411681Z",
+  "metaurl": "https://xregistry.io/xreg/xregistryspecs/message-v1/schemas/document-schema.json/meta",
+  "modifiedat": "2026-04-22T17:32:58.323659471Z",
   "schemaid": "document-schema.json",
-  "self": "http://ubuntu:7070/xregistryspecs/message-v1/schemas/document-schema.json",
+  "self": "https://xregistry.io/xreg/xregistryspecs/message-v1/schemas/document-schema.json",
   "versionid": "v1.0-rc1",
   "versionscount": 1,
-  "versionsurl": "http://ubuntu:7070/xregistryspecs/message-v1/schemas/document-schema.json/versions",
+  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/message-v1/schemas/document-schema.json/versions",
   "xid": "/xregistryspecs/message-v1/schemas/document-schema.json"
 }

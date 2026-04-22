@@ -1,14 +1,14 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2026-04-22T17:24:38.757130112Z",
+  "createdat": "2026-04-22T17:32:58.91790107Z",
   "epoch": 1,
   "isdefault": true,
-  "metaurl": "http://ubuntu:7070/xregistryspecs/schema-v1/schemas/document-schema.avsc/meta",
-  "modifiedat": "2026-04-22T17:24:38.757130112Z",
+  "metaurl": "https://xregistry.io/xreg/xregistryspecs/schema-v1/schemas/document-schema.avsc/meta",
+  "modifiedat": "2026-04-22T17:32:58.91790107Z",
   "schemaid": "document-schema.avsc",
-  "self": "http://ubuntu:7070/xregistryspecs/schema-v1/schemas/document-schema.avsc",
+  "self": "https://xregistry.io/xreg/xregistryspecs/schema-v1/schemas/document-schema.avsc",
   "versionid": "v1.0-rc1",
   "versionscount": 1,
-  "versionsurl": "http://ubuntu:7070/xregistryspecs/schema-v1/schemas/document-schema.avsc/versions",
+  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/schema-v1/schemas/document-schema.avsc/versions",
   "xid": "/xregistryspecs/schema-v1/schemas/document-schema.avsc"
 }
