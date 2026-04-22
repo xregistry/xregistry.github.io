@@ -8,14 +8,19 @@ on:
 jobs:
   update-repo:
     runs-on: ubuntu-latest
-    container:
-      image: duglin/xr-git
     permissions:
       contents: write # Required to push changes back
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Get xr exe
+        run: |
+          container_id=$(docker create ghcr.io/xregistry/xr)
+          docker cp $container_id:/xr /usr/bin/xr
+          docker rm $container_id
+          chmod +x /usr/bin/xr
 
       - name: Run local script
         run: ./tools/buildsite
