@@ -48,6 +48,7 @@
 <h1 id="xregistry-service---version-10-rc2">xRegistry Service - Version 1.0-rc2 <a class="anchor" href="#xregistry-service---version-10-rc2">🔗</a></h1>
 <!-- words: validatecompatibility validateformat strictvalidation matchcase -->
 <!-- words: compat formatvalidated compatibilityvalidated -->
+<!-- words: compat formatvalidatedreason compatibilityvalidatedreason -->
 <!-- words: consistentformat -->
 <h2 id="abstract">Abstract <a class="anchor" href="#abstract">🔗</a></h2>
 <p>This specification defines an extensible model for managing metadata
@@ -570,6 +571,11 @@ Alternative serialization formats MAY be defined.</p>
           &quot;modifiedat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
           &quot;ancestor&quot;: &quot;&lt;STRING&gt;&quot;,                  # Ancestor's versionid
           &quot;contenttype&quot;: &quot;&lt;STRING&gt;, ?              # Add default Ver extensions
+          &quot;format&quot;: &quot;&lt;STRING&gt;&quot;, ?
+          &quot;formatvalidated&quot;: &lt;BOOLEAN&gt;, ?
+          &quot;formatvalidatedreason&quot;: &quot;&lt;STRING&gt;&quot;, ?
+          &quot;compatibilityvalidated&quot;: &lt;BOOLEAN&gt;, ?
+          &quot;compatibilityvalidatedreason&quot;: &quot;&lt;STRING&gt;&quot;, ?
 
           &quot;&lt;RESOURCE&gt;url&quot;: &quot;&lt;URL&gt;&quot;, ?              # If not local
           &quot;&lt;RESOURCE&gt;&quot;: ... Resource document ..., ? # If local &amp; inlined &amp; JSON
@@ -622,7 +628,9 @@ Alternative serialization formats MAY be defined.</p>
               &quot;contenttype&quot;: &quot;&lt;STRING&gt;&quot;, ?
               &quot;format&quot;: &quot;&lt;STRING&gt;&quot;, ?
               &quot;formatvalidated&quot;: &lt;BOOLEAN&gt;, ?
+              &quot;formatvalidatedreason&quot;: &quot;&lt;STRING&gt;&quot;, ?
               &quot;compatibilityvalidated&quot;: &lt;BOOLEAN&gt;, ?
+              &quot;compatibilityvalidatedreason&quot;: &quot;&lt;STRING&gt;&quot;, ?
 
               &quot;&lt;RESOURCE&gt;url&quot;: &quot;&lt;URL&gt;&quot;, ?                # If not local
               &quot;&lt;RESOURCE&gt;&quot;: ... Resource document ..., ? # If inlined &amp; JSON
@@ -915,6 +923,11 @@ is used in the <a href="./http.html">HTTP Binding Protocol</a>.</li>
 <li>Unless otherwise stated, requests to update read-only attributes MUST be
 silently ignored by servers, even if the contents of those attributes are
 invalid.</li>
+<li><a id="read-only-changed"></a>Unless otherwise stated, server managed changes
+to read-only attributes MUST NOT be treated the same as user initiated
+changes to non-read-only attributes with respect to updating attributes such
+as <code>modifiedat</code> and <code>epoch</code>. In other words, as these read-only attributes
+are changed, the entity MUST NOT be considered &quot;updated&quot;.</li>
 </ul>
 <h4 id="extensions">Extensions <a class="anchor" href="#extensions">🔗</a></h4>
 <p>Implementations of this specification MAY define additional (extension)
@@ -1213,7 +1226,7 @@ removed, from that Resource.</p>
 <p>Constraints:</p>
 <ul>
 <li>REQUIRED.</li>
-<li>MUST be a read-only attribute.</li>
+<li>MUST be a <a href="#read-only-changed">read-only</a> attribute.</li>
 <li>MUST be an unsigned integer equal to or greater than zero.</li>
 <li>MUST increase in value each time the entity is updated.</li>
 </ul>
@@ -1784,7 +1797,7 @@ this view of the model.</p>
 <a href="#inline-flag">Inline Flag</a>.</li>
 <li>MUST be included in API and document views if requested via the
 <a href="#inline-flag">Inline Flag</a>.</li>
-<li>MUST be a read-only attribute.</li>
+<li>MUST be a <a href="#read-only-changed">read-only</a> attribute.</li>
 </ul>
 </li>
 </ul>
@@ -1941,7 +1954,11 @@ attribute names.</li>
 <p>Description: The set of compatibility rules that are available for each
 supported <code>format</code>. Each map key MUST be a case-insensitive Capabilities
 <code>formats</code> value, and the map value MUST be the list of case-insensitive
-compatibility rules supported by that <code>format</code>. An error
+compatibility rules supported by that <code>format</code>. The key MAY include a
+<code>*</code> (wildcard) character that matches zero or more instances of any
+character at that location in the string. Similar to a <code>.*</code> in regular
+expressions.</p>
+<p>An error
 (<a href="#capability_error">capability_error</a>) MUST be generated if a specified
 key/format isn't in Capabilities <code>formats</code> list or the compatibility rule
 specified is not supported for that <code>format</code> (i.e. that combination of
@@ -1964,6 +1981,7 @@ for Version compatibility is supported.</p>
 <p>Examples:</p>
 <ul>
 <li><code>&quot;compatibilities&quot;: { &quot;avro&quot;: [ &quot;backward&quot;, &quot;forward&quot; ] }</code></li>
+<li><code>&quot;compatibilities&quot;: { &quot;jsonschema*&quot;: [ &quot;backward&quot;, &quot;forward&quot;, &quot;full&quot; ] }</code></li>
 </ul>
 </li>
 </ul>
@@ -2979,7 +2997,7 @@ statement above is expected to be a &quot;MUST NOT&quot; assertion.</p>
 <p>Constraints:</p>
 <ul>
 <li>REQUIRED.</li>
-<li>SHOULD be a read-only attribute.</li>
+<li>SHOULD be a <a href="#read-only-changed">read-only</a> attribute.</li>
 <li>When not specified, the default value MUST be <code>false</code>.</li>
 <li>It MUST be a case-sensitive <code>true</code> or <code>false</code>.</li>
 <li>A request to update a read-only Resource SHOULD generate an error
@@ -3033,8 +3051,9 @@ any <code>compatibility</code> checking.</p>
 <p>Constraints:</p>
 <ul>
 <li>OPTIONAL.</li>
-<li>If present, MUST be a case-insensitive non-empty value from the Resource
-model's enumeration range.</li>
+<li>If present, MUST be a case-insensitive non-empty value from the Registry's
+<a href="#compatibilities-capability"><code>capabilities.compatibilities</code></a> values
+for the set of <code>format</code> values used by the Versions of the Resource.</li>
 <li>When changing the value of this attribute, it MUST be applied to all
 Versions of the Resource, and an error
 (<a href="#compatibility_violation">compatibility_violation</a>) MUST be generated
@@ -3292,11 +3311,7 @@ Version attributes, then it MUST match the Resource's current
 </li>
 <li>
 <p>Description: Indicates whether this Version is the &quot;default&quot; Version of the
-owning Resource. This value is different from other attributes in that it
-might often be a calculated value rather than persisted in a datastore.
-Thus, when its value changes due to the default Version of a Resource
-changing, the Version itself does not change - meaning attributes such as
-<code>modifiedat</code> remains unchanged.</p>
+owning Resource.</p>
 <p>See <a href="#creating-or-updating-resources-and-versions">Creating or Updating Resources and
 Versions</a> for additional
 information about this attribute.</p>
@@ -3305,7 +3320,7 @@ information about this attribute.</p>
 <p>Constraints:</p>
 <ul>
 <li>REQUIRED.</li>
-<li>MUST be a read-only attribute.</li>
+<li>MUST be a <a href="#read-only-changed">read-only</a> attribute.</li>
 <li>When not specified, the default value MUST be <code>false</code>.</li>
 <li>When specified, MUST be either <code>true</code> or <code>false</code>, case-sensitive.</li>
 </ul>
@@ -3438,23 +3453,20 @@ for additional information.</p>
 <h4 id="formatvalidated-attribute"><code>formatvalidated</code> Attribute <a class="anchor" href="#formatvalidated-attribute">🔗</a></h4>
 <ul>
 <li>
-<p>Type: String</p>
+<p>Type: Boolean</p>
 </li>
 <li>
 <p>Description: When
 <a href="./model.html#groupsstringresourcesstringvalidateformat"><code>format</code> validation</a>
 is enabled, this attribute will indicate whether or not the server has
-attempted to validated that the Version conforms to the rules defined by
+performed validation to ensure the Version conforms to the rules defined by
 its <code>format</code> attribute's value.</p>
-<p>The value MUST be a non-empty string in one of two forms:</p>
-<ul>
-<li><code>&quot;true&quot;</code></li>
-<li><code>&quot;false, &lt;REASON&gt;&quot;</code></li>
-</ul>
-<p>A value of <code>&quot;true&quot;</code> indicates that the server has validated the Version and
-it adheres to the <code>format</code> attribute's rules.</p>
-<p>A value that starts with <code>false</code> indicates that the server did not attempt
-to validated the Version. This can happen when
+<p>A value of <code>true</code> indicates that the server has validated the Version and
+it adheres to the <code>format</code> attribute's rules. When <code>true</code> the Version's
+<a href="#formatvalidatedreason-attribute"><code>formatvalidatedreason</code></a> MUST NOT be
+present.</p>
+<p>A value of <code>false</code> indicates that the server did not perform validation of
+the Version. This can happen when
 <a href="./model.html#groupsstringresourcesstringstrictvalidation"><code>strictvalidation</code></a><code>is set to</code>false` and:</p>
 <ul>
 <li>The <code>format</code> attribute value is not supported by the server.</li>
@@ -3470,66 +3482,73 @@ be able to access that URL.</li>
 <a href="./model.html#groupsstringresourcesstringstrictvalidation"><code>strictvalidation</code></a><code>is</code>true`, the above conditions MUST generate an error
 (<a href="#format_unknown">format_unknown</a> or <a href="#format_external">format_external</a>) and
 reject the update request instead.</p>
-<p>When <code>&quot;false&quot;</code>, this value MUST include some additional text (the <code>&lt;REASON&gt;</code>)
-indicating why the server was unable to attempt validation of the Version.
-Additionally, when <code>&quot;false&quot;</code>, if <code>compatibility</code> validation is enabled,
-the Version's
+<p>When <code>false</code>, the
+<a href="#formatvalidatedreason-attribute"><code>formatvalidatedreason</code></a>
+MUST be present with an explanation as to why the server was unable to
+perform validation of the Version. Additionally, when <code>false</code>, if
+<code>compatibility</code> validation is enabled, the Version's
 <a href="#compatibility-attribute"><code>compatibilityvalidated</code></a> attribute MUST also be
-<code>&quot;false&quot;</code>.</p>
+<code>false</code>.</p>
 <p>Note that <code>&quot;false&quot;</code> MUST NOT be used for validation failure. In those cases
 the write operation MUST generate an error
 (<a href="#format_violation">format_violation</a> and reject the request regardless
 of the value of the
 <a href="./model.html#groupsstringresourcesstringstrictvalidation"><code>strictvalidation</code></a>`
 model aspect.</p>
-<p>Due to this attribute being server managed, and influenced by the state of
-other Versions, as its value changes the Version itself MUST NOT be marked as
-changed - meaning, attributes such as <code>modifiedat</code> and <code>epoch</code> remain
-unchanged.</p>
 <ul>
-<li>
-<p>Constraints:</p>
+<li>Constraints:
 <ul>
 <li>OPTIONAL</li>
-<li>If present, MUST be non-empty.</li>
-<li>MUST be a read-only attribute.</li>
+<li>When specified, MUST be either <code>true</code> or <code>false</code>, case-sensitive.</li>
+<li>MUST be a <a href="#read-only-changed">read-only</a> attribute.</li>
 <li>MUST be present if the Resource model's <code>validateformat</code> attribute is
 <code>true</code> and the Version's <code>format</code> attribute is present.</li>
 <li>MUST NOT be present if the Resource model's <code>validateformat</code> attribute is
 <code>false</code> or the Version's <code>format</code> attribute is absent.</li>
 </ul>
 </li>
-<li>
-<p>Examples:</p>
+</ul>
+<h4 id="formatvalidatedreason-attribute"><code>formatvalidatedreason</code> Attribute <a class="anchor" href="#formatvalidatedreason-attribute">🔗</a></h4>
 <ul>
-<li><code>&quot;true&quot;</code></li>
-<li><code>&quot;false, unknown format&quot;</code></li>
+<li>
+<p>Type: String</p>
+</li>
+<li>
+<p>Description: When <a href="#formatvalidated-attribute"><code>formatvalidated</code></a> has a
+value of <code>false</code>, this attribute MUST provide information as to why the
+format validation check was not performed.</p>
+</li>
+<li>
+<p>Constraints:</p>
+<ul>
+<li>OPTIONAL</li>
+<li>When specified, MUST be a non-empty string.</li>
+<li>MUST be a <a href="#read-only-changed">read-only</a> attribute.</li>
+<li>MUST be present when <a href="#formatvalidated-attribute"><code>formatvalidated</code></a> is
+present with a value of <code>false</code>.</li>
+<li>MUST NOT be present when <a href="#formatvalidated-attribute"><code>formatvalidated</code></a> is
+absent or has a value of <code>true</code>.</li>
 </ul>
 </li>
 </ul>
 <h4 id="compatibilityvalidated-attribute"><code>compatibilityvalidated</code> Attribute <a class="anchor" href="#compatibilityvalidated-attribute">🔗</a></h4>
 <ul>
 <li>
-<p>Type: String</p>
+<p>Type: Boolean</p>
 </li>
 <li>
 <p>Description: When <a href="./model.html#groupsstringresourcesstringvalidateformat"><code>compatibility</code>
 validation</a>
 is enabled, this attribute will indicate whether or not the server has
-validated that the Version conforms to the rules defined by its Resource's
-<code>meta.compatibility</code> attribute's value.</p>
-<p>The value MUST be a non-empty string in one of two forms:</p>
-<ul>
-<li><code>&quot;true&quot;</code></li>
-<li><code>&quot;false, &lt;REASON&gt;&quot;</code></li>
-</ul>
-<p>A value of <code>&quot;true&quot;</code> indicates that the server has validated the Version and
+performed validation of the Version conforms to the rules defined by its
+Resource's <code>meta.compatibility</code> attribute's value.</p>
+<p>A value of <code>true</code> indicates that the server has validated the Version and
 it adheres to the <code>meta.compatibility</code> attribute's rules.</p>
-<p>A value that starts with <code>&quot;false&quot;</code> indicates that the server did not attempt
-to validate the Version. This can happen when
+<p>A value of <code>false</code> indicates that the server did not perform validation of
+the Version. This can happen when
 <a href="./model.html#groupsstringresourcesstringstrictvalidation"><code>strictvalidation</code></a><code>is set to</code>false` and:</p>
 <ul>
-<li>The <code>formatvalidated</code> attribute is <code>&quot;false&quot;</code>.</li>
+<li>The <code>formatvalidated</code> attribute is <code>false</code>.</li>
 <li>The <code>format</code> or <code>meta.compatibility</code> attributes not supported by the
 server.</li>
 <li>The Version uses the <code>&lt;RESOURCE&gt;url</code> attribute to reference a
@@ -3544,31 +3563,55 @@ be able to access that URL.</li>
 <a href="#compatibility_unknown">compatibility_unknown</a> or
 <a href="#format_external">format_external</a>) and
 reject the update request instead.</p>
-<p>When <code>&quot;false&quot;</code>, this value MUST include some additional text (the <code>&lt;REASON&gt;</code>)
-indicating why the server was unable to attempt validation of the Version.</p>
-<p>Note that <code>&quot;false&quot;</code> MUST NOT be used for validation failure. In those cases
+<p>When <code>false</code>, the
+<a href="#compatibilityvalidatedreason-attribute"><code>compatibilityvalidatedreason</code></a>
+MUST be present with an explanation as to why the server was unable to
+perform validation of the Version.</p>
+<p>Note that <code>false</code> MUST NOT be used for validation failure. In those cases
 the write operation MUST generate an error
 (<a href="#compatibility_violation">compatibility_violation</a> and reject the request
 regardless of the value of the
 <a href="./model.html#groupsstringresourcesstringstrictvalidation"><code>strictvalidation</code></a>`
 model aspect.</p>
-<p>Due to this attribute being server managed, and influenced by the state of
-other Versions, as its value changes the Version itself MUST NOT be marked as
-changed - meaning, attributes such as <code>modifiedat</code> and <code>epoch</code> remain
-unchanged.</p>
 </li>
 <li>
 <p>Constraints:</p>
 <ul>
 <li>OPTIONAL</li>
-<li>If present, MUST be non-empty.</li>
-<li>MUST be a read-only attribute.</li>
+<li>When specified, MUST be either <code>true</code> or <code>false</code>, case-sensitive.</li>
+<li>MUST be a <a href="#read-only-changed">read-only</a> attribute.</li>
 <li>MUST be present if the Resource model's <code>validatecompatibility</code> attribute
 is <code>true</code>, the Version's <code>format</code> value is present, and the Resource's
 <code>meta.compatibility</code> attribute is present.</li>
 <li>MUST NOT be present if the Resource model's <code>validatecompatibility</code>
 attribute is <code>false</code>, or the Version's <code>format</code> value is absent, or the
 Resource's <code>meta.compatibility</code> attribute is absent.</li>
+</ul>
+</li>
+</ul>
+<h4 id="compatibilityvalidatedreason-attribute"><code>compatibilityvalidatedreason</code> Attribute <a class="anchor" href="#compatibilityvalidatedreason-attribute">🔗</a></h4>
+<ul>
+<li>
+<p>Type: String</p>
+</li>
+<li>
+<p>Description: When
+<a href="#compatibilityvalidated-attribute"><code>compatibilityvalidated</code></a> has a
+value of <code>false</code>, this attribute MUST provide information as to why the
+format validation check was not performed.</p>
+</li>
+<li>
+<p>Constraints:</p>
+<ul>
+<li>OPTIONAL</li>
+<li>When specified, MUST be a non-empty string.</li>
+<li>MUST be a <a href="#read-only-changed">read-only</a> attribute.</li>
+<li>MUST be present when
+<a href="#compatibilityvalidated-attribute"><code>compatibilityvalidated</code></a> is
+present with a value of <code>false</code>.</li>
+<li>MUST NOT be present when
+<a href="#compatibilityvalidated-attribute"><code>compatibilityvalidated</code></a> is
+absent or has a value of <code>true</code>.</li>
 </ul>
 </li>
 </ul>
@@ -4857,10 +4900,11 @@ field is just a substitution value and MUST NOT be empty.</p>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#compatibility_unknown</code></li>
 <li>Code: <code>400 Bad Request</code></li>
 <li>Subject: <code>&lt;resource_xid&gt;</code></li>
-<li>Title: <code>The compatibility value (&lt;compat&gt;) on Resource &quot;&lt;subject&gt;&quot; is not supported.</code></li>
+<li>Title: <code>The compatibility value (&lt;compat&gt;) on Resource &quot;&lt;subject&gt;&quot; is not supported for format &quot;&lt;format&gt;&quot;.</code></li>
 <li>Args:
 <ul>
 <li><code>compat</code>: The Resource's <code>meta.compatibility</code> value.</li>
+<li><code>format</code>: The Version's <code>format</code> value.</li>
 </ul>
 </li>
 </ul>
@@ -5153,6 +5197,18 @@ error SHOULD be used instead.</p>
 <li>Args:
 <ul>
 <li><code>list</code>: A comma separated list of attributes that are missing.</li>
+</ul>
+</li>
+</ul>
+<h3 id="resources_only">resources_only <a class="anchor" href="#resources_only">🔗</a></h3>
+<ul>
+<li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#resources_only</code></li>
+<li>Code: <code>400 Bad Request</code></li>
+<li>Subject: <code>&lt;group_xid&gt;</code></li>
+<li>Title: <code>Attribute &quot;&lt;name&gt;&quot; is invalid. Only Resource types are allowed to be specified on this request: &lt;subject&gt;.</code></li>
+<li>Args:
+<ul>
+<li><code>name</code>: The name of the attribute in question.</li>
 </ul>
 </li>
 </ul>

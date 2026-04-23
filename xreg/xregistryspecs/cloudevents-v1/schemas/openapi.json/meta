@@ -1,10 +1,10 @@
 {
-  "createdat": "2026-04-22T17:32:50.648054289Z",
+  "createdat": "2026-04-23T16:20:33.448857654Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
   "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/schemas/openapi.json/versions/v1.0-rc1",
   "epoch": 1,
-  "modifiedat": "2026-04-22T17:32:50.648054289Z",
+  "modifiedat": "2026-04-23T16:20:33.448857654Z",
   "readonly": false,
   "schemaid": "openapi.json",
   "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/schemas/openapi.json/meta",

@@ -46,6 +46,8 @@
 </style>
 </head>
 <h1 id="message-definitions-registry-service---version-10-rc2">Message Definitions Registry Service - Version 1.0-rc2 <a class="anchor" href="#message-definitions-registry-service---version-10-rc2">🔗</a></h1>
+<!-- words: formatvalidated compatibilityvalidated -->
+<!-- words: formatvalidatedreason compatibilityvalidatedreason -->
 <h2 id="abstract">Abstract <a class="anchor" href="#abstract">🔗</a></h2>
 <p>This specification defines a message and event catalog extension to the
 xRegistry document format and API <a href="./../../core-v1/docs/spec.html">specification</a>. The
@@ -499,6 +501,12 @@ this form:</p>
           &quot;createdat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
           &quot;modifiedat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
           &quot;ancestor&quot;: &quot;&lt;STRING&gt;&quot;,
+          &quot;contenttype&quot;: &quot;&lt;STRING&gt;, ?
+          &quot;format&quot;: &quot;&lt;STRING&gt;&quot;, ?
+          &quot;formatvalidated&quot;: &lt;BOOLEAN&gt;, ?
+          &quot;formatvalidatedreason&quot;: &quot;&lt;STRING&gt;&quot;, ?
+          &quot;compatibilityvalidated&quot;: &lt;BOOLEAN&gt;, ?
+          &quot;compatibilityvalidatedreason&quot;: &quot;&lt;STRING&gt;&quot;, ?
 
           # Start of Message extension attributes
           &quot;basemessage&quot;: &quot;&lt;URL&gt;&quot;, ?            # Message being extended

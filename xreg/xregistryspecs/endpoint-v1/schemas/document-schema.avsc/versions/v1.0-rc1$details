@@ -1,9 +1,9 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2026-04-22T17:32:57.022764202Z",
+  "createdat": "2026-04-23T16:20:40.479594448Z",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2026-04-22T17:32:57.022764202Z",
+  "modifiedat": "2026-04-23T16:20:40.479594448Z",
   "schemaid": "document-schema.avsc",
   "self": "https://xregistry.io/xreg/xregistryspecs/endpoint-v1/schemas/document-schema.avsc/versions/v1.0-rc1",
   "versionid": "v1.0-rc1",

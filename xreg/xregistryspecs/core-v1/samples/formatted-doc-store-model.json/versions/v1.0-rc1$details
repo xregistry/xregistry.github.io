@@ -1,9 +1,9 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2026-04-22T17:32:56.417390062Z",
+  "createdat": "2026-04-23T16:20:39.77333698Z",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2026-04-22T17:32:56.417390062Z",
+  "modifiedat": "2026-04-23T16:20:39.77333698Z",
   "sampleid": "formatted-doc-store-model.json",
   "self": "https://xregistry.io/xreg/xregistryspecs/core-v1/samples/formatted-doc-store-model.json/versions/v1.0-rc1",
   "versionid": "v1.0-rc1",

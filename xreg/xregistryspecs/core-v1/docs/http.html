@@ -1201,6 +1201,9 @@ Group.</p>
 <p>The processing of this API is defined in the <a href="#creating-or-updating-entities">Creating or Updating
 Entities</a> section - see the discussion of the
 <code>POST &lt;PATH-TO-ENTITY&gt;</code> variant.</p>
+<p>A request that isn't a map of Resource types (e.g. it contains other Group
+level attributes) MUST generate an error
+(<a href="./spec.html#resources_only">resources_only</a>).</p>
 <p>The request MUST be of the form:</p>
 <pre><code class="language-yaml">POST /&lt;GROUPS&gt;/&lt;GID&gt;
 Content-Type: application/json; charset=utf-8
