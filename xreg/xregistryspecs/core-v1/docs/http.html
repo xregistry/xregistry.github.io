@@ -184,12 +184,13 @@ implementations MAY choose to prefix them as necessary. However, the same
 prefix MUST be used consistently for all APIs in the same Registry instance.</p>
 <p>If an OPTIONAL HTTP path is not supported by an implementation, then any
 use of that API MUST generate an error
-(<a href="./http.html#api_not_found">api_not_found</a>).</p>
+(<a href="./spec.html#api_not_found">api_not_found</a>).</p>
 <p>If an HTTP method is not supported for a supported HTTP path, then an error
 (<a href="./spec.html#action_not_supported">action_not_supported</a>) MUST be generated.</p>
 <p>Implementations MAY support extension APIs, however, the following rules apply:</p>
 <ul>
-<li>New HTTP paths that extend non-root paths MUST NOT be defined.</li>
+<li>New HTTP paths that extend non-root paths MUST NOT be defined as they might
+conflict with URLs of entities within the system.</li>
 <li>New root HTTP paths MAY be defined as long as they do not use Registry-level
 HTTP paths or attribute names. This includes extension and Groups collection
 attribute names.</li>
@@ -762,9 +763,6 @@ Content-Type: application/json; charset=utf-8
 an HTTP <code>GET</code> directed to the stand-alone <code>capabilities</code> map.</p>
 <p>The request MUST be of the form:</p>
 <pre><code class="language-yaml">GET /capabilities
-Content-Type: application/json; charset=utf-8
-
-{ ... Capabilities map excluded for brevity ...  }
 </code></pre>
 <p>A successful response MUST be of the form:</p>
 <pre><code class="language-yaml">HTTP/1.1 200 OK
@@ -786,8 +784,8 @@ Content-Type: application/json; charset=utf-8
     &quot;binary&quot;, &quot;collections&quot;, &quot;doc&quot;, &quot;epoch&quot;, &quot;filter&quot;, &quot;ignore&quot;, &quot;inline&quot;,
     &quot;setdefaultversionid&quot;, &quot;sort&quot;, &quot;specversion&quot;
   ],
-  &quot;ignore&quot;: [ &quot;capabilities&quot;, &quot;defaultversionid&quot;, &quot;defaultversionsticky&quot;,
-    &quot;epoch&quot;, &quot;modelsource&quot;, &quot;readonly&quot;
+  &quot;ignores&quot;: [ &quot;capabilities&quot;, &quot;defaultversionid&quot;, &quot;defaultversionsticky&quot;,
+    &quot;epoch&quot;, &quot;id&quot;, &quot;modelsource&quot;, &quot;readonly&quot;
   ],
   &quot;mutable&quot;: [ &quot;capabilities&quot;, &quot;entities&quot;, &quot;model&quot; ],
   &quot;pagination&quot;: false,
@@ -819,18 +817,28 @@ Content-Type: application/json; charset=utf-8
 
 {
   &quot;apis&quot;: {
-    &quot;type&quot;: &quot;string&quot;,
-    &quot;enum&quot;: [ &quot;/capabilities&quot;, &quot;/export&quot;, &quot;/model&quot;, /&quot;modelsource&quot; ]
+    &quot;type&quot;: &quot;array&quot;,
+    &quot;item&quot;: {
+      &quot;type&quot;: &quot;string&quot;
+    },
+    &quot;enum&quot;: [ &quot;/capabilities&quot;, &quot;/capabilitiesoffered&quot;, &quot;/export&quot;, &quot;/model&quot;,
+       &quot;/modelsource&quot; ]
   },
   &quot;flags&quot;: {
-    &quot;type&quot;: &quot;string&quot;,
+    &quot;type&quot;: &quot;array&quot;,
+    &quot;item&quot;: {
+      &quot;type&quot;: &quot;string&quot;
+    },
     &quot;enum&quot;: [ &quot;collections&quot;, &quot;doc&quot;, &quot;epoch&quot;, &quot;filter&quot;, &quot;ignore&quot;, &quot;inline&quot;,
        &quot;setdefaultversionid&quot;, &quot;sort&quot;, &quot;specversion&quot; ]
   },
-  &quot;ignore&quot;: {
-    &quot;type&quot;: &quot;string&quot;,
+  &quot;ignores&quot;: {
+    &quot;type&quot;: &quot;array&quot;,
+    &quot;item&quot;: {
+      &quot;type&quot;: &quot;string&quot;
+    },
     &quot;enum&quot;: [ &quot;capabilities&quot;, &quot;defaultversionid&quot;, &quot;defaultversionsticky&quot;,
-      &quot;epoch&quot;, &quot;modelsource&quot;, &quot;readonly&quot; ]
+      &quot;epoch&quot;, &quot;id&quot;, &quot;modelsource&quot;, &quot;readonly&quot; ]
   },
   &quot;pagination&quot;: {
     &quot;type&quot;: &quot;boolean&quot;,
@@ -841,14 +849,23 @@ Content-Type: application/json; charset=utf-8
     &quot;enum&quot;: [ false, true ]
   },
   &quot;specversions&quot;: {
-    &quot;type&quot;: &quot;string&quot;,
+    &quot;type&quot;: &quot;array&quot;,
+    &quot;item&quot;: {
+      &quot;type&quot;: &quot;string&quot;
+    },
     &quot;enum&quot;: [ &quot;1.0-rc2&quot; ]
   },
   &quot;stickyversions&quot;: {
     &quot;type&quot;: &quot;boolean&quot;,
     &quot;enum&quot;: [ true ]
   },
-  &quot;versionmodes&quot;: [ &quot;manual&quot; ]
+  &quot;versionmodes&quot;: {
+    &quot;type&quot;: &quot;array&quot;,
+    &quot;item&quot;: {
+      &quot;type&quot;: &quot;string&quot;
+    },
+    &quot;enum&quot;: [ &quot;manual&quot; ]
+  }
 }
 </code></pre>
 <h4 id="patch-and-put-capabilities"><code>PATCH</code> and <code>PUT /capabilities</code> <a class="anchor" href="#patch-and-put-capabilities">🔗</a></h4>
@@ -908,9 +925,9 @@ is completed, even though the response MUST show the requested changes.</p>
     &quot;binary&quot;, &quot;collections&quot;, &quot;doc&quot;, &quot;epoch&quot;, &quot;filter&quot;, &quot;ignore&quot;, &quot;inline&quot;,
     &quot;setdefaultversionid&quot;, &quot;sort&quot;, &quot;specversion&quot;
   ],
-  &quot;ignore&quot;: [
+  &quot;ignores&quot;: [
     &quot;capabilities&quot;, &quot;defaultversionid&quot;, &quot;defaultversionsticky&quot;, &quot;epoch&quot;,
-    &quot;modelsource&quot;, &quot;readonly&quot;
+    &quot;id&quot;, &quot;modelsource&quot;, &quot;readonly&quot;
   ],
   &quot;mutable&quot;: [ &quot;capabilities&quot;, &quot;entities&quot;, &quot;model&quot; ],
   &quot;pagination&quot;: false,
@@ -1033,10 +1050,10 @@ and that there are a total of 100 items in this collection.</p>
 Entities</a> section.</p>
 <p>The request MUST be of the form:</p>
 <pre><code class="language-yaml">PATCH /&lt;GROUPS&gt;
-Content-Type: application/json; charset:utf-8
+Content-Type: application/json; charset=utf-8
 or
 POST /&lt;GROUPS&gt;
-Content-Type: application/json; charset:utf-8
+Content-Type: application/json; charset=utf-8
 
 {
    &quot;&lt;KEY&gt;&quot;: {                                      # &lt;GROUP&gt;id
@@ -1156,14 +1173,14 @@ Content-Type: application/json; charset=utf-8
 <h4 id="patch-and-put-groupsgid"><code>PATCH</code> and <code>PUT /&lt;GROUPS&gt;/&lt;GID&gt;</code> <a class="anchor" href="#patch-and-put-groupsgid">🔗</a></h4>
 <p>A server MAY support clients creating or updating a
 <a href="./spec.html#group-entity">Group</a> in a Group collection via an HTTP <code>PATCH</code> or
-<code>POST</code> directed to the Group entity.</p>
+<code>PUT</code> directed to the Group entity.</p>
 <p>The processing of these APIs is defined in the <a href="#creating-or-updating-entities">Creating or Updating
 Entities</a> section.</p>
 <p>The request MUST be of the form:</p>
 <pre><code class="language-yaml">PATCH /&lt;GROUPS&gt;/&lt;GID&gt;
 Content-Type: application/json; charset=utf-8
 or
-PUT /&lt;GROUPS&gt;/GID&gt;
+PUT /&lt;GROUPS&gt;/&lt;GID&gt;
 Content-Type: application/json; charset=utf-8
 
 { ... Group entity excluded for brevity ... }
@@ -1498,10 +1515,10 @@ Entities</a> section - see the discussion of the
 <code>POST/PATCH &lt;PATH-TO-COLLECTION&gt;</code> variants.</p>
 <p>The request MUST be of the form:</p>
 <pre><code class="language-yaml">PATCH /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;
-Content-Type: application/json; charset:utf-8
+Content-Type: application/json; charset=utf-8
 or
 POST /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;
-Content-Type: application/json; charset:utf-8
+Content-Type: application/json; charset=utf-8
 
 {
    &quot;&lt;KEY&gt;&quot;: {                                      # &lt;RESOURCE&gt;id
@@ -2045,7 +2062,7 @@ Entities</a> section.</p>
 <pre><code class="language-yaml">PATCH /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;/meta
 Content-Type: application/json; charset=utf-8
 or
-PUT /&lt;GROUPS&gt;/GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;/meta
+PUT /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;/meta
 Content-Type: application/json; charset=utf-8
 
 { ... Meta entity excluded for brevity ... }
@@ -2138,10 +2155,10 @@ Entities</a> section - see the discussion of the
 <code>POST/PATCH &lt;PATH-TO-COLLECTION&gt;</code> variants.</p>
 <p>The request MUST be of the form:</p>
 <pre><code class="language-yaml">PATCH /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;/versions
-Content-Type: application/json; charset:utf-8
+Content-Type: application/json; charset=utf-8
 or
 POST /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;/versions
-Content-Type: application/json; charset:utf-8
+Content-Type: application/json; charset=utf-8
 
 {
    &quot;&lt;KEY&gt;&quot;: {                                      # &lt;GROUP&gt;id
@@ -2347,8 +2364,7 @@ Resource metadata or to the Resource domain-specific document. See
 <a href="#resource-metadata-vs-resource-document">Resource Metadata vs Resource Document</a>
 for more information.</p>
 <p>When directed to the Version metadata, the request MUST be of the form:</p>
-<pre><code class="language-yaml">```yaml
-PATCH /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;/versions/&lt;VID&gt;[$details]
+<pre><code class="language-yaml">PATCH /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;/versions/&lt;VID&gt;[$details]
 Content-Type: application/json; charset=utf-8
 or
 PUT /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;/versions/&lt;VID&gt;[$details]
@@ -2664,18 +2680,9 @@ Content-Type: application/json; charset=utf-8
 <a href="./spec.html">core specification</a> for more information.</p>
 <p>The following list of HTTP protocol specific errors are defined:</p>
 <!-- start-err-def -->
-<h4 id="api_not_found">api_not_found <a class="anchor" href="#api_not_found">🔗</a></h4>
-<ul>
-<li>Type: <code>https://github.com/xregistry/spec/blob/main/core/http.md#api_not_found</code></li>
-<li>Code: <code>404 Not Found</code></li>
-<li>Title: <code>The specified API is not supported: &lt;subject&gt;.</code></li>
-<li>Subject: <code>&lt;request_path&gt;</code></li>
-</ul>
-<p><code>request_path</code> MUST be the &quot;Path&quot; portion of the incoming request URL,
-starting with <code>/</code>. E.g. <code>/export</code> if the &quot;export&quot; feature is not supported.</p>
 <h4 id="details_required">details_required <a class="anchor" href="#details_required">🔗</a></h4>
 <ul>
-<li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#details_required</code></li>
+<li>Type: <code>https://github.com/xregistry/spec/blob/main/core/http.md#details_required</code></li>
 <li>Code: <code>405 Method Not Allowed</code></li>
 <li>Title: <code>$details suffix is needed when using PATCH for the entity: &lt;subject&gt;.</code></li>
 <li>Subject: <code>&lt;resource_xid&gt;</code></li>

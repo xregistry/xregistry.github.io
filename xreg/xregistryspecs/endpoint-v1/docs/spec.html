@@ -278,7 +278,7 @@ this form:</p>
           &quot;type&quot;: &quot;&lt;STRING&gt;&quot;, ?
           &quot;resourceuri&quot;: &quot;URI&quot;, ?
           &quot;authorityuri&quot;: &quot;URI&quot;, ?
-          &quot;grant_types&quot;: [ &quot;&lt;STRING&gt;&quot; * ] ?
+          &quot;granttypes&quot;: [ &quot;&lt;STRING&gt;&quot; * ] ?
         }, ?
         &quot;deployed&quot;: &lt;BOOLEAN&gt;, ?
 
@@ -528,7 +528,7 @@ envelope format used to transmit the messages.</p>
 <h5 id="cloudevents10"><code>CloudEvents/1.0</code> <a class="anchor" href="#cloudevents10">🔗</a></h5>
 <ul>
 <li><code>mode</code> : indicates whether the CloudEvent will use <code>binary</code> or <code>structured</code>
-(mode)[https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md#message].
+<a href="https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md#message">mode</a>.
 When specified, its value MUST be one of: <code>binary</code> or <code>structured</code>, case
 sensitive. When not specified, the endpoint is indicating that either mode
 is acceptable.</li>
@@ -616,23 +616,23 @@ a resource managed by the network host is protocol specific.</li>
 </li>
 <li>Examples:
 <ul>
-<li><code>[ {&quot;uri&quot;: &quot;https://example.com&quot; } ]</code></li>
+<li><code>[ {&quot;url&quot;: &quot;https://example.com&quot; } ]</code></li>
 <li>
 <pre><code>[
-  { &quot;uri&quot;: &quot;tcp://example.com&quot; },
-  { &quot;uri&quot;: &quot;wss://example.com&quot; }
+  { &quot;url&quot;: &quot;tcp://example.com&quot; },
+  { &quot;url&quot;: &quot;wss://example.com&quot; }
 ]
 </code></pre>
 </li>
 <li>
 <pre><code>[
   {
-    &quot;uri&quot;: &quot;tcp://example.com&quot;,
+    &quot;url&quot;: &quot;tcp://example.com&quot;,
     &quot;priority&quot;: 1,
     &quot;status&quot;: &quot;down&quot;
   },
   {
-    &quot;uri&quot;: &quot;wss://example.com&quot;,
+    &quot;url&quot;: &quot;wss://example.com&quot;,
     &quot;priority&quot;: 2,
     &quot;status&quot;: &quot;up&quot;
   }
@@ -722,7 +722,7 @@ authorization type.</p>
 </ul>
 </li>
 </ul>
-<h6 id="protocoloptionsauthorizationgrant_types"><code>protocoloptions.authorization.grant_types</code> <a class="anchor" href="#protocoloptionsauthorizationgrant_types">🔗</a></h6>
+<h6 id="protocoloptionsauthorizationgranttypes"><code>protocoloptions.authorization.granttypes</code> <a class="anchor" href="#protocoloptionsauthorizationgranttypes">🔗</a></h6>
 <ul>
 <li>
 <p>Type: Array of Strings</p>
@@ -749,7 +749,7 @@ the liveness of the endpoint.</li>
 <ul>
 <li>OPTIONAL.</li>
 <li>If present, MUST be either <code>true</code> or <code>false</code>, case-sensitive.</li>
-<li>When not specified, the default value is MUST be <code>true</code>.</li>
+<li>When not specified, the default value MUST be <code>true</code>.</li>
 </ul>
 </li>
 </ul>

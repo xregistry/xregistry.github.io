@@ -434,7 +434,7 @@ Alternative serialization formats MAY be defined.</p>
     &quot;ignores&quot;: [ &quot;capabilities&quot;,? &quot;defaultversionid&quot;,? &quot;defaultversionsticky&quot;,?
       &quot;id&quot;,? &quot;epoch&quot;,? &quot;modelsource&quot;,? &quot;readonly&quot;? ],
     &quot;mutable&quot;: [                        # What is mutable in the Registry
-      &quot;capabilities&quot;,? &quot;entities&quot;,? &quot;model&quot;,? &quot;&lt;STRING&gt;&quot;*
+      &quot;capabilities&quot;,? &quot;entities&quot;,? &quot;modelsource&quot;,? &quot;&lt;STRING&gt;&quot;*
     ], ?
     &quot;pagination&quot;: &lt;BOOLEAN&gt;, ?
     &quot;shortself&quot;: &lt;BOOLEAN&gt;, ?
@@ -570,7 +570,7 @@ Alternative serialization formats MAY be defined.</p>
           &quot;createdat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
           &quot;modifiedat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
           &quot;ancestor&quot;: &quot;&lt;STRING&gt;&quot;,                  # Ancestor's versionid
-          &quot;contenttype&quot;: &quot;&lt;STRING&gt;, ?              # Add default Ver extensions
+          &quot;contenttype&quot;: &quot;&lt;STRING&gt;&quot;, ?             # Add default Ver extensions
           &quot;format&quot;: &quot;&lt;STRING&gt;&quot;, ?
           &quot;formatvalidated&quot;: &lt;BOOLEAN&gt;, ?
           &quot;formatvalidatedreason&quot;: &quot;&lt;STRING&gt;&quot;, ?
@@ -1116,7 +1116,7 @@ will directly perform the desired operation or whether it returns a
 redirect to the full <code>self</code> URL requiring the client to resend the request.</p>
 <p>If an entity is deleted and then a new entity is created that results in
 the same <code>self</code> URL, this specification does not mandate that the same
-<code>shorturl</code> be generated, but it MAY do so.</p>
+<code>shortself</code> be generated, but it MAY do so.</p>
 <p>This attribute MUST only appear in the serialization if the <code>shortself</code>
 capability is enabled. However, if this capability is enabled, then disabled,
 and then re-enabled, the <code>shortself</code> values MUST retain their original
@@ -1390,7 +1390,7 @@ date/time. Implementations MAY choose to restrict its values if necessary.</li>
 existing value, however a value of <code>null</code> MUST use the current date/time
 as the new value.</li>
 <li>When absent in an update request, any existing value MUST remain
-unchanged, or if not already set, set to the current date/time.</li>
+unchanged.</li>
 <li>During the processing of a single request, all entities that have their
 <code>createdat</code> or <code>modifiedat</code> attributes set to the current date/time MUST
 use the same value in all cases.</li>
@@ -1640,7 +1640,9 @@ applied to the &quot;default&quot; Version of a Resource, and the incoming inlin
 <code>versions</code> collections includes that &quot;default&quot; Version, the Resource's default
 Version attributes MUST be silently ignored. This is to avoid any possible
 conflicting data between the two sets of data for that Version. In other
-words, the Version attributes in the incoming <code>versions</code> collection wins.</p>
+words, the Version attributes in the incoming <code>versions</code> collection wins.
+See <a href="#resource-processing-algorithm">Resource Processing Algorithm</a> for more
+details.</p>
 <p>To better understand this scenario, consider the following HTTP request to
 update a Message where the <code>defaultversionid</code> is <code>v1</code>:</p>
 <pre><code class="language-yaml">PUT http://example.com/endpoints/ep1/messages/msg1
@@ -1928,6 +1930,7 @@ support inlining the model via the <a href="#inline-flag">Inline Flag</a>.</li>
 <li>Defined values:
 <ul>
 <li><code>/capabilities</code></li>
+<li><code>/capabilitiesoffered</code></li>
 <li><code>/export</code></li>
 <li><code>/model</code></li>
 <li><code>/modelsource</code></li>
@@ -1941,6 +1944,8 @@ specification-defined APIs, Registry-level attributes or Group collection
 attribute names.</li>
 <li>It is STRONGLY RECOMMENDED that implementations support at least
 <code>/capabilities</code> and <code>/model</code>.</li>
+<li>Attempts to access an unsupported API MUST generate an error
+(<a href="#api_not_found">api_not_found</a>).</li>
 </ul>
 <h4 id="compatibilities-capability"><code>compatibilities</code> Capability <a class="anchor" href="#compatibilities-capability">🔗</a></h4>
 <ul>
@@ -2050,6 +2055,8 @@ even if the client has the ability to edit Resources in general.</li>
 </li>
 <li>When not specified, the default value MUST be an empty list and the Registry
 is read-only.</li>
+<li>Attempts to modify an unsupported item MUST generate an error
+(<a href="#api_not_found">api_not_found</a>).</li>
 </ul>
 <h4 id="pagination-capability"><code>pagination</code> Capability <a class="anchor" href="#pagination-capability">🔗</a></h4>
 <ul>
@@ -2211,10 +2218,10 @@ server MUST still include:</p>
     &quot;item&quot;: {
       &quot;type&quot;: &quot;string&quot;
     },
-    &quot;enum&quot;: [ &quot;/capabilities&quot;, &quot;capabilitiesoffered&quot;, &quot;/export&quot;, &quot;/model&quot;,
-              /&quot;modelsource&quot; ]
+    &quot;enum&quot;: [ &quot;/capabilities&quot;, &quot;/capabilitiesoffered&quot;, &quot;/export&quot;, &quot;/model&quot;,
+              &quot;/modelsource&quot; ]
   },
-  &quot;compatibilities&quot; {
+  &quot;compatibilities&quot;: {
     &quot;type&quot;: &quot;map&quot;,
     &quot;item&quot;: {
       &quot;type&quot;: &quot;string&quot;
@@ -2245,11 +2252,11 @@ server MUST still include:</p>
       &quot;type&quot;: &quot;string&quot;
     },
     &quot;enum&quot;: [ &quot;capabilities&quot;, &quot;defaultversionid&quot;, &quot;defaultversionsticky&quot;,
-      &quot;epoch&quot;, &quot;modelsource&quot;, &quot;readonly&quot; ]
+      &quot;epoch&quot;, &quot;id&quot;, &quot;modelsource&quot;, &quot;readonly&quot; ]
   },
   &quot;mutable&quot;: {
     &quot;type&quot;: &quot;array&quot;,
-    &quot;enum&quot;: [ &quot;capabilities&quot;, &quot;entities&quot;, &quot;model&quot; ],
+    &quot;enum&quot;: [ &quot;capabilities&quot;, &quot;entities&quot;, &quot;modelsource&quot; ],
     &quot;item&quot;: {
       &quot;type&quot;: &quot;string&quot;
     }
@@ -2274,7 +2281,7 @@ server MUST still include:</p>
     &quot;enum&quot;: [ false, true ]
   },
   &quot;versionmodes&quot;: {
-    &quot;type&quot;: &quot;string&quot;,
+    &quot;type&quot;: &quot;array&quot;,
     &quot;enum&quot;: [ &quot;manual&quot;, &quot;createdat&quot;, &quot;modifiedat&quot;, &quot;semver&quot; ],
     &quot;item&quot;: {
       &quot;type&quot;: &quot;string&quot;
@@ -2436,7 +2443,7 @@ it MUST adhere to the following:</p>
   &quot;createdat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
   &quot;modifiedat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
   &quot;ancestor&quot;: &quot;&lt;STRING&gt;&quot;,
-  &quot;contenttype&quot;: &quot;&lt;STRING&gt;, ?
+  &quot;contenttype&quot;: &quot;&lt;STRING&gt;&quot;, ?
 
   &quot;&lt;RESOURCE&gt;url&quot;: &quot;&lt;URL&gt;&quot;, ?                # If not local
   &quot;&lt;RESOURCE&gt;&quot;: ... Resource document ..., ? # If local &amp; inlined &amp; JSON
@@ -2745,7 +2752,7 @@ relationship between the two Resources and any changes to one would need to
 be done in the other - running the risk of them getting out of sync.</p>
 <p>The second, and better, option is to create a cross-reference from one
 (the &quot;source&quot; Resource) to the other (&quot;target&quot; Resource). This is done
-by setting the <code>xref</code> attribute on the source Resource to be the <code>xid</code>
+by setting the <code>meta.xref</code> attribute on the source Resource to be the <code>xid</code>
 of the target Resource.</p>
 <p>For example: a <code>schema</code> Resource instance defined as:</p>
 <pre><code class="language-yaml">{
@@ -2809,12 +2816,12 @@ locally defined.</p>
 <ul>
 <li>Any attributes referencing the source MUST use the source's metadata. In
 this respect, users of this serialization would never know that this is a
-cross-referenced Resource except for the presence of the <code>xref</code> attribute.
-For example, its <code>&lt;RESOURCE&gt;id</code> MUST be the source's <code>id</code> and not the
-target's.</li>
-<li>The <code>xref</code> attribute MUST appear within the <code>meta</code> entity so a client
-can easily determine that this Resource is a cross-referenced Resource, and
-it provides a reference to the targeted Resource.</li>
+cross-referenced Resource except for the presence of the <code>meta.xref</code>
+attribute. For example, its <code>&lt;RESOURCE&gt;id</code> MUST be the source's <code>id</code> and not
+the target's.</li>
+<li>The <code>xref</code> attribute MUST always appear when the source's <code>meta</code> sub-object
+is serialized so clients can easily determine that this Resource is a
+cross-referenced Resource.</li>
 <li>The <code>xref</code> XID MUST be the <code>xid</code> of the target Resource.</li>
 </ul>
 <p>From a consumption (read) perspective, aside from the presence of the <code>xref</code>
@@ -2883,7 +2890,7 @@ done.</p>
 <p>Both the source and target Resources MUST be of the same Resource model type,
 simply having similar Resource type definitions is not sufficient. This
 implies that the
-[<code>ximportresources</code>]./model.md#groupsstringximportresources) feature to
+<a href="./model.html#groupsstringximportresources"><code>ximportresources</code></a> feature to
 reference a Resource type from another Group type definition MUST be
 used.</p>
 <p>An <code>xref</code> value that points to a non-existing Resource, either because
@@ -2891,7 +2898,10 @@ it was deleted, never existed or the current client does not have permission
 to see it, is not an error and is not a condition that a server is REQUIRED to
 detect. In these &quot;dangling xref&quot; situations, the serialization of the source
 Resource will not include any target Resource attributes or nested collections.
-Rather, it will only show the <code>&lt;RESOURCE&gt;id</code> and <code>xref</code> attributes.</p>
+Rather, it will only show the <code>&lt;RESOURCE&gt;id</code> and <code>xref</code> attributes. Therefore,
+a client that receives a response containing only those two attributes can
+treat this as an indicator that the target Resource is inaccessible, and can
+make the determination as to whether this is something to investigate or not.</p>
 <p>However, a non-existing Resource is not the same as a poorly formed XID
 value. An <code>xref</code> that isn't syntactically correct, or references a
 non-existing Group or Resource, MUST generate an error
@@ -3491,7 +3501,7 @@ perform validation of the Version. Additionally, when <code>false</code>, if
 <code>false</code>.</p>
 <p>Note that <code>&quot;false&quot;</code> MUST NOT be used for validation failure. In those cases
 the write operation MUST generate an error
-(<a href="#format_violation">format_violation</a> and reject the request regardless
+(<a href="#format_violation">format_violation</a>) and reject the request regardless
 of the value of the
 <a href="./model.html#groupsstringresourcesstringstrictvalidation"><code>strictvalidation</code></a>`
 model aspect.</p>
@@ -3569,7 +3579,7 @@ MUST be present with an explanation as to why the server was unable to
 perform validation of the Version.</p>
 <p>Note that <code>false</code> MUST NOT be used for validation failure. In those cases
 the write operation MUST generate an error
-(<a href="#compatibility_violation">compatibility_violation</a> and reject the request
+(<a href="#compatibility_violation">compatibility_violation</a>) and reject the request
 regardless of the value of the
 <a href="./model.html#groupsstringresourcesstringstrictvalidation"><code>strictvalidation</code></a>`
 model aspect.</p>
@@ -4013,7 +4023,6 @@ the following:</p>
     &quot;labels&quot;: { &quot;&lt;STRING&gt;&quot;: &quot;&lt;STRING&gt;&quot; * }, ?
     &quot;createdat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
     &quot;modifiedat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
-    &quot;ancestor&quot;: &quot;&lt;STRING&gt;&quot;,
     &quot;readonly&quot;: &lt;BOOLEAN&gt;,
     &quot;compatibility&quot;: &quot;&lt;STRING&gt;&quot;,
     &quot;deprecated&quot;: { ... }, ?
@@ -4305,7 +4314,10 @@ entity's existing <code>&lt;SINGULAR&gt;id</code> value MUST NOT be performed.</
 single entity not a collection.</p>
 <p>This features is design for cases where an entity is exported and then used
 as input for another entity where that targeted entity needs to use a
-different <code>&lt;SINGULAR&gt;id</code>, without needing to transform the exported data.</p>
+different <code>&lt;SINGULAR&gt;id</code> for the root entity, without needing to transform
+the exported data.</p>
+<p>Note that any nested entities in the request MUST retain their <code>&lt;SINGULAR&gt;id</code>
+values.</p>
 <p>In cases where the target entity is a Version, then the flag MUST apply to
 both the Resource's <code>&lt;SINGULAR&gt;id</code> and the <code>versionid</code>.</p>
 </li>
@@ -4725,6 +4737,15 @@ the API supports, if any.</p>
 </ul>
 </li>
 </ul>
+<h4 id="api_not_found">api_not_found <a class="anchor" href="#api_not_found">🔗</a></h4>
+<ul>
+<li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#api_not_found</code></li>
+<li>Code: <code>404 Not Found</code></li>
+<li>Title: <code>The specified API is not supported: &lt;subject&gt;.</code></li>
+<li>Subject: <code>&lt;request_path&gt;</code></li>
+</ul>
+<p><code>request_path</code> MUST be the &quot;Path&quot; portion of the incoming request URL,
+starting with <code>/</code>. E.g. <code>/export</code> if the &quot;export&quot; feature is not supported.</p>
 <h3 id="bad_defaultversionid">bad_defaultversionid <a class="anchor" href="#bad_defaultversionid">🔗</a></h3>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#bad_defaultversionid</code></li>

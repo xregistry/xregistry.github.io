@@ -1,11 +1,11 @@
 {
-  "createdat": "2026-04-23T16:20:32.537728459Z",
+  "createdat": "2026-05-07T16:26:48.253386987Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
   "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/docs/model.json/versions/v1.0-rc1",
   "docid": "model.json",
   "epoch": 1,
-  "modifiedat": "2026-04-23T16:20:32.537728459Z",
+  "modifiedat": "2026-05-07T16:26:48.253386987Z",
   "readonly": false,
   "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/docs/model.json/meta",
   "xid": "/xregistryspecs/cloudevents-v1/docs/model.json/meta"

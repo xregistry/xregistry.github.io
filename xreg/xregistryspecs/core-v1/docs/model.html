@@ -449,9 +449,13 @@ the server.</p>
 <li>Indicates whether this attribute is REQUIRED to have a non-null value.</li>
 <li>When set to <code>true</code>, this specification does not mandate how this
 attribute's value is populated (i.e. by a client, the server or via a
-default value), just that by the end of processing any request it MUST
-have a non-null value, and generate an error
-(<a href="./spec.html#invalid_attribute">invalid_attribute</a>) if not.</li>
+default value), just that by the end of the server's processing any request
+it MUST have a non-null value, and generate an error
+(<a href="./spec.html#invalid_attribute">invalid_attribute</a>) if not. Note that this
+implies that a REQUIRED attribute does not mean that clients are mandated to
+include that attribute in its requests. If the attribute will automatically
+be populated by the server (e.g. it has a default value defined) the client
+MAY omit it.</li>
 <li>A <code>true</code> value also implies that this attribute MUST be serialized in any
 response from the server - with the exception of the optimizations
 specified for document view.</li>
