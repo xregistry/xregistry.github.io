@@ -1,11 +1,24 @@
 {
-  "apis": [
-    "/capabilities",
-    "/capabilitiesoffered",
-    "/export",
-    "/model",
-    "/modelsource"
-  ],
+  "available": {
+    "capabilities": {
+      "mutable": false
+    },
+    "capabilitiesoffered": {
+      "mutable": false
+    },
+    "entities": {
+      "mutable": false
+    },
+    "export": {
+      "mutable": false
+    },
+    "model": {
+      "mutable": false
+    },
+    "modelsource": {
+      "mutable": false
+    }
+  },
   "compatibilities": {
     "avro*": [
       "backward",
@@ -65,7 +78,6 @@
     "modelsource",
     "readonly"
   ],
-  "mutable": null,
   "pagination": false,
   "shortself": false,
   "specversions": [

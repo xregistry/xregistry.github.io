@@ -1,11 +1,11 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2026-05-07T16:26:48.388667265Z",
+  "createdat": "2026-05-20T18:45:22.344988677Z",
   "docid": "spec.md",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/docs/spec.md/meta",
-  "modifiedat": "2026-05-07T16:26:48.388667265Z",
+  "modifiedat": "2026-05-20T18:45:22.344988677Z",
   "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/docs/spec.md",
   "versionid": "v1.0-rc1",
   "versionscount": 1,

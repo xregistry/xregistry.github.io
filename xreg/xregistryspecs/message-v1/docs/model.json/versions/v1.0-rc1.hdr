@@ -2,11 +2,11 @@ content-disposition:model.json
 content-location:https://xregistry.io/xreg/xregistryspecs/message-v1/docs/model.json/versions/v1.0-rc1
 content-type:text/plain; charset=utf-8
 xregistry-ancestor:v1.0-rc1
-xregistry-createdat:2026-05-07T16:26:54.700089536Z
+xregistry-createdat:2026-05-20T18:45:31.290391527Z
 xregistry-docid:model.json
 xregistry-epoch:1
 xregistry-isdefault:true
-xregistry-modifiedat:2026-05-07T16:26:54.700089536Z
+xregistry-modifiedat:2026-05-20T18:45:31.290391527Z
 xregistry-self:https://xregistry.io/xreg/xregistryspecs/message-v1/docs/model.json/versions/v1.0-rc1
 xregistry-versionid:v1.0-rc1
 xregistry-xid:/xregistryspecs/message-v1/docs/model.json/versions/v1.0-rc1
