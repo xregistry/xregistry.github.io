@@ -328,9 +328,7 @@ Document</a> for more information.</p>
 <p>This specification is designed such that clients can choose how they want the
 data from a server to be returned. There are three main &quot;views&quot; that clients
 can choose from:</p>
-<ul>
-<li>
-<p>Single Document View</p>
+<h4 id="single-document-view">Single Document View <a class="anchor" href="#single-document-view">🔗</a></h4>
 <p>In this view, clients retrieving all (or part) of the Registry hierarchy
 as a single document. In this case, nested (or child) entities MAY be
 &quot;inlined&quot; into the retrieved document such that the need for secondary
@@ -340,9 +338,7 @@ document storage system (e.g. Github), or as input into local tooling that
 expects all of the relevant data to be stored locally on disk.</p>
 <p>See the <a href="./http.html#get-export">HTTP <code>GET /export</code> operation</a> for one way to
 generate this view.</p>
-</li>
-<li>
-<p>API View</p>
+<h4 id="api-view">API View <a class="anchor" href="#api-view">🔗</a></h4>
 <p>In this view, it is assumed that the client is interested in an interactive
 discovery and retrieval of the Registry data. Most often clients will &quot;walk&quot;
 the hierarchy of entities by following the references (links) provided
@@ -351,9 +347,7 @@ such, in this view, each entity is, by default, retrieved from the server
 via independent &quot;read&quot; operations.</p>
 <p>A query without the use of the <a href="#doc-flag">Doc flag</a>, is an example of how
 to generate this view.</p>
-</li>
-<li>
-<p>Multiple Document View</p>
+<h4 id="multiple-document-view">Multiple Document View <a class="anchor" href="#multiple-document-view">🔗</a></h4>
 <p>This is a variant of the &quot;API view&quot;. In situations where the Registry data
 is stored as independent files either on disk, or in some other object
 storage system, the client might want to avoid the duplication of
@@ -366,8 +360,6 @@ control system (e.g. Github) to minimize the number of conflicting edits
 between users in a very fluid environment.</p>
 <p>A query with the use of the <a href="#doc-flag">Doc flag</a>, is an example of how to
 generate this view.</p>
-</li>
-</ul>
 <p>This specification provides the mechanisms to allow for users to choose the
 best &quot;view&quot; for their needs. Regardless of the view, the design allows for
 the retrieved data to then be used as input into an xRegistry server.</p>
@@ -421,7 +413,14 @@ Alternative serialization formats MAY be defined.</p>
   &quot;modifiedat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
 
   &quot;capabilities&quot;: {                     # Supported capabilities/options
-    &quot;apis&quot;: [ &quot;/capabilities&quot;,? &quot;/export&quot;,? &quot;/model&quot;? ], ?
+    &quot;available&quot;: {
+      &quot;capabilities&quot;: { &quot;mutable&quot;: &lt;BOOLEAN&gt; }, ?
+      &quot;capabilitiesoffered&quot;: { &quot;mutable&quot;: &lt;BOOLEAN&gt; }, ?
+      &quot;entities&quot;: { &quot;mutable&quot;: &lt;BOOLEAN&gt; },
+      &quot;export&quot;: { &quot;mutable&quot;: false }, ?
+      &quot;model&quot;:  { &quot;mutable&quot;: false }, ?
+      &quot;modelsource&quot;: { &quot;mutable&quot;: &lt;BOOLEAN&gt; } ?
+    },
     &quot;compatibilities&quot;: {
       &quot;&lt;STRING&gt;&quot; : [ &quot;&lt;STRING&gt;&quot; * ] *
     }, ?
@@ -433,9 +432,6 @@ Alternative serialization formats MAY be defined.</p>
     &quot;formats&quot;: [ &quot;&lt;STRING&quot; * ], ?
     &quot;ignores&quot;: [ &quot;capabilities&quot;,? &quot;defaultversionid&quot;,? &quot;defaultversionsticky&quot;,?
       &quot;id&quot;,? &quot;epoch&quot;,? &quot;modelsource&quot;,? &quot;readonly&quot;? ],
-    &quot;mutable&quot;: [                        # What is mutable in the Registry
-      &quot;capabilities&quot;,? &quot;entities&quot;,? &quot;modelsource&quot;,? &quot;&lt;STRING&gt;&quot;*
-    ], ?
     &quot;pagination&quot;: &lt;BOOLEAN&gt;, ?
     &quot;shortself&quot;: &lt;BOOLEAN&gt;, ?
     &quot;specversions&quot;: [ &quot;1.0-rc2&quot;, &quot;&lt;STRING&gt;&quot;* ], ?
@@ -1815,11 +1811,16 @@ this is meant to represent just the customizations, or extensions, to the
 base <a href="./model.html#registry-model">xRegistry model</a> as defined this
 specification. This allows for users to view (and edit) just the custom
 aspects of the model without the &quot;noise&quot; of the specification-defined parts.</p>
-<p>During the processing of an update operation, if this attribute is present,
-then the Registry's model MUST be updated prior to any entities being
-updated. A value of <code>null</code>, or an empty JSON object (<code>{}</code>), MUST result
+<p>During a write operation:</p>
+<ul>
+<li>The absence of this attribute MUST result in no changes to the model, or
+modelsource of the Registry.</li>
+<li>An explicit value of <code>null</code>, or an empty JSON object (<code>{}</code>), MUST result
 in all Groups, Resources and extension attributes being removed from the
-model.</p>
+model.</li>
+<li>If present, the Registry's model MUST be updated prior to any entities
+being updated.</li>
+</ul>
 <p>The serialization of this attribute MUST be semantically equivalent to
 what was used to create the model, but it is NOT REQUIRED to be syntactically
 equivalent. In other words, it might be &quot;pretty-printed&quot;, but it MUST NOT
@@ -1865,7 +1866,7 @@ configuration detail that will help in successful usage of that feature.</p>
 being a <code>&lt;BOOLEAN&gt;</code> value of <code>true</code> to indicate support for the feature.</p>
 <p>The JSON serialization of capabilities map MUST be of the form:</p>
 <pre><code>{
-  &quot;apis&quot;: [ &quot;&lt;STRING&gt;&quot; * ], ?
+  &quot;available&quot;: { &quot;&lt;STRING&gt;&quot;: { &quot;mutable&quot;: &lt;BOOLEAN&gt; } + },
   &quot;compatibilities&quot;: { &quot;&lt;STRING&gt;&quot;: [ &quot;&lt;STRING&gt;&quot; * ] * }, ?
   &quot;flags&quot;: [ &quot;&lt;STRING&gt;&quot; * ], ?
   &quot;formats&quot;: [ &quot;&lt;STRING&gt;&quot; * ], ?
@@ -1913,39 +1914,79 @@ attribute well as a stand-alone map independent of the Registry entity (e.g.
 as with all interactions with a server, security/access controls MAY be
 needed.</p>
 <p>The following defines the specification-defined capabilities:</p>
-<h4 id="apis-capability"><code>apis</code> Capability <a class="anchor" href="#apis-capability">🔗</a></h4>
+<h4 id="available-capability"><code>available</code> Capability <a class="anchor" href="#available-capability">🔗</a></h4>
 <ul>
-<li>Name: <code>apis</code></li>
-<li>Type: Array of strings</li>
-<li>Description: The list of APIs (beyond the APIs for the data model) that
-are supported for read operations. This list is meant to allow for
-clients/tooling to easily discover which of the APIs, that are not related
-to the data model, are supported. Whether any of the APIs listed are
-supported for write operations can be discovered via the <code>mutable</code> capability.</li>
-<li>Note that it is allowable for the data that is available via more than one
-mechanism to not be available via all mechanisms. For example, it is
-possible for an implementation to support retrieving the model via a
-model-direct API (e.g. <a href="./http.html#get-model"><code>GET /model</code></a> in HTTP), but not
-support inlining the model via the <a href="#inline-flag">Inline Flag</a>.</li>
-<li>Defined values:
+<li>
+<p>Name: <code>available</code></p>
+</li>
+<li>
+<p>Type: Map of types of xRegistry metadata available.</p>
+</li>
+<li>
+<p>Description: The list of the various types of metadata available from this
+xRegistry instance. This information is meant to be used by clients, and
+tooling, to programmatically discover which pieces of xRegistry information
+are available to query or edit.</p>
+<p>The &quot;key&quot; of each map entry MUST be one of the defined values listed below.
+The &quot;value&quot; of each map entry MUST be an Object with a nested <code>&quot;mutable&quot;</code>
+boolean attribute indicating whether or not the corresponding data is
+user-editable.</p>
+<p>Some of the items listed are available via more than one mechanism. For
+example, &quot;model&quot;, in the HTTP protocol case, is available the <code>/model</code> API
+as well as via the <code>?inline=model</code> query parameter. In these cases, the data
+MUST be available via all supported retrieval mechanisms. For example, it
+would violate this specification if the <code>/model</code> API was supported but
+<code>?inline=model</code> was not, assuming the <code>?inline</code> flag was supported. If the
+<code>?inline</code> flag, in general, was not supported then only allowing the
+retrieval of the model via the <code>/model</code> API is permitted. Note that if
+a separate API is defined for a piece of data, it MUST be supported if that
+data type is listed in this capability.</p>
+<p>Metadata not listed in this capability is to be assumed to be unavailable
+via all mechanisms. Attempts to access unavailable metadata MUST generate
+an error (<a href="#not_available">not_available</a>).</p>
+</li>
+<li>
+<p>Defined values:</p>
 <ul>
-<li><code>/capabilities</code></li>
-<li><code>/capabilitiesoffered</code></li>
-<li><code>/export</code></li>
-<li><code>/model</code></li>
-<li><code>/modelsource</code></li>
+<li><a href="#registry-capabilities"><code>capabilities</code></a></li>
+<li><a href="#offered-capabilities"><code>capabilitiesoffered</code></a></li>
+<li><code>entities</code> (xRegistry root entity, Groups, Resource and Versions. MUST
+have a <code>mutable</code> value of <code>false</code>)</li>
+<li><a href="#single-document-view"><code>export</code></a></li>
+<li><a href="#model-attribute"><code>model</code></a> (MUST have a <code>mutable</code> value of <code>false</code>)</li>
+<li><a href="#modelsource-attribute"><code>modelsource</code></a></li>
 </ul>
 </li>
-<li>Values MUST start with <code>/</code>.</li>
-<li>When not specified, the default value MUST be an empty list and no APIs
-beyond those for the data model are supported.</li>
-<li>Implementations MAY define their own values but they MUST NOT conflict with
-specification-defined APIs, Registry-level attributes or Group collection
-attribute names.</li>
-<li>It is STRONGLY RECOMMENDED that implementations support at least
-<code>/capabilities</code> and <code>/model</code>.</li>
-<li>Attempts to access an unsupported API MUST generate an error
-(<a href="#api_not_found">api_not_found</a>).</li>
+<li>
+<p>When not specified, the default value MUST be just the <code>entities</code> value,
+with a <code>&quot;mutable&quot;</code> value of <code>true</code>.</p>
+</li>
+<li>
+<p>This capability MUST always include <code>entities</code> as a value, even if its
+<code>mutable</code> attribute is <code>false</code>.</p>
+</li>
+<li>
+<p>Implementations MAY define additional values.</p>
+</li>
+<li>
+<p>Implementations MAY define additional attributes for the nested Object.</p>
+</li>
+<li>
+<p>It is STRONGLY RECOMMENDED that implementations also support at least
+<code>capabilities</code> and <code>model</code>.</p>
+</li>
+<li>
+<p>Examples:</p>
+<pre><code class="language-yaml">&quot;available&quot;: {
+  &quot;capabilities&quot;: { &quot;mutable&quot;: false },
+  &quot;capabilitiesoffered&quot;: { &quot;mutable&quot;: false },
+  &quot;entities&quot;: { &quot;mutable&quot;: true },
+  &quot;export&quot;: { &quot;mutable&quot;: false },
+  &quot;model&quot;:  { &quot;mutable&quot;: false },
+  &quot;modelsource&quot;: { &quot;mutable&quot;: true }
+}
+</code></pre>
+</li>
 </ul>
 <h4 id="compatibilities-capability"><code>compatibilities</code> Capability <a class="anchor" href="#compatibilities-capability">🔗</a></h4>
 <ul>
@@ -2038,26 +2079,6 @@ offered capabilities).</li>
 </ul>
 </li>
 </ul>
-<h4 id="mutable-capability"><code>mutable</code> Capability <a class="anchor" href="#mutable-capability">🔗</a></h4>
-<ul>
-<li>Name <code>mutable</code></li>
-<li>Type: Array of strings</li>
-<li>Description: The list of items in the Registry that can be edited by the
-client. Presence in this list does not guarantee that a client can edit
-all items of that type. For example, some Resources might still be read-only
-even if the client has the ability to edit Resources in general.</li>
-<li>Supported values:
-<ul>
-<li><code>capabilities</code> (ability to configure the server's features)</li>
-<li><code>entities</code> (Groups, Resources, Versions and the Registry entity itself)</li>
-<li><code>modelsource</code> (the <a href="./model.html#registry-model">Registry model</a>)</li>
-</ul>
-</li>
-<li>When not specified, the default value MUST be an empty list and the Registry
-is read-only.</li>
-<li>Attempts to modify an unsupported item MUST generate an error
-(<a href="#api_not_found">api_not_found</a>).</li>
-</ul>
 <h4 id="pagination-capability"><code>pagination</code> Capability <a class="anchor" href="#pagination-capability">🔗</a></h4>
 <ul>
 <li>Name: <code>pagination</code></li>
@@ -2136,17 +2157,6 @@ error (<a href="#capability_missing_value">capability_missing_value</a>).</p>
 (<a href="#capability_value">capability_value</a>).</p>
 <p>A request to update an unknown capability MUST generate an error
 (<a href="#capability_unknown">capability_unknown</a>).</p>
-<p>When processing a request to update the capabilities, the processing of the
-changes to the capabilities MUST be in effect prior to any other changes
-specified in the request being made, except for the following capability
-attributes:</p>
-<ul>
-<li><code>apis</code></li>
-<li><code>specversions</code></li>
-</ul>
-<p>These two only impact subsequent requests, however, if the response includes
-the serialization of the Registry's capabilities, then the full set of
-changes MUST appear in that serialization.</p>
 <p>Normally modifying the capabilities of a server and modifying any entity data
 are typically two very distinct actions, and will not normally happen at the
 same time. However, if the situation does occur, a consistent (interoperable)
@@ -2160,36 +2170,30 @@ map, and the corresponding value provides details about the capability
 (e.g. allowed values and pointer to its documentation).</p>
 <p>The JSON serialization of the capabilities offering map MUST be of the form:</p>
 <pre><code class="language-yaml">{
-  &quot;&lt;STRING&gt;&quot;: {
+  &quot;&lt;STRING&gt;&quot;: {                   # Name of Capability attribute
     &quot;type&quot;: &quot;&lt;TYPE&gt;&quot;,
-    &quot;item&quot;: {
-      &quot;type&quot;: &quot;&lt;TYPE&gt;&quot;
-    }, ?
-    &quot;enum&quot;: [ &lt;VALUE&gt;, * ], ?
-    &quot;options&quot;: &lt;MAP&gt;, ?
+    &quot;enum&quot;: [ &lt;VALUE&gt;, * ], ?     # Allowed values for scalars
     &quot;min&quot;: &lt;VALUE&gt;, ?
     &quot;max&quot;: &lt;VALUE&gt;, ?
-    &quot;documentation&quot;: &quot;&lt;URL&gt;&quot; ?
+    &quot;documentation&quot;: &quot;&lt;URL&gt;&quot;, ?
+
+    &quot;attributes&quot;: { ... }, ?      # If &quot;type&quot; is object
+    &quot;item&quot;: {                     # If &quot;type&quot; is map,array
+      &quot;type&quot;: &quot;&lt;TYPE&gt;&quot;,           # Value type of map, array type
+      &quot;attributes&quot;: { ... }, ?    # If this item &quot;type&quot; is object (see above)
+      &quot;item&quot;: { ... } ?           # If this item &quot;type&quot; is map,array (see above)
+    }, ?
   } *
 }
 </code></pre>
 <p>Where:</p>
 <ul>
-<li><code>&lt;STRING&gt;</code> MUST be the capability name.</li>
-<li><code>&lt;TYPE&gt;</code> MUST be one of <code>boolean</code>, <code>string</code>, <code>integer</code>, <code>decimal</code>,
-<code>uinteger</code>, <code>array</code> or <code>map</code> as defined in <a href="#attributes-and-extensions">Attributes and
-Extensions</a>.</li>
-<li>When <code>&quot;type&quot;</code> is <code>array</code> <code>&quot;item.type&quot;</code> MUST be one of <code>boolean</code>,
-<code>string</code>, <code>integer</code>, <code>decimal</code>, <code>uinteger</code>. When <code>&quot;type&quot;</code> is <code>map</code> then
-<code>&quot;item.type&quot;</code> MUST be of type <code>string</code>. If <code>&quot;type&quot;</code> is of any other value
-then <code>&quot;item&quot;</code> MUST be absent. This attribute specifies the &quot;type&quot; of the
-nested array/map item.</li>
+<li>The top-level <code>&quot;&lt;STRING&gt;&quot;</code> MUST be the capability name.</li>
+<li><code>&lt;TYPE&gt;</code> MUST be one of the data types specified in
+<a href="#attributes-and-extensions">Attributes and Extensions</a>.</li>
 <li><code>&quot;enum&quot;</code>, when specified, contains a list of zero or more <code>&lt;VALUE&gt;</code>s whose
-type MUST match either <code>&quot;type&quot;</code> or <code>&quot;item.type&quot;</code> if <code>&quot;type&quot;</code> is <code>&quot;array&quot;</code>.
-This indicates the list of allowable values for this capability.</li>
-<li><code>&quot;options&quot;</code>, when specified, contains a map of zero or more map-keys (of type
-<code>&lt;STRING&gt;</code> where each key will then have an array of allowable <code>&lt;STRING&gt;</code>
-values that MAY be used for the specified key in the capability.</li>
+type MUST match either <code>&quot;type&quot;</code> (when scaler) or <code>&quot;item.type&quot;</code> if <code>&quot;type&quot;</code>
+is <code>&quot;array&quot;</code> or <code>&quot;map&quot;</code> and <code>&quot;item.type&quot;</code> is a scalar.</li>
 <li><code>&quot;min&quot;</code> and <code>&quot;max&quot;</code>, when specified, MUST match the same type as either
 <code>&quot;type&quot;</code> or <code>&quot;item.type&quot;</code> if <code>&quot;type&quot;</code> is <code>&quot;array&quot;</code>. These indicate the
 minimum or maximum (inclusive) value range of this capability. When not
@@ -2197,6 +2201,12 @@ specified, there is no stated lower (or upper) limit. These MUST only be
 used when &quot;type&quot; is a numeric type.</li>
 <li><code>&quot;documentation&quot;</code> provides a URL with additional information about the
 capability.</li>
+<li><code>&quot;attributes&quot;</code>, when specified, contains the list (as a map)  of attributes
+defined for the &quot;object&quot;-typed capability. This makes the schema of the
+capability recursive.</li>
+<li><code>&quot;item&quot;</code> MUST be specified when <code>&quot;type&quot;</code> is <code>&quot;array&quot;</code> or <code>&quot;map&quot;</code>, and
+specify details about the items in the array, or values of the map.
+Note, all map keys MUST be of type string.</li>
 </ul>
 <p>Notice the syntax borrows much of the same structure from the
 xRegistry <a href="./model.html#registry-model">model definition</a> language.</p>
@@ -2213,22 +2223,48 @@ server MUST still include:</p>
 <p>in the serialization of its capabilities offering map.</p>
 <p><strong>Examples:</strong></p>
 <pre><code class="language-yaml">{
-  &quot;apis&quot;: {
-    &quot;type&quot;: &quot;array&quot;,
-    &quot;item&quot;: {
-      &quot;type&quot;: &quot;string&quot;
-    },
-    &quot;enum&quot;: [ &quot;/capabilities&quot;, &quot;/capabilitiesoffered&quot;, &quot;/export&quot;, &quot;/model&quot;,
-              &quot;/modelsource&quot; ]
+  &quot;available&quot;: {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;attributes&quot;: {
+      &quot;capabilities&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;attributes&quot;: { &quot;mutable&quot;: { &quot;type&quot;: &quot;boolean&quot; } }
+      },
+      &quot;capabilitiesoffered&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;attributes&quot;: { &quot;mutable&quot;: { &quot;type&quot;: &quot;boolean&quot; } }
+      },
+      &quot;entities&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;attributes&quot;: { &quot;mutable&quot;: { &quot;type&quot;: &quot;boolean&quot;, &quot;enum&quot;: [ false ] } }
+      },
+      &quot;export&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;attributes&quot;: { &quot;mutable&quot;: { &quot;type&quot;: &quot;boolean&quot;, &quot;enum&quot;: [ false ] } }
+      },
+      &quot;model&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;attributes&quot;: { &quot;mutable&quot;: { &quot;type&quot;: &quot;boolean&quot; } }
+      },
+      &quot;modelsource&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;attributes&quot;: { &quot;mutable&quot;: { &quot;type&quot;: &quot;boolean&quot; } }
+      }
+    }
   },
   &quot;compatibilities&quot;: {
-    &quot;type&quot;: &quot;map&quot;,
-    &quot;item&quot;: {
-      &quot;type&quot;: &quot;string&quot;
-    },
-    &quot;options&quot;: {
-      &quot;avro&quot;: [ &quot;backward&quot;, &quot;forward&quot; ],
-      &quot;protobuf&quot;: [ &quot;backward&quot; ]
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;attributes&quot;: {
+      &quot;avro&quot;: {
+        &quot;type&quot;: &quot;array&quot;,
+        &quot;item&quot;: { &quot;type&quot;: &quot;string&quot; },
+        &quot;enum&quot;: [ &quot;backward&quot;, &quot;forward&quot; ]
+      },
+      &quot;protobuf&quot;: {
+        &quot;type&quot;: &quot;array&quot;,
+        &quot;item&quot;: { &quot;type&quot;: &quot;string&quot; },
+        &quot;enum&quot;: [ &quot;backward&quot; ]
+      }
     }
   },
   &quot;flags&quot;: {
@@ -4737,15 +4773,6 @@ the API supports, if any.</p>
 </ul>
 </li>
 </ul>
-<h4 id="api_not_found">api_not_found <a class="anchor" href="#api_not_found">🔗</a></h4>
-<ul>
-<li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#api_not_found</code></li>
-<li>Code: <code>404 Not Found</code></li>
-<li>Title: <code>The specified API is not supported: &lt;subject&gt;.</code></li>
-<li>Subject: <code>&lt;request_path&gt;</code></li>
-</ul>
-<p><code>request_path</code> MUST be the &quot;Path&quot; portion of the incoming request URL,
-starting with <code>/</code>. E.g. <code>/export</code> if the &quot;export&quot; feature is not supported.</p>
 <h3 id="bad_defaultversionid">bad_defaultversionid <a class="anchor" href="#bad_defaultversionid">🔗</a></h3>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#bad_defaultversionid</code></li>
@@ -5165,6 +5192,13 @@ field is just a substitution value and MUST NOT be empty.</p>
 <li><code>plural</code>: The &quot;plural&quot; Resource type of the Resource being processed.</li>
 </ul>
 </li>
+</ul>
+<h3 id="not_available">not_available <a class="anchor" href="#not_available">🔗</a></h3>
+<ul>
+<li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#not_available</code></li>
+<li>Code: <code>400 Bad Request</code></li>
+<li>Subject: <code>&lt;capability_available_type&gt;</code></li>
+<li>Title: <code>The requested data (&lt;subject&gt;) is not available.</code></li>
 </ul>
 <h3 id="not_found">not_found <a class="anchor" href="#not_found">🔗</a></h3>
 <p>Note, this SHOULD only be used when the request was directed to an entity that

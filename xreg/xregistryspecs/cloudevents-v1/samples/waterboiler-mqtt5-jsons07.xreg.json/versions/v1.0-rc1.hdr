@@ -2,10 +2,10 @@ content-disposition:waterboiler-mqtt5-jsons07.xreg.json
 content-location:https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/waterboiler-mqtt5-jsons07.xreg.json/versions/v1.0-rc1
 content-type:text/plain; charset=utf-8
 xregistry-ancestor:v1.0-rc1
-xregistry-createdat:2026-05-20T18:45:24.404875609Z
+xregistry-createdat:2026-05-21T20:48:51.595396663Z
 xregistry-epoch:1
 xregistry-isdefault:true
-xregistry-modifiedat:2026-05-20T18:45:24.404875609Z
+xregistry-modifiedat:2026-05-21T20:48:51.595396663Z
 xregistry-sampleid:waterboiler-mqtt5-jsons07.xreg.json
 xregistry-self:https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/waterboiler-mqtt5-jsons07.xreg.json/versions/v1.0-rc1
 xregistry-versionid:v1.0-rc1

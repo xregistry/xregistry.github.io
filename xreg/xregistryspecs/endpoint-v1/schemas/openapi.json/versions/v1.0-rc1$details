@@ -1,9 +1,9 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2026-05-20T18:45:30.750419886Z",
+  "createdat": "2026-05-21T20:48:57.84768646Z",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2026-05-20T18:45:30.750419886Z",
+  "modifiedat": "2026-05-21T20:48:57.84768646Z",
   "schemaid": "openapi.json",
   "self": "https://xregistry.io/xreg/xregistryspecs/endpoint-v1/schemas/openapi.json/versions/v1.0-rc1",
   "versionid": "v1.0-rc1",
