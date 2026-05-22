@@ -1,9 +1,9 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2026-05-22T17:01:29.909302261Z",
+  "createdat": "2026-05-22T18:08:38.070175938Z",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2026-05-22T17:01:29.909302261Z",
+  "modifiedat": "2026-05-22T18:08:38.070175938Z",
   "schemaid": "document-schema.json",
   "self": "https://xregistry.io/xreg/xregistryspecs/schema-v1/schemas/document-schema.json/versions/v1.0-rc1",
   "versionid": "v1.0-rc1",

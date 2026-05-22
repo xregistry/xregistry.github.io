@@ -265,9 +265,8 @@ Extensions</a>.</li>
 <ul>
 <li>Type: String.</li>
 <li>OPTIONAL.</li>
-<li>The type of entity that this attribute points to when <code>type</code> is set to
-<code>url-reference</code>, <code>uri-reference</code> or <code>xid</code>. <code>target</code> MUST NOT be used
-for any other type of attribute.</li>
+<li>The type of entity that this attribute points to when <code>type</code> is set to <code>url</code>,
+<code>uri</code> or <code>xid</code>. <code>target</code> MUST NOT be used for any other type of attribute.</li>
 <li>The value of this model attribute MUST be an &quot;xid template&quot; of one of the
 following forms:
 <ul>
@@ -290,7 +289,7 @@ of this Resource type, not the Resource itself.</li>
 its model definition MUST match the <code>target</code> entity type specified. An
 <code>xid</code> attribute that does not include <code>target</code> definition has no
 such restriction and MAY be any valid <code>xid</code> value.</li>
-<li>A URI/URL-reference entity attribute MAY include <code>target</code> as part of its
+<li>A URI/URL entity attribute MAY include <code>target</code> as part of its
 definition. If so, then any runtime value that is a relative URI/URL
 (begins with <code>/</code>) MUST be an <code>xid</code> and MUST adhere to the <code>target</code> entity
 type specified, if specified. Absolute URIs/URLs are not constrained by
@@ -517,8 +516,7 @@ attribute MUST only be used when the owning attribute's <code>type</code> value 
 <h3 id="attributesstringitemtarget"><code>attributes.&lt;STRING&gt;.item.target</code> <a class="anchor" href="#attributesstringitemtarget">🔗</a></h3>
 <ul>
 <li>Type: String.</li>
-<li>OPTIONAL, and MUST only be used when <code>item.type</code> is <code>url-reference</code>,
-<code>uri-reference</code> or <code>xid</code>.</li>
+<li>OPTIONAL, and MUST only be used when <code>item.type</code> is <code>url</code>, <code>uri</code> or <code>xid</code>.</li>
 <li>See <a href="#attributesstringtarget"><code>attributes.&lt;STRING&gt;.target</code></a> above.</li>
 </ul>
 <h3 id="attributesstringitemnamecharset"><code>attributes.&lt;STRING&gt;.item.namecharset</code> <a class="anchor" href="#attributesstringitemnamecharset">🔗</a></h3>

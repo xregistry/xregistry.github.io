@@ -475,7 +475,7 @@ Versions for a schema named <code>com.example.telemetrydata</code>:</p>
 <p>When the <code>format</code> attribute is set to <code>JsonSchema</code>, the <code>schema</code> attribute of
 the schema Resource is a JSON object representing a JSON Schema document
 conformant with the declared version.</p>
-<p>When a URI-reference, like <a href="./../../message-v1/docs/spec.html#dataschemauri"><code>schemauri</code></a>,
+<p>When a URI, like <a href="./../../message-v1/docs/spec.html#dataschemauri"><code>schemauri</code></a>,
 points to a JSON Schema document it MAY use a <a href="https://www.rfc-editor.org/rfc/rfc6901">JSON pointer</a>
 expression to deep link into the schema document to reference a particular type
 definition. Otherwise the top-level object definition of the schema is used.</p>
@@ -504,7 +504,7 @@ Schema specification that is used to define the schema.</p>
 <p>When the <code>format</code> attribute is set to <code>XSD</code>, the <code>schema</code> attribute of schema
 Resource is a string containing an XML Schema document conformant with the
 declared version.</p>
-<p>When a URI-reference, like <a href="./../../message-v1/docs/spec.html#dataschemauri"><code>schemauri</code></a>,
+<p>When a URI, like <a href="./../../message-v1/docs/spec.html#dataschemauri"><code>schemauri</code></a>,
 points to a JSON Schema document it MAY use an XPath expression to deep link
 into the schema document to reference a particular type definition. Otherwise
 the top-level object definition of the schema is used.</p>
@@ -530,7 +530,7 @@ with the declared version.</p>
 <li><code>Avro/1.8.2</code> is the identifier for the Apache Avro release 1.8.2.</li>
 <li><code>Avro/1.11.0</code> is the identifier for the Apache Avro release 1.11.0</li>
 </ul>
-<p>When a URI-reference, like <a href="./../../message-v1/docs/spec.html#dataschemauri"><code>schemauri</code></a>,
+<p>When a URI, like <a href="./../../message-v1/docs/spec.html#dataschemauri"><code>schemauri</code></a>,
 points to a JSON Schema document it MAY use a URI fragment suffix
 <code>[:]{record-name}</code> to deep link into the schema document to reference a
 particular type definition. Otherwise the top-level object definition of the
@@ -559,7 +559,7 @@ with the declared version.</p>
 <li><code>Protobuf/3</code> is the identifier for the Protobuf syntax version 3.</li>
 <li><code>Protobuf/2</code> is the identifier for the Protobuf syntax version 2.</li>
 </ul>
-<p>A URI-reference, like <a href="./../../message-v1/docs/spec.html#dataschemauri"><code>schemauri</code></a> that
+<p>A URI, like <a href="./../../message-v1/docs/spec.html#dataschemauri"><code>schemauri</code></a> that
 points to a Protobuf Schema document MUST reference a Protobuf <code>message</code>
 declaration contained in the schema document using a URI fragment suffix
 <code>[:]{message-name}</code>. The ':' character is used as a separator when the URI

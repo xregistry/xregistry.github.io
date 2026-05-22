@@ -620,20 +620,20 @@ the core xRegistry Resource
 <h4 id="basemessage"><code>basemessage</code> <a class="anchor" href="#basemessage">🔗</a></h4>
 <ul>
 <li>
-<p>Type: URI-reference</p>
+<p>Type: URI</p>
 </li>
 <li>
-<p>Description: if present, the URI-reference points to a message definition
-that is the base for this message definition. By following the reference,
-the base message can be retrieved and extended with the properties of this
-message. This is useful for defining variants of messages that only differ
-in minor additive aspects to avoid repetition. For example, messages that
-only have a <code>envelope</code> with associated <code>envelopemetadata</code> to be bound to
-various protocols.</p>
+<p>Description: if present, the URI points to a message definition that is the
+base for this message definition. By following the reference, the base
+message can be retrieved and extended with the properties of this message.
+This is useful for defining variants of messages that only differ in minor
+additive aspects to avoid repetition. For example, messages that only have a
+<code>envelope</code> with associated <code>envelopemetadata</code> to be bound to various
+protocols.</p>
 <p>When the value is a relative reference (begins with <code>/</code>), it MUST be a
 valid XID referencing a Resource, or Version, of type <code>message</code> within the
 same registry. When the value is an absolute URI, it MUST point to a
-message definition in an external registry, but the server is not required
+message definition in an external registry, but the server is not mandated
 to validate or resolve external references.</p>
 <p>Referenced messages MAY themselves have a <code>basemessage</code> value, however,
 the chain of messages MUST NOT be recursive.</p>
@@ -651,7 +651,7 @@ complex type.</p>
 reference, an unreachable external registry, or insufficient permissions,
 an error MUST NOT be generated. Dangling references are permitted.</p>
 <p>Resolution of absolute URIs is a client responsibility. The server stores
-the URI value but is not required to fetch, validate, or cache external
+the URI value but is not mandated to fetch, validate, or cache external
 message definitions.</p>
 </li>
 <li>
@@ -815,14 +815,14 @@ format is identified by the <code>dataschemaformat</code> attribute. Equivalent 
 </ul>
 <h4 id="dataschemauri"><code>dataschemauri</code> <a class="anchor" href="#dataschemauri">🔗</a></h4>
 <ul>
-<li>Type: URI-reference</li>
+<li>Type: URI</li>
 <li>Description: Contains a relative or absolute URI that points to the schema
 object to use for the message payload. The schema format is identified by the
 <code>dataschemaformat</code> attribute. See
 <a href="./../../schema-v1/docs/spec.html#43-schema-formats">Schema Formats</a> for details on
 how to reference specific schema objects for the message payload. It is not
-sufficient for the URI-reference to point to a schema document; it MUST
-resolve to a concrete schema object.</li>
+sufficient for the URI to point to a schema document; it MUST resolve to a
+concrete schema object.</li>
 <li>Constraints:
 <ul>
 <li>OPTIONAL.</li>
@@ -927,7 +927,7 @@ message of this type.</li>
 </ul>
 <h5 id="specurl"><code>specurl</code> <a class="anchor" href="#specurl">🔗</a></h5>
 <ul>
-<li>Type: URI-reference</li>
+<li>Type: URI</li>
 <li>Description: Contains a relative or absolute URI that points to the
 human-readable specification of the property.</li>
 <li>Constraints:
@@ -959,7 +959,6 @@ core specification, with some additions:
 underscores.</li>
 <li><code>timestamp</code>: CloudEvents &quot;Timestamp&quot; type (RFC3339 DateTime)</li>
 <li><code>uri</code>: CloudEvents URI type (RFC3986 URI).</li>
-<li><code>urireference</code>: CloudEvents &quot;URI-reference&quot; type (RFC3986 URI-reference).</li>
 <li><code>uritemplate</code>: <a href="https://www.rfc-editor.org/rfc/rfc6570">RFC6570</a> Level 1 URI Template.</li>
 </ul>
 </li>
@@ -1070,10 +1069,9 @@ message definition.</li>
 <li>The <code>type</code> of the property definition defaults to the CloudEvents type
 definition for the attribute, if any. The <code>type</code> of an attribute MAY be
 modified be to further constrained. For instance, the <code>source</code> type
-<code>urireference</code> MAY be changed to
-<code>uritemplate</code> or the <code>subject</code> type <code>string</code> MAY be constrained to a
-<code>urireference</code> or <code>stringified integer</code>. If no CloudEvents type definition
-exists, the default value MUST be <code>string</code>.</li>
+<code>uri</code> MAY be changed to <code>uritemplate</code> or the <code>subject</code> type <code>string</code> MAY be
+constrained to a <code>uri</code> or <code>stringified integer</code>. If no CloudEvents type
+definition exists, the default value MUST be <code>string</code>.</li>
 </ul>
 <p>The values of all <code>string</code> and <code>uritemplate</code>-typed attributes MAY contain
 placeholders using the <a href="https://www.rfc-editor.org/rfc/rfc6570">RFC6570</a> Level 1 URI Template syntax. When the
@@ -1137,7 +1135,7 @@ attribute value is <code>https://example.com/schemas/com.example.myevent.json</c
       &quot;type&quot;: &quot;uritemplate&quot;
     },
     &quot;subject&quot;: {
-      &quot;type&quot;: &quot;urireference&quot;
+      &quot;type&quot;: &quot;uri&quot;
     },
     &quot;time&quot;: {
       &quot;required&quot;: true
