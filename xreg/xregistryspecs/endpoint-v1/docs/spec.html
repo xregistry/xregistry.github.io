@@ -769,9 +769,13 @@ compliant with the <a href="#protocol-options">protocol's options</a>.</li>
 </li>
 </ul>
 <h4 id="messagegroups"><code>messagegroups</code> <a class="anchor" href="#messagegroups">🔗</a></h4>
-<p>The <code>messagegroups</code> attribute is an array of XID-references to message
-definition groups. The <code>messagegroups</code> attribute is used to reference
-message definition groups that are not inlined in the endpoint definition.</p>
+<p>The <code>messagegroups</code> attribute is an array of URI-references to message
+definition groups. Relative references (beginning with <code>/</code>) are XIDs within
+the same registry. Absolute URIs reference message
+definition groups in external
+registries. The server stores absolute URIs as-is without resolving them.</p>
+<p>The <code>messagegroups</code> attribute is used to reference message definition groups
+that are not inlined in the endpoint definition.</p>
 <p>Example:</p>
 <pre><code class="language-yaml">{
   &quot;protocol&quot;: &quot;HTTP/1.1&quot;,
@@ -779,7 +783,8 @@ message definition groups that are not inlined in the endpoint definition.</p>
     &quot;method&quot;: &quot;POST&quot;
   },
   &quot;messagegroups&quot;: [
-    &quot;/messagegroups/mygroup&quot;
+    &quot;/messagegroups/mygroup&quot;,
+    &quot;https://other-catalog.example.com/messagegroups/external-group&quot;
   ]
 }
 </code></pre>

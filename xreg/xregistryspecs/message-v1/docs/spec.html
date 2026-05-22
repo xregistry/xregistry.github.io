@@ -620,20 +620,25 @@ the core xRegistry Resource
 <h4 id="basemessage"><code>basemessage</code> <a class="anchor" href="#basemessage">🔗</a></h4>
 <ul>
 <li>
-<p>Type: XID</p>
+<p>Type: URI-reference</p>
 </li>
 <li>
-<p>Description: if present, the XID points to a message definition that is the
-base for this message definition. By following the XID, the base message
-can be retrieved and extended with the properties of this message. This is
-useful for defining variants of messages that only differ in minor additive
-aspects to avoid repetition. For example, messages that only have a
-<code>envelope</code> with associated <code>envelopemetadata</code> to be bound to various
-protocols.</p>
+<p>Description: if present, the URI-reference points to a message definition
+that is the base for this message definition. By following the reference,
+the base message can be retrieved and extended with the properties of this
+message. This is useful for defining variants of messages that only differ
+in minor additive aspects to avoid repetition. For example, messages that
+only have a <code>envelope</code> with associated <code>envelopemetadata</code> to be bound to
+various protocols.</p>
+<p>When the value is a relative reference (begins with <code>/</code>), it MUST be a
+valid XID referencing a Resource, or Version, of type <code>message</code> within the
+same registry. When the value is an absolute URI, it MUST point to a
+message definition in an external registry, but the server is not required
+to validate or resolve external references.</p>
 <p>Referenced messages MAY themselves have a <code>basemessage</code> value, however,
 the chain of messages MUST NOT be recursive.</p>
 <p>The processing that a client SHOULD take to materialize the message is
-to follow the <code>basemessage</code> attributes to the end of the chain of messages,
+to follow the <code>basemessage</code> references to the end of the chain of messages,
 get that message's attributes, and then walk back up the chain performing a
 &quot;merge&quot; operation of the next message's attributes. Note in the case of an
 inherited attribute being a complex type (e.g. map, object), and the
@@ -642,15 +647,21 @@ nested values) are replaced by that scalar value. For complex types, the
 merge is &quot;deep&quot;, meaning each level of the complex type is merged
 appropriately rather than it being a complete replacement of the entire
 complex type.</p>
-<p>If the referenced message can not be found then an error MUST NOT be
-generated, dangling references are permitted.</p>
+<p>If the referenced message can not be found, whether due to a dangling
+reference, an unreachable external registry, or insufficient permissions,
+an error MUST NOT be generated. Dangling references are permitted.</p>
+<p>Resolution of absolute URIs is a client responsibility. The server stores
+the URI value but is not required to fetch, validate, or cache external
+message definitions.</p>
 </li>
 <li>
 <p>Constraints:</p>
 <ul>
 <li>OPTIONAL.</li>
-<li>If present, MUST be the <code>xid</code> of a Resource, or Version, of type <code>message</code>
-as defined by this specification.</li>
+<li>If the value is a relative reference, it MUST be a valid <code>xid</code> of a
+Resource, or Version, of type <code>message</code> as defined by this specification.</li>
+<li>If the value is an absolute URI, it MUST point to a message definition
+but the server MUST NOT validate the target.</li>
 </ul>
 </li>
 <li>
@@ -658,6 +669,7 @@ as defined by this specification.</li>
 <ul>
 <li><code>/messagegroups/group1/messages/msg1</code></li>
 <li><code>/messagegroups/group1/messages/msg1/versions/v1.0</code></li>
+<li><code>https://catalog.example.com/messagegroups/shared/messages/base-event</code></li>
 </ul>
 </li>
 </ul>

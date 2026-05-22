@@ -1,11 +1,11 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2026-05-21T20:48:52.297724996Z",
+  "createdat": "2026-05-22T17:01:22.710866871Z",
   "docid": "model.schema.json",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/model.schema.json/meta",
-  "modifiedat": "2026-05-21T20:48:52.297724996Z",
+  "modifiedat": "2026-05-22T17:01:22.710866871Z",
   "self": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/model.schema.json",
   "versionid": "v1.0-rc1",
   "versionscount": 1,
