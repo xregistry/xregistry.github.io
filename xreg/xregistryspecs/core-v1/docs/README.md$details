@@ -1,11 +1,11 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2026-05-22T18:08:31.395137197Z",
+  "createdat": "2026-05-27T12:03:21.335273715Z",
   "docid": "README.md",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/README.md/meta",
-  "modifiedat": "2026-05-22T18:08:31.395137197Z",
+  "modifiedat": "2026-05-27T12:03:21.335273715Z",
   "self": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/README.md",
   "versionid": "v1.0-rc1",
   "versionscount": 1,

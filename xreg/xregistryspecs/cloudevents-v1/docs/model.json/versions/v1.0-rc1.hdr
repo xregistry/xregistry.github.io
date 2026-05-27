@@ -3,11 +3,11 @@ content-length:246
 content-location:https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/docs/model.json/versions/v1.0-rc1
 content-type:text/plain; charset=utf-8
 xregistry-ancestor:v1.0-rc1
-xregistry-createdat:2026-05-22T18:08:28.918804431Z
+xregistry-createdat:2026-05-27T12:03:18.923803059Z
 xregistry-docid:model.json
 xregistry-epoch:1
 xregistry-isdefault:true
-xregistry-modifiedat:2026-05-22T18:08:28.918804431Z
+xregistry-modifiedat:2026-05-27T12:03:18.923803059Z
 xregistry-self:https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/docs/model.json/versions/v1.0-rc1
 xregistry-versionid:v1.0-rc1
 xregistry-xid:/xregistryspecs/cloudevents-v1/docs/model.json/versions/v1.0-rc1

@@ -1,9 +1,9 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2026-05-22T18:08:30.304784773Z",
+  "createdat": "2026-05-27T12:03:20.271251115Z",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2026-05-22T18:08:30.304784773Z",
+  "modifiedat": "2026-05-27T12:03:20.271251115Z",
   "sampleid": "smartoven-xsd.xreg.json",
   "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/smartoven-xsd.xreg.json/versions/v1.0-rc1",
   "versionid": "v1.0-rc1",
