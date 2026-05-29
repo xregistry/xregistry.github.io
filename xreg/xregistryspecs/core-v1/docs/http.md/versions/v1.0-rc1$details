@@ -1,10 +1,10 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2026-05-27T12:03:22.779998732Z",
+  "createdat": "2026-05-29T01:08:59.993642873Z",
   "docid": "http.md",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2026-05-27T12:03:22.779998732Z",
+  "modifiedat": "2026-05-29T01:08:59.993642873Z",
   "self": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/http.md/versions/v1.0-rc1",
   "versionid": "v1.0-rc1",
   "xid": "/xregistryspecs/core-v1/docs/http.md/versions/v1.0-rc1"

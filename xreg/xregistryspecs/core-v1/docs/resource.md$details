@@ -1,11 +1,11 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2026-05-27T12:03:23.885816973Z",
+  "createdat": "2026-05-29T01:09:01.055981375Z",
   "docid": "resource.md",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/resource.md/meta",
-  "modifiedat": "2026-05-27T12:03:23.885816973Z",
+  "modifiedat": "2026-05-29T01:09:01.055981375Z",
   "self": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/resource.md",
   "versionid": "v1.0-rc1",
   "versionscount": 1,

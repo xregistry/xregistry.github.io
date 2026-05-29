@@ -1,10 +1,10 @@
 {
-  "createdat": "2026-05-27T12:03:26.52984382Z",
+  "createdat": "2026-05-29T01:09:03.71680696Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
   "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/endpoint-v1/schemas/document-schema.json/versions/v1.0-rc1",
   "epoch": 1,
-  "modifiedat": "2026-05-27T12:03:26.52984382Z",
+  "modifiedat": "2026-05-29T01:09:03.71680696Z",
   "readonly": false,
   "schemaid": "document-schema.json",
   "self": "https://xregistry.io/xreg/xregistryspecs/endpoint-v1/schemas/document-schema.json/meta",

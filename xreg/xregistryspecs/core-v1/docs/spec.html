@@ -1474,7 +1474,7 @@ client is expected to investigate the entity to determine if it is
 appropriate.</p>
 </li>
 <li>
-<p><code>docs</code><br>
+<p><code>documentation</code><br>
 An OPTIONAL property specifying the URL to additional information about
 the deprecation of the entity. This specification does not mandate any
 particular format or information, however some possibilities include:
@@ -1758,6 +1758,21 @@ See <a href="#registry-capabilities">Registry Capabilities</a> for more informat
 of the Registry.</li>
 <li>An explicit value of <code>null</code> for this attribute MUST result in resetting the
 capabilities to the server's default values.</li>
+<li>If present, MUST be processed before any other attributes since subsequent
+processing might be impacted by the new capability values. In cases where
+a capability setting influences the processing of this attribute, or
+of the <a href="#modelsource-attribute"><code>modelsource</code></a>, the state of those
+particular settings prior to the request MUST be used for the duration
+of the current request. For example:
+<ul>
+<li>Support for <code>ignore=capabilities</code> would be controlled by
+the pre-request configuration since, if set, would result in ignoring
+any <code>capabilities</code> attribute in the request.</li>
+<li>However, the set of supported <code>formats</code> would be controlled by the
+updated <code>capabilities</code> to ensure proper validation of the Registry data
+prior to completing the request.</li>
+</ul>
+</li>
 </ul>
 </li>
 <li>
@@ -1815,10 +1830,12 @@ aspects of the model without the &quot;noise&quot; of the specification-defined 
 <li>The absence of this attribute MUST result in no changes to the model, or
 modelsource of the Registry.</li>
 <li>An explicit value of <code>null</code>, or an empty JSON object (<code>{}</code>), MUST result
-in all Groups, Resources and extension attributes being removed from the
-model.</li>
+in all Groups, Resources and extension Registry-level attributes being
+removed from the model.</li>
 <li>If present, the Registry's model MUST be updated prior to any entities
-being updated.</li>
+being updated, including the other Registry-level attributes. However,
+if the <a href="#capabilities-attribute"><code>capabilities</code> attribute</a> is also present,
+then <code>capabilities</code> MUST be processed before <code>modelsource</code>.</li>
 </ul>
 <p>The serialization of this attribute MUST be semantically equivalent to
 what was used to create the model, but it is NOT REQUIRED to be syntactically
