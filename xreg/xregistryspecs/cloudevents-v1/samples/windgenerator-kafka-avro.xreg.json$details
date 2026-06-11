@@ -1,10 +1,10 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2026-05-29T01:08:57.776585368Z",
+  "createdat": "2026-06-11T16:39:34.213169591Z",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/windgenerator-kafka-avro.xreg.json/meta",
-  "modifiedat": "2026-05-29T01:08:57.776585368Z",
+  "modifiedat": "2026-06-11T16:39:34.213169591Z",
   "sampleid": "windgenerator-kafka-avro.xreg.json",
   "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/windgenerator-kafka-avro.xreg.json",
   "versionid": "v1.0-rc1",

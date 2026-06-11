@@ -2,10 +2,10 @@ content-disposition:schemastore_org.xreg.json
 content-location:https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/schemastore_org.xreg.json/versions/v1.0-rc1
 content-type:text/plain; charset=utf-8
 xregistry-ancestor:v1.0-rc1
-xregistry-createdat:2026-05-29T01:08:58.30310304Z
+xregistry-createdat:2026-06-11T16:39:34.771115661Z
 xregistry-epoch:1
 xregistry-isdefault:true
-xregistry-modifiedat:2026-05-29T01:08:58.30310304Z
+xregistry-modifiedat:2026-06-11T16:39:34.771115661Z
 xregistry-sampleid:schemastore_org.xreg.json
 xregistry-self:https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/schemastore_org.xreg.json/versions/v1.0-rc1
 xregistry-versionid:v1.0-rc1

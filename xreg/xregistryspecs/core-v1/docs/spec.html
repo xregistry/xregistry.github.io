@@ -545,6 +545,13 @@ Alternative serialization formats MAY be defined.</p>
         &quot;alternative&quot;: &quot;&lt;URL&gt;&quot;, ?
         &quot;documentation&quot;: &quot;&lt;URL&gt;&quot;?
       }, ?
+      &quot;constraints&quot;: {
+        &quot;&lt;RESOURCES&gt;.&lt;PATH&gt;&quot;: {                # Resource-plural + attr path
+          &quot;default&quot;: &lt;VALUE&gt;, ?                # Group specific default
+          &quot;enum&quot;: [ &lt;VALUE&gt; * ], ?             # Allowed subset of values
+          &quot;equals&quot;: &quot;&lt;PATH&gt;&quot; ?                 # Matching Group attribute path
+        } *
+      }, ?
 
       # Repeat for each Resource type in the Group
       &quot;&lt;RESOURCES&gt;url&quot;: &quot;&lt;URL&gt;&quot;,                   # e.g. &quot;messagesurl&quot;
@@ -1509,6 +1516,80 @@ values of each with respect to how they might impact each other.</p>
 </ul>
 </li>
 </ul>
+<h5 id="constraints-attribute"><code>constraints</code> Attribute <a class="anchor" href="#constraints-attribute">🔗</a></h5>
+<ul>
+<li>
+<p>Type: Map of Resource attributes to be constrained just for this Group.</p>
+<p>This attribute is used to create a set of Group instance specific constraints
+on the Resources that exist within it. For example, with this mechanism a
+Group can restrict all Resources within it to only have a subset of the
+allowed values for a particular attribute. This allows for Group instance
+specific restrictions without requiring the creating of new Resource types.</p>
+<p>These restrictions are designed to only allow subsetting of the constraints
+specified by the Resource type model and any Group model
+<a href="./model.html#groupsstringconstraints"><code>constraints</code></a> defined. They can not be
+used to extend the allowable values of the attributes being constrained.</p>
+<p>The definition of this map is the same as the Group type
+<a href="./model.html#groupsstringconstraints"><code>constraints</code></a> attribute.</p>
+<p>Any map key value specified here that is the same as a key value included
+in the Group type model's <a href="./model.html#groupsstringconstraints"><code>constraints</code></a>,
+is interpreted as a request to further constrain the Resource attribute
+being referenced. Therefore, the two definitions of the constraints are
+layered (or merged), per the following rules:</p>
+<ul>
+<li><code>default</code> attribute:
+<ul>
+<li>If present here, it MUST be a valid value within the effective <code>enum</code>
+values per the above <code>enum</code> bullet.</li>
+<li>If not present here, but specified at the Group type level, then the
+value specified at the Group type level, MUST be valid per the effective
+<code>enum</code> values per the above <code>enum</code> bullet.</li>
+</ul>
+</li>
+<li><code>enum</code> attribute:
+<ul>
+<li>If present here and at the Group type level, then the values here MUST
+be a subset of the values specified at the Group type level.</li>
+<li>If not present here, then any <code>enum</code> values specified at the Group type
+level MUST apply.</li>
+</ul>
+</li>
+<li><code>equals</code> attribute:
+<ul>
+<li>If present here and at the Group type level, then the values MUST be
+the exact same.</li>
+<li>If not present here, then any <code>equals</code> value specified at the Group type
+level MUST apply.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Constraints:</p>
+<ul>
+<li>OPTIONAL</li>
+</ul>
+</li>
+<li>
+<p>Examples:</p>
+<pre><code class="language-yaml">&quot;constraints&quot;: {
+  &quot;schemas.format&quot; : {
+    &quot;default&quot;: [ &quot;jsonschema/draft-07&quot; ],
+    &quot;enum&quot;: [ &quot;avro/1.9&quot;, &quot;jsonschema/draft-07&quot; ],
+    &quot;equals&quot;: &quot;format&quot;
+  }
+}
+</code></pre>
+<p>The above example mandates that:</p>
+<ul>
+<li>All schema Resources within this group have a <code>format</code> values that
+is either <code>avro/1.9</code> or <code>jsonschema/draft-07</code>. And when not specified,
+it will default to <code>jsonschema/draft-07</code>.</li>
+<li>It also ensures that each Resource's <code>format</code> attribute is the same as
+the owning Group's <code>format</code> values (if present).</li>
+</ul>
+</li>
+</ul>
 <h3 id="registry-collections">Registry Collections <a class="anchor" href="#registry-collections">🔗</a></h3>
 <p>Registry collections (<code>&lt;GROUPS&gt;</code>, <code>&lt;RESOURCES&gt;</code> and <code>versions</code>) that are
 defined by the <a href="./model.html#registry-model">Registry Model</a> MUST be serialized
@@ -2188,7 +2269,7 @@ map, and the corresponding value provides details about the capability
 <pre><code class="language-yaml">{
   &quot;&lt;STRING&gt;&quot;: {                   # Name of Capability attribute
     &quot;type&quot;: &quot;&lt;TYPE&gt;&quot;,
-    &quot;enum&quot;: [ &lt;VALUE&gt;, * ], ?     # Allowed values for scalars
+    &quot;enum&quot;: [ &lt;VALUE&gt; * ], ?      # Allowed values for scalars
     &quot;min&quot;: &lt;VALUE&gt;, ?
     &quot;max&quot;: &lt;VALUE&gt;, ?
     &quot;documentation&quot;: &quot;&lt;URL&gt;&quot;, ?
@@ -2695,9 +2776,9 @@ based on the Resource's
 <a href="./model.html#groupsstringresourcesstringversionmode"><code>versionmode</code></a> value.</li>
 <li>Process the <code>meta</code> sub-object, if present.</li>
 <li>Update <a href="#defaultversionid-attribute"><code>meta.defaultversionid</code></a> as needed.</li>
-<li>Enforce the <a href="#format-attribute">Version format checks</a>. Including the
-enforcement of the Resource model's <code>consistentformat</code> aspect if set to
-<code>true</code>.</li>
+<li>Enforce the <a href="#format-attribute">Version format checks</a> and the <a href="./model.html#groupsstringconstraints">Group-level
+constraints</a>. Including the enforcement
+of the Resource model's <code>consistentformat</code> aspect if set to <code>true</code>.</li>
 <li>Enforce the <a href="#compatibility-attribute">Version compatibility checks</a>.</li>
 <li>Enforce the <a href="./model.html#groupsstringresourcesstringmaxversions">Resource <code>maxversions</code>
 constraints</a>. Note that
@@ -3252,6 +3333,10 @@ request to delete the attribute, implicitly setting it to <code>false</code>.</l
 </ul>
 </li>
 </ul>
+<p>Attempts to set this attribute to <code>true</code> when the Resource's
+<a href="./model.html#groupsstringresourcesstringsetdefaultversionsticky"><code>setdefaultversionsticky</code></a>
+model aspect is <code>false</code> MUST generate an error
+<a href="#defaultversionsticky_not_allowed"><code>defaultversionsticky_not_allowed</code></a>.</p>
 <p>See <a href="#defaultversionid-attribute"><code>defaultversionid</code> Attribute</a> for more
 information on the relationship between these two attributes.</p>
 <p>See <a href="#default-version-of-a-resource">Default Version of a Resource</a> for more
@@ -4559,8 +4644,12 @@ and <code>meta.defaultversionsticky</code> MUST be set to <code>false</code>.</l
 <li>A value of <code>request</code> MUST only be used on APIs that allow the creation of
 only a single new Version. In the case of HTTP, that is the <code>POST</code> API
 directed to a Resource. This is because no other operation allows for the
-creation of a single Version without specifying its <code>versionid</code>. Use of this
-value on an inappropriate API MUST generate an error (<a href="#bad_flag">bad_flag</a>).
+creation of a single Version without specifying its <code>versionid</code>. Using it
+when more than one Version is created MUST generate an error
+(<a href="#too_many_versions">too_many_versions</a>).  Other uses of this value on an
+inappropriate API MUST generate an error (<a href="#bad_flag">bad_flag</a>).</li>
+<li>If a value of <code>request</code> was used but no Version was created for the request,
+then an error (<a href="#defaultversionid_request">defaultversionid_request</a>) MUST
 be generated.</li>
 <li>If a non-<code>null</code> and non-<code>request</code> value does not reference an existing
 Version of the Resource, after all Version processing is completed, then an
@@ -4582,7 +4671,7 @@ error (<a href="#bad_flag">bad_flag</a>).</li>
 the <code>Sort</code> flag MAY be used to indicate the order in which the entities of
 that collection are to be returned (i.e. sorted). Use of the <code>sort</code> flag
 on a non-collection result MUST generate an error
-(<a href="#sort_noncollection">sort_noncollection</a>.</p>
+(<a href="#sort_noncollection">sort_noncollection</a>).</p>
 <p>This flag MUST include a single parameter, a string containing the attribute
 (<code>&lt;ATTRIBUTE&gt;</code>) name to use as the &quot;sort key&quot; plus an OPTIONAL indication of
 whether the results are to be sorted in ascending or descending order.</p>
@@ -4985,6 +5074,18 @@ field is just a substitution value and MUST NOT be empty.</p>
 </ul>
 </li>
 </ul>
+<h3 id="constraint_failure">constraint_failure <a class="anchor" href="#constraint_failure">🔗</a></h3>
+<ul>
+<li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#constraint_failure</code></li>
+<li>Code: <code>400 Bad Request</code></li>
+<li>Subject: <code>&lt;resource_xid&gt;</code></li>
+<li>Title: <code>The request would result in one or more Versions of &quot;&lt;subject&gt;&quot; not being compliant with its owning Group's &quot;equals&quot; constraint for attribute &quot;&lt;path&gt;&quot;.</code></li>
+<li>Args:
+<ul>
+<li><code>path</code>: The dot (<code>.</code>) notion traversal path to the Resource's attribute being constrained.</li>
+</ul>
+</li>
+</ul>
 <h3 id="data_retrieval_error">data_retrieval_error <a class="anchor" href="#data_retrieval_error">🔗</a></h3>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#data_retrieval_error</code></li>
@@ -4992,6 +5093,20 @@ field is just a substitution value and MUST NOT be empty.</p>
 <li>Subject: <code>&lt;path&gt;</code></li>
 <li>Title: <code>The server was unable to retrieve all of the requested data.</code></li>
 <li>Detail: Suggestion: which entity's data was problematic, and why.</li>
+</ul>
+<h3 id="defaultversionid_request">defaultversionid_request <a class="anchor" href="#defaultversionid_request">🔗</a></h3>
+<ul>
+<li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#defaultversionid_request</code></li>
+<li>Code: <code>400 Bad Request</code></li>
+<li>Subject: <code>&lt;resource_xid&gt;</code></li>
+<li>Title: <code>Processing &quot;&lt;subject&gt;&quot;, the &quot;defaultversionid&quot; attribute is not allowed to be &quot;request&quot; since a Version wasn't processed.</code></li>
+</ul>
+<h3 id="defaultversionsticky_not_allowed">defaultversionsticky_not_allowed <a class="anchor" href="#defaultversionsticky_not_allowed">🔗</a></h3>
+<ul>
+<li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#defaultversionsticky_not_allowed</code></li>
+<li>Code: <code>400 Bad Request</code></li>
+<li>Subject: <code>&lt;resource_xid&gt;</code></li>
+<li>Title: <code>Setting &quot;defaultversionsticky&quot; to &quot;true&quot; is not allowed for &quot;&lt;subject&gt;&quot;.</code></li>
 </ul>
 <h3 id="extra_xref_attribute">extra_xref_attribute <a class="anchor" href="#extra_xref_attribute">🔗</a></h3>
 <ul>
@@ -5054,6 +5169,13 @@ field is just a substitution value and MUST NOT be empty.</p>
 <li><code>name</code>: The name of the attribute in question.</li>
 </ul>
 </li>
+</ul>
+<h3 id="hasdocument_violation">hasdocument_violation <a class="anchor" href="#hasdocument_violation">🔗</a></h3>
+<ul>
+<li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#hasdocument_violation</code></li>
+<li>Code: <code>400 Bad Request</code></li>
+<li>Subject: <code>&lt;version_xid&gt;</code></li>
+<li>Title: <code>The request would cause Version &quot;&lt;subject&gt;&quot; to be non-compliant. The Resource model has &quot;hasdocument&quot; set to &quot;false&quot; but this Version has document content.</code></li>
 </ul>
 <h3 id="inline_noninlineable">inline_noninlineable <a class="anchor" href="#inline_noninlineable">🔗</a></h3>
 <ul>
@@ -5297,12 +5419,7 @@ something unexpected happened in the server that caused an error condition.</p>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#setdefaultversionid_not_allowed</code></li>
 <li>Code: <code>400 Bad Request</code></li>
 <li>Subject: <code>&lt;resource_xid&gt;</code></li>
-<li>Title: <code>Processing &quot;&lt;subject&gt;&quot;, the &quot;setdefaultversionid&quot; flag is not allowed to be specified for entities of type &quot;&lt;singular&gt;&quot;.</code></li>
-<li>Args:
-<ul>
-<li><code>singular</code>: The &quot;singular&quot; type name of the offending Resource.</li>
-</ul>
-</li>
+<li>Title: <code>Setting &quot;defaultversionid&quot; is not allowed for &quot;&lt;subject&gt;&quot;.</code></li>
 </ul>
 <h3 id="setdefaultversionsticky_false">setdefaultversionsticky_false <a class="anchor" href="#setdefaultversionsticky_false">🔗</a></h3>
 <ul>
@@ -5325,6 +5442,13 @@ something unexpected happened in the server that caused an error condition.</p>
 <li>Subject: <code>&lt;request_path&gt;</code></li>
 <li>Title: <code>The size of the response is too large to return in a single response.</code></li>
 <li>Detail: Suggestion: list of attributes that are too large.</li>
+</ul>
+<h3 id="too_many_versions">too_many_versions <a class="anchor" href="#too_many_versions">🔗</a></h3>
+<ul>
+<li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#too_many_versions</code></li>
+<li>Code: <code>400 Bad Request</code></li>
+<li>Subject: <code>&lt;request_path&gt;</code></li>
+<li>Title: <code>When the &quot;setdefaultversionid&quot; flag is set to &quot;request&quot;, only one Version is allowed to be specified in the request message.</code></li>
 </ul>
 <h3 id="unknown_attribute">unknown_attribute <a class="anchor" href="#unknown_attribute">🔗</a></h3>
 <ul>

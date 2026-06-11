@@ -355,6 +355,12 @@ entities from a collection, so a separate delete operation might be needed
 if there are entities that need to be removed.</li>
 <li>The processing of each individual entity in the map MUST follow the same
 rules as defined for <code>PUT</code> above.</li>
+<li>In the case of an empty map of Versions and the Resource being referenced
+does not exist yet, an error (<a href="#missing_versions">missing_versions</a>) MUST
+be generated because a Resource can not exist without any Versions. If
+the intent was to create a Resource with a Version that has just default
+values, then there are other APIs that can be used that make that intent
+clear (e.g. <code>PUT</code> to the Resource itself).</li>
 </ul>
 <p>The processing of each individual entity follows the same set of rules:</p>
 <ul>
@@ -604,8 +610,9 @@ deleted.</li>
 changes to those values.</li>
 <li>For both the <code>PATCH</code> and <code>PUT</code> cases, if present, the <code>modelsource</code> attribute
 MUST be a complete replacement representation of the model definition. A
-value of <code>null</code> MUST reset the model to the server's default value.
-See <a href="./model.html#creating-or-updating-the-registry-model">Creating or Updating the Registry
+value of <code>null</code> or <code>{}</code> MUST reset the model to the server's default value
+(no Groups, Resources, extension attributes or custom specification-defined
+attributes).  See <a href="./model.html#creating-or-updating-the-registry-model">Creating or Updating the Registry
 Model</a> for more
 information.</li>
 <li>When the <code>capabilities</code> attribute is present and <code>PATCH</code> is used then only
@@ -961,6 +968,8 @@ Content-Type: application/json; charset=utf-8
 <p>A server MAY support clients retrieving the client-provided
 <a href="./model.html#registry-model">model definition</a> used to define the current
 model via an HTTP <code>GET</code> directed to the stand-alone <code>modelsource</code> entity.</p>
+<p>In cases where the Registry's model has never been specified via <code>modelsource</code>,
+this operation MUST return <code>{}</code> not an empty HTTP body.</p>
 <p>The request MUST be of the form:</p>
 <pre><code class="language-yaml">GET /modelsource
 </code></pre>
@@ -987,6 +996,9 @@ Content-Type: application/json; charset=utf-8
 <p>To update the <code>modelsource</code> as part of a request to update the
 <a href="./spec.html#registry-entity">Registry entity</a>, you can include the attribute
 as part of the <a href="#patch-and-put-"><code>PUT /</code></a> request.</p>
+<p>Note: the HTTP body MUST be a JSON object and an empty request MUST generate
+an error (<a href="#missing_body">missing_body</a>). To denote an empty model <code>{}</code> SHOULD
+be used instead.</p>
 <h3 id="group-entity">Group Entity <a class="anchor" href="#group-entity">🔗</a></h3>
 <h4 id="get-groups"><code>GET /&lt;GROUPS&gt;</code> <a class="anchor" href="#get-groups">🔗</a></h4>
 <p>A server MAY support clients retrieving a
@@ -2727,6 +2739,13 @@ starting with <code>/</code>. E.g. <code>/export</code> if the &quot;export&quot
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/http.md#missing_body</code></li>
 <li>Code: <code>400 Bad Request</code></li>
 <li>Title: <code>The request is missing an HTTP body - try '{}'.</code></li>
+<li>Subject: <code>&lt;request_path&gt;</code></li>
+</ul>
+<h4 id="missing_versions">missing_versions <a class="anchor" href="#missing_versions">🔗</a></h4>
+<ul>
+<li>Type: <code>https://github.com/xregistry/spec/blob/main/core/http.md#missing_versions</code></li>
+<li>Code: <code>400 Bad Request</code></li>
+<li>Title: <code>At least one Version needs to be included in the request to process &quot;&lt;subject&gt;&quot;.</code></li>
 <li>Subject: <code>&lt;request_path&gt;</code></li>
 </ul>
 <!-- end-err-def -->

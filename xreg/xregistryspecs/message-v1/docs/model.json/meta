@@ -1,11 +1,11 @@
 {
-  "createdat": "2026-05-29T01:09:04.228486085Z",
+  "createdat": "2026-06-11T16:39:40.636153671Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
   "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/message-v1/docs/model.json/versions/v1.0-rc1",
   "docid": "model.json",
   "epoch": 1,
-  "modifiedat": "2026-05-29T01:09:04.228486085Z",
+  "modifiedat": "2026-06-11T16:39:40.636153671Z",
   "readonly": false,
   "self": "https://xregistry.io/xreg/xregistryspecs/message-v1/docs/model.json/meta",
   "xid": "/xregistryspecs/message-v1/docs/model.json/meta"

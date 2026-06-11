@@ -1,10 +1,10 @@
 {
-  "createdat": "2026-05-29T01:08:57.414755431Z",
+  "createdat": "2026-06-11T16:39:33.827210643Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
   "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/lightbulb-avro.xreg.json/versions/v1.0-rc1",
   "epoch": 1,
-  "modifiedat": "2026-05-29T01:08:57.414755431Z",
+  "modifiedat": "2026-06-11T16:39:33.827210643Z",
   "readonly": false,
   "sampleid": "lightbulb-avro.xreg.json",
   "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/lightbulb-avro.xreg.json/meta",
