@@ -444,6 +444,30 @@ but a nested attribute is optional, or also required (and visa-versa)</p>
 </ul>
 </li>
 </ul>
+<h3 id="group-organization">Group organization <a class="anchor" href="#group-organization">🔗</a></h3>
+<p>Groups are intentionally a single organizational dimension above Resources:
+the model is always Registry → Group → Resource → Version, and Groups
+themselves do not contain other Groups. This is a deliberate design choice.
+Allowing arbitrary nesting of Groups would significantly complicate the
+model, the URL space, traversal and filter semantics, access-control
+reasoning, and tooling, without adding expressive power that cannot be
+achieved by other means.</p>
+<p>Where a hierarchical organization is useful, xRegistry instead relies on
+dot-notation in Group identifiers. Because Group IDs may contain dots, an
+identifier like <code>Contoso.ERP.Orders</code> naturally expresses a logical
+hierarchy (<code>Contoso</code> → <code>ERP</code> → <code>Orders</code>) while keeping the underlying
+collection flat. This gives implementers and users the readability and
+grouping behavior of a hierarchy — including prefix-based filtering — without
+the structural complexity of nested containers.</p>
+<p>The second, orthogonal organizational tool is <code>labels</code>. Labels are
+free-form name/value pairs that can be attached to Registries, Groups,
+Resources, Meta entities, and Versions, and they allow entities to be
+classified along as many independent axes as needed (for example
+<code>stage=dev</code>, <code>team=payments</code>, <code>tier=gold</code>). Server implementations may,
+and are encouraged to, support filtering and lookup by labels (see the
+filter examples in the core spec), which makes labels a powerful
+complement to the single Group dimension for cross-cutting discovery
+scenarios that a strict hierarchy could not express.</p>
 <h3 id="deleting-entities">Deleting entities <a class="anchor" href="#deleting-entities">🔗</a></h3>
 <p>The &quot;delete&quot; operation typically has two variants:</p>
 <ul>
@@ -913,23 +937,6 @@ reason for the Resource to exist.</p>
 Version should be driven by whether the use cases being supported by the
 Resource type definition requires that attribute to be consistent across all
 Versions or have a Version-specific value.</p>
-<h2 id="why-are-some-conditional-read-only-attributes-not-ignored">Why are some (conditional) read-only attributes not ignored? <a class="anchor" href="#why-are-some-conditional-read-only-attributes-not-ignored">🔗</a></h2>
-<p>Attributes that are always defined as &quot;read-only&quot; normally have semantics such
-that attempts to update them are silently ignored. This is especially useful
-for attributes that might change over time so that clients do not need to
-either ensure they have the latest value, or remove them from an update
-request.</p>
-<p>However, there are times when trying to update a read-only attribute must
-generate an error. This will happen when the attribute might be read-only based
-on the configuration of the owning entity, in which case it is important for
-clients to know that updating this particular instance of this
-&quot;sometimes read-only&quot; attribute failed. So, while it may seem inconsistent,
-the risk of clients assuming a non-error response meant the request was fully
-adhere to was considered more important.</p>
-<p>For example, if a Resource is defined with the <code>setdefaultversionsticky</code>
-aspect set to <code>false</code> then the <code>meta.defaultversionid</code> attribute of instances
-of that Resource becomes &quot;read-only&quot;. And any attempt to update it will result
-in an error being generated.</p>
 <h2 id="why-isnt-put-idempotent">Why isn't <code>PUT</code> idempotent? <a class="anchor" href="#why-isnt-put-idempotent">🔗</a></h2>
 <p>As stated in the <a href="./spec.html">core</a> specification, the <code>PUT</code> operations are
 almost idempotent, per the HTTP specification. For the most part, multiple

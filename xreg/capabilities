@@ -83,7 +83,6 @@
   "specversions": [
     "1.0-rc2"
   ],
-  "stickyversions": true,
   "versionmodes": [
     "createdat",
     "manual"

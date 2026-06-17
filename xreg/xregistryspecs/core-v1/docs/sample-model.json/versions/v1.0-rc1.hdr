@@ -3,11 +3,11 @@ content-length:154
 content-location:https://xregistry.io/xreg/xregistryspecs/core-v1/docs/sample-model.json/versions/v1.0-rc1
 content-type:text/plain; charset=utf-8
 xregistry-ancestor:v1.0-rc1
-xregistry-createdat:2026-06-11T16:39:35.048088952Z
+xregistry-createdat:2026-06-17T14:44:32.860142257Z
 xregistry-docid:sample-model.json
 xregistry-epoch:1
 xregistry-isdefault:true
-xregistry-modifiedat:2026-06-11T16:39:35.048088952Z
+xregistry-modifiedat:2026-06-17T14:44:32.860142257Z
 xregistry-self:https://xregistry.io/xreg/xregistryspecs/core-v1/docs/sample-model.json/versions/v1.0-rc1
 xregistry-versionid:v1.0-rc1
 xregistry-xid:/xregistryspecs/core-v1/docs/sample-model.json/versions/v1.0-rc1

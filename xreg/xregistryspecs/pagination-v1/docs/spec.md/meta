@@ -1,11 +1,11 @@
 {
-  "createdat": "2026-06-11T16:39:42.077748029Z",
+  "createdat": "2026-06-17T14:44:39.718264863Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
   "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/pagination-v1/docs/spec.md/versions/v1.0-rc1",
   "docid": "spec.md",
   "epoch": 1,
-  "modifiedat": "2026-06-11T16:39:42.077748029Z",
+  "modifiedat": "2026-06-17T14:44:39.718264863Z",
   "readonly": false,
   "self": "https://xregistry.io/xreg/xregistryspecs/pagination-v1/docs/spec.md/meta",
   "xid": "/xregistryspecs/pagination-v1/docs/spec.md/meta"

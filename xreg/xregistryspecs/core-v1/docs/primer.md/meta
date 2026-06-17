@@ -1,11 +1,11 @@
 {
-  "createdat": "2026-06-11T16:39:37.318408506Z",
+  "createdat": "2026-06-17T14:44:35.062254363Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
   "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/primer.md/versions/v1.0-rc1",
   "docid": "primer.md",
   "epoch": 1,
-  "modifiedat": "2026-06-11T16:39:37.318408506Z",
+  "modifiedat": "2026-06-17T14:44:35.062254363Z",
   "readonly": false,
   "self": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/primer.md/meta",
   "xid": "/xregistryspecs/core-v1/docs/primer.md/meta"

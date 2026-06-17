@@ -48,7 +48,7 @@
 <h1 id="xregistry-service-model---version-10-rc2">xRegistry Service Model - Version 1.0-rc2 <a class="anchor" href="#xregistry-service-model---version-10-rc2">🔗</a></h1>
 <!-- words: compat validatecompatibility validateformat strictvalidation -->
 <!-- words: matchcase compatibilityvalidated formatvalidated -->
-<!-- words: consistentformat validators stickyversion -->
+<!-- words: validators -->
 <h2 id="abstract">Abstract <a class="anchor" href="#abstract">🔗</a></h2>
 <p>This document describes the xRegistry model definition language that is used
 to define custom Groups and Resources for use within an xRegistry.</p>
@@ -176,14 +176,12 @@ will be mapped to those protocols.</p>
           &quot;modelcompatiblewith&quot;: &quot;&lt;URI&gt;&quot;, ? # Statement of compatibility
           &quot;maxversions&quot;: &lt;UINTEGER&gt;, ?   # Num Vers(&gt;=0). Default=0, 0=unlimited
           &quot;setversionid&quot;: &lt;BOOLEAN&gt;, ?   # vid settable? Default=true
-          &quot;setdefaultversionsticky&quot;: &lt;BOOLEAN&gt;, ? # Sticky settable? Default=true
           &quot;hasdocument&quot;: &lt;BOOLEAN&gt;, ?       # Has separate document. Default=true
           &quot;versionmode&quot;: &quot;&lt;STRING&gt;&quot;, ?      # 'ancestor' processing algorithm
           &quot;singleversionroot&quot;: &lt;BOOLEAN&gt;, ? # Enforce single root. Default=false
           &quot;validateformat&quot;: &lt;BOOLEAN&gt;, ?    # Do Version format checks. Default=false
           &quot;validatecompatibility&quot;: &lt;BOOLEAN&gt;, ? # Do Version compat checks. Default=false
           &quot;strictvalidation&quot;: &lt;BOOLEAN&gt;, ?  # Block unknown format/compat. Default=false
-          &quot;consistentformat&quot;: &lt;BOOLEAN&gt;, ?  # Same format for all Vers. Default=false
           &quot;typemap&quot;: &lt;MAP&gt;, ?               # ContentType mappings
           &quot;attributes&quot;: { ... }, ?          # Version attributes/extensions
           &quot;resourceattributes&quot;: { ... }, ?  # Resource attributes/extensions
@@ -839,26 +837,6 @@ Version during its creation process.</li>
 a <code>versionid</code> is provided then the server MUST generate an error
 (<a href="./spec.html#versionid_not_allowed">versionid_not_allowed</a>).</li>
 </ul>
-<h3 id="groupsstringresourcesstringsetdefaultversionsticky"><code>groups.&lt;STRING&gt;.resources.&lt;STRING&gt;.setdefaultversionsticky</code> <a class="anchor" href="#groupsstringresourcesstringsetdefaultversionsticky">🔗</a></h3>
-<ul>
-<li>Type: Boolean (<code>true</code> or <code>false</code>, case-sensitive).</li>
-<li>OPTIONAL.</li>
-<li>Indicates whether support for client-side selection of the &quot;default&quot;
-Version is supported for Resources of this type. Once set, the default
-Version MUST NOT change unless there is some explicit action by a client
-to change it - hence the term &quot;sticky&quot;.</li>
-<li>When the server's <code>stickyversion</code> capability is <code>true</code>, then when this
-aspect is not specified its default value MUST be <code>true</code>. Otherwise,
-this aspect MUST always have a value of <code>false</code>.</li>
-<li>A value of <code>true</code> indicates a client MAY select the default Version of
-a Resource via one of the methods described in this specification rather
-than the server always choosing the default Version.</li>
-<li>A value of <code>false</code> indicates the server MUST choose which Version is the
-default Version.</li>
-<li>This attribute MUST NOT be <code>true</code> if <code>maxversions</code> is one (<code>1</code>). An attempt
-to set it to <code>true</code> MUST generate an error
-(<a href="./spec.html#setdefaultversionsticky_false">setdefaultversionsticky_false</a>).</li>
-</ul>
 <h3 id="groupsstringresourcesstringhasdocument"><code>groups.&lt;STRING&gt;.resources.&lt;STRING&gt;.hasdocument</code> <a class="anchor" href="#groupsstringresourcesstringhasdocument">🔗</a></h3>
 <ul>
 <li>
@@ -1112,30 +1090,6 @@ validation logic MUST NOT generate an error. Instead, the Version's
 <code>false</code>.</li>
 <li>If the Resource's <code>meta.compatibility</code> value is unsupported, then
 the Version's <code>compatibilityvalidated</code> attribute MUST be set to <code>false</code>.</li>
-</ul>
-</li>
-</ul>
-<h3 id="groupsstringresourcesstringconsistentformat"><code>groups.&lt;STRING&gt;.resources.&lt;STRING&gt;.consistentformat</code> <a class="anchor" href="#groupsstringresourcesstringconsistentformat">🔗</a></h3>
-<ul>
-<li>Type: Boolean (<code>true</code> or <code>false</code>, case-sensitive)</li>
-<li>OPTIONAL</li>
-<li>Indicates whether all Versions of a Resource of this type are mandated to
-have the same <a href="./spec.html#format-attribute"><code>format</code></a> value.</li>
-<li>This attribute's semantics apply regardless of the values of <code>validateformat</code>
-and <code>validatecompatibility</code>.</li>
-<li>When not specified, the default value MUST be <code>false</code>.</li>
-<li>A value of <code>true</code> indicates that:
-<ul>
-<li>The <code>format</code> attribute of all Versions of a Resource of this type MUST
-have the same case-insensitive value (including the case of <code>format</code> being
-an empty string). If a Version differs then an error
-(<a href="./spec.html#format_inconsistent">format_inconsistent</a>) MUST be generated.</li>
-</ul>
-</li>
-<li>A value of <code>false</code> indicates that:
-<ul>
-<li>The server MUST NOT check for a consistent (same) <code>format</code> value across
-the Versions of a Resource of this type.</li>
 </ul>
 </li>
 </ul>

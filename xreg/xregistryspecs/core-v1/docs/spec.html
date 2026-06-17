@@ -49,7 +49,6 @@
 <!-- words: validatecompatibility validateformat strictvalidation matchcase -->
 <!-- words: compat formatvalidated compatibilityvalidated -->
 <!-- words: compat formatvalidatedreason compatibilityvalidatedreason -->
-<!-- words: consistentformat -->
 <h2 id="abstract">Abstract <a class="anchor" href="#abstract">🔗</a></h2>
 <p>This specification defines an extensible model for managing metadata
 registries. The metadata artifacts can be for any purpose, such as schemas
@@ -435,7 +434,6 @@ Alternative serialization formats MAY be defined.</p>
     &quot;pagination&quot;: &lt;BOOLEAN&gt;, ?
     &quot;shortself&quot;: &lt;BOOLEAN&gt;, ?
     &quot;specversions&quot;: [ &quot;1.0-rc2&quot;, &quot;&lt;STRING&gt;&quot;* ], ?
-    &quot;stickyversions&quot;: &lt;BOOLEAN&gt;, ?
     &quot;versionmodes&quot;: [ &quot;manual&quot;, &quot;createdat&quot;,? &quot;modifiedat&quot;,? &quot;semver&quot;,?
       &quot;&lt;STRING&gt;&quot;* ], ?
 
@@ -503,14 +501,12 @@ Alternative serialization formats MAY be defined.</p>
             &quot;modelcompatiblewith&quot;: &quot;&lt;URI&gt;&quot;, ?  # Statement of compatibility
             &quot;maxversions&quot;: &lt;UINTEGER&gt;, ?  # Num Vers(&gt;=0). Default=0(unlimited)
             &quot;setversionid&quot;: &lt;BOOLEAN&gt;, ?  # vid settable? Default=true
-            &quot;setdefaultversionsticky&quot;: &lt;BOOLEAN&gt;, ? # sticky settable? Default=true
             &quot;hasdocument&quot;: &lt;BOOLEAN&gt;, ?   # Has separate document. Default=true
             &quot;versionmode&quot;: &quot;&lt;STRING&gt;&quot;, ?  # 'ancestor' processing algorithm
             &quot;singleversionroot&quot;: &lt;BOOLEAN&gt;, ? # Default=false&quot;
             &quot;validateformat&quot;: &lt;BOOLEAN&gt;, ?    # Check version format compliance. Default=false
             &quot;validatecompatibility&quot;: &lt;BOOLEAN&gt;, ? # Check version compatibility. Default=false
             &quot;strictvalidation&quot;: &lt;BOOLEAN&gt;, ?  # Block unknown format/compat. Default=false
-            &quot;consistentformat&quot;: &lt;BOOLEAN&gt;, ?  # Same format for all Vers. Default=false
             &quot;typemap&quot;: &lt;MAP&gt;, ?               # contenttype mappings
             &quot;attributes&quot;: { ... }, ?          # Version attributes/extensions
             &quot;resourceattributes&quot;: { ... }, ?  # Resource attributes/extensions
@@ -1972,7 +1968,6 @@ being a <code>&lt;BOOLEAN&gt;</code> value of <code>true</code> to indicate supp
   &quot;pagination&quot;: &lt;BOOLEAN&gt;, ?
   &quot;shortself&quot;: &lt;BOOLEAN&gt;, ?
   &quot;specversions&quot;: [ &quot;&lt;STRING&gt;&quot; ], ?
-  &quot;stickyversions&quot;: &lt;BOOLEAN&gt;, ?
   &quot;versionmodes&quot;: [ &quot;&lt;STRING&gt;&quot; ], ?
 
   &quot;&lt;STRING&gt;&quot;: ... capability configuration ... *   // Extension capabilities
@@ -2209,16 +2204,6 @@ in the server serialization of the entities within the Registry (value of
 <li>When not specified, the default value MUST be the latest version of this
 specification supported by the server.</li>
 </ul>
-<h4 id="stickyversions-capability"><code>stickyversions</code> Capability <a class="anchor" href="#stickyversions-capability">🔗</a></h4>
-<ul>
-<li>Name: <code>stickyversions</code></li>
-<li>Type: Boolean</li>
-<li>Description: Indicates whether the server supports clients choosing which
-Version of a Resource is to be the &quot;default&quot; Version. In other words, this
-capability indicates whether a request to set a Resource's
-<code>setdefaultversionsticky</code> aspect to <code>true</code> is allowed.</li>
-<li>When not specified, the default value MUST be <code>true</code>.</li>
-</ul>
 <h4 id="updating-the-capabilities-of-a-server">Updating the Capabilities of a Server <a class="anchor" href="#updating-the-capabilities-of-a-server">🔗</a></h4>
 <p>Implementations MAY support clients updating the capabilities of the server.
 If so, they SHOULD support it via updates to the Registry entity's
@@ -2408,10 +2393,6 @@ server MUST still include:</p>
     &quot;item&quot;: {
       &quot;type&quot;: &quot;string&quot;
     }
-  },
-  &quot;stickyversions&quot;: {
-    &quot;type&quot;: &quot;boolean&quot;,
-    &quot;enum&quot;: [ false, true ]
   },
   &quot;versionmodes&quot;: {
     &quot;type&quot;: &quot;array&quot;,
@@ -2777,8 +2758,7 @@ based on the Resource's
 <li>Process the <code>meta</code> sub-object, if present.</li>
 <li>Update <a href="#defaultversionid-attribute"><code>meta.defaultversionid</code></a> as needed.</li>
 <li>Enforce the <a href="#format-attribute">Version format checks</a> and the <a href="./model.html#groupsstringconstraints">Group-level
-constraints</a>. Including the enforcement
-of the Resource model's <code>consistentformat</code> aspect if set to <code>true</code>.</li>
+constraints</a>.</li>
 <li>Enforce the <a href="#compatibility-attribute">Version compatibility checks</a>.</li>
 <li>Enforce the <a href="./model.html#groupsstringresourcesstringmaxversions">Resource <code>maxversions</code>
 constraints</a>. Note that
@@ -3330,13 +3310,26 @@ the newest Version, as defined by the Resource's
 <li>When specified, it MUST be a case-sensitive <code>true</code> or <code>false</code>.</li>
 <li>When specified in a request, a value of <code>null</code> MUST be interpreted as a
 request to delete the attribute, implicitly setting it to <code>false</code>.</li>
+<li>When a Resource's <code>maxversions</code> is set to <code>1</code>, than an attempt to set this
+this attribute to <code>true</code> MUST generate an error
+(<a href="#setdefaultversionsticky_false">setdefaultversionsticky_false</a>) since
+setting a default/sticky Version is unnecessary when there can only be
+one Version.</li>
 </ul>
 </li>
 </ul>
-<p>Attempts to set this attribute to <code>true</code> when the Resource's
-<a href="./model.html#groupsstringresourcesstringsetdefaultversionsticky"><code>setdefaultversionsticky</code></a>
-model aspect is <code>false</code> MUST generate an error
-<a href="#defaultversionsticky_not_allowed"><code>defaultversionsticky_not_allowed</code></a>.</p>
+<p>If a Resource type definition wishes to turn off the ability for clients to
+select the &quot;default&quot; Version (or to set the <code>defaultversionsticky</code> attribute to
+<code>true</code>), this MAY be done by modifying the definition of this attribute
+in the Resource type's model. For example, in the <code>metaattributes</code> section
+use the following definition:</p>
+<pre><code class="language-yaml">&quot;defaultversionsticky&quot;: {
+  &quot;name&quot;: &quot;defaultversionsticky&quot;,
+  &quot;enum&quot;: [ false ],
+  &quot;required&quot;: true,
+  &quot;default&quot;: false
+}
+</code></pre>
 <p>See <a href="#defaultversionid-attribute"><code>defaultversionid</code> Attribute</a> for more
 information on the relationship between these two attributes.</p>
 <p>See <a href="#default-version-of-a-resource">Default Version of a Resource</a> for more
@@ -3584,9 +3577,7 @@ attribute's value.</li>
 <p>Note: an attempt to set this attribute to a value that differs from the other
 Version's values could result in the server rejecting the request due to
 the <a href="#compatibility-attribute"><code>compatibility</code></a> conformance checks, if
-<code>validatecompatibility</code> model attribute is <code>true</code>. See
-<a href="./model.html#groupsstringresourcesstringconsistentformat"><code>consistentformat</code></a>
-for additional information.</p>
+<code>validatecompatibility</code> model attribute is <code>true</code>.</p>
 <ul>
 <li>Examples:
 <ul>
@@ -3920,9 +3911,7 @@ Version (see below), then the server MUST revert back to option 1
 (default = newest).</p>
 </li>
 </ol>
-<p>If supported (as determined by the <a href="./model.html#groupsstringresourcesstringsetdefaultversionsticky"><code>setdefaultversionsticky</code>
-aspect</a>,
-a client MAY choose the &quot;default&quot; Version two ways:</p>
+<p>A client MAY choose the &quot;default&quot; Version two ways:</p>
 <ol>
 <li>Via the Resource
 <a href="#defaultversionsticky-attribute"> <code>defaultversionsticky</code></a> and
@@ -4661,9 +4650,6 @@ error (<a href="#bad_flag">bad_flag</a>).</li>
 <li>Use of this flag MUST override any <code>meta.defaultversionid</code> and
 <code>meta.defaultversionsticky</code> values that are present in the request.</li>
 </ul>
-<p>Any use of this flag on a Resource that has the
-<code>setdefaultversionsticky</code> aspect set to <code>false</code> MUST generate an error
-(<a href="#setdefaultversionid_not_allowed">setdefaultversionid_not_allowed</a>).</p>
 <p>Any other invalid usage of this flag MUST generate an error
 (<a href="#bad_defaultversionid">bad_defaultversionid</a>).</p>
 <h3 id="sort-flag">Sort Flag <a class="anchor" href="#sort-flag">🔗</a></h3>
@@ -5101,13 +5087,6 @@ field is just a substitution value and MUST NOT be empty.</p>
 <li>Subject: <code>&lt;resource_xid&gt;</code></li>
 <li>Title: <code>Processing &quot;&lt;subject&gt;&quot;, the &quot;defaultversionid&quot; attribute is not allowed to be &quot;request&quot; since a Version wasn't processed.</code></li>
 </ul>
-<h3 id="defaultversionsticky_not_allowed">defaultversionsticky_not_allowed <a class="anchor" href="#defaultversionsticky_not_allowed">🔗</a></h3>
-<ul>
-<li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#defaultversionsticky_not_allowed</code></li>
-<li>Code: <code>400 Bad Request</code></li>
-<li>Subject: <code>&lt;resource_xid&gt;</code></li>
-<li>Title: <code>Setting &quot;defaultversionsticky&quot; to &quot;true&quot; is not allowed for &quot;&lt;subject&gt;&quot;.</code></li>
-</ul>
 <h3 id="extra_xref_attribute">extra_xref_attribute <a class="anchor" href="#extra_xref_attribute">🔗</a></h3>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#extra_xref_attribute</code></li>
@@ -5126,13 +5105,6 @@ field is just a substitution value and MUST NOT be empty.</p>
 <li>Code: <code>400 Bad Request</code></li>
 <li>Subject: <code>&lt;version_xid&gt;</code></li>
 <li>Title: <code>Version &quot;&lt;subject&gt;&quot; references a document stored outside of the Registry, therefore no validation was performed.</code></li>
-</ul>
-<h3 id="format_inconsistent">format_inconsistent <a class="anchor" href="#format_inconsistent">🔗</a></h3>
-<ul>
-<li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#format_inconsistent</code></li>
-<li>Code: <code>400 Bad Request</code></li>
-<li>Subject: <code>&lt;resource_xid&gt;</code></li>
-<li>Title: <code>One or more Versions of Resource &quot;&lt;subject&gt;&quot; do not have the same &quot;format&quot; value as mandated by their owning Resource model's &quot;consistentformat&quot; attribute being set.</code></li>
 </ul>
 <h3 id="format_unknown">format_unknown <a class="anchor" href="#format_unknown">🔗</a></h3>
 <ul>
@@ -5414,19 +5386,12 @@ something unexpected happened in the server that caused an error condition.</p>
 <li>Subject: <code>&lt;request_path&gt;</code></li>
 <li>Title: <code>An unexpected error occurred, please try again later.</code></li>
 </ul>
-<h3 id="setdefaultversionid_not_allowed">setdefaultversionid_not_allowed <a class="anchor" href="#setdefaultversionid_not_allowed">🔗</a></h3>
-<ul>
-<li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#setdefaultversionid_not_allowed</code></li>
-<li>Code: <code>400 Bad Request</code></li>
-<li>Subject: <code>&lt;resource_xid&gt;</code></li>
-<li>Title: <code>Setting &quot;defaultversionid&quot; is not allowed for &quot;&lt;subject&gt;&quot;.</code></li>
-</ul>
 <h3 id="setdefaultversionsticky_false">setdefaultversionsticky_false <a class="anchor" href="#setdefaultversionsticky_false">🔗</a></h3>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#setdefaultversionsticky_false</code></li>
 <li>Code: <code>400 Bad Request</code></li>
 <li>Subject: <code>&lt;resource_xid&gt;</code></li>
-<li>Title: <code>The model attribute &quot;setdefaultversionsticky&quot; needs to be &quot;false&quot; since &quot;maxversions&quot; is &quot;1&quot;.</code></li>
+<li>Title: <code>Setting &quot;defaultversionsticky&quot; to &quot;true&quot; is not allowed since &quot;maxversions&quot; is &quot;1&quot;.</code></li>
 </ul>
 <h3 id="sort_noncollection">sort_noncollection <a class="anchor" href="#sort_noncollection">🔗</a></h3>
 <ul>

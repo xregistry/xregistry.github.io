@@ -1,10 +1,10 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2026-06-11T16:39:34.158841411Z",
+  "createdat": "2026-06-17T14:44:32.054009141Z",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/waterboiler-mqtt5-jsons07.xreg.json/meta",
-  "modifiedat": "2026-06-11T16:39:34.158841411Z",
+  "modifiedat": "2026-06-17T14:44:32.054009141Z",
   "sampleid": "waterboiler-mqtt5-jsons07.xreg.json",
   "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/waterboiler-mqtt5-jsons07.xreg.json",
   "versionid": "v1.0-rc1",

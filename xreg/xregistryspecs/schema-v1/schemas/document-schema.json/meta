@@ -1,10 +1,10 @@
 {
-  "createdat": "2026-06-11T16:39:41.817154508Z",
+  "createdat": "2026-06-17T14:44:39.457836716Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
   "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/schema-v1/schemas/document-schema.json/versions/v1.0-rc1",
   "epoch": 1,
-  "modifiedat": "2026-06-11T16:39:41.817154508Z",
+  "modifiedat": "2026-06-17T14:44:39.457836716Z",
   "readonly": false,
   "schemaid": "document-schema.json",
   "self": "https://xregistry.io/xreg/xregistryspecs/schema-v1/schemas/document-schema.json/meta",
