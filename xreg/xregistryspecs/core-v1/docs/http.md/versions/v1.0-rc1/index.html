@@ -125,13 +125,14 @@ prefix MUST be used consistently for all APIs in the same Registry instance.
 
 If an OPTIONAL HTTP path is not supported by an implementation, then any
 use of that API MUST generate an error
-([api_not_found](./http.md#api_not_found)).
+([api_not_found](#api_not_found)).
 
 If an HTTP method is not supported for a supported HTTP path, then an error
 ([action_not_supported](./spec.md#action_not_supported)) MUST be generated.
 
 Implementations MAY support extension APIs, however, the following rules apply:
-- New HTTP paths that extend non-root paths MUST NOT be defined.
+- New HTTP paths that extend non-root paths MUST NOT be defined as they might
+  conflict with URLs of entities within the system.
 - New root HTTP paths MAY be defined as long as they do not use Registry-level
   HTTP paths or attribute names. This includes extension and Groups collection
   attribute names.
@@ -300,6 +301,12 @@ following:
     if there are entities that need to be removed.
   - The processing of each individual entity in the map MUST follow the same
     rules as defined for `PUT` above.
+  - In the case of an empty map of Versions and the Resource being referenced
+    does not exist yet, an error ([missing_versions](#missing_versions)) MUST
+    be generated because a Resource can not exist without any Versions. If
+    the intent was to create a Resource with a Version that has just default
+    values, then there are other APIs that can be used that make that intent
+    clear (e.g. `PUT` to the Resource itself).
 
 The processing of each individual entity follows the same set of rules:
 - If an entity with the specified `<SINGULAR>id` already exists then it MUST be
@@ -595,8 +602,9 @@ Where:
   changes to those values.
 - For both the `PATCH` and `PUT` cases, if present, the `modelsource` attribute
   MUST be a complete replacement representation of the model definition. A
-  value of `null` MUST reset the model to the server's default value.
-  See [Creating or Updating the Registry
+  value of `null` or `{}` MUST reset the model to the server's default value
+  (no Groups, Resources, extension attributes or custom specification-defined
+  attributes).  See [Creating or Updating the Registry
   Model](./model.md#creating-or-updating-the-registry-model) for more
   information.
 - When the `capabilities` attribute is present and `PATCH` is used then only
@@ -753,6 +761,8 @@ it MUST NOT support any HTTP update methods. This API was created:
   example, to then be used in an "import" type of operation for another
   Registry, or for tooling that does not need the duplication of information
   that [Doc Flag](./spec.md#doc-flag) removes.
+- Note, the semantics of the `doc` and `inline` flags MUST still be adhered to
+  even if explicitly specifying those flags is not supported by the server.
 - To allow for servers that do not support query parameters (such as
   [No-Code Servers](./spec.md#design-no-code-servers)) to expose the entire
   Registry with a single (non-query parameterized) API call.
@@ -790,9 +800,6 @@ The request MUST be of the form:
 
 ```yaml
 GET /capabilities
-Content-Type: application/json; charset=utf-8
-
-{ ... Capabilities map excluded for brevity ...  }
 ```
 
 A successful response MUST be of the form:
@@ -822,14 +829,13 @@ Content-Type: application/json; charset=utf-8
     "binary", "collections", "doc", "epoch", "filter", "ignore", "inline",
     "setdefaultversionid", "sort", "specversion"
   ],
-  "ignore": [ "capabilities", "defaultversionid", "defaultversionsticky",
-    "epoch", "modelsource", "readonly"
+  "ignores": [ "capabilities", "defaultversionid", "defaultversionsticky",
+    "epoch", "id", "modelsource", "readonly"
   ],
   "mutable": [ "capabilities", "entities", "model" ],
   "pagination": false,
   "shortself": false,
-  "specversions": [ "1.0-rc2" ],
-  "stickyversions": true
+  "specversions": [ "1.0-rc2" ]
 }
 ```
 
@@ -868,18 +874,28 @@ Content-Type: application/json; charset=utf-8
 
 {
   "apis": {
-    "type": "string",
-    "enum": [ "/capabilities", "/export", "/model", /"modelsource" ]
+    "type": "array",
+    "item": {
+      "type": "string"
+    },
+    "enum": [ "/capabilities", "/capabilitiesoffered", "/export", "/model",
+       "/modelsource" ]
   },
   "flags": {
-    "type": "string",
+    "type": "array",
+    "item": {
+      "type": "string"
+    },
     "enum": [ "collections", "doc", "epoch", "filter", "ignore", "inline",
        "setdefaultversionid", "sort", "specversion" ]
   },
-  "ignore": {
-    "type": "string",
+  "ignores": {
+    "type": "array",
+    "item": {
+      "type": "string"
+    },
     "enum": [ "capabilities", "defaultversionid", "defaultversionsticky",
-      "epoch", "modelsource", "readonly" ]
+      "epoch", "id", "modelsource", "readonly" ]
   },
   "pagination": {
     "type": "boolean",
@@ -890,14 +906,19 @@ Content-Type: application/json; charset=utf-8
     "enum": [ false, true ]
   },
   "specversions": {
-    "type": "string",
+    "type": "array",
+    "item": {
+      "type": "string"
+    },
     "enum": [ "1.0-rc2" ]
   },
-  "stickyversions": {
-    "type": "boolean",
-    "enum": [ true ]
-  },
-  "versionmodes": [ "manual" ]
+  "versionmodes": {
+    "type": "array",
+    "item": {
+      "type": "string"
+    },
+    "enum": [ "manual" ]
+  }
 }
 ```
 
@@ -974,15 +995,14 @@ PATCH /capabilities
     "binary", "collections", "doc", "epoch", "filter", "ignore", "inline",
     "setdefaultversionid", "sort", "specversion"
   ],
-  "ignore": [
+  "ignores": [
     "capabilities", "defaultversionid", "defaultversionsticky", "epoch",
-    "modelsource", "readonly"
+    "id", "modelsource", "readonly"
   ],
   "mutable": [ "capabilities", "entities", "model" ],
   "pagination": false,
   "shortself": true,
-  "specversions": [ "1.0-rc2" ],
-  "stickyversions": true
+  "specversions": [ "1.0-rc2" ]
 }
 ```
 
@@ -1022,6 +1042,9 @@ A server MAY support clients retrieving the client-provided
 [model definition](./model.md#registry-model) used to define the current
 model via an HTTP `GET` directed to the stand-alone `modelsource` entity.
 
+In cases where the Registry's model has never been specified via `modelsource`,
+this operation MUST return `{}` not an empty HTTP body.
+
 The request MUST be of the form:
 
 ```yaml
@@ -1060,6 +1083,10 @@ Content-Type: application/json; charset=utf-8
 To update the `modelsource` as part of a request to update the
 [Registry entity](./spec.md#registry-entity), you can include the attribute
 as part of the [`PUT /`](#patch-and-put-) request.
+
+Note: the HTTP body MUST be a JSON object and an empty request MUST generate
+an error ([missing_body](#missing_body)). To denote an empty model `{}` SHOULD
+be used instead.
 
 ### Group Entity
 
@@ -1147,10 +1174,10 @@ The request MUST be of the form:
 
 ```yaml
 PATCH /<GROUPS>
-Content-Type: application/json; charset:utf-8
+Content-Type: application/json; charset=utf-8
 or
 POST /<GROUPS>
-Content-Type: application/json; charset:utf-8
+Content-Type: application/json; charset=utf-8
 
 {
    "<KEY>": {                                      # <GROUP>id
@@ -1310,7 +1337,7 @@ Content-Type: application/json; charset=utf-8
 
 A server MAY support clients creating or updating a
 [Group](./spec.md#group-entity) in a Group collection via an HTTP `PATCH` or
-`POST` directed to the Group entity.
+`PUT` directed to the Group entity.
 
 The processing of these APIs is defined in the [Creating or Updating
 Entities](#creating-or-updating-entities) section.
@@ -1321,7 +1348,7 @@ The request MUST be of the form:
 PATCH /<GROUPS>/<GID>
 Content-Type: application/json; charset=utf-8
 or
-PUT /<GROUPS>/GID>
+PUT /<GROUPS>/<GID>
 Content-Type: application/json; charset=utf-8
 
 { ... Group entity excluded for brevity ... }
@@ -1371,6 +1398,10 @@ Group.
 The processing of this API is defined in the [Creating or Updating
 Entities](#creating-or-updating-entities) section - see the discussion of the
 `POST <PATH-TO-ENTITY>` variant.
+
+A request that isn't a map of Resource types (e.g. it contains other Group
+level attributes) MUST generate an error
+([resources_only](./spec.md#resources_only)).
 
 The request MUST be of the form:
 
@@ -1748,10 +1779,10 @@ The request MUST be of the form:
 
 ```yaml
 PATCH /<GROUPS>/<GID>/<RESOURCES>
-Content-Type: application/json; charset:utf-8
+Content-Type: application/json; charset=utf-8
 or
 POST /<GROUPS>/<GID>/<RESOURCES>
-Content-Type: application/json; charset:utf-8
+Content-Type: application/json; charset=utf-8
 
 {
    "<KEY>": {                                      # <RESOURCE>id
@@ -2429,7 +2460,7 @@ The request MUST be of the form:
 PATCH /<GROUPS>/<GID>/<RESOURCES>/<RID>/meta
 Content-Type: application/json; charset=utf-8
 or
-PUT /<GROUPS>/GID>/<RESOURCES>/<RID>/meta
+PUT /<GROUPS>/<GID>/<RESOURCES>/<RID>/meta
 Content-Type: application/json; charset=utf-8
 
 { ... Meta entity excluded for brevity ... }
@@ -2554,10 +2585,10 @@ The request MUST be of the form:
 
 ```yaml
 PATCH /<GROUPS>/<GID>/<RESOURCES>/<RID>/versions
-Content-Type: application/json; charset:utf-8
+Content-Type: application/json; charset=utf-8
 or
 POST /<GROUPS>/<GID>/<RESOURCES>/<RID>/versions
-Content-Type: application/json; charset:utf-8
+Content-Type: application/json; charset=utf-8
 
 {
    "<KEY>": {                                      # <GROUP>id
@@ -2819,7 +2850,6 @@ for more information.
 
 When directed to the Version metadata, the request MUST be of the form:
 
-```yaml
 ```yaml
 PATCH /<GROUPS>/<GID>/<RESOURCES>/<RID>/versions/<VID>[$details]
 Content-Type: application/json; charset=utf-8
@@ -3214,7 +3244,7 @@ The following list of HTTP protocol specific errors are defined:
 
 <!-- start-err-def -->
 
-#### api_not_found
+### api_not_found
 
 * Type: `https://github.com/xregistry/spec/blob/main/core/http.md#api_not_found`
 * Code: `404 Not Found`
@@ -3226,7 +3256,7 @@ starting with `/`. E.g. `/export` if the "export" feature is not supported.
 
 #### details_required
 
-* Type: `https://github.com/xregistry/spec/blob/main/core/spec.md#details_required`
+* Type: `https://github.com/xregistry/spec/blob/main/core/http.md#details_required`
 * Code: `405 Method Not Allowed`
 * Title: `$details suffix is needed when using PATCH for the entity: <subject>.`
 * Subject: `<resource_xid>`
@@ -3254,6 +3284,13 @@ starting with `/`. E.g. `/export` if the "export" feature is not supported.
 * Type: `https://github.com/xregistry/spec/blob/main/core/http.md#missing_body`
 * Code: `400 Bad Request`
 * Title: `The request is missing an HTTP body - try '{}'.`
+* Subject: `<request_path>`
+
+#### missing_versions
+
+* Type: `https://github.com/xregistry/spec/blob/main/core/http.md#missing_versions`
+* Code: `400 Bad Request`
+* Title: `At least one Version needs to be included in the request to process "<subject>".`
 * Subject: `<request_path>`
 
 <!-- end-err-def -->

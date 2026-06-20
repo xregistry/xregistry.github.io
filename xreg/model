@@ -216,6 +216,27 @@
             }
           }
         },
+        "constraints": {
+          "name": "constraints",
+          "type": "object",
+          "attributes": {
+            "default": {
+              "name": "default",
+              "type": "any"
+            },
+            "enum": {
+              "name": "enum",
+              "type": "array",
+              "item": {
+                "type": "any"
+              }
+            },
+            "equals": {
+              "name": "equals",
+              "type": "string"
+            }
+          }
+        },
         "docsurl": {
           "name": "docsurl",
           "type": "url",
@@ -301,13 +322,12 @@
           "singular": "doc",
           "maxversions": 0,
           "setversionid": true,
-          "setdefaultversionsticky": true,
           "hasdocument": true,
+          "versionmode": "manual",
           "singleversionroot": false,
           "validateformat": false,
           "validatecompatibility": false,
           "strictvalidation": false,
-          "consistentformat": false,
           "attributes": {
             "docid": {
               "name": "docid",
@@ -402,8 +422,8 @@
               "type": "boolean",
               "readonly": true
             },
-            "formatvalidateddetails": {
-              "name": "formatvalidateddetails",
+            "formatvalidatedreason": {
+              "name": "formatvalidatedreason",
               "type": "string",
               "readonly": true
             },
@@ -412,8 +432,8 @@
               "type": "boolean",
               "readonly": true
             },
-            "compatibilityvalidateddetails": {
-              "name": "compatibilityvalidateddetails",
+            "compatibilityvalidatedreason": {
+              "name": "compatibilityvalidatedreason",
               "type": "string",
               "readonly": true
             },
@@ -620,13 +640,12 @@
           "singular": "sample",
           "maxversions": 0,
           "setversionid": true,
-          "setdefaultversionsticky": true,
           "hasdocument": true,
+          "versionmode": "manual",
           "singleversionroot": false,
           "validateformat": false,
           "validatecompatibility": false,
           "strictvalidation": false,
-          "consistentformat": false,
           "attributes": {
             "sampleid": {
               "name": "sampleid",
@@ -721,8 +740,8 @@
               "type": "boolean",
               "readonly": true
             },
-            "formatvalidateddetails": {
-              "name": "formatvalidateddetails",
+            "formatvalidatedreason": {
+              "name": "formatvalidatedreason",
               "type": "string",
               "readonly": true
             },
@@ -731,8 +750,8 @@
               "type": "boolean",
               "readonly": true
             },
-            "compatibilityvalidateddetails": {
-              "name": "compatibilityvalidateddetails",
+            "compatibilityvalidatedreason": {
+              "name": "compatibilityvalidatedreason",
               "type": "string",
               "readonly": true
             },
@@ -939,13 +958,12 @@
           "singular": "schema",
           "maxversions": 0,
           "setversionid": true,
-          "setdefaultversionsticky": true,
           "hasdocument": true,
+          "versionmode": "manual",
           "singleversionroot": false,
           "validateformat": false,
           "validatecompatibility": false,
           "strictvalidation": false,
-          "consistentformat": false,
           "attributes": {
             "schemaid": {
               "name": "schemaid",
@@ -1040,8 +1058,8 @@
               "type": "boolean",
               "readonly": true
             },
-            "formatvalidateddetails": {
-              "name": "formatvalidateddetails",
+            "formatvalidatedreason": {
+              "name": "formatvalidatedreason",
               "type": "string",
               "readonly": true
             },
@@ -1050,8 +1068,8 @@
               "type": "boolean",
               "readonly": true
             },
-            "compatibilityvalidateddetails": {
-              "name": "compatibilityvalidateddetails",
+            "compatibilityvalidatedreason": {
+              "name": "compatibilityvalidatedreason",
               "type": "string",
               "readonly": true
             },

@@ -46,6 +46,8 @@
 </style>
 </head>
 <h1 id="schema-registry-service---version-10-rc2">Schema Registry Service - Version 1.0-rc2 <a class="anchor" href="#schema-registry-service---version-10-rc2">🔗</a></h1>
+<!-- words: formatvalidated compatibilityvalidated -->
+<!-- words: formatvalidatedreason compatibilityvalidatedreason -->
 <h2 id="abstract">Abstract <a class="anchor" href="#abstract">🔗</a></h2>
 <p>This specification defines a Schema Registry extension to the xRegistry
 document format and API <a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html">specification</a>. A Schema Registry
@@ -271,6 +273,7 @@ this form:</p>
       &quot;createdat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
       &quot;modifiedat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
       &quot;deprecated&quot;: { ... }, ?
+      &quot;format&quot;: &quot;&lt;STRING&gt;&quot;, ?
 
       &quot;schemasurl&quot;: &quot;&lt;URL&gt;&quot;,                       # Schemas collection
       &quot;schemascount&quot;: &lt;UINTEGER&gt;,
@@ -290,6 +293,12 @@ this form:</p>
           &quot;createdat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
           &quot;modifiedat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
           &quot;ancestor&quot;: &quot;&lt;STRING&gt;&quot;,
+          &quot;contenttype&quot;: &quot;&lt;STRING&gt;&quot;, ?
+          &quot;format&quot;: &quot;&lt;STRING&gt;&quot;, ?
+          &quot;formatvalidated&quot;: &lt;BOOLEAN&gt;, ?
+          &quot;formatvalidatedreason&quot;: &quot;&lt;STRING&gt;&quot;, ?
+          &quot;compatibilityvalidated&quot;: &lt;BOOLEAN&gt;, ?
+          &quot;compatibilityvalidatedreason&quot;: &quot;&lt;STRING&gt;&quot;, ?
 
           &quot;schemaurl&quot;: &quot;&lt;URL&gt;&quot;, ?
           &quot;schema&quot;: &lt;ANY&gt; ?
@@ -329,7 +338,7 @@ different formats.</p>
 <p>The follow abbreviated Schema Registry's content shows a single Schema Group
 containing 5 schemas.</p>
 <pre><code class="language-yaml">{
-  &quot;specversion&quot;: 1.0-rc2,
+  &quot;specversion&quot;: &quot;1.0-rc2&quot;,
   # other xRegistry top-level attributes excluded for brevity
 
   &quot;schemagroupsurl&quot;: &quot;http://example.com/schemagroups&quot;,
@@ -345,6 +354,18 @@ containing 5 schemas.</p>
   }
 }
 </code></pre>
+<p>There might be cases where all schemas within a schemagroup need to have the
+same <code>format</code> value. To enable this, set the schemagroup's <code>format</code> value to
+the string that all schemas/Versions within that schemagroup need to use.</p>
+<p>Additionally, if desired, a schemagroup-instance level constraint MAY be added:</p>
+<pre><code class="language-yaml">&quot;constraints&quot;: {
+  &quot;schemas.format&quot;: {
+    &quot;default&quot;: &quot;JsonSchema/draft-07&quot;
+  }
+}
+</code></pre>
+<p>This will define a schemagroup-specific default value for the schemas' <code>format</code>
+value so clients would not need to specify it manually for each schema.</p>
 <h3 id="42-schema-resources">4.2. Schema Resources <a class="anchor" href="#42-schema-resources">🔗</a></h3>
 <p>The Resource (<code>&lt;RESOURCE&gt;</code>) inside of Schema Groups is named <code>schema</code>. The
 plural, used as the collection name, is <code>schemas</code>. Any single <code>schema</code> is a
@@ -393,7 +414,7 @@ other formats on their own.</p>
 <p>The following abbreviated example shows three embedded <code>Protobuf/3</code> schema
 Versions for a schema named <code>com.example.telemetrydata</code>:</p>
 <pre><code class="language-yaml">{
-  &quot;specversion&quot;: 1.0-rc2,
+  &quot;specversion&quot;: &quot;1.0-rc2&quot;,
   # other xRegistry top-level attributes excluded for brevity
 
   &quot;schemagroupsurl&quot;: &quot;http://example.com/schemagroups&quot;,
@@ -467,7 +488,7 @@ Versions for a schema named <code>com.example.telemetrydata</code>:</p>
 <p>When the <code>format</code> attribute is set to <code>JsonSchema</code>, the <code>schema</code> attribute of
 the schema Resource is a JSON object representing a JSON Schema document
 conformant with the declared version.</p>
-<p>When a URI-reference, like <a href="./../../message-v1/docs/spec.html#dataschemauri"><code>schemauri</code></a>,
+<p>When a URI, like <a href="./../../message-v1/docs/spec.html#dataschemauri"><code>schemauri</code></a>,
 points to a JSON Schema document it MAY use a <a href="https://www.rfc-editor.org/rfc/rfc6901">JSON pointer</a>
 expression to deep link into the schema document to reference a particular type
 definition. Otherwise the top-level object definition of the schema is used.</p>
@@ -496,7 +517,7 @@ Schema specification that is used to define the schema.</p>
 <p>When the <code>format</code> attribute is set to <code>XSD</code>, the <code>schema</code> attribute of schema
 Resource is a string containing an XML Schema document conformant with the
 declared version.</p>
-<p>When a URI-reference, like <a href="./../../message-v1/docs/spec.html#dataschemauri"><code>schemauri</code></a>,
+<p>When a URI, like <a href="./../../message-v1/docs/spec.html#dataschemauri"><code>schemauri</code></a>,
 points to a JSON Schema document it MAY use an XPath expression to deep link
 into the schema document to reference a particular type definition. Otherwise
 the top-level object definition of the schema is used.</p>
@@ -522,7 +543,7 @@ with the declared version.</p>
 <li><code>Avro/1.8.2</code> is the identifier for the Apache Avro release 1.8.2.</li>
 <li><code>Avro/1.11.0</code> is the identifier for the Apache Avro release 1.11.0</li>
 </ul>
-<p>When a URI-reference, like <a href="./../../message-v1/docs/spec.html#dataschemauri"><code>schemauri</code></a>,
+<p>When a URI, like <a href="./../../message-v1/docs/spec.html#dataschemauri"><code>schemauri</code></a>,
 points to a JSON Schema document it MAY use a URI fragment suffix
 <code>[:]{record-name}</code> to deep link into the schema document to reference a
 particular type definition. Otherwise the top-level object definition of the
@@ -551,9 +572,9 @@ with the declared version.</p>
 <li><code>Protobuf/3</code> is the identifier for the Protobuf syntax version 3.</li>
 <li><code>Protobuf/2</code> is the identifier for the Protobuf syntax version 2.</li>
 </ul>
-<p>A URI-reference, like [<code>schemauri</code>](../message/spec.md#dataschemauri that points
-to an Protobuf Schema document MUST reference an Protobuf <code>message</code> declaration
-contained in the schema document using a URI fragment suffix
+<p>A URI, like <a href="./../../message-v1/docs/spec.html#dataschemauri"><code>schemauri</code></a> that
+points to a Protobuf Schema document MUST reference a Protobuf <code>message</code>
+declaration contained in the schema document using a URI fragment suffix
 <code>[:]{message-name}</code>. The ':' character is used as a separator when the URI
 already contains a fragment.</p>
 <p>Examples:</p>

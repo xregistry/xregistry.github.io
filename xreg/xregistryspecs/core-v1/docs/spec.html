@@ -48,7 +48,7 @@
 <h1 id="xregistry-service---version-10-rc2">xRegistry Service - Version 1.0-rc2 <a class="anchor" href="#xregistry-service---version-10-rc2">🔗</a></h1>
 <!-- words: validatecompatibility validateformat strictvalidation matchcase -->
 <!-- words: compat formatvalidated compatibilityvalidated -->
-<!-- words: consistentformat -->
+<!-- words: compat formatvalidatedreason compatibilityvalidatedreason -->
 <h2 id="abstract">Abstract <a class="anchor" href="#abstract">🔗</a></h2>
 <p>This specification defines an extensible model for managing metadata
 registries. The metadata artifacts can be for any purpose, such as schemas
@@ -327,9 +327,7 @@ Document</a> for more information.</p>
 <p>This specification is designed such that clients can choose how they want the
 data from a server to be returned. There are three main &quot;views&quot; that clients
 can choose from:</p>
-<ul>
-<li>
-<p>Single Document View</p>
+<h4 id="single-document-view">Single Document View <a class="anchor" href="#single-document-view">🔗</a></h4>
 <p>In this view, clients retrieving all (or part) of the Registry hierarchy
 as a single document. In this case, nested (or child) entities MAY be
 &quot;inlined&quot; into the retrieved document such that the need for secondary
@@ -339,9 +337,7 @@ document storage system (e.g. Github), or as input into local tooling that
 expects all of the relevant data to be stored locally on disk.</p>
 <p>See the <a href="./http.html#get-export">HTTP <code>GET /export</code> operation</a> for one way to
 generate this view.</p>
-</li>
-<li>
-<p>API View</p>
+<h4 id="api-view">API View <a class="anchor" href="#api-view">🔗</a></h4>
 <p>In this view, it is assumed that the client is interested in an interactive
 discovery and retrieval of the Registry data. Most often clients will &quot;walk&quot;
 the hierarchy of entities by following the references (links) provided
@@ -350,9 +346,7 @@ such, in this view, each entity is, by default, retrieved from the server
 via independent &quot;read&quot; operations.</p>
 <p>A query without the use of the <a href="#doc-flag">Doc flag</a>, is an example of how
 to generate this view.</p>
-</li>
-<li>
-<p>Multiple Document View</p>
+<h4 id="multiple-document-view">Multiple Document View <a class="anchor" href="#multiple-document-view">🔗</a></h4>
 <p>This is a variant of the &quot;API view&quot;. In situations where the Registry data
 is stored as independent files either on disk, or in some other object
 storage system, the client might want to avoid the duplication of
@@ -365,8 +359,6 @@ control system (e.g. Github) to minimize the number of conflicting edits
 between users in a very fluid environment.</p>
 <p>A query with the use of the <a href="#doc-flag">Doc flag</a>, is an example of how to
 generate this view.</p>
-</li>
-</ul>
 <p>This specification provides the mechanisms to allow for users to choose the
 best &quot;view&quot; for their needs. Regardless of the view, the design allows for
 the retrieved data to then be used as input into an xRegistry server.</p>
@@ -420,7 +412,14 @@ Alternative serialization formats MAY be defined.</p>
   &quot;modifiedat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
 
   &quot;capabilities&quot;: {                     # Supported capabilities/options
-    &quot;apis&quot;: [ &quot;/capabilities&quot;,? &quot;/export&quot;,? &quot;/model&quot;? ], ?
+    &quot;available&quot;: {
+      &quot;capabilities&quot;: { &quot;mutable&quot;: &lt;BOOLEAN&gt; }, ?
+      &quot;capabilitiesoffered&quot;: { &quot;mutable&quot;: &lt;BOOLEAN&gt; }, ?
+      &quot;entities&quot;: { &quot;mutable&quot;: &lt;BOOLEAN&gt; },
+      &quot;export&quot;: { &quot;mutable&quot;: false }, ?
+      &quot;model&quot;:  { &quot;mutable&quot;: false }, ?
+      &quot;modelsource&quot;: { &quot;mutable&quot;: &lt;BOOLEAN&gt; } ?
+    },
     &quot;compatibilities&quot;: {
       &quot;&lt;STRING&gt;&quot; : [ &quot;&lt;STRING&gt;&quot; * ] *
     }, ?
@@ -432,13 +431,9 @@ Alternative serialization formats MAY be defined.</p>
     &quot;formats&quot;: [ &quot;&lt;STRING&quot; * ], ?
     &quot;ignores&quot;: [ &quot;capabilities&quot;,? &quot;defaultversionid&quot;,? &quot;defaultversionsticky&quot;,?
       &quot;id&quot;,? &quot;epoch&quot;,? &quot;modelsource&quot;,? &quot;readonly&quot;? ],
-    &quot;mutable&quot;: [                        # What is mutable in the Registry
-      &quot;capabilities&quot;,? &quot;entities&quot;,? &quot;model&quot;,? &quot;&lt;STRING&gt;&quot;*
-    ], ?
     &quot;pagination&quot;: &lt;BOOLEAN&gt;, ?
     &quot;shortself&quot;: &lt;BOOLEAN&gt;, ?
     &quot;specversions&quot;: [ &quot;1.0-rc2&quot;, &quot;&lt;STRING&gt;&quot;* ], ?
-    &quot;stickyversions&quot;: &lt;BOOLEAN&gt;, ?
     &quot;versionmodes&quot;: [ &quot;manual&quot;, &quot;createdat&quot;,? &quot;modifiedat&quot;,? &quot;semver&quot;,?
       &quot;&lt;STRING&gt;&quot;* ], ?
 
@@ -506,14 +501,12 @@ Alternative serialization formats MAY be defined.</p>
             &quot;modelcompatiblewith&quot;: &quot;&lt;URI&gt;&quot;, ?  # Statement of compatibility
             &quot;maxversions&quot;: &lt;UINTEGER&gt;, ?  # Num Vers(&gt;=0). Default=0(unlimited)
             &quot;setversionid&quot;: &lt;BOOLEAN&gt;, ?  # vid settable? Default=true
-            &quot;setdefaultversionsticky&quot;: &lt;BOOLEAN&gt;, ? # sticky settable? Default=true
             &quot;hasdocument&quot;: &lt;BOOLEAN&gt;, ?   # Has separate document. Default=true
             &quot;versionmode&quot;: &quot;&lt;STRING&gt;&quot;, ?  # 'ancestor' processing algorithm
             &quot;singleversionroot&quot;: &lt;BOOLEAN&gt;, ? # Default=false&quot;
             &quot;validateformat&quot;: &lt;BOOLEAN&gt;, ?    # Check version format compliance. Default=false
             &quot;validatecompatibility&quot;: &lt;BOOLEAN&gt;, ? # Check version compatibility. Default=false
             &quot;strictvalidation&quot;: &lt;BOOLEAN&gt;, ?  # Block unknown format/compat. Default=false
-            &quot;consistentformat&quot;: &lt;BOOLEAN&gt;, ?  # Same format for all Vers. Default=false
             &quot;typemap&quot;: &lt;MAP&gt;, ?               # contenttype mappings
             &quot;attributes&quot;: { ... }, ?          # Version attributes/extensions
             &quot;resourceattributes&quot;: { ... }, ?  # Resource attributes/extensions
@@ -548,6 +541,13 @@ Alternative serialization formats MAY be defined.</p>
         &quot;alternative&quot;: &quot;&lt;URL&gt;&quot;, ?
         &quot;documentation&quot;: &quot;&lt;URL&gt;&quot;?
       }, ?
+      &quot;constraints&quot;: {
+        &quot;&lt;RESOURCES&gt;.&lt;PATH&gt;&quot;: {                # Resource-plural + attr path
+          &quot;default&quot;: &lt;VALUE&gt;, ?                # Group specific default
+          &quot;enum&quot;: [ &lt;VALUE&gt; * ], ?             # Allowed subset of values
+          &quot;equals&quot;: &quot;&lt;PATH&gt;&quot; ?                 # Matching Group attribute path
+        } *
+      }, ?
 
       # Repeat for each Resource type in the Group
       &quot;&lt;RESOURCES&gt;url&quot;: &quot;&lt;URL&gt;&quot;,                   # e.g. &quot;messagesurl&quot;
@@ -569,7 +569,12 @@ Alternative serialization formats MAY be defined.</p>
           &quot;createdat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
           &quot;modifiedat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
           &quot;ancestor&quot;: &quot;&lt;STRING&gt;&quot;,                  # Ancestor's versionid
-          &quot;contenttype&quot;: &quot;&lt;STRING&gt;, ?              # Add default Ver extensions
+          &quot;contenttype&quot;: &quot;&lt;STRING&gt;&quot;, ?             # Add default Ver extensions
+          &quot;format&quot;: &quot;&lt;STRING&gt;&quot;, ?
+          &quot;formatvalidated&quot;: &lt;BOOLEAN&gt;, ?
+          &quot;formatvalidatedreason&quot;: &quot;&lt;STRING&gt;&quot;, ?
+          &quot;compatibilityvalidated&quot;: &lt;BOOLEAN&gt;, ?
+          &quot;compatibilityvalidatedreason&quot;: &quot;&lt;STRING&gt;&quot;, ?
 
           &quot;&lt;RESOURCE&gt;url&quot;: &quot;&lt;URL&gt;&quot;, ?              # If not local
           &quot;&lt;RESOURCE&gt;&quot;: ... Resource document ..., ? # If local &amp; inlined &amp; JSON
@@ -622,7 +627,9 @@ Alternative serialization formats MAY be defined.</p>
               &quot;contenttype&quot;: &quot;&lt;STRING&gt;&quot;, ?
               &quot;format&quot;: &quot;&lt;STRING&gt;&quot;, ?
               &quot;formatvalidated&quot;: &lt;BOOLEAN&gt;, ?
+              &quot;formatvalidatedreason&quot;: &quot;&lt;STRING&gt;&quot;, ?
               &quot;compatibilityvalidated&quot;: &lt;BOOLEAN&gt;, ?
+              &quot;compatibilityvalidatedreason&quot;: &quot;&lt;STRING&gt;&quot;, ?
 
               &quot;&lt;RESOURCE&gt;url&quot;: &quot;&lt;URL&gt;&quot;, ?                # If not local
               &quot;&lt;RESOURCE&gt;&quot;: ... Resource document ..., ? # If inlined &amp; JSON
@@ -812,8 +819,7 @@ Use of a <code>time-zone</code> notation is RECOMMENDED. All timestamps returned
 a server MUST be normalized to UTC to allow for easy (and consistent)
 comparisons.</li>
 <li><code>uinteger</code> - unsigned integer.</li>
-<li><code>uri</code> - a URI as defined in <a href="https://tools.ietf.org/html/rfc3986">RFC 3986</a>.
-Note that it can be absolute or relative.</li>
+<li><code>uri</code> - an absolute URI ( <code>uriabsolute</code>) or relative URI (<code>urirelative</code>).</li>
 <li><code>uriabsolute</code> - absolute URI as defined in <a href="https://tools.ietf.org/html/rfc3986#section-4.3">RFC 3986 Section
 4.3</a>.</li>
 <li><code>urirelative</code> - relative URI as defined in <a href="https://tools.ietf.org/html/rfc3986#section-4.2">RFC 3986 Section
@@ -915,6 +921,11 @@ is used in the <a href="./http.html">HTTP Binding Protocol</a>.</li>
 <li>Unless otherwise stated, requests to update read-only attributes MUST be
 silently ignored by servers, even if the contents of those attributes are
 invalid.</li>
+<li><a id="read-only-changed"></a>Unless otherwise stated, server managed changes
+to read-only attributes MUST NOT be treated the same as user initiated
+changes to non-read-only attributes with respect to updating attributes such
+as <code>modifiedat</code> and <code>epoch</code>. In other words, as these read-only attributes
+are changed, the entity MUST NOT be considered &quot;updated&quot;.</li>
 </ul>
 <h4 id="extensions">Extensions <a class="anchor" href="#extensions">🔗</a></h4>
 <p>Implementations of this specification MAY define additional (extension)
@@ -1103,7 +1114,7 @@ will directly perform the desired operation or whether it returns a
 redirect to the full <code>self</code> URL requiring the client to resend the request.</p>
 <p>If an entity is deleted and then a new entity is created that results in
 the same <code>self</code> URL, this specification does not mandate that the same
-<code>shorturl</code> be generated, but it MAY do so.</p>
+<code>shortself</code> be generated, but it MAY do so.</p>
 <p>This attribute MUST only appear in the serialization if the <code>shortself</code>
 capability is enabled. However, if this capability is enabled, then disabled,
 and then re-enabled, the <code>shortself</code> values MUST retain their original
@@ -1213,7 +1224,7 @@ removed, from that Resource.</p>
 <p>Constraints:</p>
 <ul>
 <li>REQUIRED.</li>
-<li>MUST be a read-only attribute.</li>
+<li>MUST be a <a href="#read-only-changed">read-only</a> attribute.</li>
 <li>MUST be an unsigned integer equal to or greater than zero.</li>
 <li>MUST increase in value each time the entity is updated.</li>
 </ul>
@@ -1377,7 +1388,7 @@ date/time. Implementations MAY choose to restrict its values if necessary.</li>
 existing value, however a value of <code>null</code> MUST use the current date/time
 as the new value.</li>
 <li>When absent in an update request, any existing value MUST remain
-unchanged, or if not already set, set to the current date/time.</li>
+unchanged.</li>
 <li>During the processing of a single request, all entities that have their
 <code>createdat</code> or <code>modifiedat</code> attributes set to the current date/time MUST
 use the same value in all cases.</li>
@@ -1466,7 +1477,7 @@ client is expected to investigate the entity to determine if it is
 appropriate.</p>
 </li>
 <li>
-<p><code>docs</code><br>
+<p><code>documentation</code><br>
 An OPTIONAL property specifying the URL to additional information about
 the deprecation of the entity. This specification does not mandate any
 particular format or information, however some possibilities include:
@@ -1498,6 +1509,80 @@ values of each with respect to how they might impact each other.</p>
 }
 </code></pre>
 </li>
+</ul>
+</li>
+</ul>
+<h5 id="constraints-attribute"><code>constraints</code> Attribute <a class="anchor" href="#constraints-attribute">🔗</a></h5>
+<ul>
+<li>
+<p>Type: Map of Resource attributes to be constrained just for this Group.</p>
+<p>This attribute is used to create a set of Group instance specific constraints
+on the Resources that exist within it. For example, with this mechanism a
+Group can restrict all Resources within it to only have a subset of the
+allowed values for a particular attribute. This allows for Group instance
+specific restrictions without requiring the creating of new Resource types.</p>
+<p>These restrictions are designed to only allow subsetting of the constraints
+specified by the Resource type model and any Group model
+<a href="./model.html#groupsstringconstraints"><code>constraints</code></a> defined. They can not be
+used to extend the allowable values of the attributes being constrained.</p>
+<p>The definition of this map is the same as the Group type
+<a href="./model.html#groupsstringconstraints"><code>constraints</code></a> attribute.</p>
+<p>Any map key value specified here that is the same as a key value included
+in the Group type model's <a href="./model.html#groupsstringconstraints"><code>constraints</code></a>,
+is interpreted as a request to further constrain the Resource attribute
+being referenced. Therefore, the two definitions of the constraints are
+layered (or merged), per the following rules:</p>
+<ul>
+<li><code>default</code> attribute:
+<ul>
+<li>If present here, it MUST be a valid value within the effective <code>enum</code>
+values per the above <code>enum</code> bullet.</li>
+<li>If not present here, but specified at the Group type level, then the
+value specified at the Group type level, MUST be valid per the effective
+<code>enum</code> values per the above <code>enum</code> bullet.</li>
+</ul>
+</li>
+<li><code>enum</code> attribute:
+<ul>
+<li>If present here and at the Group type level, then the values here MUST
+be a subset of the values specified at the Group type level.</li>
+<li>If not present here, then any <code>enum</code> values specified at the Group type
+level MUST apply.</li>
+</ul>
+</li>
+<li><code>equals</code> attribute:
+<ul>
+<li>If present here and at the Group type level, then the values MUST be
+the exact same.</li>
+<li>If not present here, then any <code>equals</code> value specified at the Group type
+level MUST apply.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Constraints:</p>
+<ul>
+<li>OPTIONAL</li>
+</ul>
+</li>
+<li>
+<p>Examples:</p>
+<pre><code class="language-yaml">&quot;constraints&quot;: {
+  &quot;schemas.format&quot; : {
+    &quot;default&quot;: [ &quot;jsonschema/draft-07&quot; ],
+    &quot;enum&quot;: [ &quot;avro/1.9&quot;, &quot;jsonschema/draft-07&quot; ],
+    &quot;equals&quot;: &quot;format&quot;
+  }
+}
+</code></pre>
+<p>The above example mandates that:</p>
+<ul>
+<li>All schema Resources within this group have a <code>format</code> values that
+is either <code>avro/1.9</code> or <code>jsonschema/draft-07</code>. And when not specified,
+it will default to <code>jsonschema/draft-07</code>.</li>
+<li>It also ensures that each Resource's <code>format</code> attribute is the same as
+the owning Group's <code>format</code> values (if present).</li>
 </ul>
 </li>
 </ul>
@@ -1627,7 +1712,9 @@ applied to the &quot;default&quot; Version of a Resource, and the incoming inlin
 <code>versions</code> collections includes that &quot;default&quot; Version, the Resource's default
 Version attributes MUST be silently ignored. This is to avoid any possible
 conflicting data between the two sets of data for that Version. In other
-words, the Version attributes in the incoming <code>versions</code> collection wins.</p>
+words, the Version attributes in the incoming <code>versions</code> collection wins.
+See <a href="#resource-processing-algorithm">Resource Processing Algorithm</a> for more
+details.</p>
 <p>To better understand this scenario, consider the following HTTP request to
 update a Message where the <code>defaultversionid</code> is <code>v1</code>:</p>
 <pre><code class="language-yaml">PUT http://example.com/endpoints/ep1/messages/msg1
@@ -1748,6 +1835,21 @@ See <a href="#registry-capabilities">Registry Capabilities</a> for more informat
 of the Registry.</li>
 <li>An explicit value of <code>null</code> for this attribute MUST result in resetting the
 capabilities to the server's default values.</li>
+<li>If present, MUST be processed before any other attributes since subsequent
+processing might be impacted by the new capability values. In cases where
+a capability setting influences the processing of this attribute, or
+of the <a href="#modelsource-attribute"><code>modelsource</code></a>, the state of those
+particular settings prior to the request MUST be used for the duration
+of the current request. For example:
+<ul>
+<li>Support for <code>ignore=capabilities</code> would be controlled by
+the pre-request configuration since, if set, would result in ignoring
+any <code>capabilities</code> attribute in the request.</li>
+<li>However, the set of supported <code>formats</code> would be controlled by the
+updated <code>capabilities</code> to ensure proper validation of the Registry data
+prior to completing the request.</li>
+</ul>
+</li>
 </ul>
 </li>
 <li>
@@ -1784,7 +1886,7 @@ this view of the model.</p>
 <a href="#inline-flag">Inline Flag</a>.</li>
 <li>MUST be included in API and document views if requested via the
 <a href="#inline-flag">Inline Flag</a>.</li>
-<li>MUST be a read-only attribute.</li>
+<li>MUST be a <a href="#read-only-changed">read-only</a> attribute.</li>
 </ul>
 </li>
 </ul>
@@ -1800,11 +1902,18 @@ this is meant to represent just the customizations, or extensions, to the
 base <a href="./model.html#registry-model">xRegistry model</a> as defined this
 specification. This allows for users to view (and edit) just the custom
 aspects of the model without the &quot;noise&quot; of the specification-defined parts.</p>
-<p>During the processing of an update operation, if this attribute is present,
-then the Registry's model MUST be updated prior to any entities being
-updated. A value of <code>null</code>, or an empty JSON object (<code>{}</code>), MUST result
-in all Groups, Resources and extension attributes being removed from the
-model.</p>
+<p>During a write operation:</p>
+<ul>
+<li>The absence of this attribute MUST result in no changes to the model, or
+modelsource of the Registry.</li>
+<li>An explicit value of <code>null</code>, or an empty JSON object (<code>{}</code>), MUST result
+in all Groups, Resources and extension Registry-level attributes being
+removed from the model.</li>
+<li>If present, the Registry's model MUST be updated prior to any entities
+being updated, including the other Registry-level attributes. However,
+if the <a href="#capabilities-attribute"><code>capabilities</code> attribute</a> is also present,
+then <code>capabilities</code> MUST be processed before <code>modelsource</code>.</li>
+</ul>
 <p>The serialization of this attribute MUST be semantically equivalent to
 what was used to create the model, but it is NOT REQUIRED to be syntactically
 equivalent. In other words, it might be &quot;pretty-printed&quot;, but it MUST NOT
@@ -1850,7 +1959,7 @@ configuration detail that will help in successful usage of that feature.</p>
 being a <code>&lt;BOOLEAN&gt;</code> value of <code>true</code> to indicate support for the feature.</p>
 <p>The JSON serialization of capabilities map MUST be of the form:</p>
 <pre><code>{
-  &quot;apis&quot;: [ &quot;&lt;STRING&gt;&quot; * ], ?
+  &quot;available&quot;: { &quot;&lt;STRING&gt;&quot;: { &quot;mutable&quot;: &lt;BOOLEAN&gt; } + },
   &quot;compatibilities&quot;: { &quot;&lt;STRING&gt;&quot;: [ &quot;&lt;STRING&gt;&quot; * ] * }, ?
   &quot;flags&quot;: [ &quot;&lt;STRING&gt;&quot; * ], ?
   &quot;formats&quot;: [ &quot;&lt;STRING&gt;&quot; * ], ?
@@ -1859,7 +1968,6 @@ being a <code>&lt;BOOLEAN&gt;</code> value of <code>true</code> to indicate supp
   &quot;pagination&quot;: &lt;BOOLEAN&gt;, ?
   &quot;shortself&quot;: &lt;BOOLEAN&gt;, ?
   &quot;specversions&quot;: [ &quot;&lt;STRING&gt;&quot; ], ?
-  &quot;stickyversions&quot;: &lt;BOOLEAN&gt;, ?
   &quot;versionmodes&quot;: [ &quot;&lt;STRING&gt;&quot; ], ?
 
   &quot;&lt;STRING&gt;&quot;: ... capability configuration ... *   // Extension capabilities
@@ -1898,36 +2006,79 @@ attribute well as a stand-alone map independent of the Registry entity (e.g.
 as with all interactions with a server, security/access controls MAY be
 needed.</p>
 <p>The following defines the specification-defined capabilities:</p>
-<h4 id="apis-capability"><code>apis</code> Capability <a class="anchor" href="#apis-capability">🔗</a></h4>
+<h4 id="available-capability"><code>available</code> Capability <a class="anchor" href="#available-capability">🔗</a></h4>
 <ul>
-<li>Name: <code>apis</code></li>
-<li>Type: Array of strings</li>
-<li>Description: The list of APIs (beyond the APIs for the data model) that
-are supported for read operations. This list is meant to allow for
-clients/tooling to easily discover which of the APIs, that are not related
-to the data model, are supported. Whether any of the APIs listed are
-supported for write operations can be discovered via the <code>mutable</code> capability.</li>
-<li>Note that it is allowable for the data that is available via more than one
-mechanism to not be available via all mechanisms. For example, it is
-possible for an implementation to support retrieving the model via a
-model-direct API (e.g. <a href="./http.html#get-model"><code>GET /model</code></a> in HTTP), but not
-support inlining the model via the <a href="#inline-flag">Inline Flag</a>.</li>
-<li>Defined values:
+<li>
+<p>Name: <code>available</code></p>
+</li>
+<li>
+<p>Type: Map of types of xRegistry metadata available.</p>
+</li>
+<li>
+<p>Description: The list of the various types of metadata available from this
+xRegistry instance. This information is meant to be used by clients, and
+tooling, to programmatically discover which pieces of xRegistry information
+are available to query or edit.</p>
+<p>The &quot;key&quot; of each map entry MUST be one of the defined values listed below.
+The &quot;value&quot; of each map entry MUST be an Object with a nested <code>&quot;mutable&quot;</code>
+boolean attribute indicating whether or not the corresponding data is
+user-editable.</p>
+<p>Some of the items listed are available via more than one mechanism. For
+example, &quot;model&quot;, in the HTTP protocol case, is available the <code>/model</code> API
+as well as via the <code>?inline=model</code> query parameter. In these cases, the data
+MUST be available via all supported retrieval mechanisms. For example, it
+would violate this specification if the <code>/model</code> API was supported but
+<code>?inline=model</code> was not, assuming the <code>?inline</code> flag was supported. If the
+<code>?inline</code> flag, in general, was not supported then only allowing the
+retrieval of the model via the <code>/model</code> API is permitted. Note that if
+a separate API is defined for a piece of data, it MUST be supported if that
+data type is listed in this capability.</p>
+<p>Metadata not listed in this capability is to be assumed to be unavailable
+via all mechanisms. Attempts to access unavailable metadata MUST generate
+an error (<a href="#not_available">not_available</a>).</p>
+</li>
+<li>
+<p>Defined values:</p>
 <ul>
-<li><code>/capabilities</code></li>
-<li><code>/export</code></li>
-<li><code>/model</code></li>
-<li><code>/modelsource</code></li>
+<li><a href="#registry-capabilities"><code>capabilities</code></a></li>
+<li><a href="#offered-capabilities"><code>capabilitiesoffered</code></a></li>
+<li><code>entities</code> (xRegistry root entity, Groups, Resource and Versions. MUST
+have a <code>mutable</code> value of <code>false</code>)</li>
+<li><a href="#single-document-view"><code>export</code></a></li>
+<li><a href="#model-attribute"><code>model</code></a> (MUST have a <code>mutable</code> value of <code>false</code>)</li>
+<li><a href="#modelsource-attribute"><code>modelsource</code></a></li>
 </ul>
 </li>
-<li>Values MUST start with <code>/</code>.</li>
-<li>When not specified, the default value MUST be an empty list and no APIs
-beyond those for the data model are supported.</li>
-<li>Implementations MAY define their own values but they MUST NOT conflict with
-specification-defined APIs, Registry-level attributes or Group collection
-attribute names.</li>
-<li>It is STRONGLY RECOMMENDED that implementations support at least
-<code>/capabilities</code> and <code>/model</code>.</li>
+<li>
+<p>When not specified, the default value MUST be just the <code>entities</code> value,
+with a <code>&quot;mutable&quot;</code> value of <code>true</code>.</p>
+</li>
+<li>
+<p>This capability MUST always include <code>entities</code> as a value, even if its
+<code>mutable</code> attribute is <code>false</code>.</p>
+</li>
+<li>
+<p>Implementations MAY define additional values.</p>
+</li>
+<li>
+<p>Implementations MAY define additional attributes for the nested Object.</p>
+</li>
+<li>
+<p>It is STRONGLY RECOMMENDED that implementations also support at least
+<code>capabilities</code> and <code>model</code>.</p>
+</li>
+<li>
+<p>Examples:</p>
+<pre><code class="language-yaml">&quot;available&quot;: {
+  &quot;capabilities&quot;: { &quot;mutable&quot;: false },
+  &quot;capabilitiesoffered&quot;: { &quot;mutable&quot;: false },
+  &quot;entities&quot;: { &quot;mutable&quot;: true },
+  &quot;export&quot;: { &quot;mutable&quot;: false },
+  &quot;model&quot;:  { &quot;mutable&quot;: false },
+  &quot;modelsource&quot;: { &quot;mutable&quot;: true }
+}
+</code></pre>
+</li>
 </ul>
 <h4 id="compatibilities-capability"><code>compatibilities</code> Capability <a class="anchor" href="#compatibilities-capability">🔗</a></h4>
 <ul>
@@ -1941,7 +2092,11 @@ attribute names.</li>
 <p>Description: The set of compatibility rules that are available for each
 supported <code>format</code>. Each map key MUST be a case-insensitive Capabilities
 <code>formats</code> value, and the map value MUST be the list of case-insensitive
-compatibility rules supported by that <code>format</code>. An error
+compatibility rules supported by that <code>format</code>. The key MAY include a
+<code>*</code> (wildcard) character that matches zero or more instances of any
+character at that location in the string. Similar to a <code>.*</code> in regular
+expressions.</p>
+<p>An error
 (<a href="#capability_error">capability_error</a>) MUST be generated if a specified
 key/format isn't in Capabilities <code>formats</code> list or the compatibility rule
 specified is not supported for that <code>format</code> (i.e. that combination of
@@ -1964,6 +2119,7 @@ for Version compatibility is supported.</p>
 <p>Examples:</p>
 <ul>
 <li><code>&quot;compatibilities&quot;: { &quot;avro&quot;: [ &quot;backward&quot;, &quot;forward&quot; ] }</code></li>
+<li><code>&quot;compatibilities&quot;: { &quot;jsonschema*&quot;: [ &quot;backward&quot;, &quot;forward&quot;, &quot;full&quot; ] }</code></li>
 </ul>
 </li>
 </ul>
@@ -2015,24 +2171,6 @@ offered capabilities).</li>
 </ul>
 </li>
 </ul>
-<h4 id="mutable-capability"><code>mutable</code> Capability <a class="anchor" href="#mutable-capability">🔗</a></h4>
-<ul>
-<li>Name <code>mutable</code></li>
-<li>Type: Array of strings</li>
-<li>Description: The list of items in the Registry that can be edited by the
-client. Presence in this list does not guarantee that a client can edit
-all items of that type. For example, some Resources might still be read-only
-even if the client has the ability to edit Resources in general.</li>
-<li>Supported values:
-<ul>
-<li><code>capabilities</code> (ability to configure the server's features)</li>
-<li><code>entities</code> (Groups, Resources, Versions and the Registry entity itself)</li>
-<li><code>modelsource</code> (the <a href="./model.html#registry-model">Registry model</a>)</li>
-</ul>
-</li>
-<li>When not specified, the default value MUST be an empty list and the Registry
-is read-only.</li>
-</ul>
 <h4 id="pagination-capability"><code>pagination</code> Capability <a class="anchor" href="#pagination-capability">🔗</a></h4>
 <ul>
 <li>Name: <code>pagination</code></li>
@@ -2065,16 +2203,6 @@ in the server serialization of the entities within the Registry (value of
 </li>
 <li>When not specified, the default value MUST be the latest version of this
 specification supported by the server.</li>
-</ul>
-<h4 id="stickyversions-capability"><code>stickyversions</code> Capability <a class="anchor" href="#stickyversions-capability">🔗</a></h4>
-<ul>
-<li>Name: <code>stickyversions</code></li>
-<li>Type: Boolean</li>
-<li>Description: Indicates whether the server supports clients choosing which
-Version of a Resource is to be the &quot;default&quot; Version. In other words, this
-capability indicates whether a request to set a Resource's
-<code>setdefaultversionsticky</code> aspect to <code>true</code> is allowed.</li>
-<li>When not specified, the default value MUST be <code>true</code>.</li>
 </ul>
 <h4 id="updating-the-capabilities-of-a-server">Updating the Capabilities of a Server <a class="anchor" href="#updating-the-capabilities-of-a-server">🔗</a></h4>
 <p>Implementations MAY support clients updating the capabilities of the server.
@@ -2111,17 +2239,6 @@ error (<a href="#capability_missing_value">capability_missing_value</a>).</p>
 (<a href="#capability_value">capability_value</a>).</p>
 <p>A request to update an unknown capability MUST generate an error
 (<a href="#capability_unknown">capability_unknown</a>).</p>
-<p>When processing a request to update the capabilities, the processing of the
-changes to the capabilities MUST be in effect prior to any other changes
-specified in the request being made, except for the following capability
-attributes:</p>
-<ul>
-<li><code>apis</code></li>
-<li><code>specversions</code></li>
-</ul>
-<p>These two only impact subsequent requests, however, if the response includes
-the serialization of the Registry's capabilities, then the full set of
-changes MUST appear in that serialization.</p>
 <p>Normally modifying the capabilities of a server and modifying any entity data
 are typically two very distinct actions, and will not normally happen at the
 same time. However, if the situation does occur, a consistent (interoperable)
@@ -2135,36 +2252,30 @@ map, and the corresponding value provides details about the capability
 (e.g. allowed values and pointer to its documentation).</p>
 <p>The JSON serialization of the capabilities offering map MUST be of the form:</p>
 <pre><code class="language-yaml">{
-  &quot;&lt;STRING&gt;&quot;: {
+  &quot;&lt;STRING&gt;&quot;: {                   # Name of Capability attribute
     &quot;type&quot;: &quot;&lt;TYPE&gt;&quot;,
-    &quot;item&quot;: {
-      &quot;type&quot;: &quot;&lt;TYPE&gt;&quot;
-    }, ?
-    &quot;enum&quot;: [ &lt;VALUE&gt;, * ], ?
-    &quot;options&quot;: &lt;MAP&gt;, ?
+    &quot;enum&quot;: [ &lt;VALUE&gt; * ], ?      # Allowed values for scalars
     &quot;min&quot;: &lt;VALUE&gt;, ?
     &quot;max&quot;: &lt;VALUE&gt;, ?
-    &quot;documentation&quot;: &quot;&lt;URL&gt;&quot; ?
+    &quot;documentation&quot;: &quot;&lt;URL&gt;&quot;, ?
+
+    &quot;attributes&quot;: { ... }, ?      # If &quot;type&quot; is object
+    &quot;item&quot;: {                     # If &quot;type&quot; is map,array
+      &quot;type&quot;: &quot;&lt;TYPE&gt;&quot;,           # Value type of map, array type
+      &quot;attributes&quot;: { ... }, ?    # If this item &quot;type&quot; is object (see above)
+      &quot;item&quot;: { ... } ?           # If this item &quot;type&quot; is map,array (see above)
+    }, ?
   } *
 }
 </code></pre>
 <p>Where:</p>
 <ul>
-<li><code>&lt;STRING&gt;</code> MUST be the capability name.</li>
-<li><code>&lt;TYPE&gt;</code> MUST be one of <code>boolean</code>, <code>string</code>, <code>integer</code>, <code>decimal</code>,
-<code>uinteger</code>, <code>array</code> or <code>map</code> as defined in <a href="#attributes-and-extensions">Attributes and
-Extensions</a>.</li>
-<li>When <code>&quot;type&quot;</code> is <code>array</code> <code>&quot;item.type&quot;</code> MUST be one of <code>boolean</code>,
-<code>string</code>, <code>integer</code>, <code>decimal</code>, <code>uinteger</code>. When <code>&quot;type&quot;</code> is <code>map</code> then
-<code>&quot;item.type&quot;</code> MUST be of type <code>string</code>. If <code>&quot;type&quot;</code> is of any other value
-then <code>&quot;item&quot;</code> MUST be absent. This attribute specifies the &quot;type&quot; of the
-nested array/map item.</li>
+<li>The top-level <code>&quot;&lt;STRING&gt;&quot;</code> MUST be the capability name.</li>
+<li><code>&lt;TYPE&gt;</code> MUST be one of the data types specified in
+<a href="#attributes-and-extensions">Attributes and Extensions</a>.</li>
 <li><code>&quot;enum&quot;</code>, when specified, contains a list of zero or more <code>&lt;VALUE&gt;</code>s whose
-type MUST match either <code>&quot;type&quot;</code> or <code>&quot;item.type&quot;</code> if <code>&quot;type&quot;</code> is <code>&quot;array&quot;</code>.
-This indicates the list of allowable values for this capability.</li>
-<li><code>&quot;options&quot;</code>, when specified, contains a map of zero or more map-keys (of type
-<code>&lt;STRING&gt;</code> where each key will then have an array of allowable <code>&lt;STRING&gt;</code>
-values that MAY be used for the specified key in the capability.</li>
+type MUST match either <code>&quot;type&quot;</code> (when scaler) or <code>&quot;item.type&quot;</code> if <code>&quot;type&quot;</code>
+is <code>&quot;array&quot;</code> or <code>&quot;map&quot;</code> and <code>&quot;item.type&quot;</code> is a scalar.</li>
 <li><code>&quot;min&quot;</code> and <code>&quot;max&quot;</code>, when specified, MUST match the same type as either
 <code>&quot;type&quot;</code> or <code>&quot;item.type&quot;</code> if <code>&quot;type&quot;</code> is <code>&quot;array&quot;</code>. These indicate the
 minimum or maximum (inclusive) value range of this capability. When not
@@ -2172,6 +2283,12 @@ specified, there is no stated lower (or upper) limit. These MUST only be
 used when &quot;type&quot; is a numeric type.</li>
 <li><code>&quot;documentation&quot;</code> provides a URL with additional information about the
 capability.</li>
+<li><code>&quot;attributes&quot;</code>, when specified, contains the list (as a map)  of attributes
+defined for the &quot;object&quot;-typed capability. This makes the schema of the
+capability recursive.</li>
+<li><code>&quot;item&quot;</code> MUST be specified when <code>&quot;type&quot;</code> is <code>&quot;array&quot;</code> or <code>&quot;map&quot;</code>, and
+specify details about the items in the array, or values of the map.
+Note, all map keys MUST be of type string.</li>
 </ul>
 <p>Notice the syntax borrows much of the same structure from the
 xRegistry <a href="./model.html#registry-model">model definition</a> language.</p>
@@ -2188,22 +2305,48 @@ server MUST still include:</p>
 <p>in the serialization of its capabilities offering map.</p>
 <p><strong>Examples:</strong></p>
 <pre><code class="language-yaml">{
-  &quot;apis&quot;: {
-    &quot;type&quot;: &quot;array&quot;,
-    &quot;item&quot;: {
-      &quot;type&quot;: &quot;string&quot;
-    },
-    &quot;enum&quot;: [ &quot;/capabilities&quot;, &quot;capabilitiesoffered&quot;, &quot;/export&quot;, &quot;/model&quot;,
-              /&quot;modelsource&quot; ]
+  &quot;available&quot;: {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;attributes&quot;: {
+      &quot;capabilities&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;attributes&quot;: { &quot;mutable&quot;: { &quot;type&quot;: &quot;boolean&quot; } }
+      },
+      &quot;capabilitiesoffered&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;attributes&quot;: { &quot;mutable&quot;: { &quot;type&quot;: &quot;boolean&quot; } }
+      },
+      &quot;entities&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;attributes&quot;: { &quot;mutable&quot;: { &quot;type&quot;: &quot;boolean&quot;, &quot;enum&quot;: [ false ] } }
+      },
+      &quot;export&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;attributes&quot;: { &quot;mutable&quot;: { &quot;type&quot;: &quot;boolean&quot;, &quot;enum&quot;: [ false ] } }
+      },
+      &quot;model&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;attributes&quot;: { &quot;mutable&quot;: { &quot;type&quot;: &quot;boolean&quot; } }
+      },
+      &quot;modelsource&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;attributes&quot;: { &quot;mutable&quot;: { &quot;type&quot;: &quot;boolean&quot; } }
+      }
+    }
   },
-  &quot;compatibilities&quot; {
-    &quot;type&quot;: &quot;map&quot;,
-    &quot;item&quot;: {
-      &quot;type&quot;: &quot;string&quot;
-    },
-    &quot;options&quot;: {
-      &quot;avro&quot;: [ &quot;backward&quot;, &quot;forward&quot; ],
-      &quot;protobuf&quot;: [ &quot;backward&quot; ]
+  &quot;compatibilities&quot;: {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;attributes&quot;: {
+      &quot;avro&quot;: {
+        &quot;type&quot;: &quot;array&quot;,
+        &quot;item&quot;: { &quot;type&quot;: &quot;string&quot; },
+        &quot;enum&quot;: [ &quot;backward&quot;, &quot;forward&quot; ]
+      },
+      &quot;protobuf&quot;: {
+        &quot;type&quot;: &quot;array&quot;,
+        &quot;item&quot;: { &quot;type&quot;: &quot;string&quot; },
+        &quot;enum&quot;: [ &quot;backward&quot; ]
+      }
     }
   },
   &quot;flags&quot;: {
@@ -2227,11 +2370,11 @@ server MUST still include:</p>
       &quot;type&quot;: &quot;string&quot;
     },
     &quot;enum&quot;: [ &quot;capabilities&quot;, &quot;defaultversionid&quot;, &quot;defaultversionsticky&quot;,
-      &quot;epoch&quot;, &quot;modelsource&quot;, &quot;readonly&quot; ]
+      &quot;epoch&quot;, &quot;id&quot;, &quot;modelsource&quot;, &quot;readonly&quot; ]
   },
   &quot;mutable&quot;: {
     &quot;type&quot;: &quot;array&quot;,
-    &quot;enum&quot;: [ &quot;capabilities&quot;, &quot;entities&quot;, &quot;model&quot; ],
+    &quot;enum&quot;: [ &quot;capabilities&quot;, &quot;entities&quot;, &quot;modelsource&quot; ],
     &quot;item&quot;: {
       &quot;type&quot;: &quot;string&quot;
     }
@@ -2251,12 +2394,8 @@ server MUST still include:</p>
       &quot;type&quot;: &quot;string&quot;
     }
   },
-  &quot;stickyversions&quot;: {
-    &quot;type&quot;: &quot;boolean&quot;,
-    &quot;enum&quot;: [ false, true ]
-  },
   &quot;versionmodes&quot;: {
-    &quot;type&quot;: &quot;string&quot;,
+    &quot;type&quot;: &quot;array&quot;,
     &quot;enum&quot;: [ &quot;manual&quot;, &quot;createdat&quot;, &quot;modifiedat&quot;, &quot;semver&quot; ],
     &quot;item&quot;: {
       &quot;type&quot;: &quot;string&quot;
@@ -2418,7 +2557,7 @@ it MUST adhere to the following:</p>
   &quot;createdat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
   &quot;modifiedat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
   &quot;ancestor&quot;: &quot;&lt;STRING&gt;&quot;,
-  &quot;contenttype&quot;: &quot;&lt;STRING&gt;, ?
+  &quot;contenttype&quot;: &quot;&lt;STRING&gt;&quot;, ?
 
   &quot;&lt;RESOURCE&gt;url&quot;: &quot;&lt;URL&gt;&quot;, ?                # If not local
   &quot;&lt;RESOURCE&gt;&quot;: ... Resource document ..., ? # If local &amp; inlined &amp; JSON
@@ -2618,9 +2757,8 @@ based on the Resource's
 <a href="./model.html#groupsstringresourcesstringversionmode"><code>versionmode</code></a> value.</li>
 <li>Process the <code>meta</code> sub-object, if present.</li>
 <li>Update <a href="#defaultversionid-attribute"><code>meta.defaultversionid</code></a> as needed.</li>
-<li>Enforce the <a href="#format-attribute">Version format checks</a>. Including the
-enforcement of the Resource model's <code>consistentformat</code> aspect if set to
-<code>true</code>.</li>
+<li>Enforce the <a href="#format-attribute">Version format checks</a> and the <a href="./model.html#groupsstringconstraints">Group-level
+constraints</a>.</li>
 <li>Enforce the <a href="#compatibility-attribute">Version compatibility checks</a>.</li>
 <li>Enforce the <a href="./model.html#groupsstringresourcesstringmaxversions">Resource <code>maxversions</code>
 constraints</a>. Note that
@@ -2727,7 +2865,7 @@ relationship between the two Resources and any changes to one would need to
 be done in the other - running the risk of them getting out of sync.</p>
 <p>The second, and better, option is to create a cross-reference from one
 (the &quot;source&quot; Resource) to the other (&quot;target&quot; Resource). This is done
-by setting the <code>xref</code> attribute on the source Resource to be the <code>xid</code>
+by setting the <code>meta.xref</code> attribute on the source Resource to be the <code>xid</code>
 of the target Resource.</p>
 <p>For example: a <code>schema</code> Resource instance defined as:</p>
 <pre><code class="language-yaml">{
@@ -2791,12 +2929,12 @@ locally defined.</p>
 <ul>
 <li>Any attributes referencing the source MUST use the source's metadata. In
 this respect, users of this serialization would never know that this is a
-cross-referenced Resource except for the presence of the <code>xref</code> attribute.
-For example, its <code>&lt;RESOURCE&gt;id</code> MUST be the source's <code>id</code> and not the
-target's.</li>
-<li>The <code>xref</code> attribute MUST appear within the <code>meta</code> entity so a client
-can easily determine that this Resource is a cross-referenced Resource, and
-it provides a reference to the targeted Resource.</li>
+cross-referenced Resource except for the presence of the <code>meta.xref</code>
+attribute. For example, its <code>&lt;RESOURCE&gt;id</code> MUST be the source's <code>id</code> and not
+the target's.</li>
+<li>The <code>xref</code> attribute MUST always appear when the source's <code>meta</code> sub-object
+is serialized so clients can easily determine that this Resource is a
+cross-referenced Resource.</li>
 <li>The <code>xref</code> XID MUST be the <code>xid</code> of the target Resource.</li>
 </ul>
 <p>From a consumption (read) perspective, aside from the presence of the <code>xref</code>
@@ -2865,7 +3003,7 @@ done.</p>
 <p>Both the source and target Resources MUST be of the same Resource model type,
 simply having similar Resource type definitions is not sufficient. This
 implies that the
-[<code>ximportresources</code>]./model.md#groupsstringximportresources) feature to
+<a href="./model.html#groupsstringximportresources"><code>ximportresources</code></a> feature to
 reference a Resource type from another Group type definition MUST be
 used.</p>
 <p>An <code>xref</code> value that points to a non-existing Resource, either because
@@ -2873,7 +3011,10 @@ it was deleted, never existed or the current client does not have permission
 to see it, is not an error and is not a condition that a server is REQUIRED to
 detect. In these &quot;dangling xref&quot; situations, the serialization of the source
 Resource will not include any target Resource attributes or nested collections.
-Rather, it will only show the <code>&lt;RESOURCE&gt;id</code> and <code>xref</code> attributes.</p>
+Rather, it will only show the <code>&lt;RESOURCE&gt;id</code> and <code>xref</code> attributes. Therefore,
+a client that receives a response containing only those two attributes can
+treat this as an indicator that the target Resource is inaccessible, and can
+make the determination as to whether this is something to investigate or not.</p>
 <p>However, a non-existing Resource is not the same as a poorly formed XID
 value. An <code>xref</code> that isn't syntactically correct, or references a
 non-existing Group or Resource, MUST generate an error
@@ -2979,7 +3120,7 @@ statement above is expected to be a &quot;MUST NOT&quot; assertion.</p>
 <p>Constraints:</p>
 <ul>
 <li>REQUIRED.</li>
-<li>SHOULD be a read-only attribute.</li>
+<li>SHOULD be a <a href="#read-only-changed">read-only</a> attribute.</li>
 <li>When not specified, the default value MUST be <code>false</code>.</li>
 <li>It MUST be a case-sensitive <code>true</code> or <code>false</code>.</li>
 <li>A request to update a read-only Resource SHOULD generate an error
@@ -3033,8 +3174,9 @@ any <code>compatibility</code> checking.</p>
 <p>Constraints:</p>
 <ul>
 <li>OPTIONAL.</li>
-<li>If present, MUST be a case-insensitive non-empty value from the Resource
-model's enumeration range.</li>
+<li>If present, MUST be a case-insensitive non-empty value from the Registry's
+<a href="#compatibilities-capability"><code>capabilities.compatibilities</code></a> values
+for the set of <code>format</code> values used by the Versions of the Resource.</li>
 <li>When changing the value of this attribute, it MUST be applied to all
 Versions of the Resource, and an error
 (<a href="#compatibility_violation">compatibility_violation</a>) MUST be generated
@@ -3168,9 +3310,26 @@ the newest Version, as defined by the Resource's
 <li>When specified, it MUST be a case-sensitive <code>true</code> or <code>false</code>.</li>
 <li>When specified in a request, a value of <code>null</code> MUST be interpreted as a
 request to delete the attribute, implicitly setting it to <code>false</code>.</li>
+<li>When a Resource's <code>maxversions</code> is set to <code>1</code>, than an attempt to set this
+this attribute to <code>true</code> MUST generate an error
+(<a href="#setdefaultversionsticky_false">setdefaultversionsticky_false</a>) since
+setting a default/sticky Version is unnecessary when there can only be
+one Version.</li>
 </ul>
 </li>
 </ul>
+<p>If a Resource type definition wishes to turn off the ability for clients to
+select the &quot;default&quot; Version (or to set the <code>defaultversionsticky</code> attribute to
+<code>true</code>), this MAY be done by modifying the definition of this attribute
+in the Resource type's model. For example, in the <code>metaattributes</code> section
+use the following definition:</p>
+<pre><code class="language-yaml">&quot;defaultversionsticky&quot;: {
+  &quot;name&quot;: &quot;defaultversionsticky&quot;,
+  &quot;enum&quot;: [ false ],
+  &quot;required&quot;: true,
+  &quot;default&quot;: false
+}
+</code></pre>
 <p>See <a href="#defaultversionid-attribute"><code>defaultversionid</code> Attribute</a> for more
 information on the relationship between these two attributes.</p>
 <p>See <a href="#default-version-of-a-resource">Default Version of a Resource</a> for more
@@ -3292,11 +3451,7 @@ Version attributes, then it MUST match the Resource's current
 </li>
 <li>
 <p>Description: Indicates whether this Version is the &quot;default&quot; Version of the
-owning Resource. This value is different from other attributes in that it
-might often be a calculated value rather than persisted in a datastore.
-Thus, when its value changes due to the default Version of a Resource
-changing, the Version itself does not change - meaning attributes such as
-<code>modifiedat</code> remains unchanged.</p>
+owning Resource.</p>
 <p>See <a href="#creating-or-updating-resources-and-versions">Creating or Updating Resources and
 Versions</a> for additional
 information about this attribute.</p>
@@ -3305,7 +3460,7 @@ information about this attribute.</p>
 <p>Constraints:</p>
 <ul>
 <li>REQUIRED.</li>
-<li>MUST be a read-only attribute.</li>
+<li>MUST be a <a href="#read-only-changed">read-only</a> attribute.</li>
 <li>When not specified, the default value MUST be <code>false</code>.</li>
 <li>When specified, MUST be either <code>true</code> or <code>false</code>, case-sensitive.</li>
 </ul>
@@ -3422,9 +3577,7 @@ attribute's value.</li>
 <p>Note: an attempt to set this attribute to a value that differs from the other
 Version's values could result in the server rejecting the request due to
 the <a href="#compatibility-attribute"><code>compatibility</code></a> conformance checks, if
-<code>validatecompatibility</code> model attribute is <code>true</code>. See
-<a href="./model.html#groupsstringresourcesstringconsistentformat"><code>consistentformat</code></a>
-for additional information.</p>
+<code>validatecompatibility</code> model attribute is <code>true</code>.</p>
 <ul>
 <li>Examples:
 <ul>
@@ -3438,23 +3591,20 @@ for additional information.</p>
 <h4 id="formatvalidated-attribute"><code>formatvalidated</code> Attribute <a class="anchor" href="#formatvalidated-attribute">🔗</a></h4>
 <ul>
 <li>
-<p>Type: String</p>
+<p>Type: Boolean</p>
 </li>
 <li>
 <p>Description: When
 <a href="./model.html#groupsstringresourcesstringvalidateformat"><code>format</code> validation</a>
 is enabled, this attribute will indicate whether or not the server has
-attempted to validated that the Version conforms to the rules defined by
+performed validation to ensure the Version conforms to the rules defined by
 its <code>format</code> attribute's value.</p>
-<p>The value MUST be a non-empty string in one of two forms:</p>
-<ul>
-<li><code>&quot;true&quot;</code></li>
-<li><code>&quot;false, &lt;REASON&gt;&quot;</code></li>
-</ul>
-<p>A value of <code>&quot;true&quot;</code> indicates that the server has validated the Version and
-it adheres to the <code>format</code> attribute's rules.</p>
-<p>A value that starts with <code>false</code> indicates that the server did not attempt
-to validated the Version. This can happen when
+<p>A value of <code>true</code> indicates that the server has validated the Version and
+it adheres to the <code>format</code> attribute's rules. When <code>true</code> the Version's
+<a href="#formatvalidatedreason-attribute"><code>formatvalidatedreason</code></a> MUST NOT be
+present.</p>
+<p>A value of <code>false</code> indicates that the server did not perform validation of
+the Version. This can happen when
 <a href="./model.html#groupsstringresourcesstringstrictvalidation"><code>strictvalidation</code></a><code>is set to</code>false` and:</p>
 <ul>
 <li>The <code>format</code> attribute value is not supported by the server.</li>
@@ -3470,66 +3620,73 @@ be able to access that URL.</li>
 <a href="./model.html#groupsstringresourcesstringstrictvalidation"><code>strictvalidation</code></a><code>is</code>true`, the above conditions MUST generate an error
 (<a href="#format_unknown">format_unknown</a> or <a href="#format_external">format_external</a>) and
 reject the update request instead.</p>
-<p>When <code>&quot;false&quot;</code>, this value MUST include some additional text (the <code>&lt;REASON&gt;</code>)
-indicating why the server was unable to attempt validation of the Version.
-Additionally, when <code>&quot;false&quot;</code>, if <code>compatibility</code> validation is enabled,
-the Version's
+<p>When <code>false</code>, the
+<a href="#formatvalidatedreason-attribute"><code>formatvalidatedreason</code></a>
+MUST be present with an explanation as to why the server was unable to
+perform validation of the Version. Additionally, when <code>false</code>, if
+<code>compatibility</code> validation is enabled, the Version's
 <a href="#compatibility-attribute"><code>compatibilityvalidated</code></a> attribute MUST also be
-<code>&quot;false&quot;</code>.</p>
+<code>false</code>.</p>
 <p>Note that <code>&quot;false&quot;</code> MUST NOT be used for validation failure. In those cases
 the write operation MUST generate an error
-(<a href="#format_violation">format_violation</a> and reject the request regardless
+(<a href="#format_violation">format_violation</a>) and reject the request regardless
 of the value of the
 <a href="./model.html#groupsstringresourcesstringstrictvalidation"><code>strictvalidation</code></a>`
 model aspect.</p>
-<p>Due to this attribute being server managed, and influenced by the state of
-other Versions, as its value changes the Version itself MUST NOT be marked as
-changed - meaning, attributes such as <code>modifiedat</code> and <code>epoch</code> remain
-unchanged.</p>
 <ul>
-<li>
-<p>Constraints:</p>
+<li>Constraints:
 <ul>
 <li>OPTIONAL</li>
-<li>If present, MUST be non-empty.</li>
-<li>MUST be a read-only attribute.</li>
+<li>When specified, MUST be either <code>true</code> or <code>false</code>, case-sensitive.</li>
+<li>MUST be a <a href="#read-only-changed">read-only</a> attribute.</li>
 <li>MUST be present if the Resource model's <code>validateformat</code> attribute is
 <code>true</code> and the Version's <code>format</code> attribute is present.</li>
 <li>MUST NOT be present if the Resource model's <code>validateformat</code> attribute is
 <code>false</code> or the Version's <code>format</code> attribute is absent.</li>
 </ul>
 </li>
-<li>
-<p>Examples:</p>
+</ul>
+<h4 id="formatvalidatedreason-attribute"><code>formatvalidatedreason</code> Attribute <a class="anchor" href="#formatvalidatedreason-attribute">🔗</a></h4>
 <ul>
-<li><code>&quot;true&quot;</code></li>
-<li><code>&quot;false, unknown format&quot;</code></li>
+<li>
+<p>Type: String</p>
+</li>
+<li>
+<p>Description: When <a href="#formatvalidated-attribute"><code>formatvalidated</code></a> has a
+value of <code>false</code>, this attribute MUST provide information as to why the
+format validation check was not performed.</p>
+</li>
+<li>
+<p>Constraints:</p>
+<ul>
+<li>OPTIONAL</li>
+<li>When specified, MUST be a non-empty string.</li>
+<li>MUST be a <a href="#read-only-changed">read-only</a> attribute.</li>
+<li>MUST be present when <a href="#formatvalidated-attribute"><code>formatvalidated</code></a> is
+present with a value of <code>false</code>.</li>
+<li>MUST NOT be present when <a href="#formatvalidated-attribute"><code>formatvalidated</code></a> is
+absent or has a value of <code>true</code>.</li>
 </ul>
 </li>
 </ul>
 <h4 id="compatibilityvalidated-attribute"><code>compatibilityvalidated</code> Attribute <a class="anchor" href="#compatibilityvalidated-attribute">🔗</a></h4>
 <ul>
 <li>
-<p>Type: String</p>
+<p>Type: Boolean</p>
 </li>
 <li>
 <p>Description: When <a href="./model.html#groupsstringresourcesstringvalidateformat"><code>compatibility</code>
 validation</a>
 is enabled, this attribute will indicate whether or not the server has
-validated that the Version conforms to the rules defined by its Resource's
-<code>meta.compatibility</code> attribute's value.</p>
-<p>The value MUST be a non-empty string in one of two forms:</p>
-<ul>
-<li><code>&quot;true&quot;</code></li>
-<li><code>&quot;false, &lt;REASON&gt;&quot;</code></li>
-</ul>
-<p>A value of <code>&quot;true&quot;</code> indicates that the server has validated the Version and
+performed validation of the Version conforms to the rules defined by its
+Resource's <code>meta.compatibility</code> attribute's value.</p>
+<p>A value of <code>true</code> indicates that the server has validated the Version and
 it adheres to the <code>meta.compatibility</code> attribute's rules.</p>
-<p>A value that starts with <code>&quot;false&quot;</code> indicates that the server did not attempt
-to validate the Version. This can happen when
+<p>A value of <code>false</code> indicates that the server did not perform validation of
+the Version. This can happen when
 <a href="./model.html#groupsstringresourcesstringstrictvalidation"><code>strictvalidation</code></a><code>is set to</code>false` and:</p>
 <ul>
-<li>The <code>formatvalidated</code> attribute is <code>&quot;false&quot;</code>.</li>
+<li>The <code>formatvalidated</code> attribute is <code>false</code>.</li>
 <li>The <code>format</code> or <code>meta.compatibility</code> attributes not supported by the
 server.</li>
 <li>The Version uses the <code>&lt;RESOURCE&gt;url</code> attribute to reference a
@@ -3544,31 +3701,55 @@ be able to access that URL.</li>
 <a href="#compatibility_unknown">compatibility_unknown</a> or
 <a href="#format_external">format_external</a>) and
 reject the update request instead.</p>
-<p>When <code>&quot;false&quot;</code>, this value MUST include some additional text (the <code>&lt;REASON&gt;</code>)
-indicating why the server was unable to attempt validation of the Version.</p>
-<p>Note that <code>&quot;false&quot;</code> MUST NOT be used for validation failure. In those cases
+<p>When <code>false</code>, the
+<a href="#compatibilityvalidatedreason-attribute"><code>compatibilityvalidatedreason</code></a>
+MUST be present with an explanation as to why the server was unable to
+perform validation of the Version.</p>
+<p>Note that <code>false</code> MUST NOT be used for validation failure. In those cases
 the write operation MUST generate an error
-(<a href="#compatibility_violation">compatibility_violation</a> and reject the request
+(<a href="#compatibility_violation">compatibility_violation</a>) and reject the request
 regardless of the value of the
 <a href="./model.html#groupsstringresourcesstringstrictvalidation"><code>strictvalidation</code></a>`
 model aspect.</p>
-<p>Due to this attribute being server managed, and influenced by the state of
-other Versions, as its value changes the Version itself MUST NOT be marked as
-changed - meaning, attributes such as <code>modifiedat</code> and <code>epoch</code> remain
-unchanged.</p>
 </li>
 <li>
 <p>Constraints:</p>
 <ul>
 <li>OPTIONAL</li>
-<li>If present, MUST be non-empty.</li>
-<li>MUST be a read-only attribute.</li>
+<li>When specified, MUST be either <code>true</code> or <code>false</code>, case-sensitive.</li>
+<li>MUST be a <a href="#read-only-changed">read-only</a> attribute.</li>
 <li>MUST be present if the Resource model's <code>validatecompatibility</code> attribute
 is <code>true</code>, the Version's <code>format</code> value is present, and the Resource's
 <code>meta.compatibility</code> attribute is present.</li>
 <li>MUST NOT be present if the Resource model's <code>validatecompatibility</code>
 attribute is <code>false</code>, or the Version's <code>format</code> value is absent, or the
 Resource's <code>meta.compatibility</code> attribute is absent.</li>
+</ul>
+</li>
+</ul>
+<h4 id="compatibilityvalidatedreason-attribute"><code>compatibilityvalidatedreason</code> Attribute <a class="anchor" href="#compatibilityvalidatedreason-attribute">🔗</a></h4>
+<ul>
+<li>
+<p>Type: String</p>
+</li>
+<li>
+<p>Description: When
+<a href="#compatibilityvalidated-attribute"><code>compatibilityvalidated</code></a> has a
+value of <code>false</code>, this attribute MUST provide information as to why the
+format validation check was not performed.</p>
+</li>
+<li>
+<p>Constraints:</p>
+<ul>
+<li>OPTIONAL</li>
+<li>When specified, MUST be a non-empty string.</li>
+<li>MUST be a <a href="#read-only-changed">read-only</a> attribute.</li>
+<li>MUST be present when
+<a href="#compatibilityvalidated-attribute"><code>compatibilityvalidated</code></a> is
+present with a value of <code>false</code>.</li>
+<li>MUST NOT be present when
+<a href="#compatibilityvalidated-attribute"><code>compatibilityvalidated</code></a> is
+absent or has a value of <code>true</code>.</li>
 </ul>
 </li>
 </ul>
@@ -3730,9 +3911,7 @@ Version (see below), then the server MUST revert back to option 1
 (default = newest).</p>
 </li>
 </ol>
-<p>If supported (as determined by the <a href="./model.html#groupsstringresourcesstringsetdefaultversionsticky"><code>setdefaultversionsticky</code>
-aspect</a>,
-a client MAY choose the &quot;default&quot; Version two ways:</p>
+<p>A client MAY choose the &quot;default&quot; Version two ways:</p>
 <ol>
 <li>Via the Resource
 <a href="#defaultversionsticky-attribute"> <code>defaultversionsticky</code></a> and
@@ -3970,7 +4149,6 @@ the following:</p>
     &quot;labels&quot;: { &quot;&lt;STRING&gt;&quot;: &quot;&lt;STRING&gt;&quot; * }, ?
     &quot;createdat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
     &quot;modifiedat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
-    &quot;ancestor&quot;: &quot;&lt;STRING&gt;&quot;,
     &quot;readonly&quot;: &lt;BOOLEAN&gt;,
     &quot;compatibility&quot;: &quot;&lt;STRING&gt;&quot;,
     &quot;deprecated&quot;: { ... }, ?
@@ -4262,7 +4440,10 @@ entity's existing <code>&lt;SINGULAR&gt;id</code> value MUST NOT be performed.</
 single entity not a collection.</p>
 <p>This features is design for cases where an entity is exported and then used
 as input for another entity where that targeted entity needs to use a
-different <code>&lt;SINGULAR&gt;id</code>, without needing to transform the exported data.</p>
+different <code>&lt;SINGULAR&gt;id</code> for the root entity, without needing to transform
+the exported data.</p>
+<p>Note that any nested entities in the request MUST retain their <code>&lt;SINGULAR&gt;id</code>
+values.</p>
 <p>In cases where the target entity is a Version, then the flag MUST apply to
 both the Resource's <code>&lt;SINGULAR&gt;id</code> and the <code>versionid</code>.</p>
 </li>
@@ -4452,8 +4633,12 @@ and <code>meta.defaultversionsticky</code> MUST be set to <code>false</code>.</l
 <li>A value of <code>request</code> MUST only be used on APIs that allow the creation of
 only a single new Version. In the case of HTTP, that is the <code>POST</code> API
 directed to a Resource. This is because no other operation allows for the
-creation of a single Version without specifying its <code>versionid</code>. Use of this
-value on an inappropriate API MUST generate an error (<a href="#bad_flag">bad_flag</a>).
+creation of a single Version without specifying its <code>versionid</code>. Using it
+when more than one Version is created MUST generate an error
+(<a href="#too_many_versions">too_many_versions</a>).  Other uses of this value on an
+inappropriate API MUST generate an error (<a href="#bad_flag">bad_flag</a>).</li>
+<li>If a value of <code>request</code> was used but no Version was created for the request,
+then an error (<a href="#defaultversionid_request">defaultversionid_request</a>) MUST
 be generated.</li>
 <li>If a non-<code>null</code> and non-<code>request</code> value does not reference an existing
 Version of the Resource, after all Version processing is completed, then an
@@ -4465,9 +4650,6 @@ error (<a href="#bad_flag">bad_flag</a>).</li>
 <li>Use of this flag MUST override any <code>meta.defaultversionid</code> and
 <code>meta.defaultversionsticky</code> values that are present in the request.</li>
 </ul>
-<p>Any use of this flag on a Resource that has the
-<code>setdefaultversionsticky</code> aspect set to <code>false</code> MUST generate an error
-(<a href="#setdefaultversionid_not_allowed">setdefaultversionid_not_allowed</a>).</p>
 <p>Any other invalid usage of this flag MUST generate an error
 (<a href="#bad_defaultversionid">bad_defaultversionid</a>).</p>
 <h3 id="sort-flag">Sort Flag <a class="anchor" href="#sort-flag">🔗</a></h3>
@@ -4475,7 +4657,7 @@ error (<a href="#bad_flag">bad_flag</a>).</li>
 the <code>Sort</code> flag MAY be used to indicate the order in which the entities of
 that collection are to be returned (i.e. sorted). Use of the <code>sort</code> flag
 on a non-collection result MUST generate an error
-(<a href="#sort_noncollection">sort_noncollection</a>.</p>
+(<a href="#sort_noncollection">sort_noncollection</a>).</p>
 <p>This flag MUST include a single parameter, a string containing the attribute
 (<code>&lt;ATTRIBUTE&gt;</code>) name to use as the &quot;sort key&quot; plus an OPTIONAL indication of
 whether the results are to be sorted in ascending or descending order.</p>
@@ -4857,10 +5039,11 @@ field is just a substitution value and MUST NOT be empty.</p>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#compatibility_unknown</code></li>
 <li>Code: <code>400 Bad Request</code></li>
 <li>Subject: <code>&lt;resource_xid&gt;</code></li>
-<li>Title: <code>The compatibility value (&lt;compat&gt;) on Resource &quot;&lt;subject&gt;&quot; is not supported.</code></li>
+<li>Title: <code>The compatibility value (&lt;compat&gt;) on Resource &quot;&lt;subject&gt;&quot; is not supported for format &quot;&lt;format&gt;&quot;.</code></li>
 <li>Args:
 <ul>
 <li><code>compat</code>: The Resource's <code>meta.compatibility</code> value.</li>
+<li><code>format</code>: The Version's <code>format</code> value.</li>
 </ul>
 </li>
 </ul>
@@ -4877,6 +5060,18 @@ field is just a substitution value and MUST NOT be empty.</p>
 </ul>
 </li>
 </ul>
+<h3 id="constraint_failure">constraint_failure <a class="anchor" href="#constraint_failure">🔗</a></h3>
+<ul>
+<li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#constraint_failure</code></li>
+<li>Code: <code>400 Bad Request</code></li>
+<li>Subject: <code>&lt;resource_xid&gt;</code></li>
+<li>Title: <code>The request would result in one or more Versions of &quot;&lt;subject&gt;&quot; not being compliant with its owning Group's &quot;equals&quot; constraint for attribute &quot;&lt;path&gt;&quot;.</code></li>
+<li>Args:
+<ul>
+<li><code>path</code>: The dot (<code>.</code>) notion traversal path to the Resource's attribute being constrained.</li>
+</ul>
+</li>
+</ul>
 <h3 id="data_retrieval_error">data_retrieval_error <a class="anchor" href="#data_retrieval_error">🔗</a></h3>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#data_retrieval_error</code></li>
@@ -4884,6 +5079,13 @@ field is just a substitution value and MUST NOT be empty.</p>
 <li>Subject: <code>&lt;path&gt;</code></li>
 <li>Title: <code>The server was unable to retrieve all of the requested data.</code></li>
 <li>Detail: Suggestion: which entity's data was problematic, and why.</li>
+</ul>
+<h3 id="defaultversionid_request">defaultversionid_request <a class="anchor" href="#defaultversionid_request">🔗</a></h3>
+<ul>
+<li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#defaultversionid_request</code></li>
+<li>Code: <code>400 Bad Request</code></li>
+<li>Subject: <code>&lt;resource_xid&gt;</code></li>
+<li>Title: <code>Processing &quot;&lt;subject&gt;&quot;, the &quot;defaultversionid&quot; attribute is not allowed to be &quot;request&quot; since a Version wasn't processed.</code></li>
 </ul>
 <h3 id="extra_xref_attribute">extra_xref_attribute <a class="anchor" href="#extra_xref_attribute">🔗</a></h3>
 <ul>
@@ -4903,13 +5105,6 @@ field is just a substitution value and MUST NOT be empty.</p>
 <li>Code: <code>400 Bad Request</code></li>
 <li>Subject: <code>&lt;version_xid&gt;</code></li>
 <li>Title: <code>Version &quot;&lt;subject&gt;&quot; references a document stored outside of the Registry, therefore no validation was performed.</code></li>
-</ul>
-<h3 id="format_inconsistent">format_inconsistent <a class="anchor" href="#format_inconsistent">🔗</a></h3>
-<ul>
-<li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#format_inconsistent</code></li>
-<li>Code: <code>400 Bad Request</code></li>
-<li>Subject: <code>&lt;resource_xid&gt;</code></li>
-<li>Title: <code>One or more Versions of Resource &quot;&lt;subject&gt;&quot; do not have the same &quot;format&quot; value as mandated by their owning Resource model's &quot;consistentformat&quot; attribute being set.</code></li>
 </ul>
 <h3 id="format_unknown">format_unknown <a class="anchor" href="#format_unknown">🔗</a></h3>
 <ul>
@@ -4946,6 +5141,13 @@ field is just a substitution value and MUST NOT be empty.</p>
 <li><code>name</code>: The name of the attribute in question.</li>
 </ul>
 </li>
+</ul>
+<h3 id="hasdocument_violation">hasdocument_violation <a class="anchor" href="#hasdocument_violation">🔗</a></h3>
+<ul>
+<li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#hasdocument_violation</code></li>
+<li>Code: <code>400 Bad Request</code></li>
+<li>Subject: <code>&lt;version_xid&gt;</code></li>
+<li>Title: <code>The request would cause Version &quot;&lt;subject&gt;&quot; to be non-compliant. The Resource model has &quot;hasdocument&quot; set to &quot;false&quot; but this Version has document content.</code></li>
 </ul>
 <h3 id="inline_noninlineable">inline_noninlineable <a class="anchor" href="#inline_noninlineable">🔗</a></h3>
 <ul>
@@ -5101,6 +5303,13 @@ field is just a substitution value and MUST NOT be empty.</p>
 </ul>
 </li>
 </ul>
+<h3 id="not_available">not_available <a class="anchor" href="#not_available">🔗</a></h3>
+<ul>
+<li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#not_available</code></li>
+<li>Code: <code>400 Bad Request</code></li>
+<li>Subject: <code>&lt;capability_available_type&gt;</code></li>
+<li>Title: <code>The requested data (&lt;subject&gt;) is not available.</code></li>
+</ul>
 <h3 id="not_found">not_found <a class="anchor" href="#not_found">🔗</a></h3>
 <p>Note, this SHOULD only be used when the request was directed to an entity that
 does not exist. For cases where the target entity does exist, but there is an
@@ -5156,6 +5365,18 @@ error SHOULD be used instead.</p>
 </ul>
 </li>
 </ul>
+<h3 id="resources_only">resources_only <a class="anchor" href="#resources_only">🔗</a></h3>
+<ul>
+<li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#resources_only</code></li>
+<li>Code: <code>400 Bad Request</code></li>
+<li>Subject: <code>&lt;group_xid&gt;</code></li>
+<li>Title: <code>Attribute &quot;&lt;name&gt;&quot; is invalid. Only Resource types are allowed to be specified on this request: &lt;subject&gt;.</code></li>
+<li>Args:
+<ul>
+<li><code>name</code>: The name of the attribute in question.</li>
+</ul>
+</li>
+</ul>
 <h3 id="server_error">server_error <a class="anchor" href="#server_error">🔗</a></h3>
 <p>This error MAY be used when it appears that the incoming request was valid but
 something unexpected happened in the server that caused an error condition.</p>
@@ -5165,24 +5386,12 @@ something unexpected happened in the server that caused an error condition.</p>
 <li>Subject: <code>&lt;request_path&gt;</code></li>
 <li>Title: <code>An unexpected error occurred, please try again later.</code></li>
 </ul>
-<h3 id="setdefaultversionid_not_allowed">setdefaultversionid_not_allowed <a class="anchor" href="#setdefaultversionid_not_allowed">🔗</a></h3>
-<ul>
-<li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#setdefaultversionid_not_allowed</code></li>
-<li>Code: <code>400 Bad Request</code></li>
-<li>Subject: <code>&lt;resource_xid&gt;</code></li>
-<li>Title: <code>Processing &quot;&lt;subject&gt;&quot;, the &quot;setdefaultversionid&quot; flag is not allowed to be specified for entities of type &quot;&lt;singular&gt;&quot;.</code></li>
-<li>Args:
-<ul>
-<li><code>singular</code>: The &quot;singular&quot; type name of the offending Resource.</li>
-</ul>
-</li>
-</ul>
 <h3 id="setdefaultversionsticky_false">setdefaultversionsticky_false <a class="anchor" href="#setdefaultversionsticky_false">🔗</a></h3>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#setdefaultversionsticky_false</code></li>
 <li>Code: <code>400 Bad Request</code></li>
 <li>Subject: <code>&lt;resource_xid&gt;</code></li>
-<li>Title: <code>The model attribute &quot;setdefaultversionsticky&quot; needs to be &quot;false&quot; since &quot;maxversions&quot; is &quot;1&quot;.</code></li>
+<li>Title: <code>Setting &quot;defaultversionsticky&quot; to &quot;true&quot; is not allowed since &quot;maxversions&quot; is &quot;1&quot;.</code></li>
 </ul>
 <h3 id="sort_noncollection">sort_noncollection <a class="anchor" href="#sort_noncollection">🔗</a></h3>
 <ul>
@@ -5198,6 +5407,13 @@ something unexpected happened in the server that caused an error condition.</p>
 <li>Subject: <code>&lt;request_path&gt;</code></li>
 <li>Title: <code>The size of the response is too large to return in a single response.</code></li>
 <li>Detail: Suggestion: list of attributes that are too large.</li>
+</ul>
+<h3 id="too_many_versions">too_many_versions <a class="anchor" href="#too_many_versions">🔗</a></h3>
+<ul>
+<li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#too_many_versions</code></li>
+<li>Code: <code>400 Bad Request</code></li>
+<li>Subject: <code>&lt;request_path&gt;</code></li>
+<li>Title: <code>When the &quot;setdefaultversionid&quot; flag is set to &quot;request&quot;, only one Version is allowed to be specified in the request message.</code></li>
 </ul>
 <h3 id="unknown_attribute">unknown_attribute <a class="anchor" href="#unknown_attribute">🔗</a></h3>
 <ul>

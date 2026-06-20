@@ -48,7 +48,7 @@
 <h1 id="xregistry-service-model---version-10-rc2">xRegistry Service Model - Version 1.0-rc2 <a class="anchor" href="#xregistry-service-model---version-10-rc2">🔗</a></h1>
 <!-- words: compat validatecompatibility validateformat strictvalidation -->
 <!-- words: matchcase compatibilityvalidated formatvalidated -->
-<!-- words: consistentformat validators -->
+<!-- words: validators -->
 <h2 id="abstract">Abstract <a class="anchor" href="#abstract">🔗</a></h2>
 <p>This document describes the xRegistry model definition language that is used
 to define custom Groups and Resources for use within an xRegistry.</p>
@@ -156,6 +156,14 @@ will be mapped to those protocols.</p>
       &quot;attributes&quot;: { ... }, ?           # See &quot;attributes&quot; above
       &quot;ximportresources&quot;: [ &quot;&lt;XIDTYPE&gt;&quot;, * ], ?   # Include these Resources
 
+      &quot;constraints&quot;: {
+        &quot;&lt;RESOURCES&gt;.&lt;PATH&gt;&quot;: {          # Resource-plural + attribute path
+          &quot;default&quot;: &lt;VALUE&gt;, ?          # Group specific default
+          &quot;enum&quot;: [ &lt;VALUE&gt; * ], ?       # Allowed subset of values
+          &quot;equals&quot;: &quot;&lt;PATH&gt;&quot; ?           # Matching Group attribute path
+        } *
+      }, ?
+
       &quot;resources&quot;: {
         &quot;&lt;STRING&gt;&quot;: {                    # Key=plural name, e.g. &quot;messages&quot;
           &quot;plural&quot;: &quot;&lt;STRING&gt;&quot;,          # E.g. &quot;messages&quot;
@@ -168,14 +176,12 @@ will be mapped to those protocols.</p>
           &quot;modelcompatiblewith&quot;: &quot;&lt;URI&gt;&quot;, ? # Statement of compatibility
           &quot;maxversions&quot;: &lt;UINTEGER&gt;, ?   # Num Vers(&gt;=0). Default=0, 0=unlimited
           &quot;setversionid&quot;: &lt;BOOLEAN&gt;, ?   # vid settable? Default=true
-          &quot;setdefaultversionsticky&quot;: &lt;BOOLEAN&gt;, ? # Sticky settable? Default=true
           &quot;hasdocument&quot;: &lt;BOOLEAN&gt;, ?       # Has separate document. Default=true
           &quot;versionmode&quot;: &quot;&lt;STRING&gt;&quot;, ?      # 'ancestor' processing algorithm
           &quot;singleversionroot&quot;: &lt;BOOLEAN&gt;, ? # Enforce single root. Default=false
           &quot;validateformat&quot;: &lt;BOOLEAN&gt;, ?    # Do Version format checks. Default=false
           &quot;validatecompatibility&quot;: &lt;BOOLEAN&gt;, ? # Do Version compat checks. Default=false
           &quot;strictvalidation&quot;: &lt;BOOLEAN&gt;, ?  # Block unknown format/compat. Default=false
-          &quot;consistentformat&quot;: &lt;BOOLEAN&gt;, ?  # Same format for all Vers. Default=false
           &quot;typemap&quot;: &lt;MAP&gt;, ?               # ContentType mappings
           &quot;attributes&quot;: { ... }, ?          # Version attributes/extensions
           &quot;resourceattributes&quot;: { ... }, ?  # Resource attributes/extensions
@@ -265,9 +271,8 @@ Extensions</a>.</li>
 <ul>
 <li>Type: String.</li>
 <li>OPTIONAL.</li>
-<li>The type of entity that this attribute points to when <code>type</code> is set to
-<code>url-reference</code>, <code>uri-reference</code> or <code>xid</code>. <code>target</code> MUST NOT be used
-for any other type of attribute.</li>
+<li>The type of entity that this attribute points to when <code>type</code> is set to <code>url</code>,
+<code>uri</code> or <code>xid</code>. <code>target</code> MUST NOT be used for any other type of attribute.</li>
 <li>The value of this model attribute MUST be an &quot;xid template&quot; of one of the
 following forms:
 <ul>
@@ -290,7 +295,7 @@ of this Resource type, not the Resource itself.</li>
 its model definition MUST match the <code>target</code> entity type specified. An
 <code>xid</code> attribute that does not include <code>target</code> definition has no
 such restriction and MAY be any valid <code>xid</code> value.</li>
-<li>A URI/URL-reference entity attribute MAY include <code>target</code> as part of its
+<li>A URI/URL entity attribute MAY include <code>target</code> as part of its
 definition. If so, then any runtime value that is a relative URI/URL
 (begins with <code>/</code>) MUST be an <code>xid</code> and MUST adhere to the <code>target</code> entity
 type specified, if specified. Absolute URIs/URLs are not constrained by
@@ -449,9 +454,13 @@ the server.</p>
 <li>Indicates whether this attribute is REQUIRED to have a non-null value.</li>
 <li>When set to <code>true</code>, this specification does not mandate how this
 attribute's value is populated (i.e. by a client, the server or via a
-default value), just that by the end of processing any request it MUST
-have a non-null value, and generate an error
-(<a href="./spec.html#invalid_attribute">invalid_attribute</a>) if not.</li>
+default value), just that by the end of the server's processing any request
+it MUST have a non-null value, and generate an error
+(<a href="./spec.html#invalid_attribute">invalid_attribute</a>) if not. Note that this
+implies that a REQUIRED attribute does not mean that clients are mandated to
+include that attribute in its requests. If the attribute will automatically
+be populated by the server (e.g. it has a default value defined) the client
+MAY omit it.</li>
 <li>A <code>true</code> value also implies that this attribute MUST be serialized in any
 response from the server - with the exception of the optimizations
 specified for document view.</li>
@@ -513,8 +522,7 @@ attribute MUST only be used when the owning attribute's <code>type</code> value 
 <h3 id="attributesstringitemtarget"><code>attributes.&lt;STRING&gt;.item.target</code> <a class="anchor" href="#attributesstringitemtarget">🔗</a></h3>
 <ul>
 <li>Type: String.</li>
-<li>OPTIONAL, and MUST only be used when <code>item.type</code> is <code>url-reference</code>,
-<code>uri-reference</code> or <code>xid</code>.</li>
+<li>OPTIONAL, and MUST only be used when <code>item.type</code> is <code>url</code>, <code>uri</code> or <code>xid</code>.</li>
 <li>See <a href="#attributesstringtarget"><code>attributes.&lt;STRING&gt;.target</code></a> above.</li>
 </ul>
 <h3 id="attributesstringitemnamecharset"><code>attributes.&lt;STRING&gt;.item.namecharset</code> <a class="anchor" href="#attributesstringitemnamecharset">🔗</a></h3>
@@ -657,6 +665,79 @@ shared compatible model.</li>
 <li>See <a href="#reuse-of-resource-definitions">Reuse of Resource Definitions</a> for
 more information.</li>
 </ul>
+<h3 id="groupsstringconstraints"><code>groups.&lt;STRING&gt;.constraints</code> <a class="anchor" href="#groupsstringconstraints">🔗</a></h3>
+<p>The <code>constraints</code> map defines a set of rules that can be used to govern
+the attribute values in Resources that are added to instances of the Group
+type being defined.</p>
+<p>These constraints MUST be applied to all instances of this Group type. Group
+instances MAY choose to add additional entries, or further restrict the ones
+defined here, via use of the Group instance's
+<a href="./spec.html#constraints-attribute"><code>constraints</code> attribute</a>.</p>
+<p>The constraints MUST be applied to all Versions of all Resources in the Group
+instances, and generate an error
+(<a href="./spec.html#constraint_failure">constraint_failure</a>) if a violation is
+detected.</p>
+<p>When possible these constraints are best described when defining the Resource
+attributes in question, rather than here. However, there are cases where this
+might not be possible, such as when Resources are added to a Group type via the
+<code>ximportresources</code> feature or defining a relationship between Group and
+Resource attributes - such is the case for the <code>equals</code> constraint defined
+below.</p>
+<p>Inclusion of a Resource in a Group instance via the
+<a href="./spec.html#cross-referencing-resources"><code>meta.xref</code></a> mechanism introduces
+some special considerations. The following describes the how the aspects of
+a constraint are applied to such xref'd Resources:</p>
+<ul>
+<li>The <code>enum</code> and <code>equals</code> constraints, if specified, MUST be adhered to by the
+Resource. Note that this includes changes to the Resource in its original
+location that would then violate any of the Groups' constraints that xref
+that Resource.</li>
+<li>The <code>default</code> values specified MUST NOT be applied to the Resource since
+its presence in the Group is just a &quot;reference&quot; (or &quot;read-only&quot;). Write
+operations on the Resource need to be done in its original location.</li>
+</ul>
+<h3 id="groupsstringconstraintsresourcespath"><code>groups.&lt;STRING&gt;.constraints.&lt;RESOURCES&gt;.&lt;PATH&gt;</code> <a class="anchor" href="#groupsstringconstraintsresourcespath">🔗</a></h3>
+<p>This map key MUST reference the Resource attribute that is to be constrained.
+It MUST reference a scalar attribute (top-level, or nested within object or
+map, but MUST NOT reference items in arrays). It MUST only reference
+statically-defined attributes, not ones that are dynamically added via an
+<code>ifvalues</code> clause or via a <code>*</code> extension definition.</p>
+<p>The <code>&lt;RESOURCES&gt;</code> portion of the map key MUST be the plural name of the
+Resource type being referenced.</p>
+<p>The <code>&lt;PATH&gt;</code> portion of the map key MUST be a dot (<code>.</code>) notional traversal to
+the Resource attribute being constrained.</p>
+<h3 id="groupsstringconstraintsresourcespathdefault"><code>groups.&lt;STRING&gt;.constraints.&lt;RESOURCES&gt;.&lt;PATH&gt;.default</code> <a class="anchor" href="#groupsstringconstraintsresourcespathdefault">🔗</a></h3>
+<p>This attribute defines the default value that MUST be used for the referenced
+Resource attribute. This MUST override any default value specified in the
+model for that attribute. See the
+<a href="#attributesstringdefault">attribute <code>default</code> aspect</a> for additional
+information concerning default value processing, as they apply here as well
+with one exception: adding a default value here does not mandate that the
+referenced Resource attribute's <code>required</code> attribute be set to <code>true</code>.
+However, it would have the same net effect at runtime because a value would
+always be defined for that attribute.</p>
+<h3 id="groupsstringconstraintsresourcespathenum"><code>groups.&lt;STRING&gt;.constraints.&lt;RESOURCES&gt;.&lt;PATH&gt;.enum</code> <a class="anchor" href="#groupsstringconstraintsresourcespathenum">🔗</a></h3>
+<p>This attribute defines the set of values that the referenced Resource attribute
+MUST be restricted to. The list's values MUST be valid per the Resource
+attribute's model definition (e.g. a proper subset of any <code>enum</code> defined, and
+of the same type). The list MUST NOT be empty.</p>
+<h3 id="groupsstringconstraintsresourcespathequals"><code>groups.&lt;STRING&gt;.constraints.&lt;RESOURCES&gt;.&lt;PATH&gt;.equals</code> <a class="anchor" href="#groupsstringconstraintsresourcespathequals">🔗</a></h3>
+<p>Use of this attribute within a constraint MAY be used to ensure that all
+Resource instances within a Group instance have the same value for the
+specified attribute in all of their Versions.</p>
+<p>When present, this attribute MUST contain the dot (<code>.</code>) notation path in the
+Group instance that the referenced Resource attribute MUST match. If the two
+attributes exist and do not match then an error
+(<a href="./spec.html#constraint_failure">constraint_failure</a>) MUST be generated.</p>
+<p>If the referenced Group attribute does not exist, then the <code>equals</code> constraint
+enforcement for the Resource attribute MUST be silently ignored.</p>
+<p>If, after any potential <code>default</code> processing logic is performed, the Resource
+attribute (in any of its Versions) does not exist but the Group attribute does
+exist, then an error (<a href="./spec.html#constraint_failure">constraint_failure</a>) MUST
+be generated.</p>
+<p>This attribute MUST reference a statically defined Group attribute. In other
+words, it can not reference an attribute defined by an <code>ifvalues</code> clause or a
+<code>*</code> extension definition.</p>
 <h3 id="groupsstringresources"><code>groups.&lt;STRING&gt;.resources</code> <a class="anchor" href="#groupsstringresources">🔗</a></h3>
 <ul>
 <li>Type: Map where the key MUST be the plural name (<code>groups.resources.plural</code>)
@@ -756,27 +837,6 @@ Version during its creation process.</li>
 a <code>versionid</code> is provided then the server MUST generate an error
 (<a href="./spec.html#versionid_not_allowed">versionid_not_allowed</a>).</li>
 </ul>
-<h3 id="groupsstringresourcesstringsetdefaultversionsticky"><code>groups.&lt;STRING&gt;.resources.&lt;STRING&gt;.setdefaultversionsticky</code> <a class="anchor" href="#groupsstringresourcesstringsetdefaultversionsticky">🔗</a></h3>
-<ul>
-<li>Type: Boolean (<code>true</code> or <code>false</code>, case-sensitive).</li>
-<li>OPTIONAL.</li>
-<li>Indicates whether support for client-side selection of the &quot;default&quot;
-Version is supported for Resources of this type. Once set, the default
-Version MUST NOT change unless there is some explicit action by a client
-to change it - hence the term &quot;sticky&quot;.</li>
-<li>When not specified, the default value MUST be <code>true</code>.</li>
-<li>A value of <code>true</code> indicates a client MAY select the default Version of
-a Resource via one of the methods described in this specification rather
-than the server always choosing the default Version.</li>
-<li>A value of <code>false</code> indicates the server MUST choose which Version is the
-default Version.</li>
-<li>An attempt to set the <code>defaultversionid</code> attribute when this aspect is
-<code>false</code> MUST generate an error
-(<a href="./spec.html#setdefaultversionid_not_allowed">setdefaultversionid_not_allowed</a>).</li>
-<li>This attribute MUST NOT be <code>true</code> if <code>maxversions</code> is one (<code>1</code>). An attempt
-to set it to <code>false</code> MUST generate an error
-(<a href="./spec.html#setdefaultversionsticky_false">setdefaultversionsticky_false</a>.</li>
-</ul>
 <h3 id="groupsstringresourcesstringhasdocument"><code>groups.&lt;STRING&gt;.resources.&lt;STRING&gt;.hasdocument</code> <a class="anchor" href="#groupsstringresourcesstringhasdocument">🔗</a></h3>
 <ul>
 <li>
@@ -793,6 +853,9 @@ xRegistry metadata and not a domain-specific document.</p>
 <p>A value of <code>true</code> does not mean that these Resources are guaranteed to
 have a non-empty document, and a query to the Resource MAY return an
 empty document.</p>
+<p>Attempts to change this value from <code>true</code> to <code>false</code> when there are existing
+Versions with domain-specific documents MUST generate an error
+(<a href="./spec.html#hasdocument_violation">hasdocument_violation</a>).</p>
 <p>See
 <a href="./spec.html#document-resources-vs-metadata-only-resources">Document Resources vs Metadata-Only Resources</a>
 for more information.</p>
@@ -1030,36 +1093,12 @@ the Version's <code>compatibilityvalidated</code> attribute MUST be set to <code
 </ul>
 </li>
 </ul>
-<h3 id="groupsstringresourcesstringconsistentformat"><code>groups.&lt;STRING&gt;.resources.&lt;STRING&gt;.consistentformat</code> <a class="anchor" href="#groupsstringresourcesstringconsistentformat">🔗</a></h3>
-<ul>
-<li>Type: Boolean (<code>true</code> or <code>false</code>, case-sensitive)</li>
-<li>OPTIONAL</li>
-<li>Indicates whether all Versions of a Resource of this type are mandated to
-have the same <a href="./spec.html#format-attribute"><code>format</code></a> value.</li>
-<li>This attribute's semantics apply regardless of the values of <code>validateformat</code>
-and <code>validatecompatibility</code>.</li>
-<li>When not specified, the default value MUST be <code>false</code>.</li>
-<li>A value of <code>true</code> indicates that:
-<ul>
-<li>The <code>format</code> attribute of all Versions of a Resource of this type MUST
-have the same case-insensitive value (including the case of <code>format</code> being
-an empty string). If a Version differs then an error
-(<a href="./spec.html#format_inconsistent">format_inconsistent</a>) MUST be generated.</li>
-</ul>
-</li>
-<li>A value of <code>false</code> indicates that:
-<ul>
-<li>The server MUST NOT check for a consistent (same) <code>format</code> value across
-the Versions of a Resource of this type.</li>
-</ul>
-</li>
-</ul>
 <h3 id="groupsstringresourcesstringtypemap"><code>groups.&lt;STRING&gt;.resources.&lt;STRING&gt;.typemap</code> <a class="anchor" href="#groupsstringresourcesstringtypemap">🔗</a></h3>
 <ul>
 <li>
 <p>Type: Map where the keys and values MUST be non-empty strings. The key
 MAY include at most one <code>*</code> to act as a wildcard to mean zero or more
-instance of any character at that position in the string - similar to a
+instances of any character at that position in the string - similar to a
 <code>.*</code> in a regular expression. The key MUST be a case-insensitive string.</p>
 </li>
 <li>
@@ -1267,6 +1306,8 @@ to <code>integer</code> is not.</li>
 aspect changed to <code>false</code>.</li>
 <li>Specification-defined attributes that are <code>readonly</code> MUST NOT have this
 aspect changed to <code>false</code>.</li>
+<li>Specification-defined attributes that define a <code>default</code> value MUST always
+include a <code>default</code> value in its definition.</li>
 </ul>
 <p>Any specification attributes not included in a request to define, or update,
 a model MUST be included in the resulting full model. In other words, the full

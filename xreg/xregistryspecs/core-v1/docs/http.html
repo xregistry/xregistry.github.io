@@ -184,12 +184,13 @@ implementations MAY choose to prefix them as necessary. However, the same
 prefix MUST be used consistently for all APIs in the same Registry instance.</p>
 <p>If an OPTIONAL HTTP path is not supported by an implementation, then any
 use of that API MUST generate an error
-(<a href="./http.html#api_not_found">api_not_found</a>).</p>
+(<a href="#api_not_found">api_not_found</a>).</p>
 <p>If an HTTP method is not supported for a supported HTTP path, then an error
 (<a href="./spec.html#action_not_supported">action_not_supported</a>) MUST be generated.</p>
 <p>Implementations MAY support extension APIs, however, the following rules apply:</p>
 <ul>
-<li>New HTTP paths that extend non-root paths MUST NOT be defined.</li>
+<li>New HTTP paths that extend non-root paths MUST NOT be defined as they might
+conflict with URLs of entities within the system.</li>
 <li>New root HTTP paths MAY be defined as long as they do not use Registry-level
 HTTP paths or attribute names. This includes extension and Groups collection
 attribute names.</li>
@@ -354,6 +355,12 @@ entities from a collection, so a separate delete operation might be needed
 if there are entities that need to be removed.</li>
 <li>The processing of each individual entity in the map MUST follow the same
 rules as defined for <code>PUT</code> above.</li>
+<li>In the case of an empty map of Versions and the Resource being referenced
+does not exist yet, an error (<a href="#missing_versions">missing_versions</a>) MUST
+be generated because a Resource can not exist without any Versions. If
+the intent was to create a Resource with a Version that has just default
+values, then there are other APIs that can be used that make that intent
+clear (e.g. <code>PUT</code> to the Resource itself).</li>
 </ul>
 <p>The processing of each individual entity follows the same set of rules:</p>
 <ul>
@@ -603,8 +610,9 @@ deleted.</li>
 changes to those values.</li>
 <li>For both the <code>PATCH</code> and <code>PUT</code> cases, if present, the <code>modelsource</code> attribute
 MUST be a complete replacement representation of the model definition. A
-value of <code>null</code> MUST reset the model to the server's default value.
-See <a href="./model.html#creating-or-updating-the-registry-model">Creating or Updating the Registry
+value of <code>null</code> or <code>{}</code> MUST reset the model to the server's default value
+(no Groups, Resources, extension attributes or custom specification-defined
+attributes).  See <a href="./model.html#creating-or-updating-the-registry-model">Creating or Updating the Registry
 Model</a> for more
 information.</li>
 <li>When the <code>capabilities</code> attribute is present and <code>PATCH</code> is used then only
@@ -737,6 +745,8 @@ entire <a href="./spec.html#registry-entity">Registry</a> as a single document. 
 example, to then be used in an &quot;import&quot; type of operation for another
 Registry, or for tooling that does not need the duplication of information
 that <a href="./spec.html#doc-flag">Doc Flag</a> removes.</li>
+<li>Note, the semantics of the <code>doc</code> and <code>inline</code> flags MUST still be adhered to
+even if explicitly specifying those flags is not supported by the server.</li>
 <li>To allow for servers that do not support query parameters (such as
 <a href="./spec.html#design-no-code-servers">No-Code Servers</a>) to expose the entire
 Registry with a single (non-query parameterized) API call.</li>
@@ -762,9 +772,6 @@ Content-Type: application/json; charset=utf-8
 an HTTP <code>GET</code> directed to the stand-alone <code>capabilities</code> map.</p>
 <p>The request MUST be of the form:</p>
 <pre><code class="language-yaml">GET /capabilities
-Content-Type: application/json; charset=utf-8
-
-{ ... Capabilities map excluded for brevity ...  }
 </code></pre>
 <p>A successful response MUST be of the form:</p>
 <pre><code class="language-yaml">HTTP/1.1 200 OK
@@ -786,14 +793,13 @@ Content-Type: application/json; charset=utf-8
     &quot;binary&quot;, &quot;collections&quot;, &quot;doc&quot;, &quot;epoch&quot;, &quot;filter&quot;, &quot;ignore&quot;, &quot;inline&quot;,
     &quot;setdefaultversionid&quot;, &quot;sort&quot;, &quot;specversion&quot;
   ],
-  &quot;ignore&quot;: [ &quot;capabilities&quot;, &quot;defaultversionid&quot;, &quot;defaultversionsticky&quot;,
-    &quot;epoch&quot;, &quot;modelsource&quot;, &quot;readonly&quot;
+  &quot;ignores&quot;: [ &quot;capabilities&quot;, &quot;defaultversionid&quot;, &quot;defaultversionsticky&quot;,
+    &quot;epoch&quot;, &quot;id&quot;, &quot;modelsource&quot;, &quot;readonly&quot;
   ],
   &quot;mutable&quot;: [ &quot;capabilities&quot;, &quot;entities&quot;, &quot;model&quot; ],
   &quot;pagination&quot;: false,
   &quot;shortself&quot;: false,
-  &quot;specversions&quot;: [ &quot;1.0-rc2&quot; ],
-  &quot;stickyversions&quot;: true
+  &quot;specversions&quot;: [ &quot;1.0-rc2&quot; ]
 }
 </code></pre>
 <h4 id="get-capabilitiesoffered"><code>GET /capabilitiesoffered</code> <a class="anchor" href="#get-capabilitiesoffered">🔗</a></h4>
@@ -819,18 +825,28 @@ Content-Type: application/json; charset=utf-8
 
 {
   &quot;apis&quot;: {
-    &quot;type&quot;: &quot;string&quot;,
-    &quot;enum&quot;: [ &quot;/capabilities&quot;, &quot;/export&quot;, &quot;/model&quot;, /&quot;modelsource&quot; ]
+    &quot;type&quot;: &quot;array&quot;,
+    &quot;item&quot;: {
+      &quot;type&quot;: &quot;string&quot;
+    },
+    &quot;enum&quot;: [ &quot;/capabilities&quot;, &quot;/capabilitiesoffered&quot;, &quot;/export&quot;, &quot;/model&quot;,
+       &quot;/modelsource&quot; ]
   },
   &quot;flags&quot;: {
-    &quot;type&quot;: &quot;string&quot;,
+    &quot;type&quot;: &quot;array&quot;,
+    &quot;item&quot;: {
+      &quot;type&quot;: &quot;string&quot;
+    },
     &quot;enum&quot;: [ &quot;collections&quot;, &quot;doc&quot;, &quot;epoch&quot;, &quot;filter&quot;, &quot;ignore&quot;, &quot;inline&quot;,
        &quot;setdefaultversionid&quot;, &quot;sort&quot;, &quot;specversion&quot; ]
   },
-  &quot;ignore&quot;: {
-    &quot;type&quot;: &quot;string&quot;,
+  &quot;ignores&quot;: {
+    &quot;type&quot;: &quot;array&quot;,
+    &quot;item&quot;: {
+      &quot;type&quot;: &quot;string&quot;
+    },
     &quot;enum&quot;: [ &quot;capabilities&quot;, &quot;defaultversionid&quot;, &quot;defaultversionsticky&quot;,
-      &quot;epoch&quot;, &quot;modelsource&quot;, &quot;readonly&quot; ]
+      &quot;epoch&quot;, &quot;id&quot;, &quot;modelsource&quot;, &quot;readonly&quot; ]
   },
   &quot;pagination&quot;: {
     &quot;type&quot;: &quot;boolean&quot;,
@@ -841,14 +857,19 @@ Content-Type: application/json; charset=utf-8
     &quot;enum&quot;: [ false, true ]
   },
   &quot;specversions&quot;: {
-    &quot;type&quot;: &quot;string&quot;,
+    &quot;type&quot;: &quot;array&quot;,
+    &quot;item&quot;: {
+      &quot;type&quot;: &quot;string&quot;
+    },
     &quot;enum&quot;: [ &quot;1.0-rc2&quot; ]
   },
-  &quot;stickyversions&quot;: {
-    &quot;type&quot;: &quot;boolean&quot;,
-    &quot;enum&quot;: [ true ]
-  },
-  &quot;versionmodes&quot;: [ &quot;manual&quot; ]
+  &quot;versionmodes&quot;: {
+    &quot;type&quot;: &quot;array&quot;,
+    &quot;item&quot;: {
+      &quot;type&quot;: &quot;string&quot;
+    },
+    &quot;enum&quot;: [ &quot;manual&quot; ]
+  }
 }
 </code></pre>
 <h4 id="patch-and-put-capabilities"><code>PATCH</code> and <code>PUT /capabilities</code> <a class="anchor" href="#patch-and-put-capabilities">🔗</a></h4>
@@ -908,15 +929,14 @@ is completed, even though the response MUST show the requested changes.</p>
     &quot;binary&quot;, &quot;collections&quot;, &quot;doc&quot;, &quot;epoch&quot;, &quot;filter&quot;, &quot;ignore&quot;, &quot;inline&quot;,
     &quot;setdefaultversionid&quot;, &quot;sort&quot;, &quot;specversion&quot;
   ],
-  &quot;ignore&quot;: [
+  &quot;ignores&quot;: [
     &quot;capabilities&quot;, &quot;defaultversionid&quot;, &quot;defaultversionsticky&quot;, &quot;epoch&quot;,
-    &quot;modelsource&quot;, &quot;readonly&quot;
+    &quot;id&quot;, &quot;modelsource&quot;, &quot;readonly&quot;
   ],
   &quot;mutable&quot;: [ &quot;capabilities&quot;, &quot;entities&quot;, &quot;model&quot; ],
   &quot;pagination&quot;: false,
   &quot;shortself&quot;: true,
-  &quot;specversions&quot;: [ &quot;1.0-rc2&quot; ],
-  &quot;stickyversions&quot;: true
+  &quot;specversions&quot;: [ &quot;1.0-rc2&quot; ]
 }
 </code></pre>
 <h3 id="registry-model">Registry Model <a class="anchor" href="#registry-model">🔗</a></h3>
@@ -942,6 +962,8 @@ Content-Type: application/json; charset=utf-8
 <p>A server MAY support clients retrieving the client-provided
 <a href="./model.html#registry-model">model definition</a> used to define the current
 model via an HTTP <code>GET</code> directed to the stand-alone <code>modelsource</code> entity.</p>
+<p>In cases where the Registry's model has never been specified via <code>modelsource</code>,
+this operation MUST return <code>{}</code> not an empty HTTP body.</p>
 <p>The request MUST be of the form:</p>
 <pre><code class="language-yaml">GET /modelsource
 </code></pre>
@@ -968,6 +990,9 @@ Content-Type: application/json; charset=utf-8
 <p>To update the <code>modelsource</code> as part of a request to update the
 <a href="./spec.html#registry-entity">Registry entity</a>, you can include the attribute
 as part of the <a href="#patch-and-put-"><code>PUT /</code></a> request.</p>
+<p>Note: the HTTP body MUST be a JSON object and an empty request MUST generate
+an error (<a href="#missing_body">missing_body</a>). To denote an empty model <code>{}</code> SHOULD
+be used instead.</p>
 <h3 id="group-entity">Group Entity <a class="anchor" href="#group-entity">🔗</a></h3>
 <h4 id="get-groups"><code>GET /&lt;GROUPS&gt;</code> <a class="anchor" href="#get-groups">🔗</a></h4>
 <p>A server MAY support clients retrieving a
@@ -1033,10 +1058,10 @@ and that there are a total of 100 items in this collection.</p>
 Entities</a> section.</p>
 <p>The request MUST be of the form:</p>
 <pre><code class="language-yaml">PATCH /&lt;GROUPS&gt;
-Content-Type: application/json; charset:utf-8
+Content-Type: application/json; charset=utf-8
 or
 POST /&lt;GROUPS&gt;
-Content-Type: application/json; charset:utf-8
+Content-Type: application/json; charset=utf-8
 
 {
    &quot;&lt;KEY&gt;&quot;: {                                      # &lt;GROUP&gt;id
@@ -1156,14 +1181,14 @@ Content-Type: application/json; charset=utf-8
 <h4 id="patch-and-put-groupsgid"><code>PATCH</code> and <code>PUT /&lt;GROUPS&gt;/&lt;GID&gt;</code> <a class="anchor" href="#patch-and-put-groupsgid">🔗</a></h4>
 <p>A server MAY support clients creating or updating a
 <a href="./spec.html#group-entity">Group</a> in a Group collection via an HTTP <code>PATCH</code> or
-<code>POST</code> directed to the Group entity.</p>
+<code>PUT</code> directed to the Group entity.</p>
 <p>The processing of these APIs is defined in the <a href="#creating-or-updating-entities">Creating or Updating
 Entities</a> section.</p>
 <p>The request MUST be of the form:</p>
 <pre><code class="language-yaml">PATCH /&lt;GROUPS&gt;/&lt;GID&gt;
 Content-Type: application/json; charset=utf-8
 or
-PUT /&lt;GROUPS&gt;/GID&gt;
+PUT /&lt;GROUPS&gt;/&lt;GID&gt;
 Content-Type: application/json; charset=utf-8
 
 { ... Group entity excluded for brevity ... }
@@ -1201,6 +1226,9 @@ Group.</p>
 <p>The processing of this API is defined in the <a href="#creating-or-updating-entities">Creating or Updating
 Entities</a> section - see the discussion of the
 <code>POST &lt;PATH-TO-ENTITY&gt;</code> variant.</p>
+<p>A request that isn't a map of Resource types (e.g. it contains other Group
+level attributes) MUST generate an error
+(<a href="./spec.html#resources_only">resources_only</a>).</p>
 <p>The request MUST be of the form:</p>
 <pre><code class="language-yaml">POST /&lt;GROUPS&gt;/&lt;GID&gt;
 Content-Type: application/json; charset=utf-8
@@ -1495,10 +1523,10 @@ Entities</a> section - see the discussion of the
 <code>POST/PATCH &lt;PATH-TO-COLLECTION&gt;</code> variants.</p>
 <p>The request MUST be of the form:</p>
 <pre><code class="language-yaml">PATCH /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;
-Content-Type: application/json; charset:utf-8
+Content-Type: application/json; charset=utf-8
 or
 POST /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;
-Content-Type: application/json; charset:utf-8
+Content-Type: application/json; charset=utf-8
 
 {
    &quot;&lt;KEY&gt;&quot;: {                                      # &lt;RESOURCE&gt;id
@@ -2042,7 +2070,7 @@ Entities</a> section.</p>
 <pre><code class="language-yaml">PATCH /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;/meta
 Content-Type: application/json; charset=utf-8
 or
-PUT /&lt;GROUPS&gt;/GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;/meta
+PUT /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;/meta
 Content-Type: application/json; charset=utf-8
 
 { ... Meta entity excluded for brevity ... }
@@ -2135,10 +2163,10 @@ Entities</a> section - see the discussion of the
 <code>POST/PATCH &lt;PATH-TO-COLLECTION&gt;</code> variants.</p>
 <p>The request MUST be of the form:</p>
 <pre><code class="language-yaml">PATCH /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;/versions
-Content-Type: application/json; charset:utf-8
+Content-Type: application/json; charset=utf-8
 or
 POST /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;/versions
-Content-Type: application/json; charset:utf-8
+Content-Type: application/json; charset=utf-8
 
 {
    &quot;&lt;KEY&gt;&quot;: {                                      # &lt;GROUP&gt;id
@@ -2344,8 +2372,7 @@ Resource metadata or to the Resource domain-specific document. See
 <a href="#resource-metadata-vs-resource-document">Resource Metadata vs Resource Document</a>
 for more information.</p>
 <p>When directed to the Version metadata, the request MUST be of the form:</p>
-<pre><code class="language-yaml">```yaml
-PATCH /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;/versions/&lt;VID&gt;[$details]
+<pre><code class="language-yaml">PATCH /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;/versions/&lt;VID&gt;[$details]
 Content-Type: application/json; charset=utf-8
 or
 PUT /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;/versions/&lt;VID&gt;[$details]
@@ -2661,7 +2688,7 @@ Content-Type: application/json; charset=utf-8
 <a href="./spec.html">core specification</a> for more information.</p>
 <p>The following list of HTTP protocol specific errors are defined:</p>
 <!-- start-err-def -->
-<h4 id="api_not_found">api_not_found <a class="anchor" href="#api_not_found">🔗</a></h4>
+<h3 id="api_not_found">api_not_found <a class="anchor" href="#api_not_found">🔗</a></h3>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/http.md#api_not_found</code></li>
 <li>Code: <code>404 Not Found</code></li>
@@ -2672,7 +2699,7 @@ Content-Type: application/json; charset=utf-8
 starting with <code>/</code>. E.g. <code>/export</code> if the &quot;export&quot; feature is not supported.</p>
 <h4 id="details_required">details_required <a class="anchor" href="#details_required">🔗</a></h4>
 <ul>
-<li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#details_required</code></li>
+<li>Type: <code>https://github.com/xregistry/spec/blob/main/core/http.md#details_required</code></li>
 <li>Code: <code>405 Method Not Allowed</code></li>
 <li>Title: <code>$details suffix is needed when using PATCH for the entity: &lt;subject&gt;.</code></li>
 <li>Subject: <code>&lt;resource_xid&gt;</code></li>
@@ -2706,6 +2733,13 @@ starting with <code>/</code>. E.g. <code>/export</code> if the &quot;export&quot
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/http.md#missing_body</code></li>
 <li>Code: <code>400 Bad Request</code></li>
 <li>Title: <code>The request is missing an HTTP body - try '{}'.</code></li>
+<li>Subject: <code>&lt;request_path&gt;</code></li>
+</ul>
+<h4 id="missing_versions">missing_versions <a class="anchor" href="#missing_versions">🔗</a></h4>
+<ul>
+<li>Type: <code>https://github.com/xregistry/spec/blob/main/core/http.md#missing_versions</code></li>
+<li>Code: <code>400 Bad Request</code></li>
+<li>Title: <code>At least one Version needs to be included in the request to process &quot;&lt;subject&gt;&quot;.</code></li>
 <li>Subject: <code>&lt;request_path&gt;</code></li>
 </ul>
 <!-- end-err-def -->
