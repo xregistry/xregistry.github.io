@@ -48,7 +48,7 @@
 <h1 id="xregistry-service-model---version-10-rc2">xRegistry Service Model - Version 1.0-rc2 <a class="anchor" href="#xregistry-service-model---version-10-rc2">🔗</a></h1>
 <!-- words: compat validatecompatibility validateformat strictvalidation -->
 <!-- words: matchcase compatibilityvalidated formatvalidated -->
-<!-- words: validators -->
+<!-- words: validators matchversions -->
 <h2 id="abstract">Abstract <a class="anchor" href="#abstract">🔗</a></h2>
 <p>This document describes the xRegistry model definition language that is used
 to define custom Groups and Resources for use within an xRegistry.</p>
@@ -121,6 +121,7 @@ will be mapped to those protocols.</p>
       &quot;enum&quot;: [ &lt;VALUE&gt; * ], ?         # Array of scalars of type &quot;&lt;TYPE&gt;&quot;
       &quot;strict&quot;: &lt;BOOLEAN&gt;, ?           # Just &quot;enum&quot; values or not. Default=true
       &quot;matchcase&quot;: &lt;BOOLEAN&gt;, ?        # Strings case-sensitive? Default=false
+      &quot;matchversions&quot;: &lt;BOOLEAN&gt;, ?    # Same for all Versions? Default=false
       &quot;readonly&quot;: &lt;BOOLEAN&gt;, ?         # From client's POV. Default=false
       &quot;immutable&quot;: &lt;BOOLEAN&gt;, ?        # Once set, can't change. Default=false
       &quot;required&quot;: &lt;BOOLEAN&gt;, ?         # Default=false
@@ -159,7 +160,7 @@ will be mapped to those protocols.</p>
       &quot;constraints&quot;: {
         &quot;&lt;RESOURCES&gt;.&lt;PATH&gt;&quot;: {          # Resource-plural + attribute path
           &quot;default&quot;: &lt;VALUE&gt;, ?          # Group specific default
-          &quot;enum&quot;: [ &lt;VALUE&gt; * ], ?       # Allowed subset of values
+          &quot;enum&quot;: [ &lt;VALUE&gt; + ], ?       # Allowed subset of values
           &quot;equals&quot;: &quot;&lt;PATH&gt;&quot; ?           # Matching Group attribute path
         } *
       }, ?
@@ -399,8 +400,32 @@ This attribute has no impact when <code>enum</code> is absent or an empty array.
 <li>OPTIONAL.</li>
 <li>Indicates whether the <code>string</code> attribute's value MUST be compared with
 a matching value in a case-sensitive way, or not.</li>
-<li>This attribute MUST NOT be <code>true</code> if the owning attribute's <code>type</code> (or
+<li>This aspect MUST NOT be <code>true</code> if the owning attribute's <code>type</code> (or
 <code>item.type</code> for non-scalars) is not <code>&quot;string&quot;</code>.</li>
+<li>When not specified, the default value MUST be <code>false</code>.</li>
+</ul>
+<h3 id="attributesstringmatchversions"><code>attributes.&lt;STRING&gt;.matchversions</code> <a class="anchor" href="#attributesstringmatchversions">🔗</a></h3>
+<ul>
+<li>Type: Boolean.</li>
+<li>OPTIONAL.</li>
+<li>Indicates whether all Versions of a Resource instance MUST have the same
+value for this attribute (or MUST be missing from all Versions). If an
+inconsistency is found then an error
+(<a href="./spec.html#mismatched_version_attribute">mismatched_version_attribute</a>) MUST
+be generated.</li>
+<li>This aspect MUST only be <code>true</code> for attribute definitions that:
+<ul>
+<li>Are within a <a href="#groupsstringresourcesstringattributes">Resource type's versioned
+attributes</a> section.</li>
+<li>Are for scalar typed attributes.</li>
+<li>Are statically defined. Meaning, not defined as part of a <code>ifvalues</code> clause
+or via a <code>*</code> extension definition</li>
+<li>Are not defined within an array or map. Within an object is allowed.</li>
+</ul>
+</li>
+<li>In the case of the attribute type being a <code>string</code>, the comparison MUST take
+into account the <a href="#attributesstringmatchcase">matchcase</a> aspect of the
+attribute.</li>
 <li>When not specified, the default value MUST be <code>false</code>.</li>
 </ul>
 <h3 id="attributesstringreadonly"><code>attributes.&lt;STRING&gt;.readonly</code> <a class="anchor" href="#attributesstringreadonly">🔗</a></h3>
@@ -495,6 +520,9 @@ be automatically changed to the new default value. In other words, a new
 default value MUST only apply to new, or subsequent updates (when set to
 <code>null</code>, which would reset it to the current default value) of existing,
 instances of the attribute.</li>
+<li>If the attribute is defined to have an <code>enum</code> list, and its <code>strict</code> aspect
+is <code>true</code>, then if a <code>default</code> value is specified it MUST be one of those
+<code>enum</code> values.</li>
 </ul>
 <h3 id="attributesstringattributes"><code>attributes.&lt;STRING&gt;.attributes</code> <a class="anchor" href="#attributesstringattributes">🔗</a></h3>
 <ul>
@@ -698,8 +726,8 @@ operations on the Resource need to be done in its original location.</li>
 </ul>
 <h3 id="groupsstringconstraintsresourcespath"><code>groups.&lt;STRING&gt;.constraints.&lt;RESOURCES&gt;.&lt;PATH&gt;</code> <a class="anchor" href="#groupsstringconstraintsresourcespath">🔗</a></h3>
 <p>This map key MUST reference the Resource attribute that is to be constrained.
-It MUST reference a scalar attribute (top-level, or nested within object or
-map, but MUST NOT reference items in arrays). It MUST only reference
+It MUST reference a scalar attribute (top-level, or nested within objects) but
+but MUST NOT reference items in arrays or maps). It MUST only reference
 statically-defined attributes, not ones that are dynamically added via an
 <code>ifvalues</code> clause or via a <code>*</code> extension definition.</p>
 <p>The <code>&lt;RESOURCES&gt;</code> portion of the map key MUST be the plural name of the
@@ -707,28 +735,40 @@ Resource type being referenced.</p>
 <p>The <code>&lt;PATH&gt;</code> portion of the map key MUST be a dot (<code>.</code>) notional traversal to
 the Resource attribute being constrained.</p>
 <h3 id="groupsstringconstraintsresourcespathdefault"><code>groups.&lt;STRING&gt;.constraints.&lt;RESOURCES&gt;.&lt;PATH&gt;.default</code> <a class="anchor" href="#groupsstringconstraintsresourcespathdefault">🔗</a></h3>
-<p>This attribute defines the default value that MUST be used for the referenced
+<p>This aspect defines the default value that MUST be used for the referenced
 Resource attribute. This MUST override any default value specified in the
 model for that attribute. See the
 <a href="#attributesstringdefault">attribute <code>default</code> aspect</a> for additional
 information concerning default value processing, as they apply here as well
 with one exception: adding a default value here does not mandate that the
-referenced Resource attribute's <code>required</code> attribute be set to <code>true</code>.
+referenced Resource attribute's <code>required</code> aspect be set to <code>true</code>.
 However, it would have the same net effect at runtime because a value would
 always be defined for that attribute.</p>
+<p>Note, if the constraint does not define a new <code>enum</code> set, but a <code>default</code> value
+is defined, then if the referenced attribute has an <code>enum</code> set and has its
+<code>strict</code> aspect set to <code>true</code> then this <code>default</code> value MUST be one of those
+<code>enum</code> values.</p>
 <h3 id="groupsstringconstraintsresourcespathenum"><code>groups.&lt;STRING&gt;.constraints.&lt;RESOURCES&gt;.&lt;PATH&gt;.enum</code> <a class="anchor" href="#groupsstringconstraintsresourcespathenum">🔗</a></h3>
-<p>This attribute defines the set of values that the referenced Resource attribute
-MUST be restricted to. The list's values MUST be valid per the Resource
-attribute's model definition (e.g. a proper subset of any <code>enum</code> defined, and
-of the same type). The list MUST NOT be empty.</p>
+<p>This aspect defines the set of values that the referenced Resource attribute
+MUST be restricted to regardless of whether the Resource's
+<a href="#attributesstringstrict"><code>strict</code></a> attribute is set to <code>true</code> or not. The
+list's values MUST be valid per the Resource attribute's model definition
+(e.g. a proper subset of any <code>enum</code> defined if the Resource's <code>enum</code> is
+<a href="#attributesstringstrict"><code>strict</code></a>, and of the same type).</p>
+<p>As with the <a href="#attributesstringenum"><code>enum</code> attribute</a> defined for attributes,
+an empty <code>enum</code> list in a constraints MUST be treated the same as no <code>enum</code>
+aspect at all and no further constraints on the allowable attribute values are
+applied beyond what the attribute itself defines.</p>
+<p>If an <code>enum</code> set is defined, but a <code>default</code> values is not, then any <code>default</code>
+value specified in the attribute itself MUST be part of the <code>enum</code> set.</p>
 <h3 id="groupsstringconstraintsresourcespathequals"><code>groups.&lt;STRING&gt;.constraints.&lt;RESOURCES&gt;.&lt;PATH&gt;.equals</code> <a class="anchor" href="#groupsstringconstraintsresourcespathequals">🔗</a></h3>
-<p>Use of this attribute within a constraint MAY be used to ensure that all
+<p>Use of this aspect within a constraint MAY be used to ensure that all
 Resource instances within a Group instance have the same value for the
 specified attribute in all of their Versions.</p>
-<p>When present, this attribute MUST contain the dot (<code>.</code>) notation path in the
-Group instance that the referenced Resource attribute MUST match. If the two
-attributes exist and do not match then an error
-(<a href="./spec.html#constraint_failure">constraint_failure</a>) MUST be generated.</p>
+<p>When present, this aspect MUST contain the dot (<code>.</code>) notation path in the
+Group instance that the referenced Resource attribute MUST match. In the
+case of the attribute type being a <code>string</code>, the comparison MUST take into
+account the <a href="#attributesstringmatchcase">matchcase</a> aspect of the attribute.</p>
 <p>If the referenced Group attribute does not exist, then the <code>equals</code> constraint
 enforcement for the Resource attribute MUST be silently ignored.</p>
 <p>If, after any potential <code>default</code> processing logic is performed, the Resource
@@ -737,7 +777,10 @@ exist, then an error (<a href="./spec.html#constraint_failure">constraint_failur
 be generated.</p>
 <p>This attribute MUST reference a statically defined Group attribute. In other
 words, it can not reference an attribute defined by an <code>ifvalues</code> clause or a
-<code>*</code> extension definition.</p>
+<code>*</code> extension definition. Nor can it reference an attribute within an array.</p>
+<p>Note that if a Resource type's versioned attribute has a <code>matchversions</code> aspect
+set to <code>false</code>, then this feature will have the same net affect as
+<code>matchversions</code> for that attribute being <code>true</code>.</p>
 <h3 id="groupsstringresources"><code>groups.&lt;STRING&gt;.resources</code> <a class="anchor" href="#groupsstringresources">🔗</a></h3>
 <ul>
 <li>Type: Map where the key MUST be the plural name (<code>groups.resources.plural</code>)
@@ -821,6 +864,13 @@ Once the single oldest Version is determined, delete it.
 A special case for the pruning rules is that if <code>maxversions</code> is set to
 one (1), then the &quot;default&quot; Version is not skipped, which means it will be
 deleted and the new Version will become &quot;default&quot;.</li>
+<li>An attempt to change <code>maxversions</code> to <code>1</code> when there are existing Resource
+instances that have their <code>defaultversionsticky</code> attribute set to <code>true</code> MUST
+generate an error
+(<a href="./spec.html#setdefaultversionsticky_false">setdefaultversionsticky_false</a>).
+See
+<a href="./spec.html#defaultversionsticky-attribute"><code>defaultversionsticky</code> Attribute</a>
+for additional information.</li>
 </ul>
 <h3 id="groupsstringresourcesstringsetversionid"><code>groups.&lt;STRING&gt;.resources.&lt;STRING&gt;.setversionid</code> <a class="anchor" href="#groupsstringresourcesstringsetversionid">🔗</a></h3>
 <ul>
@@ -999,7 +1049,7 @@ tree.</li>
 <li>Note that if the Resource's <code>versionmode</code> value might influence
 the permissible values of this aspect.</li>
 <li>See the
-<a href="./primer.html#singleversionroot-policy-enforcement"><code>singleversionroot</code> Policy
+<a href="./primer.html#10712-singleversionroot-policy-enforcement"><code>singleversionroot</code> Policy
 Enforcement</a> section of
 the Primer for more information.</li>
 </ul>

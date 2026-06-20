@@ -1,10 +1,10 @@
 {
-  "createdat": "2026-06-17T14:44:36.935153816Z",
+  "createdat": "2026-06-20T23:45:15.033993285Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
   "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/samples/doc-store-model.json/versions/v1.0-rc1",
   "epoch": 1,
-  "modifiedat": "2026-06-17T14:44:36.935153816Z",
+  "modifiedat": "2026-06-20T23:45:15.033993285Z",
   "readonly": false,
   "sampleid": "doc-store-model.json",
   "self": "https://xregistry.io/xreg/xregistryspecs/core-v1/samples/doc-store-model.json/meta",

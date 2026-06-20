@@ -49,6 +49,7 @@
 <!-- words: validatecompatibility validateformat strictvalidation matchcase -->
 <!-- words: compat formatvalidated compatibilityvalidated -->
 <!-- words: compat formatvalidatedreason compatibilityvalidatedreason -->
+<!-- words: matchversions -->
 <h2 id="abstract">Abstract <a class="anchor" href="#abstract">🔗</a></h2>
 <p>This specification defines an extensible model for managing metadata
 registries. The metadata artifacts can be for any purpose, such as schemas
@@ -454,6 +455,7 @@ Alternative serialization formats MAY be defined.</p>
         &quot;enum&quot;: [ &lt;VALUE&gt; * ], ?        # Array of scalars of type `&quot;type&quot;`
         &quot;strict&quot;: &lt;BOOLEAN&gt;, ?          # Just &quot;enum&quot; values? Default=true
         &quot;matchcase&quot;: &lt;BOOLEAN&gt;, ?       # Strings case-sensitive? Def=false
+        &quot;matchversions&quot;: &lt;BOOLEAN&gt;, ?   # Same for all Versions? Def=false
         &quot;readonly&quot;: &lt;BOOLEAN&gt;, ?        # From client's POV. Default=false
         &quot;immutable&quot;: &lt;BOOLEAN&gt;, ?       # Once set, can't change. Default=false
         &quot;required&quot;: &lt;BOOLEAN&gt;, ?        # Default=false
@@ -544,7 +546,7 @@ Alternative serialization formats MAY be defined.</p>
       &quot;constraints&quot;: {
         &quot;&lt;RESOURCES&gt;.&lt;PATH&gt;&quot;: {                # Resource-plural + attr path
           &quot;default&quot;: &lt;VALUE&gt;, ?                # Group specific default
-          &quot;enum&quot;: [ &lt;VALUE&gt; * ], ?             # Allowed subset of values
+          &quot;enum&quot;: [ &lt;VALUE&gt; + ], ?             # Allowed subset of values
           &quot;equals&quot;: &quot;&lt;PATH&gt;&quot; ?                 # Matching Group attribute path
         } *
       }, ?
@@ -1536,10 +1538,10 @@ layered (or merged), per the following rules:</p>
 <li><code>default</code> attribute:
 <ul>
 <li>If present here, it MUST be a valid value within the effective <code>enum</code>
-values per the above <code>enum</code> bullet.</li>
+values per the <code>enum</code> bullet below.</li>
 <li>If not present here, but specified at the Group type level, then the
 value specified at the Group type level, MUST be valid per the effective
-<code>enum</code> values per the above <code>enum</code> bullet.</li>
+<code>enum</code> values per the <code>enum</code> bullet below.</li>
 </ul>
 </li>
 <li><code>enum</code> attribute:
@@ -2757,8 +2759,10 @@ based on the Resource's
 <a href="./model.html#groupsstringresourcesstringversionmode"><code>versionmode</code></a> value.</li>
 <li>Process the <code>meta</code> sub-object, if present.</li>
 <li>Update <a href="#defaultversionid-attribute"><code>meta.defaultversionid</code></a> as needed.</li>
-<li>Enforce the <a href="#format-attribute">Version format checks</a> and the <a href="./model.html#groupsstringconstraints">Group-level
-constraints</a>.</li>
+<li>Enforce the <a href="#format-attribute">Version format checks</a>.</li>
+<li>Enforce the <a href="./model.html#groupsstringconstraints">Group-level constraints</a>.</li>
+<li>Enforce the <a href="./model.html#attributesstringmatchversions">Resource <code>matchversions</code>
+checks</a>.</li>
 <li>Enforce the <a href="#compatibility-attribute">Version compatibility checks</a>.</li>
 <li>Enforce the <a href="./model.html#groupsstringresourcesstringmaxversions">Resource <code>maxversions</code>
 constraints</a>. Note that
@@ -3310,7 +3314,7 @@ the newest Version, as defined by the Resource's
 <li>When specified, it MUST be a case-sensitive <code>true</code> or <code>false</code>.</li>
 <li>When specified in a request, a value of <code>null</code> MUST be interpreted as a
 request to delete the attribute, implicitly setting it to <code>false</code>.</li>
-<li>When a Resource's <code>maxversions</code> is set to <code>1</code>, than an attempt to set this
+<li>When a Resource type's <code>maxversions</code> is set to <code>1</code>, any attempt to set this
 this attribute to <code>true</code> MUST generate an error
 (<a href="#setdefaultversionsticky_false">setdefaultversionsticky_false</a>) since
 setting a default/sticky Version is unnecessary when there can only be
@@ -3330,6 +3334,9 @@ use the following definition:</p>
   &quot;default&quot;: false
 }
 </code></pre>
+<p>Likewise, forcing all Resource instances to have &quot;sticky&quot; Versions MAY be
+achieved via the same mechanism but using <code>true</code> instead of <code>false</code> in the
+<code>enum</code> and <code>default</code> aspects.</p>
 <p>See <a href="#defaultversionid-attribute"><code>defaultversionid</code> Attribute</a> for more
 information on the relationship between these two attributes.</p>
 <p>See <a href="#default-version-of-a-resource">Default Version of a Resource</a> for more
@@ -5237,6 +5244,18 @@ field is just a substitution value and MUST NOT be empty.</p>
 <li><code>singular</code>: The &quot;singular&quot; name of the model entity being processed.</li>
 <li><code>invalid_id</code>: The ID values specified in the request.</li>
 <li><code>expected_id</code>: The ID that was supposed to be used instead.</li>
+</ul>
+</li>
+</ul>
+<h3 id="mismatched_version_attribute">mismatched_version_attribute <a class="anchor" href="#mismatched_version_attribute">🔗</a></h3>
+<ul>
+<li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#mismatched_version_attribute</code></li>
+<li>Code: <code>400 Bad Request</code></li>
+<li>Subject: <code>&lt;resource_xid&gt;</code></li>
+<li>Title: <code>The request would cause the &quot;&lt;name&gt;&quot; attribute across the Versions of &quot;&lt;subject&gt;&quot; to be different.</code></li>
+<li>Args:
+<ul>
+<li><code>name</code>: The dot (<code>.</code>) notation path to the attribute causing the violation.</li>
 </ul>
 </li>
 </ul>
