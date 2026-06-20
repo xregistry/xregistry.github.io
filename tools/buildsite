@@ -41,9 +41,19 @@ update_md_hrefs() {
       return
     fi
 
+    # echo href:${href} >&2
+
     local target_abs="$(realpath -m "${orig_dir}/${href}")"
-    local target_dir="$(dirname "$target_abs")"
-    local target_base="$(basename "$target_abs")"
+    # echo target_abs=${target_abs} >&2
+    if test -d "${target_abs}"; then
+      # if we're on a dir then there's no need to split things up
+      local target_dir="${target_abs}"
+      local target_base=""
+    else
+      local target_dir="$(dirname "$target_abs")"
+      local target_base="$(basename "$target_abs")"
+    fi
+    # echo "   : " target_abs=${target_abs} >&2
 
     target_dir=${target_dir#$repo_root} # make it relative to repo_root
 
@@ -93,6 +103,7 @@ update_md_hrefs() {
       local new_href="$(compute_new_href "$old_href" "$original_dir")"
       printf '%s' "${new_href})"  # add ) back in after the href
 
+      # dug
       # echo "Mapped ${original_dir}: ${old_href} -> ${new_href}" >&2
 
       rest="${BASH_REMATCH[3]}"
@@ -136,6 +147,7 @@ list=(
 "cloudevents/schemas/*"                cloudevents-v1/schemas
 "cloudevents/samples/scenarios/*.json" cloudevents-v1/samples
 "cloudevents/samples/schemas/*.json"   cloudevents-v1/samples
+"cloudevents/samples"                  cloudevents-v1/samples
 "core/*.json"                          core-v1/docs
 "core/*.md"                            core-v1/docs
 "core/*.png"                           core-v1/docs
@@ -159,7 +171,12 @@ for (( i=0 ; ; i++)); do
   [[ "${list[$i]}" == "" ]] && break
   src=${list[$i]}
   (( i=i+1 ))
-  base=`dirname "$src"`
+  if test -d "$FILES/$src"; then
+    # if it's just a dir then the mapping key is the entire string
+    base="$src"
+  else
+    base=`dirname "$src"`
+  fi
   tgt=${list[$i]}
   mapping[$base]="$tgt"
   # echo "Add mapping: $base -> $tgt" >&2
@@ -173,6 +190,9 @@ for (( i=0 ; ; i++)); do
 
   for file in $src ; do
     # echo $tgt "<-" $file
+
+    # Skip dirs, just keep them around for mapping hrefs later on
+    test -d "$file" && continue
 
     if grep -qI . $file ; then
       # non-binary files have their href's tweaked
@@ -216,7 +236,7 @@ grep -roPH 'href="\K[^"]+' xreg | \
         # echo verifying: $file
         src_dir=$(dirname $src)
         test -e "${src_dir}/${tgt}" && continue
-        echo  "In $src: ${tgt} doesn't exist"
+        echo  "In $src: ${tgt} doesn't exist, looking for ${src_dir}/${tgt}"
         exit 1
     done
 
