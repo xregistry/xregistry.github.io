@@ -1,10 +1,10 @@
 {
-  "createdat": "2026-06-21T00:43:00.97679963Z",
+  "createdat": "2026-06-21T01:11:25.322569563Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
   "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/mqtt-sparkplugB.xreg.json/versions/v1.0-rc1",
   "epoch": 1,
-  "modifiedat": "2026-06-21T00:43:00.97679963Z",
+  "modifiedat": "2026-06-21T01:11:25.322569563Z",
   "readonly": false,
   "sampleid": "mqtt-sparkplugB.xreg.json",
   "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/mqtt-sparkplugB.xreg.json/meta",
