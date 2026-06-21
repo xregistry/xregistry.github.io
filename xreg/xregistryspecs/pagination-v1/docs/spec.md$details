@@ -1,11 +1,11 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2026-06-21T00:35:33.161231103Z",
+  "createdat": "2026-06-21T00:43:09.412628741Z",
   "docid": "spec.md",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "https://xregistry.io/xreg/xregistryspecs/pagination-v1/docs/spec.md/meta",
-  "modifiedat": "2026-06-21T00:35:33.161231103Z",
+  "modifiedat": "2026-06-21T00:43:09.412628741Z",
   "self": "https://xregistry.io/xreg/xregistryspecs/pagination-v1/docs/spec.md",
   "versionid": "v1.0-rc1",
   "versionscount": 1,

@@ -1,10 +1,10 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2026-06-21T00:35:24.999879004Z",
+  "createdat": "2026-06-21T00:43:00.97679963Z",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/mqtt-sparkplugB.xreg.json/meta",
-  "modifiedat": "2026-06-21T00:35:24.999879004Z",
+  "modifiedat": "2026-06-21T00:43:00.97679963Z",
   "sampleid": "mqtt-sparkplugB.xreg.json",
   "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/mqtt-sparkplugB.xreg.json",
   "versionid": "v1.0-rc1",
