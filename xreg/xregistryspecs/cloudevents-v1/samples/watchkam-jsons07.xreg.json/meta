@@ -1,10 +1,10 @@
 {
-  "createdat": "2026-06-20T23:45:09.755459753Z",
+  "createdat": "2026-06-21T00:35:25.208882929Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
   "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/watchkam-jsons07.xreg.json/versions/v1.0-rc1",
   "epoch": 1,
-  "modifiedat": "2026-06-20T23:45:09.755459753Z",
+  "modifiedat": "2026-06-21T00:35:25.208882929Z",
   "readonly": false,
   "sampleid": "watchkam-jsons07.xreg.json",
   "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/watchkam-jsons07.xreg.json/meta",

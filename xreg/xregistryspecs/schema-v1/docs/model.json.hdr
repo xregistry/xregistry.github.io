@@ -3,12 +3,12 @@ content-length:1132
 content-location:https://xregistry.io/xreg/xregistryspecs/schema-v1/docs/model.json/versions/v1.0-rc1
 content-type:text/plain; charset=utf-8
 xregistry-ancestor:v1.0-rc1
-xregistry-createdat:2026-06-20T23:45:17.32293038Z
+xregistry-createdat:2026-06-21T00:35:32.606208571Z
 xregistry-docid:model.json
 xregistry-epoch:1
 xregistry-isdefault:true
 xregistry-metaurl:https://xregistry.io/xreg/xregistryspecs/schema-v1/docs/model.json/meta
-xregistry-modifiedat:2026-06-20T23:45:17.32293038Z
+xregistry-modifiedat:2026-06-21T00:35:32.606208571Z
 xregistry-self:https://xregistry.io/xreg/xregistryspecs/schema-v1/docs/model.json
 xregistry-versionid:v1.0-rc1
 xregistry-versionscount:1

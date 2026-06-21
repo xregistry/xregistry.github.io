@@ -45,7 +45,7 @@
   }
 </style>
 </head>
-<h1 id="schema-registry-service---version-10-rc2">Schema Registry Service - Version 1.0-rc2 <a class="anchor" href="#schema-registry-service---version-10-rc2">🔗</a></h1>
+<h1 id="schema-registry-service---version-10-rc3">Schema Registry Service - Version 1.0-rc3 <a class="anchor" href="#schema-registry-service---version-10-rc3">🔗</a></h1>
 <!-- words: formatvalidated compatibilityvalidated -->
 <!-- words: formatvalidatedreason compatibilityvalidatedreason -->
 <h2 id="abstract">Abstract <a class="anchor" href="#abstract">🔗</a></h2>
@@ -53,8 +53,6 @@
 document format and API <a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html">specification</a>. A Schema Registry
 allows for the storage, management and discovery of schema documents.</p>
 <h2 id="table-of-contents">Table of Contents <a class="anchor" href="#table-of-contents">🔗</a></h2>
-<ul>
-<li><a href="#schema-registry-service---version-10-rc2">Schema Registry Service - Version 1.0-rc2</a>
 <ul>
 <li><a href="#abstract">Abstract</a></li>
 <li><a href="#table-of-contents">Table of Contents</a></li>
@@ -88,8 +86,6 @@ allows for the storage, management and discovery of schema documents.</p>
 <li><a href="#432-xml-schema">4.3.2. XML Schema</a></li>
 <li><a href="#433-apache-avro-schema">4.3.3. Apache Avro Schema</a></li>
 <li><a href="#434-protobuf-schema">4.3.4. Protobuf Schema</a></li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -338,7 +334,7 @@ different formats.</p>
 <p>The follow abbreviated Schema Registry's content shows a single Schema Group
 containing 5 schemas.</p>
 <pre><code class="language-yaml">{
-  &quot;specversion&quot;: &quot;1.0-rc2&quot;,
+  &quot;specversion&quot;: &quot;1.0-rc3&quot;,
   # other xRegistry top-level attributes excluded for brevity
 
   &quot;schemagroupsurl&quot;: &quot;http://example.com/schemagroups&quot;,
@@ -414,7 +410,7 @@ other formats on their own.</p>
 <p>The following abbreviated example shows three embedded <code>Protobuf/3</code> schema
 Versions for a schema named <code>com.example.telemetrydata</code>:</p>
 <pre><code class="language-yaml">{
-  &quot;specversion&quot;: &quot;1.0-rc2&quot;,
+  &quot;specversion&quot;: &quot;1.0-rc3&quot;,
   # other xRegistry top-level attributes excluded for brevity
 
   &quot;schemagroupsurl&quot;: &quot;http://example.com/schemagroups&quot;,

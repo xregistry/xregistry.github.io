@@ -45,7 +45,7 @@
   }
 </style>
 </head>
-<h1 id="xregistry-service---version-10-rc2">xRegistry Service - Version 1.0-rc2 <a class="anchor" href="#xregistry-service---version-10-rc2">🔗</a></h1>
+<h1 id="xregistry-service---version-10-rc3">xRegistry Service - Version 1.0-rc3 <a class="anchor" href="#xregistry-service---version-10-rc3">🔗</a></h1>
 <!-- words: validatecompatibility validateformat strictvalidation matchcase -->
 <!-- words: compat formatvalidated compatibilityvalidated -->
 <!-- words: compat formatvalidatedreason compatibilityvalidatedreason -->
@@ -434,7 +434,7 @@ Alternative serialization formats MAY be defined.</p>
       &quot;id&quot;,? &quot;epoch&quot;,? &quot;modelsource&quot;,? &quot;readonly&quot;? ],
     &quot;pagination&quot;: &lt;BOOLEAN&gt;, ?
     &quot;shortself&quot;: &lt;BOOLEAN&gt;, ?
-    &quot;specversions&quot;: [ &quot;1.0-rc2&quot;, &quot;&lt;STRING&gt;&quot;* ], ?
+    &quot;specversions&quot;: [ &quot;1.0-rc3&quot;, &quot;&lt;STRING&gt;&quot;* ], ?
     &quot;versionmodes&quot;: [ &quot;manual&quot;, &quot;createdat&quot;,? &quot;modifiedat&quot;,? &quot;semver&quot;,?
       &quot;&lt;STRING&gt;&quot;* ], ?
 
@@ -2200,7 +2200,7 @@ in the server serialization of the entities within the Registry (value of
 <code>specversion</code> flag.</li>
 <li>Non-exhaustive list of supported values:
 <ul>
-<li><code>1.0-rc2</code></li>
+<li><code>1.0-rc3</code></li>
 </ul>
 </li>
 <li>When not specified, the default value MUST be the latest version of this
@@ -2391,7 +2391,7 @@ server MUST still include:</p>
   },
   &quot;specversions&quot;: {
     &quot;type&quot;: &quot;array&quot;,
-    &quot;enum&quot;: [ &quot;1.0-rc2&quot; ],
+    &quot;enum&quot;: [ &quot;1.0-rc3&quot; ],
     &quot;item&quot;: {
       &quot;type&quot;: &quot;string&quot;
     }
