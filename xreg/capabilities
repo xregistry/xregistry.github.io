@@ -81,7 +81,7 @@
   "pagination": false,
   "shortself": false,
   "specversions": [
-    "1.0-rc2"
+    "1.0-rc3"
   ],
   "versionmodes": [
     "createdat",

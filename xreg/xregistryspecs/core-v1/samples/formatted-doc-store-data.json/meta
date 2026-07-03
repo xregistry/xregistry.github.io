@@ -1,10 +1,10 @@
 {
-  "createdat": "2026-06-21T01:11:30.997100363Z",
+  "createdat": "2026-07-03T12:05:12.654404131Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
   "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/samples/formatted-doc-store-data.json/versions/v1.0-rc1",
   "epoch": 1,
-  "modifiedat": "2026-06-21T01:11:30.997100363Z",
+  "modifiedat": "2026-07-03T12:05:12.654404131Z",
   "readonly": false,
   "sampleid": "formatted-doc-store-data.json",
   "self": "https://xregistry.io/xreg/xregistryspecs/core-v1/samples/formatted-doc-store-data.json/meta",

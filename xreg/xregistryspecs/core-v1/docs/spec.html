@@ -50,6 +50,7 @@
 <!-- words: compat formatvalidated compatibilityvalidated -->
 <!-- words: compat formatvalidatedreason compatibilityvalidatedreason -->
 <!-- words: matchversions -->
+<!-- words: myarray myobject -->
 <h2 id="abstract">Abstract <a class="anchor" href="#abstract">🔗</a></h2>
 <p>This specification defines an extensible model for managing metadata
 registries. The metadata artifacts can be for any purpose, such as schemas
@@ -111,6 +112,7 @@ Versions</a></li>
 <li><a href="#specversion-flag">SpecVersion Flag</a></li>
 </ul>
 </li>
+<li><a href="#xregistry-dot--notation">xRegistry Dot (<code>.</code>) Notation</a></li>
 <li><a href="#error-processing">Error Processing</a></li>
 </ul>
 <h2 id="overview">Overview <a class="anchor" href="#overview">🔗</a></h2>
@@ -524,7 +526,7 @@ Alternative serialization formats MAY be defined.</p>
   &quot;&lt;GROUPS&gt;url&quot;: &quot;&lt;URL&gt;&quot;,                          # e.g. &quot;endpointsurl&quot;
   &quot;&lt;GROUPS&gt;count&quot;: &lt;UINTEGER&gt;,                     # e.g. &quot;endpointscount&quot;
   &quot;&lt;GROUPS&gt;&quot;: {                                    # Only if inlined
-    &quot;&lt;KEY&gt;&quot;: {                                     # Key=the Group id
+    &quot;&lt;KEY&gt;&quot;: {                                     # Key=the Group ID
       &quot;&lt;GROUP&gt;id&quot;: &quot;&lt;STRING&gt;&quot;,                     # The Group ID
       &quot;self&quot;: &quot;&lt;URL&gt;&quot;,
       &quot;shortself&quot;: &quot;&lt;URL&gt;&quot;, ?
@@ -546,7 +548,7 @@ Alternative serialization formats MAY be defined.</p>
       &quot;constraints&quot;: {
         &quot;&lt;RESOURCES&gt;.&lt;PATH&gt;&quot;: {                # Resource-plural + attr path
           &quot;default&quot;: &lt;VALUE&gt;, ?                # Group specific default
-          &quot;enum&quot;: [ &lt;VALUE&gt; + ], ?             # Allowed subset of values
+          &quot;enum&quot;: [ &lt;VALUE&gt; * ], ?             # Allowed subset of values
           &quot;equals&quot;: &quot;&lt;PATH&gt;&quot; ?                 # Matching Group attribute path
         } *
       }, ?
@@ -555,7 +557,7 @@ Alternative serialization formats MAY be defined.</p>
       &quot;&lt;RESOURCES&gt;url&quot;: &quot;&lt;URL&gt;&quot;,                   # e.g. &quot;messagesurl&quot;
       &quot;&lt;RESOURCES&gt;count&quot;: &lt;UINTEGER&gt;,              # e.g. &quot;messagescount&quot;
       &quot;&lt;RESOURCES&gt;&quot;: {                             # Only if inlined
-        &quot;&lt;KEY&gt;&quot;: {                                 # The Resource id
+        &quot;&lt;KEY&gt;&quot;: {                                 # The Resource ID
           &quot;&lt;RESOURCE&gt;id&quot;: &quot;&lt;STRING&gt;&quot;,
           &quot;versionid&quot;: &quot;&lt;STRING&gt;&quot;,                 # Default Version's ID
           &quot;self&quot;: &quot;&lt;URL&gt;&quot;,                         # Resource URL, not Version
@@ -611,8 +613,8 @@ Alternative serialization formats MAY be defined.</p>
           &quot;versionscount&quot;: &lt;UINTEGER&gt;,
           &quot;versions&quot;: {                            # Only if inlined
             &quot;&lt;KEY&gt;&quot;: {                             # The Version's versionid
-              &quot;&lt;RESOURCE&gt;id&quot;: &quot;&lt;STRING&gt;&quot;,          # The Resource id
-              &quot;versionid&quot;: &quot;&lt;STRING&gt;&quot;,             # The Version id
+              &quot;&lt;RESOURCE&gt;id&quot;: &quot;&lt;STRING&gt;&quot;,          # The Resource ID
+              &quot;versionid&quot;: &quot;&lt;STRING&gt;&quot;,             # The Version ID
               &quot;self&quot;: &quot;&lt;URL&gt;&quot;,                     # Version URL
               &quot;shortself&quot;: &quot;&lt;URL&gt;&quot;, ?
               &quot;xid&quot;: &quot;&lt;XID&gt;&quot;,
@@ -1523,43 +1525,30 @@ on the Resources that exist within it. For example, with this mechanism a
 Group can restrict all Resources within it to only have a subset of the
 allowed values for a particular attribute. This allows for Group instance
 specific restrictions without requiring the creating of new Resource types.</p>
-<p>These restrictions are designed to only allow subsetting of the constraints
-specified by the Resource type model and any Group model
-<a href="./model.html#groupsstringconstraints"><code>constraints</code></a> defined. They can not be
+<p>These restrictions are designed to only allow subsetting of the definitions
+specified by the Resource type model and any Group type model
+<a href="./model.html#groupsstringconstraints"><code>constraints</code></a> defined. They MUST NOT be
 used to extend the allowable values of the attributes being constrained.</p>
 <p>The definition of this map is the same as the Group type
 <a href="./model.html#groupsstringconstraints"><code>constraints</code></a> attribute.</p>
 <p>Any map key value specified here that is the same as a key value included
 in the Group type model's <a href="./model.html#groupsstringconstraints"><code>constraints</code></a>,
 is interpreted as a request to further constrain the Resource attribute
-being referenced. Therefore, the two definitions of the constraints are
-layered (or merged), per the following rules:</p>
+being referenced.</p>
+<p>The two layers of definitions of the constraints are merged such that any
+individual constraint aspect defined at the Group instance level MUST
+override any constraint aspect mentioned at the Group type level. Absence
+of (or <code>null</code> value for) an aspect at the Group instance level MUST NOT
+impact any constraints defined at the Group type level.</p>
+<p>The following further clarifies this merging:</p>
 <ul>
-<li><code>default</code> attribute:
-<ul>
-<li>If present here, it MUST be a valid value within the effective <code>enum</code>
-values per the <code>enum</code> bullet below.</li>
-<li>If not present here, but specified at the Group type level, then the
-value specified at the Group type level, MUST be valid per the effective
-<code>enum</code> values per the <code>enum</code> bullet below.</li>
-</ul>
-</li>
-<li><code>enum</code> attribute:
-<ul>
-<li>If present here and at the Group type level, then the values here MUST
-be a subset of the values specified at the Group type level.</li>
-<li>If not present here, then any <code>enum</code> values specified at the Group type
-level MUST apply.</li>
-</ul>
-</li>
-<li><code>equals</code> attribute:
-<ul>
-<li>If present here and at the Group type level, then the values MUST be
-the exact same.</li>
-<li>If not present here, then any <code>equals</code> value specified at the Group type
-level MUST apply.</li>
-</ul>
-</li>
+<li>If <code>enum</code> is specified at both levels, then the Group instance <code>enum</code> set
+MUST be a subset of the <code>enum</code> defined at the Group type level.</li>
+<li>If the <code>equals</code> aspect is defined in both levels then they MUST be the
+exact same value. And in that situation, specifying it at the Group
+instance level is redundant. For clarity, a Group instance MAY introduce
+an <code>equals</code> aspect for a constraint key defined at the Group type level
+that has no <code>equals</code> aspect.</li>
 </ul>
 </li>
 <li>
@@ -1572,7 +1561,7 @@ level MUST apply.</li>
 <p>Examples:</p>
 <pre><code class="language-yaml">&quot;constraints&quot;: {
   &quot;schemas.format&quot; : {
-    &quot;default&quot;: [ &quot;jsonschema/draft-07&quot; ],
+    &quot;default&quot;: &quot;jsonschema/draft-07&quot;,
     &quot;enum&quot;: [ &quot;avro/1.9&quot;, &quot;jsonschema/draft-07&quot; ],
     &quot;equals&quot;: &quot;format&quot;
   }
@@ -4220,19 +4209,22 @@ expression MUST be returned.</li>
 </code></pre>
 <p>Where:</p>
 <ul>
-<li><code>&lt;PATH&gt;</code> MUST be a dot (<code>.</code>) notation traversal of the Registry to the entity
-of interest, or absent if at the top of the Registry request. Note that
-the <code>&lt;PATH&gt;</code> value is based on the requesting URL and not the root of the
-Registry. See the examples below. To reference an attribute with a dot as
-part of its name, the JSONPath escaping mechanism MUST be used:
-<code>['my.name']</code>. For example, <code>prop1.my.name.prop2</code> would be specified as
-<code>prop1['my.name'].prop2</code> if <code>my.name</code> is the name of one attribute.</li>
+<li><code>&lt;PATH&gt;</code> MUST be a <a href="#xregistry-dot--notation">dot (<code>.</code>) notation</a> traversal
+of the Registry to the entity of interest, or absent if at the top of the
+Registry request. See the
+<a href="#xregistry-dot--notation">xRegistry Dot (<code>.</code>) Notation</a> section for more
+details on the syntax.</li>
+<li>The <code>&lt;PATH&gt;</code> value MUST be based on the requesting URL and not the root of
+the Registry. Meaning, if the URL targets a Group then the <code>&lt;PATH&gt;</code> value
+would be relative to the Group and not the root of the Registry. See the
+examples below.</li>
+<li><code>&lt;ATTRIBUTE&gt;</code> uses dot notation as well. Technically, the filter expression
+is a single dot notation reference, but the <code>&lt;PATH&gt;</code> and <code>&lt;ATTRIBUTE&gt;</code> are
+called out separately here for descriptive purposes.</li>
 <li><code>&lt;PATH&gt;</code> MUST only consist of valid <code>&lt;GROUPS&gt;</code> type names, <code>&lt;RESOURCES&gt;</code>
-type names or <code>versions</code>, otherwise an error
-(<a href="#bad_filter">bad_filter</a>) MUST be generated.</li>
+type names or <code>versions</code>, otherwise an error (<a href="#bad_filter">bad_filter</a>)
+MUST be generated.</li>
 <li><code>&lt;ATTRIBUTE&gt;</code> MUST be the attribute in the entity to be examined.</li>
-<li>Complex attributes (e.g. <code>labels</code>) MUST use dot (<code>.</code>) to reference nested
-attributes. For example: <code>labels.stage=dev</code>.</li>
 <li>A non-<code>null</code> <code>&lt;VALUE&gt;</code> MUST only be used when referencing scalar attributes.</li>
 <li>A reference to a nonexistent attribute SHOULD NOT generate an error and
 SHOULD be treated the same as a non-matching situation. For example, a
@@ -4727,6 +4719,212 @@ backwards compatible.</p>
 <p>However, due to the potential for semantics changes of versions with suffix
 values (e.g. <code>v2.0.0-rc1</code>), the suffix value MUST be part of the comparison
 checking.</p>
+<h2 id="xregistry-dot--notation">xRegistry Dot (<code>.</code>) Notation <a class="anchor" href="#xregistry-dot--notation">🔗</a></h2>
+<p>This specification defines a syntax for referencing entities and attributes
+within the xRegistry metadata. Known as &quot;dot notation&quot;, it borrows some
+of the core aspects of the <a href="https://www.rfc-editor.org/info/rfc9535">JSON Path</a>
+specification.</p>
+<p>The following notation operators are defined:</p>
+<ul>
+<li><code>.NAME</code> : access a property (or key) of an object (or map).</li>
+<li><code>['NAME']</code> : same as previous but <code>NAME</code> contains characters that are not
+to be interpreted as an operator (e.g. <code>.</code>) or it contains just digits and
+is not to be interpreted as an array index.</li>
+<li><code>[&quot;NAME&quot;]</code> : same as previous but with double-quotes (<code>&quot;</code>).</li>
+<li><code>[INTEGER]</code> : access an array index (zero-based).</li>
+</ul>
+<p>Note: due to the serialization of maps and objects (often) being
+indistinguishable, this specification (similar to JSONPath) does not provide
+different syntaxes for traversing each.</p>
+<p>For clarity, use of square brackets (<code>[]</code>) without use of either type of
+quotes around the value MUST be interpreted as accessing an array. Conversely,
+use of quotes MUST be interpreted as accessing an object/map.</p>
+<p><strong>Examples:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Dot Notation</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.name</code></td>
+<td>An attribute (or map key) called <code>name</code></td>
+</tr>
+<tr>
+<td><code>['my.name']</code></td>
+<td>An attribute (or map key) called <code>my.name</code></td>
+</tr>
+<tr>
+<td><code>[2]</code></td>
+<td>The 3rd (zero-based) item in an array</td>
+</tr>
+<tr>
+<td><code>[&quot;birth.date&quot;] </code></td>
+<td>Attribute/key called <code>birth.date</code></td>
+</tr>
+<tr>
+<td><code>[&quot;2&quot;]</code></td>
+<td>An attribute/key called <code>2</code> (a string, not integer)</td>
+</tr>
+<tr>
+<td><code>employee.name</code></td>
+<td><code>name</code> attribute/key in an object/map called <code>employee</code></td>
+</tr>
+<tr>
+<td><code>stack[3]</code></td>
+<td>Element with index 3 (zero-based) in <code>stack</code> array</td>
+</tr>
+<tr>
+<td><code>employee['joe'].addresses[0].state</code></td>
+<td><code>joe</code> attr/key of <code>employee</code>, then the first index of its <code>addresses</code> array, then <code>state</code> attr/key of that address</td>
+</tr>
+</tbody>
+</table>
+<p>Depending on the situation in which the notation is being used, there are
+certain special values that MAY be used, a described in the following sections.</p>
+<h3 id="dot-notation-in-filters">Dot-Notation in Filters <a class="anchor" href="#dot-notation-in-filters">🔗</a></h3>
+<p>When using <a href="#filter-flag">filters</a> the following special values MAY be used:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.*</code></td>
+<td>Match any item in an object/map</td>
+</tr>
+<tr>
+<td><code>[*]</code></td>
+<td>Match any item in an array</td>
+</tr>
+<tr>
+<td><code>[-1]</code></td>
+<td>Match the final item in an array</td>
+</tr>
+</tbody>
+</table>
+<p>Note that <code>['*']</code> is not the same as <code>.*</code>. Rather, <code>['*']</code> is a reference
+to an attribute/key called <code>*</code> - assuming that it is a valid attribute/key
+name in that particular situation.</p>
+<p>Use of <code>-1</code> as a special index in an array does not extend to other negative
+integers. Those MUST generate an error (<a href="#bad_request">bad_request</a>).</p>
+<p><strong>Examples</strong></p>
+<p>Given the following definition of a <code>schemagroup</code> Group type extension:</p>
+<pre><code class="language-yaml">{
+  &quot;info&quot;: {
+    &quot;owner&quot;: &lt;STRING&gt;,
+    &quot;reviewers&quot;: [ &lt;STRING&gt;, * ]                # An array of strings
+    &quot;labels&quot;: { &quot;&lt;STRING&gt;&quot;: &quot;&lt;STRING&gt;&quot; * }, ?   # A map of string -&gt; string
+    &quot;addresses&quot;: {
+      &quot;&lt;STRING&gt;&quot;: {                             # e.g. &quot;home&quot;, &quot;work&quot;
+        &quot;street&quot;: &quot;&lt;STRING&gt;&quot;,
+        &quot;state&quot;: &quot;&lt;STRING&gt;&quot;,
+        &quot;zip&quot;: &quot;&lt;STRING&gt;&quot;
+      } *
+    } *
+  },
+  &quot;age&quot;: &lt;INTEGER&gt;
+}
+</code></pre>
+<ul>
+<li>Find all schemagroups that have an <code>age</code> of <code>5</code>:
+<code>GET /?filter=schemagroups.age=5</code></li>
+<li>Find all schemagroups where <code>owner</code> is <code>joe</code>:
+<code>GET /?filter=schemagroups.info.owner=joe</code></li>
+<li>Find all schemagroups that have a label <code>env</code> set to <code>prod</code>:
+<code>GET /?filter=schemagroups.info.labels.env=prop</code></li>
+<li>Find all schemagroups that have any label with a value of <code>June</code>:
+<code>GET /?filter=schemagroups.info.labels.*=June</code></li>
+<li>Find all schemagroups that have a &quot;reviewers&quot; value of <code>Steve</code>:
+<code>GET /?filter=schemagroups.info.reviewers[*]=Steve</code></li>
+<li>Find all schemagroups that have an &quot;info.address&quot; in <code>CA</code>:
+<code>GET /?filter=schemagroups.info.addresses.*.state=CA</code></li>
+</ul>
+<p>In the above examples, notice that the filter only specified the <code>schemagroups</code>
+collection as part of the hierarchy traversal. From a purist perspective those
+filters really ought to have been written with the <code>*</code> wildcard for the
+matching schemagroups's <code>ID</code>, for example:</p>
+<pre><code class="language-yaml">?filter=schemagroups.*.info.owner
+</code></pre>
+<p>to indicate that we're asking to search over all schemagroups (by ID) in the
+<code>schemagroups</code> collection, and then for each one examine its <code>info.owner</code>
+attribute. However, requiring that extra bit of information in the filter
+would introduce two potential problems:</p>
+<ul>
+<li>It would mandate all users add <code>.*.</code> in almost all filter expressions,
+which could be tedious since in most cases it's expected that people are
+going to search over all items in the xRegistry collection.</li>
+<li>Additionally, if they were interested in just one item in the collection,
+then they would most likely have specified that as part of the request URL.
+For example, <code>GET /schemagroups/mygroup/...</code> - in which case the ID would
+not appear as part of the filter expression at all.</li>
+</ul>
+<p>As a result, when specifying a filter expression that steps between the
+xRegistry hierarchy, the <code>ID</code> portion of the path is excluded. However, this
+does not apply to stepping through the path of objects/maps/arrays defined
+within an xRegistry entity (Group, Resource, Versions). In those cases use
+of the <code>*</code> wildcard would need to be used to indicate &quot;any&quot; items in that set.
+This is demonstrated in the &quot;info.addresses&quot; example above.</p>
+<p>For completeness, to filter based on a schema's name, the request might
+look like:</p>
+<pre><code class="language-yaml">GET /?filter=schemagroups.schemas.name=myschema
+</code></pre>
+<p>would search over all schemagroups, and over all schemas in those groups,
+for ones with a <code>name</code> attribute set to <code>myschema</code>.</p>
+<p>It is worth noting that if the user really does want a certain schemagroup with
+a certain ID (e.g. <code>mygroup</code>), without the request URL path being
+<code>/schemagroups/mygroup</code>, then they can achieve this by using a compound
+filter:</p>
+<pre><code class="language-yaml">GET /?filter=schemagroups.schemas.name=myschema,schemagroups.schemagroupid=mygroup
+</code></pre>
+<p>The <code>,</code> in a single filter expression represents an <code>AND</code> operation.</p>
+<h3 id="additional-special-dot-notation-considerations">Additional Special Dot-Notation Considerations <a class="anchor" href="#additional-special-dot-notation-considerations">🔗</a></h3>
+<p>While not used in this server specification, the following syntax guidelines
+are RECOMMENDED to be used for consistency across xRegistry tooling:</p>
+<ul>
+<li>Insert an item into the middle of an array: <code>[INTEGER:]</code>.
+<ul>
+<li>E.g. <code>set myarray[3:]=mary</code> would be used to insert &quot;mary&quot; at the 4th
+index (zero-based), pushing current index positions 3 (and higher) further
+down in the array.</li>
+<li>If the specified integer value does not exist, then an error MUST be
+generated. Even in the case of <code>0</code> for an empty array.</li>
+</ul>
+</li>
+<li>Insert at the start of an array: <code>[^]</code>.
+<ul>
+<li>E.g. <code>set myarray[^]=mary</code> would insert &quot;mary&quot; at the start of the array,
+and create the array first if it is not yet defined.</li>
+</ul>
+</li>
+<li>Append to the end of an array: <code>[$]</code>.
+<ul>
+<li>E.g. <code>set myarray[$]=mary</code> would append &quot;mary&quot; to the end of the array,
+and create the array first if it is not yet defined.</li>
+</ul>
+</li>
+<li>Specifying an empty object/map: <code>{}</code>.
+<ul>
+<li>E.g. <code>set myobject={}</code> would replace any value for <code>myobject</code> with an
+empty object/map.</li>
+</ul>
+</li>
+<li>Specifying an empty array: <code>[]</code>.
+<ul>
+<li>E.g. <code>set myarray=[]</code> would replace any values in <code>myarray</code> with an empty
+array.</li>
+</ul>
+</li>
+<li>Deleting an item from an array MUST shift all higher indexed items down one
+since this specification does not support sparse arrays. Note, that if the
+intent is to replace that item, rather than doing a delete followed by an
+insert, a direct replacement of that index is RECOMMENDED.</li>
+</ul>
 <h2 id="error-processing">Error Processing <a class="anchor" href="#error-processing">🔗</a></h2>
 <p>If an error occurs during the processing of a request, even if the error was
 during the creation of the response (e.g. an invalid <code>inline</code> value was

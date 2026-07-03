@@ -1,9 +1,9 @@
 {
   "ancestor": "v1.0-rc1",
-  "createdat": "2026-06-21T01:11:24.291794411Z",
+  "createdat": "2026-07-03T12:05:06.460050782Z",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2026-06-21T01:11:24.291794411Z",
+  "modifiedat": "2026-07-03T12:05:06.460050782Z",
   "schemaid": "document-schema.avsc",
   "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/schemas/document-schema.avsc/versions/v1.0-rc1",
   "versionid": "v1.0-rc1",

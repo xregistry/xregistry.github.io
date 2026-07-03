@@ -786,7 +786,7 @@ Content-Type: application/json; charset=utf-8
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;apis&quot;: [
+  &quot;available&quot;: [
     &quot;/capabilities&quot;, &quot;/export&quot;, &quot;/model&quot;, &quot;/modelsource&quot;
   ],
   &quot;flags&quot;: [
@@ -824,7 +824,7 @@ Content-Type: application/json; charset=utf-8
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;apis&quot;: {
+  &quot;available&quot;: {
     &quot;type&quot;: &quot;array&quot;,
     &quot;item&quot;: {
       &quot;type&quot;: &quot;string&quot;
@@ -922,7 +922,7 @@ is completed, even though the response MUST show the requested changes.</p>
 }
 </code></pre>
 <pre><code class="language-yaml">{
-  &quot;apis&quot;: [
+  &quot;available&quot;: [
     &quot;/capabilities&quot;, &quot;/export&quot;, &quot;/model&quot;, &quot;/modelsource&quot;
   ],
   &quot;flags&quot;: [
@@ -1958,7 +1958,7 @@ xRegistry-epoch: 1
 xRegistry-name: Blob Created
 xRegistry-isdefault: true
 xRegistry-ancestor: 1
-Location: https://example.com/endpoints/ep1/messages/msg1/versions/v2
+Location: https://example.com/endpoints/ep1/messages/msg1/versions/2
 Content-Location: https://example.com/endpoints/ep1/messages/msg1/versions/2
 Content-Disposition: msg1
 
@@ -2279,7 +2279,6 @@ Version metadata or to the Version domain-specific document. See
 for more information.</p>
 <p>When <code>$details</code> is used, or the Resource is not configured to have a
 domain-specific document, then a successful response MUST be of the form:</p>
-<p>A successful response MUST be of the form:</p>
 <pre><code class="language-yaml">HTTP/1.1 200 OK
 Content-Type: application/json; charset=utf-8
 
@@ -2295,7 +2294,7 @@ the <code>&lt;RESOURCE&gt;url</code> value if set.</p>
 MUST be of the form:</p>
 <pre><code class="language-yaml">HTTP/1.1 200 OK
 or
-HTTP/1.2 303 See Other
+HTTP/1.1 303 See Other
 Content-Type: &lt;STRING&gt; ?
 xRegistry-&lt;RESOURCE&gt;id: &lt;STRING&gt;
 xRegistry-versionid: &lt;STRING&gt;
