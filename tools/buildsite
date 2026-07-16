@@ -228,6 +228,7 @@ echo "# Verify all hrefs in html files have been modified correctly"
 # Find href (tgt) relative to source (src)
 grep -roPH 'href="\K[^"]+' xreg | \
     grep -v ":http" | \
+    grep -v 'URL$' | \
     grep -v ":#" | \
     sed 's/#.*//' | \
     sort -u | \
