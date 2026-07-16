@@ -131,7 +131,7 @@ detect changes in values.</li>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;now&quot;,
   &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestor&quot;: &quot;1&quot;,
+  &quot;ancestorid&quot;: &quot;1&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -154,7 +154,7 @@ naming algorithm defined in the specification. </li></li>
 <li>Conceptually, this new Version is populated with the Resource's default
 Version attributes from the request. However, since there are none, all
 mandatory attributes are assigned their default values.</li>
-<li>The Version's <code>ancestor</code> value is <code>1</code> (points to itself) because it is the
+<li>The Version's <code>ancestorid</code> value is <code>1</code> (points to itself) because it is the
 root of a hierarchy tree.</li>
 <li>Being the only Version, it is the default Version, and it is not &quot;sticky&quot;.</li>
 <li>Using <code>PATCH</code> instead of <code>PUT</code> will yield the exact same results.</li>
@@ -185,7 +185,7 @@ root of a hierarchy tree.</li>
     &quot;isdefault&quot;: true,
     &quot;createdat&quot;: &quot;now&quot;,
     &quot;modifiedat&quot;: &quot;now&quot;,
-    &quot;ancestor&quot;: &quot;1&quot;,
+    &quot;ancestorid&quot;: &quot;1&quot;,
 
     &quot;meta&quot;: {
       &quot;epoch&quot;: 1,
@@ -234,7 +234,7 @@ the Resource level and within the Version in the <code>versions</code> collectio
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;now&quot;,
   &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestor&quot;: &quot;v1&quot;,
+  &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -248,7 +248,7 @@ the Resource level and within the Version in the <code>versions</code> collectio
       &quot;epoch&quot;: 1,
       &quot;createdat&quot;: &quot;now&quot;,
       &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestor&quot;: &quot;v1&quot;
+      &quot;ancestorid&quot;: &quot;v1&quot;
     },
     &quot;v2&quot;: { see Resource.* attrs }
   }
@@ -262,7 +262,7 @@ the Resource level and within the Version in the <code>versions</code> collectio
 <code>meta.defaultversionid</code> are absent, but <code>versions</code> is not empty, all
 Resource.* attributes are ignored.</li>
 <li>Since all Versions have the same <code>createdat</code> timestamp they are sorted
-alphabetically by their <code>versionid</code> values in order to set their <code>ancestor</code>
+alphabetically by their <code>versionid</code> values in order to set their <code>ancestorid</code>
 attributes.</li>
 <li>Which means <code>v2</code> becomes the newest and therefore the default Version.</li>
 <li>Ancestor order: <code>1</code> &lt;- <code>v1</code> &lt;- <code>v2</code>.</li>
@@ -302,7 +302,7 @@ attributes.</li>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;3030&quot;,
   &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestor&quot;: &quot;v3&quot;,
+  &quot;ancestorid&quot;: &quot;v3&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -316,14 +316,14 @@ attributes.</li>
       &quot;epoch&quot;: 1,
       &quot;createdat&quot;: &quot;2020&quot;,
       &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestor&quot;: &quot;v1&quot;
+      &quot;ancestorid&quot;: &quot;v1&quot;
     },
     &quot;v2&quot;: { see Resource.* attrs },
     &quot;v3&quot;: {
       &quot;epoch&quot;: 1,
       &quot;createdat&quot;: &quot;now&quot;,
       &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestor&quot;: &quot;v1&quot;
+      &quot;ancestorid&quot;: &quot;v1&quot;
     }
   }
 }
@@ -367,7 +367,7 @@ request's <code>versions</code> collection.</li>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;now&quot;,
   &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestor&quot;: &quot;v2&quot;,
+  &quot;ancestorid&quot;: &quot;v2&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -382,13 +382,13 @@ request's <code>versions</code> collection.</li>
       &quot;name&quot;: &quot;foo&quot;,
       &quot;createdat&quot;: &quot;now&quot;,
       &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestor&quot;: &quot;v1&quot;
+      &quot;ancestorid&quot;: &quot;v1&quot;
     },
     &quot;v2&quot;: {
       &quot;epoch&quot;: 1,
       &quot;createdat&quot;: &quot;now&quot;,
       &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestor&quot;: &quot;v1&quot;
+      &quot;ancestorid&quot;: &quot;v1&quot;
     },
     &quot;v3&quot;: { see Resource.* attrs },
   }
@@ -429,7 +429,7 @@ that Resource.* attributes are for <code>v1</code>.</li>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;now&quot;,
   &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestor&quot;: &quot;v1&quot;,
+  &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -479,7 +479,7 @@ attributes will be applied.</li>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;now&quot;,
   &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestor&quot;: &quot;v0&quot;,
+  &quot;ancestorid&quot;: &quot;v0&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -494,13 +494,13 @@ attributes will be applied.</li>
       &quot;name&quot;: &quot;foo&quot;
       &quot;createdat&quot;: &quot;now&quot;,
       &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestor&quot;: &quot;v1&quot;
+      &quot;ancestorid&quot;: &quot;v1&quot;
     },
     &quot;v1&quot;: {
       &quot;epoch&quot;: 1,
       &quot;createdat&quot;: &quot;2020&quot;,
       &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestor&quot;: &quot;v1&quot;
+      &quot;ancestorid&quot;: &quot;v1&quot;
     },
     &quot;v2&quot;: { see Resource.* attrs }
   }
@@ -523,7 +523,7 @@ attributes will be applied.</li>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;2021&quot;,
   &quot;modifiedat&quot;: &quot;2021&quot;,
-  &quot;ancestor&quot;: &quot;v0&quot;,
+  &quot;ancestorid&quot;: &quot;v0&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -564,7 +564,7 @@ attributes will be applied.</li>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;2020&quot;,
   &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestor&quot;: &quot;v0&quot;,
+  &quot;ancestorid&quot;: &quot;v0&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 2,
@@ -579,14 +579,14 @@ attributes will be applied.</li>
       &quot;name&quot;: &quot;foo&quot;,
       &quot;createdat&quot;: &quot;2021&quot;,
       &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestor&quot;: &quot;v1&quot;
+      &quot;ancestorid&quot;: &quot;v1&quot;
     },
     &quot;v1&quot;: { see Resource.* attrs },
     &quot;v2&quot;: { see Resource.* attrs }
       &quot;epoch&quot;: 1,
       &quot;createdat&quot;: &quot;now&quot;,
       &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestor&quot;: &quot;v0&quot;
+      &quot;ancestorid&quot;: &quot;v0&quot;
     }
   }
 }
@@ -637,7 +637,7 @@ Version due to <code>defaultversionsticky</code> being <code>true</code>.</li>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;2020&quot;,
   &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestor&quot;: &quot;v1&quot;,
+  &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -652,14 +652,14 @@ Version due to <code>defaultversionsticky</code> being <code>true</code>.</li>
       &quot;name&quot;: &quot;foo&quot;,
       &quot;createdat&quot;: &quot;2021&quot;,
       &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestor&quot;: &quot;v1&quot;
+      &quot;ancestorid&quot;: &quot;v1&quot;
     },
     &quot;v1&quot;: { see Resource.* attrs }
     &quot;v2&quot;: {
       &quot;epoch&quot;: 1,
       &quot;createdat&quot;: &quot;now&quot;,
       &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestor&quot;: &quot;v0&quot;
+      &quot;ancestorid&quot;: &quot;v0&quot;
     }
   }
 }
@@ -709,7 +709,7 @@ the resulting default Version. This means that in the previous example
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;now&quot;,
   &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestor&quot;: &quot;v0&quot;,
+  &quot;ancestorid&quot;: &quot;v0&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -724,13 +724,13 @@ the resulting default Version. This means that in the previous example
       &quot;name&quot;: &quot;foo&quot;,
       &quot;createdat&quot;: &quot;now&quot;,
       &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestor&quot;: &quot;v1&quot;
+      &quot;ancestorid&quot;: &quot;v1&quot;
     },
     &quot;v1&quot;: {
       &quot;epoch&quot;: 1,
       &quot;createdat&quot;: &quot;2020&quot;,
       &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestor&quot;: &quot;v1&quot;
+      &quot;ancestorid&quot;: &quot;v1&quot;
     },
     &quot;v2&quot;: { see Resource.* attrs }
   }
@@ -776,7 +776,7 @@ resulting default Version due to <code>defaultversionsticky</code> being <code>f
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;2020&quot;,
   &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestor&quot;: &quot;v1&quot;,
+  &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -791,7 +791,7 @@ resulting default Version due to <code>defaultversionsticky</code> being <code>f
       &quot;epoch&quot;: 1,
       &quot;createdat&quot;: &quot;now&quot;,
       &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestor&quot;: &quot;v1&quot;
+      &quot;ancestorid&quot;: &quot;v1&quot;
     }
   }
 }
@@ -814,7 +814,7 @@ be used as the &quot;clue&quot; for the current default Version.</li>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;2025&quot;,
   &quot;modifiedat&quot;: &quot;2025&quot;,
-  &quot;ancestor&quot;: &quot;v1&quot;,
+  &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -827,7 +827,7 @@ be used as the &quot;clue&quot; for the current default Version.</li>
     &quot;v1&quot;: { see Resource.* attrs },
     &quot;v2&quot;: {
       &quot;createdat&quot;: &quot;2025&quot;,
-      &quot;ancestor&quot;: &quot;v1&quot;
+      &quot;ancestorid&quot;: &quot;v1&quot;
     }
   }
 }
@@ -857,7 +857,7 @@ be used as the &quot;clue&quot; for the current default Version.</li>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;2025&quot;,
   &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestor&quot;: &quot;v2&quot;,
+  &quot;ancestorid&quot;: &quot;v2&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 2,
@@ -872,7 +872,7 @@ be used as the &quot;clue&quot; for the current default Version.</li>
       &quot;epoch&quot;: 2,
       &quot;createdat&quot;: &quot;2020&quot;,
       &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestor&quot;: &quot;v2&quot;
+      &quot;ancestorid&quot;: &quot;v2&quot;
     }
   }
 }
@@ -899,7 +899,7 @@ being <code>false</code>.</li>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;2025&quot;,
   &quot;modifiedat&quot;: &quot;2025&quot;,
-  &quot;ancestor&quot;: &quot;v1&quot;,
+  &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -913,7 +913,7 @@ being <code>false</code>.</li>
       &quot;epoch&quot;: 1,
       &quot;createdat&quot;: &quot;2025&quot;,
       &quot;modifiedat&quot;: &quot;2025&quot;,
-      &quot;ancestor&quot;: &quot;v1&quot;
+      &quot;ancestorid&quot;: &quot;v1&quot;
     },
     &quot;v2&quot;: { see Resource.* attrs }
     }
@@ -944,7 +944,7 @@ being <code>false</code>.</li>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;2025&quot;,
   &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestor&quot;: &quot;v2&quot;,
+  &quot;ancestorid&quot;: &quot;v2&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 2,
@@ -959,7 +959,7 @@ being <code>false</code>.</li>
       &quot;epoch&quot;: 2,
       &quot;createdat&quot;: &quot;2020&quot;,
       &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestor&quot;: &quot;v2&quot;
+      &quot;ancestorid&quot;: &quot;v2&quot;
     }
   }
 }
@@ -987,7 +987,7 @@ the next example we'll see how <code>PATCH</code> changes this semantics.</li>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;2025&quot;,
   &quot;modifiedat&quot;: &quot;2025&quot;,
-  &quot;ancestor&quot;: &quot;v1&quot;,
+  &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -1001,7 +1001,7 @@ the next example we'll see how <code>PATCH</code> changes this semantics.</li>
       &quot;epoch&quot;: 1,
       &quot;createdat&quot;: &quot;2025&quot;,
       &quot;modifiedat&quot;: &quot;2025&quot;,
-      &quot;ancestor&quot;: &quot;v1&quot;
+      &quot;ancestorid&quot;: &quot;v1&quot;
     },
     &quot;v2&quot;: { see Resource.* attrs }
     }
@@ -1032,7 +1032,7 @@ the next example we'll see how <code>PATCH</code> changes this semantics.</li>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;2020&quot;,
   &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestor&quot;: &quot;v2&quot;,
+  &quot;ancestorid&quot;: &quot;v2&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 2,
@@ -1046,7 +1046,7 @@ the next example we'll see how <code>PATCH</code> changes this semantics.</li>
       &quot;epoch&quot;: 2,
       &quot;createdat&quot;: &quot;2025&quot;,
       &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestor&quot;: &quot;v2&quot;
+      &quot;ancestorid&quot;: &quot;v2&quot;
     },
     &quot;v2&quot;: { see Resource.* attrs }
   }
@@ -1075,7 +1075,7 @@ current default Version becomes &quot;sticky&quot;.</li>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;2025&quot;,
   &quot;modifiedat&quot;: &quot;2025&quot;,
-  &quot;ancestor&quot;: &quot;v1&quot;,
+  &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -1103,7 +1103,7 @@ current default Version becomes &quot;sticky&quot;.</li>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;2025&quot;,
   &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestor&quot;: &quot;v1&quot;,
+  &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -1136,7 +1136,7 @@ of all attributes.</li>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;2025&quot;,
   &quot;modifiedat&quot;: &quot;2025&quot;,
-  &quot;ancestor&quot;: &quot;v1&quot;,
+  &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -1166,7 +1166,7 @@ of all attributes.</li>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;2025&quot;,
   &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestor&quot;: &quot;v1&quot;,
+  &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -1201,7 +1201,7 @@ current default Version.</li>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;2025&quot;,
   &quot;modifiedat&quot;: &quot;2025&quot;,
-  &quot;ancestor&quot;: &quot;v1&quot;,
+  &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -1232,7 +1232,7 @@ current default Version.</li>
   &quot;description&quot;: &quot;very cool&quot;,
   &quot;createdat&quot;: &quot;2025&quot;,
   &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestor&quot;: &quot;v1&quot;,
+  &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -1266,7 +1266,7 @@ current default Version.</li>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;2025&quot;,
   &quot;modifiedat&quot;: &quot;2025&quot;,
-  &quot;ancestor&quot;: &quot;v1&quot;,
+  &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -1298,7 +1298,7 @@ current default Version.</li>
   &quot;description&quot;: &quot;very cool&quot;,
   &quot;createdat&quot;: &quot;2025&quot;,
   &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestor&quot;: &quot;v1&quot;,
+  &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -1332,7 +1332,7 @@ current default Version.</li>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;2025&quot;,
   &quot;modifiedat&quot;: &quot;2025&quot;,
-  &quot;ancestor&quot;: &quot;v1&quot;,
+  &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -1364,7 +1364,7 @@ current default Version.</li>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;2025&quot;,
   &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestor&quot;: &quot;v1&quot;,
+  &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 2,
@@ -1398,7 +1398,7 @@ Version the calculated default Version remains <code>1</code>.</li>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;2025&quot;,
   &quot;modifiedat&quot;: &quot;2025&quot;,
-  &quot;ancestor&quot;: &quot;v1&quot;,
+  &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -1431,7 +1431,7 @@ Version the calculated default Version remains <code>1</code>.</li>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;2025&quot;,
   &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestor&quot;: &quot;v1&quot;,
+  &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 2,
@@ -1466,7 +1466,7 @@ Version the calculated default Version remains <code>1</code>.</li>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;2025&quot;,
   &quot;modifiedat&quot;: &quot;2025&quot;,
-  &quot;ancestor&quot;: &quot;v1&quot;,
+  &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -1480,7 +1480,7 @@ Version the calculated default Version remains <code>1</code>.</li>
       &quot;epoch&quot;: 1,
       &quot;createdat&quot;: &quot;2025&quot;,
       &quot;modifiedat&quot;: &quot;2025&quot;,
-      &quot;ancestor&quot;: &quot;v1&quot;
+      &quot;ancestorid&quot;: &quot;v1&quot;
     },
     &quot;v2&quot;: { see Resource.* attrs }
   }
@@ -1503,7 +1503,7 @@ Version the calculated default Version remains <code>1</code>.</li>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;2025&quot;,
   &quot;modifiedat&quot;: &quot;2025&quot;,
-  &quot;ancestor&quot;: &quot;v1&quot;,
+  &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 2,
@@ -1518,7 +1518,7 @@ Version the calculated default Version remains <code>1</code>.</li>
       &quot;epoch&quot;: 1,
       &quot;createdat&quot;: &quot;2025&quot;,
       &quot;modifiedat&quot;: &quot;2025&quot;,
-      &quot;ancestor&quot;: &quot;v1&quot;
+      &quot;ancestorid&quot;: &quot;v1&quot;
     }
   }
 }
@@ -1545,7 +1545,7 @@ sticky.</li>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;2025&quot;,
   &quot;modifiedat&quot;: &quot;2025&quot;,
-  &quot;ancestor&quot;: &quot;v1&quot;,
+  &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -1593,7 +1593,7 @@ would have been ignored.</li>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;2025&quot;,
   &quot;modifiedat&quot;: &quot;2025&quot;,
-  &quot;ancestor&quot;: &quot;v1&quot;,
+  &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -1639,7 +1639,7 @@ value of <code>true</code> then <code>defaultversionid</code> would have been ig
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;2025&quot;,
   &quot;modifiedat&quot;: &quot;2025&quot;,
-  &quot;ancestor&quot;: &quot;v1&quot;,
+  &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -1677,7 +1677,7 @@ value of <code>true</code> then <code>defaultversionid</code> would have been ig
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;1999&quot;,
   &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestor&quot;: &quot;v2&quot;,
+  &quot;ancestorid&quot;: &quot;v2&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 2,
@@ -1692,7 +1692,7 @@ value of <code>true</code> then <code>defaultversionid</code> would have been ig
        &quot;epoch&quot;: 1,
        &quot;createdat&quot;: &quot;1998&quot;,
        &quot;modifiedat&quot;: &quot;now&quot;,
-       &quot;ancestor&quot;: &quot;v2&quot;
+       &quot;ancestorid&quot;: &quot;v2&quot;
      }
   }
 }
@@ -1736,7 +1736,7 @@ a newer <code>createdat</code> value. And it is now sticky per the request.</li>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;now&quot;,
   &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestor&quot;: &quot;v1&quot;,
+  &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -1751,7 +1751,7 @@ a newer <code>createdat</code> value. And it is now sticky per the request.</li>
       &quot;name&quot;: &quot;abc&quot;,
       &quot;createdat&quot;: &quot;now&quot;,
       &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestor&quot;: &quot;v1&quot;
+      &quot;ancestorid&quot;: &quot;v1&quot;
     },
     &quot;v2&quot;: { see Resource.* attrs }
   }
@@ -1791,7 +1791,7 @@ a newer <code>createdat</code> value. And it is now sticky per the request.</li>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;now&quot;,
   &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestor&quot;: &quot;v1&quot;,
+  &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -1806,7 +1806,7 @@ a newer <code>createdat</code> value. And it is now sticky per the request.</li>
       &quot;name&quot;: &quot;abc&quot;,
       &quot;createdat&quot;: &quot;now&quot;,
       &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestor&quot;: &quot;v1&quot;
+      &quot;ancestorid&quot;: &quot;v1&quot;
     },
     &quot;v2&quot;: { see Resource.* attrs }
   }
@@ -1848,7 +1848,7 @@ calculating the default Version because <code>meta.defaultversionsticky</code> i
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;now&quot;,
   &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestor&quot;: &quot;v1&quot;,
+  &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -1863,7 +1863,7 @@ calculating the default Version because <code>meta.defaultversionsticky</code> i
       &quot;name&quot;: &quot;abc&quot;,
       &quot;createdat&quot;: &quot;now&quot;,
       &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestor&quot;: &quot;v1&quot;
+      &quot;ancestorid&quot;: &quot;v1&quot;
     },
     &quot;v2&quot;: { see Resource.* attrs }
   }
@@ -1899,7 +1899,7 @@ calculating the default Version because <code>meta.defaultversionsticky</code> i
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;now&quot;,
   &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestor&quot;: &quot;v1&quot;,
+  &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -1914,7 +1914,7 @@ calculating the default Version because <code>meta.defaultversionsticky</code> i
       &quot;epoch&quot;: 1,
       &quot;createdat&quot;: &quot;now&quot;,
       &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestor&quot;: &quot;v1&quot;
+      &quot;ancestorid&quot;: &quot;v1&quot;
     },
   }
 }
@@ -1948,7 +1948,7 @@ calculating the default Version because <code>meta.defaultversionsticky</code> i
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;now&quot;,
   &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestor&quot;: &quot;v1&quot;,
+  &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;meta&quot;: {
     &quot;epoch&quot;: 1,
@@ -1963,7 +1963,7 @@ calculating the default Version because <code>meta.defaultversionsticky</code> i
       &quot;epoch&quot;: 1,
       &quot;createdat&quot;: &quot;now&quot;,
       &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestor&quot;: &quot;v1&quot;
+      &quot;ancestorid&quot;: &quot;v1&quot;
     },
   }
 }

@@ -155,8 +155,8 @@ will be mapped to those protocols.</p>
       &quot;modelversion&quot;: &quot;&lt;STRING&gt;&quot;, ?      # Version of the group model
       &quot;modelcompatiblewith&quot;: &quot;&lt;URI&gt;&quot;, ?  # Statement of compatibility
       &quot;attributes&quot;: { ... }, ?           # See &quot;attributes&quot; above
-      &quot;ximportresources&quot;: [ &quot;&lt;XIDTYPE&gt;&quot;, * ], ?   # Include these Resources
-
+      &quot;ximportresources&quot;: [ &quot;&lt;XIDTYPE&gt;&quot;, * ], ?   # Include these Resources,
+                                                  # only for &quot;modelsource&quot;
       &quot;constraints&quot;: {
         &quot;&lt;RESOURCES&gt;.&lt;PATH&gt;&quot;: {          # Resource-plural + attribute path
           &quot;default&quot;: &lt;VALUE&gt;, ?          # Group specific default
@@ -178,7 +178,7 @@ will be mapped to those protocols.</p>
           &quot;maxversions&quot;: &lt;UINTEGER&gt;, ?   # Num Vers(&gt;=0). Default=0, 0=unlimited
           &quot;setversionid&quot;: &lt;BOOLEAN&gt;, ?   # vid settable? Default=true
           &quot;hasdocument&quot;: &lt;BOOLEAN&gt;, ?       # Has separate document. Default=true
-          &quot;versionmode&quot;: &quot;&lt;STRING&gt;&quot;, ?      # 'ancestor' processing algorithm
+          &quot;versionmode&quot;: &quot;&lt;STRING&gt;&quot;, ?      # Ancestor processing algorithm
           &quot;singleversionroot&quot;: &lt;BOOLEAN&gt;, ? # Enforce single root. Default=false
           &quot;validateformat&quot;: &lt;BOOLEAN&gt;, ?    # Do Version format checks. Default=false
           &quot;validatecompatibility&quot;: &lt;BOOLEAN&gt;, ? # Do Version compat checks. Default=false
@@ -193,6 +193,9 @@ will be mapped to those protocols.</p>
   } ?
 }
 </code></pre>
+<p>See the <a href="#includes-in-the-xregistry-model-data">Includes in the xRegistry Model
+Data</a> section for use of the
+<code>$include(s)</code> directives in <code>modelsource</code>.</p>
 <p>The following describes the attributes of the Registry model:</p>
 <h3 id="description"><code>description</code> <a class="anchor" href="#description">🔗</a></h3>
 <ul>
@@ -941,7 +944,7 @@ are managed with respect to aspects such as:
 <ul>
 <li>Which Version is the &quot;newest&quot;?</li>
 <li>Which Version is the &quot;oldest&quot;?</li>
-<li>How a Version's <code>ancestor</code> attribute will be populated when not
+<li>How a Version's <code>ancestorid</code> attribute will be populated when not
 explicitly set by a client.</li>
 </ul>
 </li>
@@ -949,11 +952,11 @@ explicitly set by a client.</li>
 additional aspects that they control, as long as those aspects do not
 conflict with specification-defined semantics.</li>
 <li>Regardless of the algorithm used, implementations MUST ensure that
-the <code>ancestor</code> attribute of all Versions of a Resource accurately
+the <code>ancestorid</code> attribute of all Versions of a Resource accurately
 represent the relationship of the Versions prior to the completion of
 any operation. For example, when the <code>createdat</code> algorithm is used and
 the <code>createdat</code> timestamp of a Version is modified, this might cause a
-reordering of the Versions and the <code>ancestor</code> attributes might need to
+reordering of the Versions and the <code>ancestorid</code> attributes might need to
 be changed accordingly. Similarly, the <code>defaultversionid</code> of the
 Resource might change if its <code>defaultversionsticky</code> attribute is <code>false</code>.</li>
 <li>When not specified, the default value MUST be <code>manual</code>.</li>
@@ -970,20 +973,20 @@ finding the one with the newest <code>createdat</code> timestamp. If there is
 more than one, then the one with the highest alphabetically
 case-insensitive <code>versionid</code> value MUST be chosen.</li>
 <li>Oldest Version: MUST be determined by finding all root Versions (ones
-that have an <code>ancestor</code> value that points to itself), then finding
+that have an <code>ancestorid</code> value that points to itself), then finding
 the one with the oldest <code>createdat</code> timestamp. If there is more than
 one, then the one with the lowest alphabetically case-insensitive
 <code>versionid</code> MUST be chosen.</li>
 <li>Ancestor Processing: typically provided by clients. During a &quot;create&quot;
-operation, all Versions that do not have an <code>ancestor</code> value
+operation, all Versions that do not have an <code>ancestorid</code> value
 provided MUST be sorted/processed by <code>versionid</code> (in case-insensitive
-ascending order) and the <code>ancestor</code> value of each MUST be set to the
+ascending order) and the <code>ancestorid</code> value of each MUST be set to the
 current &quot;newest version&quot; per the above semantics. Note that as
 each new Version is created, it MUST become the &quot;newest&quot;. If there
 is no existing Version then the new Version becomes a root and its
-<code>ancestor</code> value MUST be its <code>versionid</code> attribute value.</li>
+<code>ancestorid</code> value MUST be its <code>versionid</code> attribute value.</li>
 <li>Deleted Ancestor: if a Version's ancestor is deleted, then this Version
-MUST become a root, and its <code>ancestor</code> value MUST be set to its
+MUST become a root, and its <code>ancestorid</code> value MUST be set to its
 <code>versionid</code> value.</li>
 </ul>
 </li>
@@ -999,15 +1002,15 @@ oldest <code>createdat</code> timestamp. If there is more than one, then the
 one with the lowest alphabetically case-insensitive <code>versionid</code>
 value MUST be chosen. Note that this MUST also be the one and only
 &quot;root&quot; Version.</li>
-<li>Ancestor Processing: The <code>ancestor</code> value of each Version MUST be
+<li>Ancestor Processing: The <code>ancestorid</code> value of each Version MUST be
 determined via examination of the <code>createdat</code> timestamp of each
 Version and the Versions sorted in ascending order, where the first
-one will be the &quot;root&quot; (oldest) Version and its <code>ancestor</code> value
+one will be the &quot;root&quot; (oldest) Version and its <code>ancestorid</code> value
 MUST be its <code>versionid</code>. If there is more than one Version with the
 same <code>createdat</code> timestamp then those MUST be ordered in ascending
 case-insensitive ordered based on their <code>versionid</code> values.</li>
 <li>Deleted Ancestor: if a Version's ancestor is deleted, then this Version's
-<code>ancestor</code> value MUST be determined by the &quot;ancestor processing&quot; logic
+<code>ancestorid</code> value MUST be determined by the &quot;ancestor processing&quot; logic
 as stated above.</li>
 <li>When this <code>versionmode</code> is used, the <code>singleversionroot</code> aspect
 MUST be set to <code>true</code>.</li>
@@ -1031,13 +1034,13 @@ specification's &quot;precedence&quot; ordering rules.</li>
 value per the <a href="https://semver.org/">Semantic Versioning</a>
 specification's &quot;precedence&quot; ordering rules. Note that this MUST also
 be the one and only &quot;root&quot; Version.</li>
-<li>Ancestor Processing: The <code>ancestor</code> value of each Version MUST either
+<li>Ancestor Processing: The <code>ancestorid</code> value of each Version MUST either
 be its <code>versionid</code> value (if it it the oldest Version), or the
 <code>versionid</code> of the next oldest Version per the
 <a href="https://semver.org/">Semantic Versioning</a> specification's
 &quot;precedence&quot; ordering rules.</li>
 <li>Deleted Ancestor: if a Version's ancestor is deleted, then this Version's
-<code>ancestor</code> value MUST be determined by the &quot;ancestor processing&quot; logic
+<code>ancestorid</code> value MUST be determined by the &quot;ancestor processing&quot; logic
 as stated above.</li>
 <li>When this <code>versionmode</code> is used, the <code>singleversionroot</code> aspect
 MUST be set to <code>true</code>.</li>
@@ -1052,7 +1055,7 @@ MUST be set to <code>true</code>.</li>
 <li>OPTIONAL.</li>
 <li>Indicates whether Resources of this type can have multiple Versions
 that represent roots of an ancestor tree, as indicated by the
-Version's <code>ancestor</code> attribute value being the same as its <code>versionid</code>
+Version's <code>ancestorid</code> attribute value being the same as its <code>versionid</code>
 attribute.</li>
 <li>When not specified, the default value MUST be <code>false</code>.</li>
 <li>A value of <code>true</code> indicates that only one Version of the Resource can
@@ -1460,6 +1463,12 @@ MUST NOT result in a circular import chain.</li>
 <p>Locally defined Resources MAY be defined within a Group that uses the
 <code>ximportresources</code> feature, however, Resource <code>plural</code> and <code>singular</code> values
 MUST be unique across all imported and locally defined Resources.</p>
+<p>This attribute, while listed in the schema definition of <code>model</code>, and
+<code>modelsource</code> for ease of reading the specification, is only available for
+<code>modelsource</code>. Similar to the <code>$include</code> directive, servers MUST process any
+<code>ximportresources</code> found in the <code>modelsource</code> data and the results MUST be
+reflected in the <code>model</code>, but the <code>ximportresources</code> directive MUST NOT appear
+in the <code>model</code> serialization.</p>
 <p>See <a href="./spec.html#cross-referencing-resources">Cross Referencing Resources</a> for
 more additional information.</p>
 <h3 id="includes-in-the-xregistry-model-data">Includes in the xRegistry Model Data <a class="anchor" href="#includes-in-the-xregistry-model-data">🔗</a></h3>

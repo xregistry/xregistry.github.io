@@ -288,7 +288,7 @@ this form:</p>
           &quot;labels&quot;: { &quot;&lt;STRING&gt;&quot;: &quot;&lt;STRING&gt;&quot; * }, ?
           &quot;createdat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
           &quot;modifiedat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
-          &quot;ancestor&quot;: &quot;&lt;STRING&gt;&quot;,
+          &quot;ancestorid&quot;: &quot;&lt;STRING&gt;&quot;,
           &quot;contenttype&quot;: &quot;&lt;STRING&gt;&quot;, ?
           &quot;format&quot;: &quot;&lt;STRING&gt;&quot;, ?
           &quot;formatvalidated&quot;: &lt;BOOLEAN&gt;, ?
@@ -387,10 +387,10 @@ major version identifier in the <code>schemaid</code>, like <code>&quot;com.exam
 <code>&quot;com.example.event.2024-02&quot;</code>, so that incompatible, but historically related
 schemas can be more easily identified by users and developers. The schema
 <code>versionid</code> then functions as the semantic minor version identifier.</p>
-<p>The <a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html#ancestor-attribute"><code>ancestor</code></a> attribute permits multiple version branches
-to exist, and allows for implementations to determine the Version lineage. See
-the <a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html#ancestor-attribute"><code>ancestor</code></a> attribute in the core xRegistry
-specification for more information.</p>
+<p>The <a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html#ancestorid-attribute"><code>ancestorid</code></a> attribute permits multiple version
+branches to exist, and allows for implementations to determine the Version
+lineage. See the <a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html#ancestorid-attribute"><code>ancestorid</code></a> attribute in the core
+xRegistry specification for more information.</p>
 <h3 id="43-schema-formats">4.3. Schema Formats <a class="anchor" href="#43-schema-formats">🔗</a></h3>
 <p>This specification further refines the
 <a href="./../../core-v1/docs/spec.html#format-attribute">core specification's <code>format</code></a> for use
@@ -428,7 +428,7 @@ Versions for a schema named <code>com.example.telemetrydata</code>:</p>
           &quot;versionid&quot;: &quot;3&quot;,
           &quot;isdefault&quot;: true,
           &quot;description&quot;: &quot;device telemetry event data&quot;,
-          &quot;ancestor&quot;: &quot;2&quot;,
+          &quot;ancestorid&quot;: &quot;2&quot;,
           &quot;format&quot;: &quot;Protobuf/3&quot;,
           # other xRegistry default Version attributes excluded for brevity
 
@@ -443,7 +443,7 @@ Versions for a schema named <code>com.example.telemetrydata</code>:</p>
               &quot;versionid&quot;: &quot;1&quot;,
               &quot;isdefault&quot;: false,
               &quot;description&quot;: &quot;device telemetry event data&quot;,
-              &quot;ancestor&quot;: &quot;1&quot;,
+              &quot;ancestorid&quot;: &quot;1&quot;,
               &quot;format&quot;: &quot;Protobuf/3&quot;,
               # other xRegistry Version-level attributes excluded for brevity
 
@@ -454,7 +454,7 @@ Versions for a schema named <code>com.example.telemetrydata</code>:</p>
               &quot;versionid&quot;: &quot;2&quot;,
               &quot;isdefault&quot;: false,
               &quot;description&quot;: &quot;device telemetry event data&quot;,
-              &quot;ancestor&quot;: &quot;1&quot;,
+              &quot;ancestorid&quot;: &quot;1&quot;,
               &quot;format&quot;: &quot;Protobuf/3&quot;,
               # other xRegistry Version-level attributes excluded for brevity
 
@@ -465,7 +465,7 @@ Versions for a schema named <code>com.example.telemetrydata</code>:</p>
               &quot;versionid&quot;: &quot;3&quot;,
               &quot;isdefault&quot;: true,
               &quot;description&quot;: &quot;device telemetry event data&quot;,
-              &quot;ancestor&quot;: &quot;2&quot;,
+              &quot;ancestorid&quot;: &quot;2&quot;,
               &quot;format&quot;: &quot;Protobuf/3&quot;,
               # other xRegistry Version-level attributes excluded for brevity
 

@@ -1,13 +1,13 @@
 content-disposition:sample-model-full.json
 content-location:https://xregistry.io/xreg/xregistryspecs/core-v1/docs/sample-model-full.json/versions/v1.0-rc1
 content-type:text/plain; charset=utf-8
-xregistry-ancestor:v1.0-rc1
-xregistry-createdat:2026-07-03T12:05:08.453720354Z
+xregistry-ancestorid:v1.0-rc1
+xregistry-createdat:2026-07-16T18:23:15.881685518Z
 xregistry-docid:sample-model-full.json
 xregistry-epoch:1
 xregistry-isdefault:true
 xregistry-metaurl:https://xregistry.io/xreg/xregistryspecs/core-v1/docs/sample-model-full.json/meta
-xregistry-modifiedat:2026-07-03T12:05:08.453720354Z
+xregistry-modifiedat:2026-07-16T18:23:15.881685518Z
 xregistry-self:https://xregistry.io/xreg/xregistryspecs/core-v1/docs/sample-model-full.json
 xregistry-versionid:v1.0-rc1
 xregistry-versionscount:1

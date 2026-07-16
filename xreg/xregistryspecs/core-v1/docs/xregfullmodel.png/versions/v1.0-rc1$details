@@ -1,10 +1,10 @@
 {
-  "ancestor": "v1.0-rc1",
-  "createdat": "2026-07-03T12:05:12.36751945Z",
+  "ancestorid": "v1.0-rc1",
+  "createdat": "2026-07-16T18:23:19.899272406Z",
   "docid": "xregfullmodel.png",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2026-07-03T12:05:12.36751945Z",
+  "modifiedat": "2026-07-16T18:23:19.899272406Z",
   "self": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/xregfullmodel.png/versions/v1.0-rc1",
   "versionid": "v1.0-rc1",
   "xid": "/xregistryspecs/core-v1/docs/xregfullmodel.png/versions/v1.0-rc1"

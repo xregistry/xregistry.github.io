@@ -51,6 +51,7 @@
 <!-- words: compat formatvalidatedreason compatibilityvalidatedreason -->
 <!-- words: matchversions -->
 <!-- words: myarray myobject -->
+<!-- words: href schemaregistry webpage -->
 <h2 id="abstract">Abstract <a class="anchor" href="#abstract">🔗</a></h2>
 <p>This specification defines an extensible model for managing metadata
 registries. The metadata artifacts can be for any purpose, such as schemas
@@ -113,6 +114,7 @@ Versions</a></li>
 </ul>
 </li>
 <li><a href="#xregistry-dot--notation">xRegistry Dot (<code>.</code>) Notation</a></li>
+<li><a href="#xregistry-discovery">xRegistry Discovery</a></li>
 <li><a href="#error-processing">Error Processing</a></li>
 </ul>
 <h2 id="overview">Overview <a class="anchor" href="#overview">🔗</a></h2>
@@ -292,7 +294,9 @@ results?</li>
 <li>The domain-specific <a href="./model.html#registry-model">&quot;model&quot;</a> that defines the
 types of entities being managed by the Registry. For example, the model
 might define a Group called <code>schemagroups</code> that has <code>schemas</code> as the
-Resources within those Groups.</li>
+Resources within those Groups. All xRegistry protocol specifications
+(e.g. <code>http</code>(./http.md) MUST define at least one REQUIRED mechanism by
+which the model can be retrieved.</li>
 </ul>
 <h3 id="design-group-entity">Design: Group Entity <a class="anchor" href="#design-group-entity">🔗</a></h3>
 <p>Below the Registry, Groups serve as logical collections of related Resources.
@@ -305,7 +309,7 @@ as an example).</p>
 <p>A Resource entity in the Registry holds one or more Versions of metadata, and
 optionally a domain-specific document. If a Resource holds multiple Versions,
 those can be organized with
-<a href="#compatibility-attribute">compatibility policies</a> and<a href="#ancestor-attribute">
+<a href="#compatibility-attribute">compatibility policies</a> and<a href="#ancestorid-attribute">
 lineage</a>. Each Resource
 always has a default Version corresponding to one of the available Versions
 that is indirectly accessed when interacting with the Resource. All held
@@ -491,8 +495,8 @@ Alternative serialization formats MAY be defined.</p>
         &quot;modelversion&quot;: &quot;&lt;STRING&gt;&quot;, ?     # Version of the group model
         &quot;modelcompatiblewith&quot;: &quot;&lt;URI&gt;&quot;, ? # Statement of compatibility
         &quot;attributes&quot;: { ... }, ?          # Group-level attributes/extensions
-        &quot;ximportresources&quot;: [ &quot;&lt;XIDTYPE&gt;&quot;, * ], ?   # Include these Resources
-
+        &quot;ximportresources&quot;: [ &quot;&lt;XIDTYPE&gt;&quot;, * ], ?   # Include these Resources,
+                                                    # only for &quot;modelsource&quot;
         &quot;resources&quot;: {
           &quot;&lt;STRING&gt;&quot;: {                   # Key=plural name, e.g. &quot;messages&quot;
             &quot;plural&quot;: &quot;&lt;STRING&gt;&quot;,         # e.g. &quot;messages&quot;
@@ -506,7 +510,7 @@ Alternative serialization formats MAY be defined.</p>
             &quot;maxversions&quot;: &lt;UINTEGER&gt;, ?  # Num Vers(&gt;=0). Default=0(unlimited)
             &quot;setversionid&quot;: &lt;BOOLEAN&gt;, ?  # vid settable? Default=true
             &quot;hasdocument&quot;: &lt;BOOLEAN&gt;, ?   # Has separate document. Default=true
-            &quot;versionmode&quot;: &quot;&lt;STRING&gt;&quot;, ?  # 'ancestor' processing algorithm
+            &quot;versionmode&quot;: &quot;&lt;STRING&gt;&quot;, ?  # Ancestor processing algorithm
             &quot;singleversionroot&quot;: &lt;BOOLEAN&gt;, ? # Default=false&quot;
             &quot;validateformat&quot;: &lt;BOOLEAN&gt;, ?    # Check version format compliance. Default=false
             &quot;validatecompatibility&quot;: &lt;BOOLEAN&gt;, ? # Check version compatibility. Default=false
@@ -572,7 +576,7 @@ Alternative serialization formats MAY be defined.</p>
           &quot;labels&quot;: { &quot;&lt;STRING&gt;&quot;: &quot;&lt;STRING&gt;&quot; * }, ?
           &quot;createdat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
           &quot;modifiedat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
-          &quot;ancestor&quot;: &quot;&lt;STRING&gt;&quot;,                  # Ancestor's versionid
+          &quot;ancestorid&quot;: &quot;&lt;STRING&gt;&quot;,                # Ancestor's versionid
           &quot;contenttype&quot;: &quot;&lt;STRING&gt;&quot;, ?             # Add default Ver extensions
           &quot;format&quot;: &quot;&lt;STRING&gt;&quot;, ?
           &quot;formatvalidated&quot;: &lt;BOOLEAN&gt;, ?
@@ -627,7 +631,7 @@ Alternative serialization formats MAY be defined.</p>
               &quot;labels&quot;: { &quot;&lt;STRING&gt;&quot;: &quot;&lt;STRING&gt;&quot; * }, ? # Version's labels
               &quot;createdat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
               &quot;modifiedat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
-              &quot;ancestor&quot;: &quot;&lt;STRING&gt;&quot;,              # Ancestor's versionid
+              &quot;ancestorid&quot;: &quot;&lt;STRING&gt;&quot;,            # Ancestor's versionid
               &quot;contenttype&quot;: &quot;&lt;STRING&gt;&quot;, ?
               &quot;format&quot;: &quot;&lt;STRING&gt;&quot;, ?
               &quot;formatvalidated&quot;: &lt;BOOLEAN&gt;, ?
@@ -646,6 +650,9 @@ Alternative serialization formats MAY be defined.</p>
   } ?
 }
 </code></pre>
+<p>See the <a href="./model.html#includes-in-the-xregistry-model-data">Includes in the xRegistry Model
+Data</a>
+section for use of the <code>$include(s)</code> directives in <code>modelsource</code>.</p>
 <p>If there is an issue with reading or parsing the data provided to the
 server, then an error (<a href="#parsing_data">parsing_data</a>) MUST be generated.</p>
 <h3 id="design-data-retrieval-issues">Design: Data Retrieval Issues <a class="anchor" href="#design-data-retrieval-issues">🔗</a></h3>
@@ -2547,7 +2554,7 @@ it MUST adhere to the following:</p>
   &quot;labels&quot;: { &quot;&lt;STRING&gt;&quot;: &quot;&lt;STRING&gt;&quot; * }, ?
   &quot;createdat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
   &quot;modifiedat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
-  &quot;ancestor&quot;: &quot;&lt;STRING&gt;&quot;,
+  &quot;ancestorid&quot;: &quot;&lt;STRING&gt;&quot;,
   &quot;contenttype&quot;: &quot;&lt;STRING&gt;&quot;, ?
 
   &quot;&lt;RESOURCE&gt;url&quot;: &quot;&lt;URL&gt;&quot;, ?                # If not local
@@ -2743,7 +2750,7 @@ JSON serialization:</p>
 <li>Process the Versions in the <code>versions</code> collection, if present.</li>
 <li>Process the Resource's default Version attributes only if the default
 Version is not present in the <code>versions</code> collection.</li>
-<li>Update all Version's <a href="#ancestor-attribute"><code>ancestor</code> values</a> as needed,
+<li>Update all Version's <a href="#ancestorid-attribute"><code>ancestorid</code> values</a> as needed,
 based on the Resource's
 <a href="./model.html#groupsstringresourcesstringversionmode"><code>versionmode</code></a> value.</li>
 <li>Process the <code>meta</code> sub-object, if present.</li>
@@ -2755,7 +2762,7 @@ checks</a>.</li>
 <li>Enforce the <a href="#compatibility-attribute">Version compatibility checks</a>.</li>
 <li>Enforce the <a href="./model.html#groupsstringresourcesstringmaxversions">Resource <code>maxversions</code>
 constraints</a>. Note that
-this might require updating the <a href="#ancestor-attribute"><code>ancestor</code> values</a>
+this might require updating the <a href="#ancestorid-attribute"><code>ancestorid</code> values</a>
 again after some Versions have been deleted.</li>
 </ol>
 <p>The following provides additional details:</p>
@@ -2882,7 +2889,7 @@ locally defined.</p>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;2024-01-01-T12:00:00Z&quot;,
   &quot;modifiedat&quot;: &quot;2024-01-01-T12:01:00Z&quot;,
-  &quot;ancestor&quot;: &quot;v1&quot;,
+  &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;metaurl&quot;: &quot;http://example.com/schemagroups/group2/schemas/sharedSchema/meta&quot;,
   &quot;versionscount&quot;: 1,
@@ -2899,7 +2906,7 @@ locally defined.</p>
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;2024-01-01-T12:00:00Z&quot;,
   &quot;modifiedat&quot;: &quot;2024-01-01-T12:01:00Z&quot;,
-  &quot;ancestor&quot;: &quot;v1&quot;,
+  &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;metaurl&quot;: &quot;http://example.com/schemagroups/group1/schemas/mySchema/meta&quot;,
   &quot;meta&quot;: {
@@ -3133,7 +3140,7 @@ unchanged.</li>
 <p>Description: States that Versions of this Resource adhere to a certain
 compatibility rule. For example, a <code>backward</code> compatibility value would
 indicate that all Versions of a Resource are backwards compatible with the
-next oldest Version, as determined by their <code>ancestor</code> attributes.</p>
+next oldest Version, as determined by their <code>ancestorid</code> attributes.</p>
 <p>This specification makes no statement as to which parts of the Version data
 are examined for compatibility (e.g. xRegistry metadata, domain-specific
 document, etc.). This will be defined by the compatibility rules defined by
@@ -3145,7 +3152,7 @@ However, domain-specific specifications are expected to modify the
 <code>compatibility</code> enum values defined in the Resource's model to limit the
 list of available values and to define the exact meaning of each.</p>
 <p>For <code>compatibility</code> strategies that require understanding the lineage
-relationship between the Versions, the <a href="#ancestor-attribute"><code>ancestor</code></a>
+relationship between the Versions, the <a href="#ancestorid-attribute"><code>ancestorid</code></a>
 attribute on each Version MUST be used to determine that information.</p>
 <p>This specification defines the following enumeration values. Implementations
 MAY choose to extend this list, or use a subset of it.</p>
@@ -3370,7 +3377,7 @@ following:</p>
   &quot;labels&quot;: { &quot;&lt;STRING&gt;&quot;: &quot;&lt;STRING&gt;&quot; * }, ?
   &quot;createdat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
   &quot;modifiedat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
-  &quot;ancestor&quot;: &quot;&lt;STRING&gt;&quot;,
+  &quot;ancestorid&quot;: &quot;&lt;STRING&gt;&quot;,
   &quot;contenttype&quot;: &quot;&lt;STRING&gt;&quot;, ?
 
   &quot;&lt;RESOURCE&gt;url&quot;: &quot;&lt;URL&gt;&quot;, ?                  # If not local
@@ -3469,14 +3476,14 @@ information about this attribute.</p>
 </ul>
 </li>
 </ul>
-<h4 id="ancestor-attribute"><code>ancestor</code> Attribute <a class="anchor" href="#ancestor-attribute">🔗</a></h4>
+<h4 id="ancestorid-attribute"><code>ancestorid</code> Attribute <a class="anchor" href="#ancestorid-attribute">🔗</a></h4>
 <ul>
 <li>
 <p>Type: String</p>
 </li>
 <li>
 <p>Description: The <code>versionid</code> of this Version's ancestor.</p>
-<p>The <code>ancestor</code> attribute MUST be set to the <code>versionid</code> of this Version's
+<p>The <code>ancestorid</code> attribute MUST be set to the <code>versionid</code> of this Version's
 ancestor. If this Version is a root of an ancestor hierarchy tree then it
 MUST be set to its own <code>versionid</code> value.</p>
 <p>See the Resource's
@@ -3484,14 +3491,14 @@ MUST be set to its own <code>versionid</code> value.</p>
 aspect for more information on how this attribute value can be populated.</p>
 <p>If a create operation asks the server to choose the <code>versionid</code> when
 creating a root Version, the <code>versionid</code> is not yet known and therefore
-cannot be specified in the <code>ancestor</code> attribute as part of the request. In
+cannot be specified in the <code>ancestorid</code> attribute as part of the request. In
 those cases a value of <code>request</code> MUST be used as a way to reference itself.</p>
 </li>
 <li>
 <p>Constraints:</p>
 <ul>
 <li>REQUIRED.</li>
-<li>The <code>ancestor</code> attribute MUST NOT be set to a value that
+<li>The <code>ancestorid</code> attribute MUST NOT be set to a value that
 creates circular references between Versions and it is STRONGLY RECOMMENDED
 that the server generate an error
 (<a href="#ancestor_circular_reference">ancestor_circular_reference</a>) if a request
@@ -3499,11 +3506,11 @@ attempts to do so. For example, an operation that makes Version A's
 ancestor B, and Version B's ancestor A, would generate an error.</li>
 <li>When absent in an update operation request, it MUST be interpreted as the
 same as if it were present with its existing value.</li>
-<li>Any attempt to set an <code>ancestor</code> attribute to a non-existing <code>versionid</code>
+<li>Any attempt to set an <code>ancestorid</code> attribute to a non-existing <code>versionid</code>
 MUST generate an error (<a href="#unknown_id">unknown_id</a>).</li>
-<li>For clarity, any modification to the <code>ancestor</code> attribute MUST result in
+<li>For clarity, any modification to the <code>ancestorid</code> attribute MUST result in
 the owning Version's <code>epoch</code> and <code>modifiedat</code> attributes be updated
-appropriately, regardless of whether the change to <code>ancestor</code> was
+appropriately, regardless of whether the change to <code>ancestorid</code> was
 explicitly part of a request or indirectly changed due to changes to other
 Versions.</li>
 </ul>
@@ -4030,8 +4037,8 @@ modifying the bytes of the document in any way - such as &quot;pretty printing&q
 <p>This flag MAY be used on any request but will only influence the serialization
 of Resource and Version entities that have a domain-specific document.</p>
 <h3 id="collections-flag">Collections Flag <a class="anchor" href="#collections-flag">🔗</a></h3>
-<p>The <code>collections</code> flag MAY be used on requests directed to the Registry itself
-or to Group instances to indicate that the response message MUST NOT include
+<p>The <code>collections</code> flag MAY be used on requests directed to the Registry itself,
+or to Group instances, to indicate that the response message MUST NOT include
 any attributes from the top-level entity (Registry or Group), but instead MUST
 include only all of the nested xRegistry Collection maps that are defined at
 that level. Specifying it on a request directed to some other part of the
@@ -4221,9 +4228,6 @@ examples below.</li>
 <li><code>&lt;ATTRIBUTE&gt;</code> uses dot notation as well. Technically, the filter expression
 is a single dot notation reference, but the <code>&lt;PATH&gt;</code> and <code>&lt;ATTRIBUTE&gt;</code> are
 called out separately here for descriptive purposes.</li>
-<li><code>&lt;PATH&gt;</code> MUST only consist of valid <code>&lt;GROUPS&gt;</code> type names, <code>&lt;RESOURCES&gt;</code>
-type names or <code>versions</code>, otherwise an error (<a href="#bad_filter">bad_filter</a>)
-MUST be generated.</li>
 <li><code>&lt;ATTRIBUTE&gt;</code> MUST be the attribute in the entity to be examined.</li>
 <li>A non-<code>null</code> <code>&lt;VALUE&gt;</code> MUST only be used when referencing scalar attributes.</li>
 <li>A reference to a nonexistent attribute SHOULD NOT generate an error and
@@ -4315,6 +4319,7 @@ will only fail if the attribute has no value at all.</li>
 references an attribute in that entity (i.e. there is no <code>&lt;PATH&gt;</code>), then if the
 expression does not match the entity, that entity MUST NOT be returned. In
 other words, a <code>404 Not Found</code> would be generated in the HTTP protocol case.</p>
+<p>Invalid filter expressions MUST generate an error (<a href="#bad_filter">bad_filter</a>).</p>
 <p><strong>Examples:</strong></p>
 <p>Using the <a href="./http.html">HTTP protocol binding</a> syntax:</p>
 <table>
@@ -4516,16 +4521,13 @@ to be represented as a single (self-contained) document.</p>
 </ul>
 <p>The value of the <code>inline</code> flag is a list of <code>&lt;PATH&gt;</code> values where each is a
 string indicating which inlineable attribute to show in the response.
-References to nested attributes are represented using a dot (<code>.</code>) notation
-where the xRegistry collection names along the hierarchy are concatenated. For
-example: <code>endpoints.messages.versions</code> will inline all Versions of Messages.
-Non-leaf parts of the <code>&lt;PATH&gt;</code> MUST only reference xRegistry collection names
-and not any specific entity IDs since <code>&lt;PATH&gt;</code> is meant to be an abstract
-traversal of the model.</p>
-<p>To reference an attribute with a dot as part of its name, the JSONPath
-escaping mechanism MUST be used: <code>['my.name']</code>. For example,
-<code>prop1.my.name.prop2</code> would be specified as <code>prop1['my.name'].prop2</code> if
-<code>my.name</code> is the name of an attribute.</p>
+References to nested attributes are represented using a
+<a href="#xregistry-dot--notation">dot (<code>.</code>) notation</a> where the xRegistry collection
+names along the hierarchy are concatenated. For example:
+<code>endpoints.messages.versions</code> will inline all Versions of Messages.  Non-leaf
+parts of the <code>&lt;PATH&gt;</code> MUST only reference xRegistry collection names and not
+any specific entity IDs since <code>&lt;PATH&gt;</code> is meant to be an abstract traversal of
+the model.</p>
 <p>There MAY be multiple <code>&lt;PATH&gt;</code>s specified in a single request and each
 protocol binding specification will indicate how the list is specified.</p>
 <p>The <code>*</code> value MAY be used to indicate that all nested inlineable attributes
@@ -4662,8 +4664,9 @@ on a non-collection result MUST generate an error
 whether the results are to be sorted in ascending or descending order.</p>
 <p>The following rules apply:</p>
 <ul>
-<li><code>&lt;ATTRIBUTE&gt;</code> MUST be the JSONPath to one of the attributes defined in
-collection's entities that will be the primary sort key for the results.
+<li><code>&lt;ATTRIBUTE&gt;</code> MUST be a <a href="#xregistry-dot--notation">dot (<code>.</code>) notation</a> path
+to one of the attributes defined in collection's entities that will be the
+primary sort key for the results.
 The attribute MUST only reference a scalar attribute within the top-level
 collection, it MUST NOT attempt to traverse into a nested xRegistry
 collection even if that nested collection is inlined.</li>
@@ -4802,17 +4805,11 @@ certain special values that MAY be used, a described in the following sections.<
 <td><code>[*]</code></td>
 <td>Match any item in an array</td>
 </tr>
-<tr>
-<td><code>[-1]</code></td>
-<td>Match the final item in an array</td>
-</tr>
 </tbody>
 </table>
 <p>Note that <code>['*']</code> is not the same as <code>.*</code>. Rather, <code>['*']</code> is a reference
 to an attribute/key called <code>*</code> - assuming that it is a valid attribute/key
 name in that particular situation.</p>
-<p>Use of <code>-1</code> as a special index in an array does not extend to other negative
-integers. Those MUST generate an error (<a href="#bad_request">bad_request</a>).</p>
 <p><strong>Examples</strong></p>
 <p>Given the following definition of a <code>schemagroup</code> Group type extension:</p>
 <pre><code class="language-yaml">{
@@ -4884,8 +4881,11 @@ filter:</p>
 </code></pre>
 <p>The <code>,</code> in a single filter expression represents an <code>AND</code> operation.</p>
 <h3 id="additional-special-dot-notation-considerations">Additional Special Dot-Notation Considerations <a class="anchor" href="#additional-special-dot-notation-considerations">🔗</a></h3>
-<p>While not used in this server specification, the following syntax guidelines
-are RECOMMENDED to be used for consistency across xRegistry tooling:</p>
+<p>The dot-notation defined in this specification is purposely limited to keep
+implementation requirements to a minimum. However, third-party xRegistry
+tooling might leverage more expressive dot-notation features. In order to
+encourage interoperability and consistency across tooling, the following
+syntax guidelines are RECOMMENDED for other common situations:</p>
 <ul>
 <li>Insert an item into the middle of an array: <code>[INTEGER:]</code>.
 <ul>
@@ -4908,6 +4908,13 @@ and create the array first if it is not yet defined.</li>
 and create the array first if it is not yet defined.</li>
 </ul>
 </li>
+<li>Referencing the last item in an array: <code>[-1]</code>.
+<ul>
+<li>E.g. <code>set myarray[-1]=mary</code> would replace the last item in the array.</li>
+<li>If the array is empty, then an error would be generated.</li>
+<li>This notation does not extend to other negative integers.</li>
+</ul>
+</li>
 <li>Specifying an empty object/map: <code>{}</code>.
 <ul>
 <li>E.g. <code>set myobject={}</code> would replace any value for <code>myobject</code> with an
@@ -4924,6 +4931,121 @@ array.</li>
 since this specification does not support sparse arrays. Note, that if the
 intent is to replace that item, rather than doing a delete followed by an
 insert, a direct replacement of that index is RECOMMENDED.</li>
+</ul>
+<h2 id="xregistry-discovery">xRegistry Discovery <a class="anchor" href="#xregistry-discovery">🔗</a></h2>
+<p>This specification defines the following mechanisms by which xRegistry servers
+can be discovered:</p>
+<h3 id="host-based-discovery">Host-based Discovery <a class="anchor" href="#host-based-discovery">🔗</a></h3>
+<p>If access to the root of a hosting environment is available, then it is
+RECOMMENDED that implementations leverage the
+<a href="https://www.iana.org/assignments/well-known-uris/well-known-uris.xhtml"><code>/.well-known</code> discovery
+mechanism</a>
+by making xRegistry &quot;discovery&quot; metadata available at the
+following URL:</p>
+<pre><code class="language-yaml">/.well-known/xregistry
+</code></pre>
+<p>If supported, a request (<code>GET</code>) to this location MUST return a document of
+the form:</p>
+<pre><code class="language-yaml">{
+  &quot;registries&quot;: {
+    &quot;URL&quot;, *
+  }
+}
+</code></pre>
+<p>Where:</p>
+<ul>
+<li>Each <code>URL</code> is the full absolute URL location an xRegistry server.</li>
+</ul>
+<p>While normally this list would only include xRegistry servers hosted on this
+specific host, it is not a requirement that this be the case.</p>
+<ul>
+<li>Examples:
+<ul>
+<li>
+<pre><code class="language-yaml">{
+  &quot;registries&quot;: [
+    &quot;https://example.com/schemaregistry&quot;
+  ]
+}
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="registry-base-discovery">Registry-base Discovery <a class="anchor" href="#registry-base-discovery">🔗</a></h3>
+<p>Similar to the <a href="#host-based-discovery">Host-based Discovery</a> mechanism,
+an xRegistry server instance MAY advertise a list of additional xRegistry
+servers by supporting a protocol-specific retrieval mechanism.</p>
+<p>Regardless of the exact protocol mechanism, the data returned MUST adhere
+to the same format as the Host-based discovery mechanism:</p>
+<pre><code class="language-yaml">{
+  &quot;registries&quot;: {
+    &quot;URL&quot;, *
+  }
+}
+</code></pre>
+<p>Where:</p>
+<ul>
+<li>Each <code>URL</code> is the full absolute URL location an xRegistry server.</li>
+<li>While not expected, the list MAY include the current server's URL.</li>
+<li>This list MAY, but is not mandated to, include URLs from the
+host-based discovery mechanism. It is expected that clients will
+detect duplicate URLs if needed.</li>
+</ul>
+<p>See the <a href="./http.html#xregistry-discovery">xRegistry HTTP specification</a> for more
+information on the HTTP-specific discovery mechanism.</p>
+<ul>
+<li>Examples:
+<ul>
+<li>Using HTTP, a &quot;dev&quot; registry, points to a &quot;prod&quot; registry:
+<pre><code class="language-yaml">GET http://example.com/registries/dev/.xregistry
+
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+{
+  &quot;registries&quot;: [
+    &quot;https://example.com/registries/prod&quot;
+  ]
+}
+</code></pre>
+</li>
+<li>Additionally, if access to the root of the host is available, the
+following would work:
+<pre><code class="language-yaml">GET http://example.com/.well-known/xregistry
+
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+{
+  &quot;registries&quot;: [
+    &quot;https://example.com/registries/dev&quot;,
+    &quot;https://example.com/registries/prod&quot;
+  ]
+}
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<p>Since clients might not be aware of the hosting limitations of the servers,
+to maximize the set of xRegistries servers found, both Host-based and
+Registry-based mechanisms SHOULD be attempted.</p>
+<h3 id="webpage-based-discovery">Webpage-based Discovery <a class="anchor" href="#webpage-based-discovery">🔗</a></h3>
+<p>Web pages MAY choose to advertise the location of a related xRegistry
+server by including a <code>&lt;link&gt;</code> element in the page's <code>&lt;head&gt;</code> section.
+The format of the element MUST adhere to:</p>
+<pre><code class="language-yaml">&lt;link rel=&quot;alternative&quot; type=&quot;application/xregistry+json&quot;
+      title=&quot;STRING&quot; href=&quot;URL&quot;/&gt;
+</code></pre>
+<ul>
+<li>Example:
+<ul>
+<li>
+<pre><code class="language-yaml">&lt;link rel=&quot;alternative&quot; type=&quot;application/xregistry+json&quot;
+      title=&quot;Our xRegistry server&quot; href=&quot;https://xreg.example.com/&quot;/&gt;
+</code></pre>
+</li>
+</ul>
+</li>
 </ul>
 <h2 id="error-processing">Error Processing <a class="anchor" href="#error-processing">🔗</a></h2>
 <p>If an error occurs during the processing of a request, even if the error was

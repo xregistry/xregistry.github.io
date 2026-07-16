@@ -131,6 +131,7 @@ model and semantics that apply to all protocols.</p>
 <li><a href="#delete-groupsgidresourcesridversionsvid"><code>DELETE /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;/versions/&lt;VID&gt;</code></a></li>
 </ul>
 </li>
+<li><a href="#xregistry-discovery">xRegistry Discovery</a></li>
 </ul>
 </li>
 <li><a href="#request-flags--query-parameters">Request Flags / Query Parameters</a></li>
@@ -941,9 +942,9 @@ is completed, even though the response MUST show the requested changes.</p>
 </code></pre>
 <h3 id="registry-model">Registry Model <a class="anchor" href="#registry-model">🔗</a></h3>
 <h4 id="get-model"><code>GET /model</code> <a class="anchor" href="#get-model">🔗</a></h4>
-<p>A server MAY support clients retrieving its full
+<p>A server MUST support clients retrieving its full
 <a href="./model.html#registry-model">model definition</a> via an HTTP <code>GET</code> directed to
-the stand-lone <code>model</code> entity.</p>
+the stand-alone <code>model</code> entity.</p>
 <p>The request MUST be of the form:</p>
 <pre><code class="language-yaml">GET /model
 </code></pre>
@@ -1401,7 +1402,7 @@ xRegistry-icon: &lt;URL&gt; ?
 xRegistry-labels.&lt;KEY&gt;: &lt;STRING&gt; *
 xRegistry-createdat: &lt;TIMESTAMP&gt;
 xRegistry-modifiedat: &lt;TIMESTAMP&gt;
-xRegistry-ancestor: &lt;STRING&gt;
+xRegistry-ancestorid: &lt;STRING&gt;
 xRegistry-&lt;RESOURCE&gt;url: &lt;URL&gt; ?           # End of default Version attributes
 xRegistry-metaurl: &lt;URL&gt;                   # Resource-level attributes
 xRegistry-versionsurl: &lt;URL&gt;
@@ -1444,7 +1445,7 @@ xRegistry-icon: &lt;URL&gt; ?
 xRegistry-labels.&lt;KEY&gt;: &lt;STRING&gt; *
 xRegistry-createdat: &lt;TIMESTAMP&gt;
 xRegistry-modifiedat: &lt;TIMESTAMP&gt;
-xRegistry-ancestor: &lt;STRING&gt;
+xRegistry-ancestorid: &lt;STRING&gt;
 xRegistry-&lt;RESOURCE&gt;url: &lt;URL&gt; ?           # End of default Version attributes
 Location: &lt;URL&gt; ?
 Content-Location: &lt;URL&gt; ?
@@ -1505,7 +1506,7 @@ Link: &lt;https://example.com/endpoints/ep1/messages&amp;page=2&gt;;rel=next;cou
     &quot;isdefault&quot;: true,
     &quot;createdat&quot;: &quot;2024-04-30T12:00:00Z&quot;,
     &quot;modifiedat&quot;: &quot;2024-04-30T12:00:01Z&quot;,
-    &quot;ancestor&quot;: &quot;1.0&quot;,
+    &quot;ancestorid&quot;: &quot;1.0&quot;,
 
     &quot;metaurl&quot;: &quot;https://example.com/endpoints/ep1/messages/msg1/meta&quot;,
     &quot;versionsurl&quot;: &quot;https://example.com/endpoints/ep1/messages/msg1/versions&quot;,
@@ -1664,7 +1665,7 @@ xRegistry-icon: &lt;URL&gt; ?
 xRegistry-labels.&lt;KEY&gt;: &lt;STRING&gt; *
 xRegistry-createdat: &lt;TIMESTAMP&gt;
 xRegistry-modifiedat: &lt;TIMESTAMP&gt;
-xRegistry-ancestor: &lt;STRING&gt;
+xRegistry-ancestorid: &lt;STRING&gt;
 xRegistry-&lt;RESOURCE&gt;url: &lt;URL&gt; ?       # If Resource is not in body
 xRegistry-metaurl: &lt;URL&gt;
 xRegistry-versionsurl: &lt;URL&gt;
@@ -1702,7 +1703,7 @@ Content-Location: https://example.com/endpoints/ep1/messages/msg1/versions/1
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;2024-04-30T12:00:00Z&quot;,
   &quot;modifiedat&quot;: &quot;2024-04-30T12:00:01Z&quot;,
-  &quot;ancestor&quot;: &quot;1&quot;,
+  &quot;ancestorid&quot;: &quot;1&quot;,
 
   &quot;metaurl&quot;: &quot;https://example.com/endpoints/ep1/messages/msg1/meta&quot;,
   &quot;versionsurl&quot;: &quot;https://example.com/endpoints/ep1/messages/msg1/versions&quot;,
@@ -1751,7 +1752,7 @@ xRegistry-icon: &lt;URL&gt; ?
 xRegistry-labels.&lt;KEY&gt;: &lt;STRING&gt; *
 xRegistry-createdat: &lt;TIMESTAMP&gt; ?
 xRegistry-modifiedat: &lt;TIMESTAMP&gt; ?
-xRegistry-ancestor: &lt;STRING&gt; ?
+xRegistry-ancestorid: &lt;STRING&gt; ?
 xRegistry-&lt;RESOURCE&gt;url: &lt;URL&gt; ?
 
 ... Resource document excluded for brevity ... ?
@@ -1778,7 +1779,7 @@ xRegistry-icon: &lt;URL&gt; ?
 xRegistry-labels.&lt;KEY&gt;: &lt;STRING&gt; *
 xRegistry-createdat: &lt;TIMESTAMP&gt;
 xRegistry-modifiedat: &lt;TIMESTAMP&gt;
-xRegistry-ancestor: &lt;STRING&gt;
+xRegistry-ancestorid: &lt;STRING&gt;
 xRegistry-&lt;RESOURCE&gt;url: &lt;URL&gt; ?       # If Resource is not in body
 xRegistry-metaurl: &lt;URL&gt;
 xRegistry-versionsurl: &lt;URL&gt;
@@ -1812,7 +1813,7 @@ xRegistry-xid: /endpoints/ep1/messages/msg1
 xRegistry-epoch: 1
 xRegistry-name: Blob Created
 xRegistry-isdefault: true
-xRegistry-ancestor: 1
+xRegistry-ancestorid: 1
 xRegistry-metaurl: https://example.com/endpoints/ep1/messages/msg1/meta
 xRegistry-versionsurl: https://example.com/endpoints/ep1/messages/msg1/versions
 xRegistry-versionscount: 1
@@ -1851,7 +1852,7 @@ Content-Location: https://example.com/endpoints/ep1/messages/msg1/versions/1
   &quot;description&quot;: &quot;a cool event&quot;,
   &quot;createdat&quot;: &quot;2024-04-30T12:00:00Z&quot;,
   &quot;modifiedat&quot;: &quot;2024-04-30T12:00:01Z&quot;,
-  &quot;ancestor&quot;: &quot;1&quot;,
+  &quot;ancestorid&quot;: &quot;1&quot;,
 
   &quot;message&quot;: {
     # Updated definition of a &quot;Blob Created&quot; event excluded for brevity
@@ -1901,7 +1902,7 @@ xRegistry-icon: &lt;URL&gt; ?
 xRegistry-labels.&lt;KEY&gt;: &lt;STRING&gt; *
 xRegistry-createdat: &lt;TIMESTAMP&gt; ?
 xRegistry-modifiedat: &lt;TIMESTAMP&gt; ?
-xRegistry-ancestor: &lt;STRING&gt; ?
+xRegistry-ancestorid: &lt;STRING&gt; ?
 xRegistry-&lt;RESOURCE&gt;url: &lt;URL&gt; ?
 
 ... Version document excluded for brevity ... ?
@@ -1926,7 +1927,7 @@ xRegistry-icon: &lt;URL&gt; ?
 xRegistry-labels.&lt;KEY&gt;: &lt;STRING&gt; *
 xRegistry-createdat: &lt;TIMESTAMP&gt;
 xRegistry-modifiedat: &lt;TIMESTAMP&gt;
-xRegistry-ancestor: &lt;STRING&gt;
+xRegistry-ancestorid: &lt;STRING&gt;
 xRegistry-&lt;RESOURCE&gt;url: &lt;URL&gt; ?       # If Resource is not in body
 Location: &lt;URL&gt; ?                      # If 201 or 303 is returned
 Content-Location: &lt;URL&gt; ?
@@ -1957,7 +1958,7 @@ xRegistry-xid: /endpoints/ep1/messages/msg1/versions/2
 xRegistry-epoch: 1
 xRegistry-name: Blob Created
 xRegistry-isdefault: true
-xRegistry-ancestor: 1
+xRegistry-ancestorid: 1
 Location: https://example.com/endpoints/ep1/messages/msg1/versions/2
 Content-Location: https://example.com/endpoints/ep1/messages/msg1/versions/2
 Content-Disposition: msg1
@@ -1993,7 +1994,7 @@ Content-Location: https://example.com/endpoints/ep1/messages/msg1/versions/1
   &quot;description&quot;: &quot;a cool event&quot;,
   &quot;createdat&quot;: &quot;2024-04-30T12:00:00Z&quot;,
   &quot;modifiedat&quot;: &quot;2024-04-30T12:00:01Z&quot;,
-  &quot;ancestor&quot;: &quot;1&quot;,
+  &quot;ancestorid&quot;: &quot;1&quot;,
 
   &quot;message&quot;: {
     # Updated definition of a &quot;Blob Created&quot; event excluded for brevity
@@ -2148,7 +2149,7 @@ Link: &lt;https://example.com/endpoints/ep1/messages/msg1/versions&amp;page=2&gt
     &quot;isdefault&quot;: true,
     &quot;createdat&quot;: &quot;2024-04-30T12:00:00Z&quot;,
     &quot;modifiedat&quot;: &quot;2024-04-30T12:00:01Z&quot;,
-    &quot;ancestor&quot;: &quot;1.0&quot;
+    &quot;ancestorid&quot;: &quot;1.0&quot;
   }
 }
 </code></pre>
@@ -2309,7 +2310,7 @@ xRegistry-icon: &lt;URL&gt; ?
 xRegistry-labels.&lt;KEY&gt;: &lt;STRING&gt; *
 xRegistry-createdat: &lt;TIMESTAMP&gt;
 xRegistry-modifiedat: &lt;TIMESTAMP&gt;
-xRegistry-ancestor: &lt;STRING&gt;
+xRegistry-ancestorid: &lt;STRING&gt;
 Location: &lt;URL&gt; ?                        # If 303 is returned
 Content-Disposition: &lt;STRING&gt; ?
 
@@ -2338,7 +2339,7 @@ Content-Type: application/json; charset=utf-8
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;2024-04-30T12:00:00Z&quot;,
   &quot;modifiedat&quot;: &quot;2024-04-30T12:00:01Z&quot;,
-  &quot;ancestor&quot;: &quot;1.0&quot;
+  &quot;ancestorid&quot;: &quot;1.0&quot;
 }
 </code></pre>
 <p>Retrieve the domain-specific document of the same schema Resource:</p>
@@ -2354,7 +2355,7 @@ xRegistry-epoch: 2
 xRegistry-isdefault: true
 xRegistry-createdat: 2024-04-30T12:00:00Z
 xRegistry-modifiedat: 2024-04-30T12:00:01Z
-xRegistry-ancestor: 1.0
+xRegistry-ancestorid: 1.0
 Content-Disposition: myschema
 
 { ... Contents of a schema doc excluded for brevity ...  }
@@ -2402,7 +2403,7 @@ xRegistry-icon: &lt;URL&gt; ?
 xRegistry-labels.&lt;KEY&gt;: &lt;STRING&gt; *
 xRegistry-createdat: &lt;TIMESTAMP&gt; ?
 xRegistry-modifiedat: &lt;TIMESTAMP&gt; ?
-xRegistry-ancestor: &lt;STRING&gt; ?
+xRegistry-ancestorid: &lt;STRING&gt; ?
 xRegistry-&lt;RESOURCE&gt;url: &lt;URL&gt; ?
 
 ... Version document excluded for brevity ... ?
@@ -2429,7 +2430,7 @@ xRegistry-icon: &lt;URL&gt; ?
 xRegistry-labels.&lt;KEY&gt;: &lt;STRING&gt; *
 xRegistry-createdat: &lt;TIMESTAMP&gt;
 xRegistry-modifiedat: &lt;TIMESTAMP&gt;
-xRegistry-ancestor: &lt;STRING&gt;
+xRegistry-ancestorid: &lt;STRING&gt;
 xRegistry-&lt;RESOURCE&gt;url: &lt;URL&gt; ?       # If Resource is not in body
 Location: &lt;URL&gt; ?                      # If 201 or 303 is returned
 Content-Location: &lt;URL&gt; ?
@@ -2454,7 +2455,7 @@ xRegistry-xid: /endpoints/ep1/messages/msg1/versions/v2.0
 xRegistry-epoch: 1
 xRegistry-name: Blob Created v2
 xRegistry-isdefault: true
-xRegistry-ancestor: v1.0
+xRegistry-ancestorid: v1.0
 Location: https://example.com/endpoints/ep1/messages/msg1/versions/v2.0
 Content-Location: https://example.com/endpoints/ep1/messages/msg1/versions/v2.0
 Content-Disposition: msg1
@@ -2488,7 +2489,7 @@ Content-Location: https://example.com/endpoints/ep1/messages/msg1/versions/v2.0
   &quot;description&quot;: &quot;a cool event&quot;,
   &quot;createdat&quot;: &quot;2024-04-30T12:00:00Z&quot;,
   &quot;modifiedat&quot;: &quot;2024-04-30T12:00:01Z&quot;,
-  &quot;ancestor&quot;: &quot;v1.0&quot;,
+  &quot;ancestorid&quot;: &quot;v1.0&quot;,
 
   &quot;message&quot;: {
     # Updated definition of a &quot;Blob Created&quot; event excluded for brevity
@@ -2522,6 +2523,27 @@ HTTP/1.1 204 No Content
 </code></pre>
 <pre><code>HTTP/1.1 204 No Content
 </code></pre>
+<h2 id="xregistry-discovery">xRegistry Discovery <a class="anchor" href="#xregistry-discovery">🔗</a></h2>
+<p>As defined by the <a href="./spec.html#xregistry-discovery">core specification</a>, clients
+MAY query an xRegistry server for the list of additional xRegistry servers
+that might be of interest. If supported, the Registry-based discovery file,
+for an HTTP server, MUST be available at the root of the Registry (e.g. as a
+sibling API to <code>/model</code>) via the <code>/.xregistry</code> API:</p>
+<pre><code class="language-yaml">GET /.xregistry
+</code></pre>
+<p>A successful response MUST be of the form:</p>
+<pre><code class="language-yaml">HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+
+{
+  &quot;registries&quot;: {
+    &quot;URL&quot;, *
+  }
+}
+</code></pre>
+<p>Note that unlike the <a href="./spec.html#host-based-discovery">Host-based Discovery</a>
+mechanism, this API includes a dot (<code>.</code>) before <code>xregistry</code> to avoid any
+potential name collisions with the xRegistry's data.</p>
 <h2 id="request-flags--query-parameters">Request Flags / Query Parameters <a class="anchor" href="#request-flags--query-parameters">🔗</a></h2>
 <p>The <a href="./spec.html">core xRegistry specification</a> defines a set of
 <a href="./spec.html#request-flags">request flags</a> that MAY be used to control the

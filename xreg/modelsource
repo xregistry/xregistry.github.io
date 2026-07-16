@@ -86,6 +86,12 @@
       "immutable": true,
       "required": true
     },
+    "shortself": {
+      "name": "shortself",
+      "type": "url",
+      "readonly": true,
+      "immutable": true
+    },
     "specversion": {
       "name": "specversion",
       "type": "string",

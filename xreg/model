@@ -21,6 +21,12 @@
       "immutable": true,
       "required": true
     },
+    "shortself": {
+      "name": "shortself",
+      "type": "url",
+      "readonly": true,
+      "immutable": true
+    },
     "xid": {
       "name": "xid",
       "type": "xid",
@@ -143,6 +149,12 @@
           "readonly": true,
           "immutable": true,
           "required": true
+        },
+        "shortself": {
+          "name": "shortself",
+          "type": "url",
+          "readonly": true,
+          "immutable": true
         },
         "xid": {
           "name": "xid",
@@ -353,6 +365,12 @@
               "immutable": true,
               "required": true
             },
+            "shortself": {
+              "name": "shortself",
+              "type": "url",
+              "readonly": true,
+              "immutable": true
+            },
             "xid": {
               "name": "xid",
               "type": "xid",
@@ -406,8 +424,8 @@
               "type": "timestamp",
               "required": true
             },
-            "ancestor": {
-              "name": "ancestor",
+            "ancestorid": {
+              "name": "ancestorid",
               "type": "string",
               "matchcase": true,
               "required": true
@@ -471,6 +489,12 @@
               "readonly": true,
               "immutable": true,
               "required": true
+            },
+            "shortself": {
+              "name": "shortself",
+              "type": "url",
+              "readonly": true,
+              "immutable": true
             },
             "xid": {
               "name": "xid",
@@ -537,6 +561,12 @@
               "readonly": true,
               "immutable": true,
               "required": true
+            },
+            "shortself": {
+              "name": "shortself",
+              "type": "url",
+              "readonly": true,
+              "immutable": true
             },
             "xid": {
               "name": "xid",
@@ -671,6 +701,12 @@
               "immutable": true,
               "required": true
             },
+            "shortself": {
+              "name": "shortself",
+              "type": "url",
+              "readonly": true,
+              "immutable": true
+            },
             "xid": {
               "name": "xid",
               "type": "xid",
@@ -724,8 +760,8 @@
               "type": "timestamp",
               "required": true
             },
-            "ancestor": {
-              "name": "ancestor",
+            "ancestorid": {
+              "name": "ancestorid",
               "type": "string",
               "matchcase": true,
               "required": true
@@ -789,6 +825,12 @@
               "readonly": true,
               "immutable": true,
               "required": true
+            },
+            "shortself": {
+              "name": "shortself",
+              "type": "url",
+              "readonly": true,
+              "immutable": true
             },
             "xid": {
               "name": "xid",
@@ -855,6 +897,12 @@
               "readonly": true,
               "immutable": true,
               "required": true
+            },
+            "shortself": {
+              "name": "shortself",
+              "type": "url",
+              "readonly": true,
+              "immutable": true
             },
             "xid": {
               "name": "xid",
@@ -989,6 +1037,12 @@
               "immutable": true,
               "required": true
             },
+            "shortself": {
+              "name": "shortself",
+              "type": "url",
+              "readonly": true,
+              "immutable": true
+            },
             "xid": {
               "name": "xid",
               "type": "xid",
@@ -1042,8 +1096,8 @@
               "type": "timestamp",
               "required": true
             },
-            "ancestor": {
-              "name": "ancestor",
+            "ancestorid": {
+              "name": "ancestorid",
               "type": "string",
               "matchcase": true,
               "required": true
@@ -1107,6 +1161,12 @@
               "readonly": true,
               "immutable": true,
               "required": true
+            },
+            "shortself": {
+              "name": "shortself",
+              "type": "url",
+              "readonly": true,
+              "immutable": true
             },
             "xid": {
               "name": "xid",
@@ -1173,6 +1233,12 @@
               "readonly": true,
               "immutable": true,
               "required": true
+            },
+            "shortself": {
+              "name": "shortself",
+              "type": "url",
+              "readonly": true,
+              "immutable": true
             },
             "xid": {
               "name": "xid",

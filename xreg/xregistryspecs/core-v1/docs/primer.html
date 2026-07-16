@@ -932,7 +932,7 @@ in the entity in order to be model compliant.</p>
 <p>Likewise, implementations of the server must validate the entire entity
 against the new model, not just a subset of the entity's attributes.</p>
 <h4 id="10711-multi-root-ancestor-hierarchies">10.7.11. Multi-root ancestor hierarchies <a class="anchor" href="#10711-multi-root-ancestor-hierarchies">🔗</a></h4>
-<p>The <a href="./spec.html#ancestor-attribute"><code>ancestor</code> attribute</a> is used to build a
+<p>The <a href="./spec.html#ancestorid-attribute"><code>ancestorid</code> attribute</a> is used to build a
 hierarchy of Versions to facilitate compatibility checking when the
 <a href="./spec.html#compatibility-attribute"><code>compatibility</code> attribute</a> is set. There
 are cases in which it's desirable to create multiple roots. In some
@@ -942,13 +942,13 @@ attribute (see <code>groups.resources.maxversions</code> under
 pruning of the Version tree. In such cases, when deleting the oldest Version,
 this could result in a new root being created when there are multiple
 decedents of the deleted Version.</p>
-<p>To signal that a Version represents a root of a hierarchy, the <code>ancestor</code>
+<p>To signal that a Version represents a root of a hierarchy, the <code>ancestorid</code>
 attribute has its value set to the Version's <code>versionid</code> attribute. This
 makes the ancestor explicit, and the possible ambiguity of using another
 value such as null which, based on the scenario, could mean &quot;no ancestor&quot; or
 &quot;default to the newest&quot;.</p>
 <h4 id="10712-singleversionroot-policy-enforcement">10.7.12. <code>singleversionroot</code> Policy Enforcement <a class="anchor" href="#10712-singleversionroot-policy-enforcement">🔗</a></h4>
-<p>Related to the previous discussions concerning the <code>ancestor</code> attribute,
+<p>Related to the previous discussions concerning the <code>ancestorid</code> attribute,
 the <a href="./model.html#registry-model">Resource Model</a> <code>singleversionroot</code> attribute
 controls whether a Resource is allowed to have more than one &quot;root&quot; Version,
 or whether all Versions of that Resource must be a descendant of the same
@@ -991,8 +991,8 @@ scenarios, the server may be unable to prune Versions, when the
 <a href="./model.html#registry-model">Resource Model</a> is set to <code>true</code> and the request
 must be rejected.</p>
 <p>Consider a scenario in which 3 Versions exist: v1 is the root (and therefore
-has its <code>ancestor</code> attribute set to v1), and v2 and v3 both have
-their <code>ancestor</code> attribute set to v1. In addition, the
+has its <code>ancestorid</code> attribute set to v1), and v2 and v3 both have
+their <code>ancestorid</code> attribute set to v1. In addition, the
 <code>groups.resources.maxversions</code> is set to 3. When creating a new Version, the
 server will find the oldest Version (v1) and attempt to prune it. However,
 deleting v1 would mean that v2 and v3 would become roots, as both of them
@@ -1004,7 +1004,7 @@ delete v2 or v3 to allow the server to prune the oldest Version (v1) before
 creating a new Version.</p>
 <h4 id="10714-whats-the-oldestnewest-version-of-a-resource">10.7.14. What's the oldest/newest Version of a Resource? <a class="anchor" href="#10714-whats-the-oldestnewest-version-of-a-resource">🔗</a></h4>
 <p>The oldest Version of a Resource isn't necessarily the one with the oldest
-<code>createdat</code> timestamp, because the <code>ancestor</code> attribute takes precedence
+<code>createdat</code> timestamp, because the <code>ancestorid</code> attribute takes precedence
 over the <code>createdat</code> attribute. This is because the ancestor tree more
 accurately describes an ordered lineage of the Versions than timestamps. In
 the case multiple Versions exist with the same <code>createdat</code> timestamp, those
@@ -1033,7 +1033,7 @@ not expose this implementation/deployment choice to the end-user. In other
 words, the use of the file-server as a caching service should be transparent
 to their users.</p>
 <h4 id="10716-detecting-circular-references-between-versions">10.7.16. Detecting circular references between Versions <a class="anchor" href="#10716-detecting-circular-references-between-versions">🔗</a></h4>
-<p>The specification mentions that the Version's <code>ancestor</code> attribute should not
+<p>The specification mentions that the Version's <code>ancestorid</code> attribute should not
 be set in such a way as to cause a circular dependency list between Versions.
 However, when talking about the server generating an error in such conditions
 it says it is &quot;STRONGLY RECOMMENDED&quot; that an error is generated, not that it

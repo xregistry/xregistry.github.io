@@ -2,11 +2,11 @@ content-disposition:doc-store-data.json
 content-length:747
 content-location:https://xregistry.io/xreg/xregistryspecs/core-v1/samples/doc-store-data.json/versions/v1.0-rc1
 content-type:text/plain; charset=utf-8
-xregistry-ancestor:v1.0-rc1
-xregistry-createdat:2026-07-03T12:05:12.559483045Z
+xregistry-ancestorid:v1.0-rc1
+xregistry-createdat:2026-07-16T18:23:20.093101899Z
 xregistry-epoch:1
 xregistry-isdefault:true
-xregistry-modifiedat:2026-07-03T12:05:12.559483045Z
+xregistry-modifiedat:2026-07-16T18:23:20.093101899Z
 xregistry-sampleid:doc-store-data.json
 xregistry-self:https://xregistry.io/xreg/xregistryspecs/core-v1/samples/doc-store-data.json/versions/v1.0-rc1
 xregistry-versionid:v1.0-rc1
