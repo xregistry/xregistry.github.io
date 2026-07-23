@@ -1,13 +1,12 @@
 content-disposition:formatted-doc-store-model.json
 content-length:159
 content-location:https://xregistry.io/xreg/xregistryspecs/core-v1/samples/formatted-doc-store-model.json/versions/v1.0-rc1
-content-type:text/plain; charset=utf-8
 xregistry-ancestorid:v1.0-rc1
-xregistry-createdat:2026-07-16T18:23:20.239850854Z
+xregistry-createdat:2026-07-23T16:25:20.53637987Z
 xregistry-epoch:1
 xregistry-isdefault:true
 xregistry-metaurl:https://xregistry.io/xreg/xregistryspecs/core-v1/samples/formatted-doc-store-model.json/meta
-xregistry-modifiedat:2026-07-16T18:23:20.239850854Z
+xregistry-modifiedat:2026-07-23T16:25:20.53637987Z
 xregistry-sampleid:formatted-doc-store-model.json
 xregistry-self:https://xregistry.io/xreg/xregistryspecs/core-v1/samples/formatted-doc-store-model.json
 xregistry-versionid:v1.0-rc1

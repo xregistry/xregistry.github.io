@@ -1,10 +1,10 @@
 {
-  "createdat": "2026-07-16T18:23:21.366481869Z",
+  "createdat": "2026-07-23T16:25:21.675352409Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
   "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/endpoint-v1/schemas/openapi.json/versions/v1.0-rc1",
   "epoch": 1,
-  "modifiedat": "2026-07-16T18:23:21.366481869Z",
+  "modifiedat": "2026-07-23T16:25:21.675352409Z",
   "readonly": false,
   "schemaid": "openapi.json",
   "self": "https://xregistry.io/xreg/xregistryspecs/endpoint-v1/schemas/openapi.json/meta",
