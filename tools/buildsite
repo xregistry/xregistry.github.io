@@ -147,6 +147,7 @@ list=(
 "cloudevents/schemas/*"                cloudevents-v1/schemas
 "cloudevents/samples/scenarios/*.json" cloudevents-v1/samples
 "cloudevents/samples/schemas/*.json"   cloudevents-v1/samples
+"cloudevents/samples/README.md"        cloudevents-v1/samples
 "cloudevents/samples"                  cloudevents-v1/samples
 "core/*.json"                          core-v1/docs
 "core/*.md"                            core-v1/docs
