@@ -1,10 +1,10 @@
 content-disposition:contoso-crm.cereg
 content-location:https://xregistry.io/xreg/xregistryspecs/core-v1/samples/contoso-crm.cereg/versions/v1.0-rc1
 xregistry-ancestorid:v1.0-rc1
-xregistry-createdat:2026-07-23T16:25:20.631630881Z
+xregistry-createdat:2026-07-23T16:35:20.883347289Z
 xregistry-epoch:1
 xregistry-isdefault:true
-xregistry-modifiedat:2026-07-23T16:25:20.631630881Z
+xregistry-modifiedat:2026-07-23T16:35:20.883347289Z
 xregistry-sampleid:contoso-crm.cereg
 xregistry-self:https://xregistry.io/xreg/xregistryspecs/core-v1/samples/contoso-crm.cereg/versions/v1.0-rc1
 xregistry-versionid:v1.0-rc1

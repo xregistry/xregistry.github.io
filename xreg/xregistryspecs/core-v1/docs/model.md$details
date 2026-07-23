@@ -1,11 +1,11 @@
 {
   "ancestorid": "v1.0-rc1",
-  "createdat": "2026-07-23T16:25:18.009654672Z",
+  "createdat": "2026-07-23T16:35:18.322648609Z",
   "docid": "model.md",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/model.md/meta",
-  "modifiedat": "2026-07-23T16:25:18.009654672Z",
+  "modifiedat": "2026-07-23T16:35:18.322648609Z",
   "self": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/model.md",
   "versionid": "v1.0-rc1",
   "versionscount": 1,

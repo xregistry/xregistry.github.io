@@ -49,7 +49,7 @@
 <!-- words: validatecompatibility validateformat strictvalidation matchcase -->
 <!-- words: compat formatvalidated compatibilityvalidated -->
 <!-- words: compat formatvalidatedreason compatibilityvalidatedreason -->
-<!-- words: matchversions -->
+<!-- words: matchversions excludeall -->
 <!-- words: myarray myobject -->
 <!-- words: href schemaregistry webpage -->
 <h2 id="abstract">Abstract <a class="anchor" href="#abstract">🔗</a></h2>
@@ -1115,7 +1115,10 @@ metadata rather than its domain-specific document (e.g. <code>$details</code> in
 <li>
 <p>Description: A server-generated unique absolute URL for an entity. This
 attribute MUST be an alternative URL for the owning entity's <code>self</code>
-attribute. The intention is that <code>shortself</code> SHOULD be shorter in length
+(non-<code>$details</code> suffixed) URL. When a client constructs a request based on
+the <code>shortself</code> URL, it MAY append <code>$details</code>, or any flags (e.g. query
+parameters), that are valid for use on the <code>self</code> URL.</p>
+<p>The intention is that <code>shortself</code> SHOULD be shorter in length
 than <code>self</code> such that it MAY be used when the length of the URL referencing
 the owning entity is important. For example, in cases where the size of a
 message referencing this entity needs to be as small as possible.</p>
@@ -1143,6 +1146,8 @@ the attribute is serialized or not.</p>
 <li>MUST be a non-empty absolute URL referencing the same entity as the <code>self</code>
 URL, either directly or indirectly via a protocol-specific redirect.</li>
 <li>MUST be a read-only attribute.</li>
+<li>MUST NOT contain the <code>$</code> character as that is reserved for specification
+defined suffixes (such as <code>$details</code>).</li>
 </ul>
 </li>
 <li>
@@ -4074,6 +4079,7 @@ view&quot; when serializing entities and MUST be modified to do the following:</
 <li>MUST remove the default Version attributes from a Resource's serialization.</li>
 <li>MUST remove the Version <code>formatvalidated</code> and <code>compatibilityvalidated</code>
 attributes from Version serializations.</li>
+<li>MUST remove the <code>shortself</code> attribute from all entity serializations.</li>
 <li>When a Resource (source) uses the <code>xref</code> feature, the target Resource's
 attributes MUST be excluded from the source's serialization.</li>
 <li>Resources and Versions MUST be serialized in their
@@ -4315,6 +4321,39 @@ character and not as a wildcard.</li>
 attribute, with any value (even an empty string). In other words, the filter
 will only fail if the attribute has no value at all.</li>
 </ul>
+<p>As specified in the <a href="#registry-collections">Registry Collections</a> section,
+when a query includes a filter expression, any nested xRegistry collections
+in the response SHOULD result in the specification of a <code>&lt;COLLECTION&gt;url</code>
+attribute that allows clients to easily traverse into that collection with
+the appropriated sub-filter expression to yield the same results as the
+original filter, but just for that nested collection. However, if the filters
+results in zero entities for a particular collection due to the filter
+excluding that collection entirely, rather than the <code>&lt;COLLECTION&gt;url</code> not
+having any filter expression at all (which would result in the full collection
+being returned), servers MUST use the special filter expression <code>excludeall</code>
+to indicate no results are to be returned for that URL.</p>
+<p>For example, using HTTP:</p>
+<pre><code class="language-yaml">GET /?filter=schemagroups.schemas.name=myschema
+
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+
+{
+  ... Registry attributes excluded for brevity ...
+  &quot;messagegroupsurl&quot;: &quot;http://example.com/messagegroups?filter=excludeall&quot;,
+  &quot;messagegroupscount&quot;: 0,
+  &quot;schemagroupsurl&quot;: &quot;http://example.com/schemagroups?filter=schemas.name=myschema&quot;,
+  &quot;schemagroupscount&quot;: 10
+}
+</code></pre>
+<p>If the URL references a collection then an empty collection (<code>{}</code>) MUST be
+returned. If the URL references an entity, then an error
+(<a href="#not_found">not_found</a>) MUST be generated. If any other filter expression
+appear at the same time, then an error (<a href="#bad_filter">bad_filter</a>) MUST be
+generated.</p>
+<p>The special <code>filter</code> value <code>excludeall</code> MAY be used to indicate that no
+results are to be returned from the query. This value is expected to only be
+used by servers in response to a query that produces a <code>&lt;COLLECTION&gt;url</code>.</p>
 <p>If the request references an entity (not a collection), and the expression
 references an attribute in that entity (i.e. there is no <code>&lt;PATH&gt;</code>), then if the
 expression does not match the entity, that entity MUST NOT be returned. In

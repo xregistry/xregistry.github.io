@@ -1330,7 +1330,7 @@ type &quot;any&quot;.</li>
 <li>All Resource definitions, including Version <code>&lt;COLLECTION&gt;*</code>, <code>meta</code> and
 <code>metaurl</code> attributes. Note that the <code>&lt;RESOURCE&gt;*</code> attribute would only appear
 if the
-<a href="./model.html#groupsstringresourcesstringhasdocument"><code>hasdocument</code> aspect</a>
+<a href="#groupsstringresourcesstringhasdocument"><code>hasdocument</code> aspect</a>
 aspect is <code>true</code>.</li>
 </ul>
 <p>The &quot;modelsource&quot; view of the model is just what was provided by the user when
@@ -1508,8 +1508,8 @@ earlier attributes included take precedence over subsequently included
 attributes.</li>
 <li>Both <code>$include</code> and <code>$includes</code> MUST NOT be present at the same time at the
 same level in the model.</li>
-<li>Included model definitions MAY use <code>include</code> directives, but MUST NOT be
-recursive.</li>
+<li>Included model definitions MAY use <code>include</code> directives, but MUST NOT result
+in a circular include chain.</li>
 <li>Resolution of the include path MUST follow standard path resolution.
 Meaning, relative paths are relative to the document with the include
 directive.</li>

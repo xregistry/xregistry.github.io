@@ -1,0 +1,12 @@
+{
+  "createdat": "2026-07-23T16:35:15.934169303Z",
+  "defaultversionid": "v1.0-rc1",
+  "defaultversionsticky": false,
+  "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/README.md/versions/v1.0-rc1",
+  "epoch": 1,
+  "modifiedat": "2026-07-23T16:35:15.934169303Z",
+  "readonly": false,
+  "sampleid": "README.md",
+  "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/README.md/meta",
+  "xid": "/xregistryspecs/cloudevents-v1/samples/README.md/meta"
+}

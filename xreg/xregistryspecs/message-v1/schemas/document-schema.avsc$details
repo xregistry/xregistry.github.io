@@ -1,10 +1,10 @@
 {
   "ancestorid": "v1.0-rc1",
-  "createdat": "2026-07-23T16:25:22.246543101Z",
+  "createdat": "2026-07-23T16:35:22.508388795Z",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "https://xregistry.io/xreg/xregistryspecs/message-v1/schemas/document-schema.avsc/meta",
-  "modifiedat": "2026-07-23T16:25:22.246543101Z",
+  "modifiedat": "2026-07-23T16:35:22.508388795Z",
   "schemaid": "document-schema.avsc",
   "self": "https://xregistry.io/xreg/xregistryspecs/message-v1/schemas/document-schema.avsc",
   "versionid": "v1.0-rc1",
