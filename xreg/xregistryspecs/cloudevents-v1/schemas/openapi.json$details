@@ -1,10 +1,10 @@
 {
   "ancestorid": "v1.0-rc1",
-  "createdat": "2026-07-23T16:35:14.609250676Z",
+  "createdat": "2026-07-29T11:52:37.039722508Z",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/schemas/openapi.json/meta",
-  "modifiedat": "2026-07-23T16:35:14.609250676Z",
+  "modifiedat": "2026-07-29T11:52:37.039722508Z",
   "schemaid": "openapi.json",
   "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/schemas/openapi.json",
   "versionid": "v1.0-rc1",

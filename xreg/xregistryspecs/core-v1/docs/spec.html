@@ -51,7 +51,7 @@
 <!-- words: compat formatvalidatedreason compatibilityvalidatedreason -->
 <!-- words: matchversions excludeall -->
 <!-- words: myarray myobject -->
-<!-- words: href schemaregistry webpage -->
+<!-- words: href schemaregistry missingschema webpage -->
 <h2 id="abstract">Abstract <a class="anchor" href="#abstract">🔗</a></h2>
 <p>This specification defines an extensible model for managing metadata
 registries. The metadata artifacts can be for any purpose, such as schemas
@@ -3016,10 +3016,25 @@ it was deleted, never existed or the current client does not have permission
 to see it, is not an error and is not a condition that a server is REQUIRED to
 detect. In these &quot;dangling xref&quot; situations, the serialization of the source
 Resource will not include any target Resource attributes or nested collections.
-Rather, it will only show the <code>&lt;RESOURCE&gt;id</code> and <code>xref</code> attributes. Therefore,
-a client that receives a response containing only those two attributes can
+Rather, it will only show the <code>xref</code> and ID-like attributes. Therefore, a
+client that receives a response containing only those attributes can
 treat this as an indicator that the target Resource is inaccessible, and can
 make the determination as to whether this is something to investigate or not.</p>
+<p>For example, a schema Resource (<code>mySchema</code>) referencing a non-existing schema
+Resource (<code>missingSchema</code>) would look like:</p>
+<pre><code class="language-yaml">{
+  &quot;schemaid&quot;: &quot;mySchema&quot;,
+  &quot;self&quot;: &quot;http://example.com/schemagroups/group1/schemas/mySchema&quot;,
+  &quot;xid&quot;: &quot;/schemagroups/group1/schemas/mySchema&quot;,
+  &quot;metaurl&quot;: &quot;https://example.com/schemagroups/group1/schemas/mySchema/meta&quot;,
+  &quot;meta&quot;: {
+    &quot;schemaid&quot;: &quot;mySchema&quot;,
+    &quot;self&quot;: &quot;http://example.com/schemagroups/group1/schemas/mySchema/meta&quot;,
+    &quot;xid&quot;: &quot;/schemagroups/group1/schemas/mySchema/meta&quot;,
+    &quot;xref&quot;: &quot;/schemagroups/group1/schemas/missingSchema&quot;
+  }
+}
+</code></pre>
 <p>However, a non-existing Resource is not the same as a poorly formed XID
 value. An <code>xref</code> that isn't syntactically correct, or references a
 non-existing Group or Resource, MUST generate an error
@@ -5431,10 +5446,11 @@ field is just a substitution value and MUST NOT be empty.</p>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#constraint_failure</code></li>
 <li>Code: <code>400 Bad Request</code></li>
 <li>Subject: <code>&lt;resource_xid&gt;</code></li>
-<li>Title: <code>The request would result in one or more Versions of &quot;&lt;subject&gt;&quot; not being compliant with its owning Group's &quot;equals&quot; constraint for attribute &quot;&lt;path&gt;&quot;.</code></li>
+<li>Title: <code>The request would result in one or more Versions of &quot;&lt;subject&gt;&quot; not being compliant with its owning Group's &quot;&lt;kind&gt;&quot; constraint for attribute &quot;&lt;path&gt;&quot;.</code></li>
 <li>Args:
 <ul>
 <li><code>path</code>: The dot (<code>.</code>) notion traversal path to the Resource's attribute being constrained.</li>
+<li><code>kind</code>: The type of constraint violated, either <code>enum</code> or <code>equals</code>.</li>
 </ul>
 </li>
 </ul>
