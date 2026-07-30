@@ -48,6 +48,7 @@
 <h1 id="schema-registry-service---version-10-rc3">Schema Registry Service - Version 1.0-rc3 <a class="anchor" href="#schema-registry-service---version-10-rc3">🔗</a></h1>
 <!-- words: formatvalidated compatibilityvalidated -->
 <!-- words: formatvalidatedreason compatibilityvalidatedreason -->
+<!-- words: jsonstructure jstruct namespace -->
 <h2 id="abstract">Abstract <a class="anchor" href="#abstract">🔗</a></h2>
 <p>This specification defines a Schema Registry extension to the xRegistry
 document format and API <a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html">specification</a>. A Schema Registry
@@ -86,6 +87,7 @@ allows for the storage, management and discovery of schema documents.</p>
 <li><a href="#432-xml-schema">4.3.2. XML Schema</a></li>
 <li><a href="#433-apache-avro-schema">4.3.3. Apache Avro Schema</a></li>
 <li><a href="#434-protobuf-schema">4.3.4. Protobuf Schema</a></li>
+<li><a href="#435-json-structure-schema">4.3.5. JSON Structure Schema</a></li>
 </ul>
 </li>
 </ul>
@@ -484,10 +486,11 @@ Versions for a schema named <code>com.example.telemetrydata</code>:</p>
 <p>When the <code>format</code> attribute is set to <code>JsonSchema</code>, the <code>schema</code> attribute of
 the schema Resource is a JSON object representing a JSON Schema document
 conformant with the declared version.</p>
-<p>When a URI, like <a href="./../../message-v1/docs/spec.html#dataschemauri"><code>schemauri</code></a>,
-points to a JSON Schema document it MAY use a <a href="https://www.rfc-editor.org/rfc/rfc6901">JSON pointer</a>
-expression to deep link into the schema document to reference a particular type
-definition. Otherwise the top-level object definition of the schema is used.</p>
+<p>When a URI, like the Message Registry's
+<a href="./../../message-v1/docs/spec.html#dataschemauri"><code>dataschemauri</code></a>, points to a JSON Schema
+document it MAY use a <a href="https://www.rfc-editor.org/rfc/rfc6901">JSON pointer</a> expression to deep link into
+the schema document to reference a particular type definition. Otherwise the
+top-level object definition of the schema is used.</p>
 <p>The version of the JSON Schema format is the version of the JSON Schema
 specification that is used to define the schema. The version of the JSON Schema
 specification is defined in the <code>$schema</code> attribute of the schema document.</p>
@@ -513,10 +516,11 @@ Schema specification that is used to define the schema.</p>
 <p>When the <code>format</code> attribute is set to <code>XSD</code>, the <code>schema</code> attribute of schema
 Resource is a string containing an XML Schema document conformant with the
 declared version.</p>
-<p>When a URI, like <a href="./../../message-v1/docs/spec.html#dataschemauri"><code>schemauri</code></a>,
-points to a JSON Schema document it MAY use an XPath expression to deep link
-into the schema document to reference a particular type definition. Otherwise
-the top-level object definition of the schema is used.</p>
+<p>When a URI, like the Message Registry's
+<a href="./../../message-v1/docs/spec.html#dataschemauri"><code>dataschemauri</code></a>, points to an XML Schema
+document it MAY use an XPath expression to deep link into the schema document to
+reference a particular type definition. Otherwise the top-level object
+definition of the schema is used.</p>
 <p>The identifiers for the following XML Schema versions:</p>
 <ul>
 <li>1.0: <code>https://www.w3.org/TR/xmlschema-1/</code></li>
@@ -539,12 +543,12 @@ with the declared version.</p>
 <li><code>Avro/1.8.2</code> is the identifier for the Apache Avro release 1.8.2.</li>
 <li><code>Avro/1.11.0</code> is the identifier for the Apache Avro release 1.11.0</li>
 </ul>
-<p>When a URI, like <a href="./../../message-v1/docs/spec.html#dataschemauri"><code>schemauri</code></a>,
-points to a JSON Schema document it MAY use a URI fragment suffix
-<code>[:]{record-name}</code> to deep link into the schema document to reference a
-particular type definition. Otherwise the top-level object definition of the
-schema is used. The ':' character is used as a separator when the URI already
-contains a fragment.</p>
+<p>When a URI, like the Message Registry's
+<a href="./../../message-v1/docs/spec.html#dataschemauri"><code>dataschemauri</code></a>, points to an Avro Schema
+document it MAY use a URI fragment suffix <code>[:]{record-name}</code> to deep link into
+the schema document to reference a particular type definition. Otherwise the
+top-level object definition of the schema is used. The ':' character is used as
+a separator when the URI already contains a fragment.</p>
 <p>Examples:</p>
 <ul>
 <li>If the Avro schema document is referenced using the URI
@@ -568,11 +572,11 @@ with the declared version.</p>
 <li><code>Protobuf/3</code> is the identifier for the Protobuf syntax version 3.</li>
 <li><code>Protobuf/2</code> is the identifier for the Protobuf syntax version 2.</li>
 </ul>
-<p>A URI, like <a href="./../../message-v1/docs/spec.html#dataschemauri"><code>schemauri</code></a> that
-points to a Protobuf Schema document MUST reference a Protobuf <code>message</code>
-declaration contained in the schema document using a URI fragment suffix
-<code>[:]{message-name}</code>. The ':' character is used as a separator when the URI
-already contains a fragment.</p>
+<p>A URI, like the Message Registry's
+<a href="./../../message-v1/docs/spec.html#dataschemauri"><code>dataschemauri</code></a>, that points to a Protobuf
+Schema document MUST reference a Protobuf <code>message</code> declaration contained in the
+schema document using a URI fragment suffix <code>[:]{message-name}</code>. The ':'
+character is used as a separator when the URI already contains a fragment.</p>
 <p>Examples:</p>
 <ul>
 <li>If the Protobuf schema document is referenced using the URI
@@ -584,6 +588,31 @@ message.</li>
 the which the reference is already in the form of a URI fragment, the suffix
 is appended separated with a colon, for instance
 <code>.../com.example.telemetrydata:TelemetryEvent</code>.</li>
+</ul>
+<h4 id="435-json-structure-schema">4.3.5. JSON Structure Schema <a class="anchor" href="#435-json-structure-schema">🔗</a></h4>
+<p>The <a href="./../../core-v1/docs/spec.html#format-attribute"><code>format</code></a> identifier for JSON Structure
+Schema is <code>JsonStructure</code>. When the <code>format</code> attribute is set to <code>JsonStructure</code>,
+the <code>schema</code> attribute of the schema Resource is a JSON object representing a JSON
+Structure schema document <a href="https://json-structure.github.io/core/draft-vasters-json-structure-core.html">JSTRUCT-CORE</a>.</p>
+<p>The version identifier follows the pattern <code>JsonStructure/{version}</code>, where
+<code>{version}</code> is the version of the JSON Structure Core specification that is
+used to define the schema.</p>
+<p><code>JsonStructure/draft-04</code> is the identifier for the Internet-Draft version 04 of
+the JSON Structure Core specification. If a future RFC is published, the
+version identifier will be updated to reflect the RFC number, for example
+<code>JsonStructure/rfc-0000</code>.</p>
+<p>When a URI, like the Message Registry's
+<a href="./../../message-v1/docs/spec.html#dataschemauri"><code>dataschemauri</code></a>, points to a JSON Structure
+schema document, it MAY use a <a href="https://www.rfc-editor.org/rfc/rfc6901">JSON pointer</a> expression to deep
+link into the schema document to reference a particular type definition. This is
+typically used to reference type definitions within the <code>definitions</code> namespace.</p>
+<p>Examples:</p>
+<ul>
+<li><code>https://example.com/schemas/person.json#/definitions/Employee</code> uses the
+<code>#/definitions/Employee</code> fragment to reference the <code>Employee</code> type definition.</li>
+<li>For local Schema Registry references like
+<code>#/schemagroups/com.example.schemas/schemas/com.example.person/versions/1/definitions/Employee</code>,
+append the JSON Pointer fragment to reference a specific type within that schema.</li>
 </ul>
 <p>Like the <a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html">xRegistry Core</a> specification, this specification does
 not explicitly address authentication or authorization levels of users, nor how

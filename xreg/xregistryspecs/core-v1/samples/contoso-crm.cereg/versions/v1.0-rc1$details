@@ -1,9 +1,9 @@
 {
   "ancestorid": "v1.0-rc1",
-  "createdat": "2026-07-29T11:52:43.1494292Z",
+  "createdat": "2026-07-30T16:17:53.155114607Z",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2026-07-29T11:52:43.1494292Z",
+  "modifiedat": "2026-07-30T16:17:53.155114607Z",
   "sampleid": "contoso-crm.cereg",
   "self": "https://xregistry.io/xreg/xregistryspecs/core-v1/samples/contoso-crm.cereg/versions/v1.0-rc1",
   "versionid": "v1.0-rc1",
