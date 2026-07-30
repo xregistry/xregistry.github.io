@@ -1,10 +1,10 @@
 {
   "ancestorid": "v1.0-rc1",
-  "createdat": "2026-07-30T16:17:55.23322104Z",
+  "createdat": "2026-07-30T16:24:49.914026658Z",
   "docid": "model.json",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2026-07-30T16:17:55.23322104Z",
+  "modifiedat": "2026-07-30T16:24:49.914026658Z",
   "self": "https://xregistry.io/xreg/xregistryspecs/schema-v1/docs/model.json/versions/v1.0-rc1",
   "versionid": "v1.0-rc1",
   "xid": "/xregistryspecs/schema-v1/docs/model.json/versions/v1.0-rc1"
