@@ -1,14 +1,14 @@
 {
   "ancestorid": "v1.0-rc1",
-  "createdat": "2026-08-04T11:39:23.765938041Z",
+  "createdat": "2026-08-04T20:44:08.073174073Z",
   "epoch": 1,
   "isdefault": true,
-  "metaurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/contoso-erp-jsons07.xreg.json/meta",
-  "modifiedat": "2026-08-04T11:39:23.765938041Z",
+  "metaurl": "http://localhost:8383/xregistryspecs/cloudevents-v1/samples/contoso-erp-jsons07.xreg.json/meta",
+  "modifiedat": "2026-08-04T20:44:08.073174073Z",
   "sampleid": "contoso-erp-jsons07.xreg.json",
-  "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/contoso-erp-jsons07.xreg.json",
+  "self": "http://localhost:8383/xregistryspecs/cloudevents-v1/samples/contoso-erp-jsons07.xreg.json$details",
   "versionid": "v1.0-rc1",
   "versionscount": 1,
-  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/contoso-erp-jsons07.xreg.json/versions",
+  "versionsurl": "http://localhost:8383/xregistryspecs/cloudevents-v1/samples/contoso-erp-jsons07.xreg.json/versions",
   "xid": "/xregistryspecs/cloudevents-v1/samples/contoso-erp-jsons07.xreg.json"
 }

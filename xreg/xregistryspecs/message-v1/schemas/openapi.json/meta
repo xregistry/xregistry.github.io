@@ -1,12 +1,12 @@
 {
-  "createdat": "2026-08-04T11:39:29.884649296Z",
+  "createdat": "2026-08-04T20:44:14.77462015Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
-  "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/message-v1/schemas/openapi.json/versions/v1.0-rc1",
+  "defaultversionurl": "http://localhost:8383/xregistryspecs/message-v1/schemas/openapi.json/versions/v1.0-rc1$details",
   "epoch": 1,
-  "modifiedat": "2026-08-04T11:39:29.884649296Z",
+  "modifiedat": "2026-08-04T20:44:14.77462015Z",
   "readonly": false,
   "schemaid": "openapi.json",
-  "self": "https://xregistry.io/xreg/xregistryspecs/message-v1/schemas/openapi.json/meta",
+  "self": "http://localhost:8383/xregistryspecs/message-v1/schemas/openapi.json/meta",
   "xid": "/xregistryspecs/message-v1/schemas/openapi.json/meta"
 }

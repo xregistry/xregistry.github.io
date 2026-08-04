@@ -1,14 +1,14 @@
 {
   "ancestorid": "v1.0-rc1",
-  "createdat": "2026-08-04T11:39:24.031056594Z",
+  "createdat": "2026-08-04T20:44:08.361801166Z",
   "epoch": 1,
   "isdefault": true,
-  "metaurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/vacuumcleaner-avro.xreg.json/meta",
-  "modifiedat": "2026-08-04T11:39:24.031056594Z",
+  "metaurl": "http://localhost:8383/xregistryspecs/cloudevents-v1/samples/vacuumcleaner-avro.xreg.json/meta",
+  "modifiedat": "2026-08-04T20:44:08.361801166Z",
   "sampleid": "vacuumcleaner-avro.xreg.json",
-  "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/vacuumcleaner-avro.xreg.json",
+  "self": "http://localhost:8383/xregistryspecs/cloudevents-v1/samples/vacuumcleaner-avro.xreg.json$details",
   "versionid": "v1.0-rc1",
   "versionscount": 1,
-  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/vacuumcleaner-avro.xreg.json/versions",
+  "versionsurl": "http://localhost:8383/xregistryspecs/cloudevents-v1/samples/vacuumcleaner-avro.xreg.json/versions",
   "xid": "/xregistryspecs/cloudevents-v1/samples/vacuumcleaner-avro.xreg.json"
 }

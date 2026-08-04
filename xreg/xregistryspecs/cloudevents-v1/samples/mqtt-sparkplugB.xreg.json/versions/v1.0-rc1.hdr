@@ -1,10 +1,10 @@
 content-disposition:mqtt-sparkplugB.xreg.json
 content-location:https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/mqtt-sparkplugB.xreg.json/versions/v1.0-rc1
 xregistry-ancestorid:v1.0-rc1
-xregistry-createdat:2026-08-04T11:39:23.917109919Z
+xregistry-createdat:2026-08-04T20:44:08.239829394Z
 xregistry-epoch:1
 xregistry-isdefault:true
-xregistry-modifiedat:2026-08-04T11:39:23.917109919Z
+xregistry-modifiedat:2026-08-04T20:44:08.239829394Z
 xregistry-sampleid:mqtt-sparkplugB.xreg.json
 xregistry-self:https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/mqtt-sparkplugB.xreg.json/versions/v1.0-rc1
 xregistry-versionid:v1.0-rc1

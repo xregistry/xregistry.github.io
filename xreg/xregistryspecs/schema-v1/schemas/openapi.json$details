@@ -1,14 +1,14 @@
 {
   "ancestorid": "v1.0-rc1",
-  "createdat": "2026-08-04T11:39:30.301479472Z",
+  "createdat": "2026-08-04T20:44:15.235057783Z",
   "epoch": 1,
   "isdefault": true,
-  "metaurl": "https://xregistry.io/xreg/xregistryspecs/schema-v1/schemas/openapi.json/meta",
-  "modifiedat": "2026-08-04T11:39:30.301479472Z",
+  "metaurl": "http://localhost:8383/xregistryspecs/schema-v1/schemas/openapi.json/meta",
+  "modifiedat": "2026-08-04T20:44:15.235057783Z",
   "schemaid": "openapi.json",
-  "self": "https://xregistry.io/xreg/xregistryspecs/schema-v1/schemas/openapi.json",
+  "self": "http://localhost:8383/xregistryspecs/schema-v1/schemas/openapi.json$details",
   "versionid": "v1.0-rc1",
   "versionscount": 1,
-  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/schema-v1/schemas/openapi.json/versions",
+  "versionsurl": "http://localhost:8383/xregistryspecs/schema-v1/schemas/openapi.json/versions",
   "xid": "/xregistryspecs/schema-v1/schemas/openapi.json"
 }

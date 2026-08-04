@@ -1,14 +1,14 @@
 {
   "ancestorid": "v1.0-rc1",
-  "createdat": "2026-08-04T11:39:29.884649296Z",
+  "createdat": "2026-08-04T20:44:14.77462015Z",
   "epoch": 1,
   "isdefault": true,
-  "metaurl": "https://xregistry.io/xreg/xregistryspecs/message-v1/schemas/openapi.json/meta",
-  "modifiedat": "2026-08-04T11:39:29.884649296Z",
+  "metaurl": "http://localhost:8383/xregistryspecs/message-v1/schemas/openapi.json/meta",
+  "modifiedat": "2026-08-04T20:44:14.77462015Z",
   "schemaid": "openapi.json",
-  "self": "https://xregistry.io/xreg/xregistryspecs/message-v1/schemas/openapi.json",
+  "self": "http://localhost:8383/xregistryspecs/message-v1/schemas/openapi.json$details",
   "versionid": "v1.0-rc1",
   "versionscount": 1,
-  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/message-v1/schemas/openapi.json/versions",
+  "versionsurl": "http://localhost:8383/xregistryspecs/message-v1/schemas/openapi.json/versions",
   "xid": "/xregistryspecs/message-v1/schemas/openapi.json"
 }

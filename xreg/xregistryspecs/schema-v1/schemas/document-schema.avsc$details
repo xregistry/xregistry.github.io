@@ -1,14 +1,14 @@
 {
   "ancestorid": "v1.0-rc1",
-  "createdat": "2026-08-04T11:39:30.131262868Z",
+  "createdat": "2026-08-04T20:44:15.046950476Z",
   "epoch": 1,
   "isdefault": true,
-  "metaurl": "https://xregistry.io/xreg/xregistryspecs/schema-v1/schemas/document-schema.avsc/meta",
-  "modifiedat": "2026-08-04T11:39:30.131262868Z",
+  "metaurl": "http://localhost:8383/xregistryspecs/schema-v1/schemas/document-schema.avsc/meta",
+  "modifiedat": "2026-08-04T20:44:15.046950476Z",
   "schemaid": "document-schema.avsc",
-  "self": "https://xregistry.io/xreg/xregistryspecs/schema-v1/schemas/document-schema.avsc",
+  "self": "http://localhost:8383/xregistryspecs/schema-v1/schemas/document-schema.avsc$details",
   "versionid": "v1.0-rc1",
   "versionscount": 1,
-  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/schema-v1/schemas/document-schema.avsc/versions",
+  "versionsurl": "http://localhost:8383/xregistryspecs/schema-v1/schemas/document-schema.avsc/versions",
   "xid": "/xregistryspecs/schema-v1/schemas/document-schema.avsc"
 }

@@ -1,14 +1,14 @@
 {
   "ancestorid": "v1.0-rc1",
-  "createdat": "2026-08-04T11:39:23.866827421Z",
+  "createdat": "2026-08-04T20:44:08.183420036Z",
   "epoch": 1,
   "isdefault": true,
-  "metaurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/lightbulb-avro.xreg.json/meta",
-  "modifiedat": "2026-08-04T11:39:23.866827421Z",
+  "metaurl": "http://localhost:8383/xregistryspecs/cloudevents-v1/samples/lightbulb-avro.xreg.json/meta",
+  "modifiedat": "2026-08-04T20:44:08.183420036Z",
   "sampleid": "lightbulb-avro.xreg.json",
-  "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/lightbulb-avro.xreg.json",
+  "self": "http://localhost:8383/xregistryspecs/cloudevents-v1/samples/lightbulb-avro.xreg.json$details",
   "versionid": "v1.0-rc1",
   "versionscount": 1,
-  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/lightbulb-avro.xreg.json/versions",
+  "versionsurl": "http://localhost:8383/xregistryspecs/cloudevents-v1/samples/lightbulb-avro.xreg.json/versions",
   "xid": "/xregistryspecs/cloudevents-v1/samples/lightbulb-avro.xreg.json"
 }

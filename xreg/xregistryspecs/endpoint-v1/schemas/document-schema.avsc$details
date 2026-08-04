@@ -1,14 +1,14 @@
 {
   "ancestorid": "v1.0-rc1",
-  "createdat": "2026-08-04T11:39:28.679574223Z",
+  "createdat": "2026-08-04T20:44:13.480063901Z",
   "epoch": 1,
   "isdefault": true,
-  "metaurl": "https://xregistry.io/xreg/xregistryspecs/endpoint-v1/schemas/document-schema.avsc/meta",
-  "modifiedat": "2026-08-04T11:39:28.679574223Z",
+  "metaurl": "http://localhost:8383/xregistryspecs/endpoint-v1/schemas/document-schema.avsc/meta",
+  "modifiedat": "2026-08-04T20:44:13.480063901Z",
   "schemaid": "document-schema.avsc",
-  "self": "https://xregistry.io/xreg/xregistryspecs/endpoint-v1/schemas/document-schema.avsc",
+  "self": "http://localhost:8383/xregistryspecs/endpoint-v1/schemas/document-schema.avsc$details",
   "versionid": "v1.0-rc1",
   "versionscount": 1,
-  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/endpoint-v1/schemas/document-schema.avsc/versions",
+  "versionsurl": "http://localhost:8383/xregistryspecs/endpoint-v1/schemas/document-schema.avsc/versions",
   "xid": "/xregistryspecs/endpoint-v1/schemas/document-schema.avsc"
 }

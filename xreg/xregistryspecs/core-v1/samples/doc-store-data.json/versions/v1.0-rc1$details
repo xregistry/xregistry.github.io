@@ -1,11 +1,11 @@
 {
   "ancestorid": "v1.0-rc1",
-  "createdat": "2026-08-04T11:39:28.135111539Z",
+  "createdat": "2026-08-04T20:44:12.837834567Z",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2026-08-04T11:39:28.135111539Z",
+  "modifiedat": "2026-08-04T20:44:12.837834567Z",
   "sampleid": "doc-store-data.json",
-  "self": "https://xregistry.io/xreg/xregistryspecs/core-v1/samples/doc-store-data.json/versions/v1.0-rc1",
+  "self": "http://localhost:8383/xregistryspecs/core-v1/samples/doc-store-data.json/versions/v1.0-rc1$details",
   "versionid": "v1.0-rc1",
   "xid": "/xregistryspecs/core-v1/samples/doc-store-data.json/versions/v1.0-rc1"
 }

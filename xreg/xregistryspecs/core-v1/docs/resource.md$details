@@ -1,14 +1,14 @@
 {
   "ancestorid": "v1.0-rc1",
-  "createdat": "2026-08-04T11:39:26.834086348Z",
+  "createdat": "2026-08-04T20:44:11.394405705Z",
   "docid": "resource.md",
   "epoch": 1,
   "isdefault": true,
-  "metaurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/resource.md/meta",
-  "modifiedat": "2026-08-04T11:39:26.834086348Z",
-  "self": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/resource.md",
+  "metaurl": "http://localhost:8383/xregistryspecs/core-v1/docs/resource.md/meta",
+  "modifiedat": "2026-08-04T20:44:11.394405705Z",
+  "self": "http://localhost:8383/xregistryspecs/core-v1/docs/resource.md$details",
   "versionid": "v1.0-rc1",
   "versionscount": 1,
-  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/resource.md/versions",
+  "versionsurl": "http://localhost:8383/xregistryspecs/core-v1/docs/resource.md/versions",
   "xid": "/xregistryspecs/core-v1/docs/resource.md"
 }

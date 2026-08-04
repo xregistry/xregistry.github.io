@@ -1,14 +1,14 @@
 {
   "ancestorid": "v1.0-rc1",
-  "createdat": "2026-08-04T11:39:28.210617835Z",
+  "createdat": "2026-08-04T20:44:12.923950131Z",
   "epoch": 1,
   "isdefault": true,
-  "metaurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/samples/formatted-doc-store-data.json/meta",
-  "modifiedat": "2026-08-04T11:39:28.210617835Z",
+  "metaurl": "http://localhost:8383/xregistryspecs/core-v1/samples/formatted-doc-store-data.json/meta",
+  "modifiedat": "2026-08-04T20:44:12.923950131Z",
   "sampleid": "formatted-doc-store-data.json",
-  "self": "https://xregistry.io/xreg/xregistryspecs/core-v1/samples/formatted-doc-store-data.json",
+  "self": "http://localhost:8383/xregistryspecs/core-v1/samples/formatted-doc-store-data.json$details",
   "versionid": "v1.0-rc1",
   "versionscount": 1,
-  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/samples/formatted-doc-store-data.json/versions",
+  "versionsurl": "http://localhost:8383/xregistryspecs/core-v1/samples/formatted-doc-store-data.json/versions",
   "xid": "/xregistryspecs/core-v1/samples/formatted-doc-store-data.json"
 }

@@ -1,14 +1,14 @@
 {
   "ancestorid": "v1.0-rc1",
-  "createdat": "2026-08-04T11:39:24.672578459Z",
+  "createdat": "2026-08-04T20:44:09.027263604Z",
   "docid": "model.json",
   "epoch": 1,
   "isdefault": true,
-  "metaurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/model.json/meta",
-  "modifiedat": "2026-08-04T11:39:24.672578459Z",
-  "self": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/model.json",
+  "metaurl": "http://localhost:8383/xregistryspecs/core-v1/docs/model.json/meta",
+  "modifiedat": "2026-08-04T20:44:09.027263604Z",
+  "self": "http://localhost:8383/xregistryspecs/core-v1/docs/model.json$details",
   "versionid": "v1.0-rc1",
   "versionscount": 1,
-  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/model.json/versions",
+  "versionsurl": "http://localhost:8383/xregistryspecs/core-v1/docs/model.json/versions",
   "xid": "/xregistryspecs/core-v1/docs/model.json"
 }
