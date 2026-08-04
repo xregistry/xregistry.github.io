@@ -1,10 +1,10 @@
 content-disposition:document-schema.json
 content-location:https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/schemas/document-schema.json/versions/v1.0-rc1
 xregistry-ancestorid:v1.0-rc1
-xregistry-createdat:2026-07-30T16:24:41.258473684Z
+xregistry-createdat:2026-08-04T11:39:23.290162207Z
 xregistry-epoch:1
 xregistry-isdefault:true
-xregistry-modifiedat:2026-07-30T16:24:41.258473684Z
+xregistry-modifiedat:2026-08-04T11:39:23.290162207Z
 xregistry-schemaid:document-schema.json
 xregistry-self:https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/schemas/document-schema.json/versions/v1.0-rc1
 xregistry-versionid:v1.0-rc1

@@ -1,10 +1,10 @@
 content-disposition:schemastore_org.xreg.json
 content-location:https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/schemastore_org.xreg.json/versions/v1.0-rc1
 xregistry-ancestorid:v1.0-rc1
-xregistry-createdat:2026-07-30T16:24:42.870261518Z
+xregistry-createdat:2026-08-04T11:39:24.571071532Z
 xregistry-epoch:1
 xregistry-isdefault:true
-xregistry-modifiedat:2026-07-30T16:24:42.870261518Z
+xregistry-modifiedat:2026-08-04T11:39:24.571071532Z
 xregistry-sampleid:schemastore_org.xreg.json
 xregistry-self:https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/samples/schemastore_org.xreg.json/versions/v1.0-rc1
 xregistry-versionid:v1.0-rc1

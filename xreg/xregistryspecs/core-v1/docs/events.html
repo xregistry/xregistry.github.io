@@ -119,7 +119,7 @@ generated.</li>
 </ul>
 <p>The following sections specify the metadata defined for xRegistry events.
 Implementations MAY define additional metadata.</p>
-<h3 id="cloudevent-typehttpsgithubcomcloudeventsspecblobmaincloudeventsspecmdtype-core-context-attribute">CloudEvent <a href="https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md#type"><code>type</code></a> Core Context Attribute <a class="anchor" href="#cloudevent-typehttpsgithubcomcloudeventsspecblobmaincloudeventsspecmdtype-core-context-attribute">🔗</a></h3>
+<h3 id="cloudevent-type-core-context-attribute">CloudEvent <a href="https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md#type"><code>type</code></a> Core Context Attribute <a class="anchor" href="#cloudevent-type-core-context-attribute">🔗</a></h3>
 <p>The type of action taken on the entity. The value MUST be of the form:
 <code>io.xregistry.&lt;ENTITY&gt;.&lt;ACTION&gt;</code>
 where:</p>
@@ -151,18 +151,18 @@ upon. It MUST be one of:</p>
 </li>
 </ul>
 <p>This context attribute MUST be present in each event.</p>
-<h3 id="cloudevent-sourcehttpsgithubcomcloudeventsspecblobmaincloudeventsspecmdsource-1-core-context-attribute">CloudEvent <a href="https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md#source-1"><code>source</code></a> Core Context Attribute <a class="anchor" href="#cloudevent-sourcehttpsgithubcomcloudeventsspecblobmaincloudeventsspecmdsource-1-core-context-attribute">🔗</a></h3>
+<h3 id="cloudevent-source-core-context-attribute">CloudEvent <a href="https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md#source-1"><code>source</code></a> Core Context Attribute <a class="anchor" href="#cloudevent-source-core-context-attribute">🔗</a></h3>
 <p>The xRegistry in which the entity exists. The value MUST be an absolute URL
 to the root of the xRegistry instance.</p>
 <p>This context attribute MUST be present in each event.</p>
-<h3 id="cloudevent-subjecthttpsgithubcomcloudeventsspecblobmaincloudeventsspecmdsubject-core-context-attribute">CloudEvent <a href="https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md#subject"><code>subject</code></a> Core Context Attribute <a class="anchor" href="#cloudevent-subjecthttpsgithubcomcloudeventsspecblobmaincloudeventsspecmdsubject-core-context-attribute">🔗</a></h3>
+<h3 id="cloudevent-subject-core-context-attribute">CloudEvent <a href="https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md#subject"><code>subject</code></a> Core Context Attribute <a class="anchor" href="#cloudevent-subject-core-context-attribute">🔗</a></h3>
 <p>The <code>xid</code> of the entity acted upon. While this attribute is OPTIONAL in the
 CloudEvents specification, it is REQUIRED to be present in an xRegistry event.</p>
 <p>Note: constructing a URL by appending the <code>subject</code> value to the <code>source</code>
 value MUST result in an absolute URL to the entity (assuming any trailing <code>/</code>
 on <code>source</code> is removed since XIDs always start with <code>/</code>).</p>
 <p>This context attribute MUST be present in each event.</p>
-<h3 id="cloudevent-timehttpsgithubcomcloudeventsspecblobmaincloudeventsspecmdtime-core-context-attribute">CloudEvent <a href="https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md#time"><code>time</code></a> Core Context Attribute <a class="anchor" href="#cloudevent-timehttpsgithubcomcloudeventsspecblobmaincloudeventsspecmdtime-core-context-attribute">🔗</a></h3>
+<h3 id="cloudevent-time-core-context-attribute">CloudEvent <a href="https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md#time"><code>time</code></a> Core Context Attribute <a class="anchor" href="#cloudevent-time-core-context-attribute">🔗</a></h3>
 <p>The time of when the interaction occurred. This value MUST be the same for
 all events generated within the same interaction.</p>
 <p>Its value MUST be an <a href="https://tools.ietf.org/html/rfc3339">RFC3339</a> timestamp
@@ -193,7 +193,7 @@ interaction, the following HTTP header MUST be present in the response flow:</p>
 each request-response operation.</p>
 <p>This context attribute is NOT REQUIRED to be present in the event, but is
 RECOMMENDED.</p>
-<h3 id="cloudevent-datahttpsgithubcomcloudeventsspecblobmaincloudeventsspecmdevent-data">CloudEvent <a href="https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md#event-data"><code>data</code></a> <a class="anchor" href="#cloudevent-datahttpsgithubcomcloudeventsspecblobmaincloudeventsspecmdevent-data">🔗</a></h3>
+<h3 id="cloudevent-data">CloudEvent <a href="https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md#event-data"><code>data</code></a> <a class="anchor" href="#cloudevent-data">🔗</a></h3>
 <p>When present, and serialized in JSON, the <code>data</code> MUST be of the form:</p>
 <pre><code class="language-yaml">{
   &quot;changed&quot;: [ &quot;&lt;STRING&gt;&quot;, * ] ?
