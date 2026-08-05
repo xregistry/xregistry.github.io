@@ -1,11 +1,11 @@
 {
-  "createdat": "2026-08-04T20:44:10.344538592Z",
+  "createdat": "2026-08-05T01:02:06.740159617Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
   "defaultversionurl": "http://localhost:8383/xregistryspecs/core-v1/docs/http.md/versions/v1.0-rc1$details",
   "docid": "http.md",
   "epoch": 1,
-  "modifiedat": "2026-08-04T20:44:10.344538592Z",
+  "modifiedat": "2026-08-05T01:02:06.740159617Z",
   "readonly": false,
   "self": "http://localhost:8383/xregistryspecs/core-v1/docs/http.md/meta",
   "xid": "/xregistryspecs/core-v1/docs/http.md/meta"

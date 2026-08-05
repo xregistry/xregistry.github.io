@@ -1,11 +1,11 @@
 {
   "ancestorid": "v1.0-rc1",
-  "createdat": "2026-08-04T20:44:13.410492026Z",
+  "createdat": "2026-08-05T01:02:10.27633199Z",
   "docid": "spec.md",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "http://localhost:8383/xregistryspecs/endpoint-v1/docs/spec.md/meta",
-  "modifiedat": "2026-08-04T20:44:13.410492026Z",
+  "modifiedat": "2026-08-05T01:02:10.27633199Z",
   "self": "http://localhost:8383/xregistryspecs/endpoint-v1/docs/spec.md$details",
   "versionid": "v1.0-rc1",
   "versionscount": 1,

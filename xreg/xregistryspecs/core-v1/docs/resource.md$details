@@ -1,11 +1,11 @@
 {
   "ancestorid": "v1.0-rc1",
-  "createdat": "2026-08-04T20:44:11.394405705Z",
+  "createdat": "2026-08-05T01:02:07.994414123Z",
   "docid": "resource.md",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "http://localhost:8383/xregistryspecs/core-v1/docs/resource.md/meta",
-  "modifiedat": "2026-08-04T20:44:11.394405705Z",
+  "modifiedat": "2026-08-05T01:02:07.994414123Z",
   "self": "http://localhost:8383/xregistryspecs/core-v1/docs/resource.md$details",
   "versionid": "v1.0-rc1",
   "versionscount": 1,

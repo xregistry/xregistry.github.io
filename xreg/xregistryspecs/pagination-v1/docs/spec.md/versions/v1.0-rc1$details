@@ -1,10 +1,10 @@
 {
   "ancestorid": "v1.0-rc1",
-  "createdat": "2026-08-04T20:44:15.290343487Z",
+  "createdat": "2026-08-05T01:02:12.411533161Z",
   "docid": "spec.md",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2026-08-04T20:44:15.290343487Z",
+  "modifiedat": "2026-08-05T01:02:12.411533161Z",
   "self": "http://localhost:8383/xregistryspecs/pagination-v1/docs/spec.md/versions/v1.0-rc1$details",
   "versionid": "v1.0-rc1",
   "xid": "/xregistryspecs/pagination-v1/docs/spec.md/versions/v1.0-rc1"

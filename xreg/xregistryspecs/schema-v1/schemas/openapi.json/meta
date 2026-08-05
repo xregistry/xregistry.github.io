@@ -1,10 +1,10 @@
 {
-  "createdat": "2026-08-04T20:44:15.235057783Z",
+  "createdat": "2026-08-05T01:02:12.354654347Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
   "defaultversionurl": "http://localhost:8383/xregistryspecs/schema-v1/schemas/openapi.json/versions/v1.0-rc1$details",
   "epoch": 1,
-  "modifiedat": "2026-08-04T20:44:15.235057783Z",
+  "modifiedat": "2026-08-05T01:02:12.354654347Z",
   "readonly": false,
   "schemaid": "openapi.json",
   "self": "http://localhost:8383/xregistryspecs/schema-v1/schemas/openapi.json/meta",
