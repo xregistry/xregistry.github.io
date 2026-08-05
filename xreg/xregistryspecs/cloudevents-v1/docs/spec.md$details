@@ -1,11 +1,11 @@
 {
   "ancestorid": "v1.0-rc1",
-  "createdat": "2026-08-05T01:02:03.185481113Z",
+  "createdat": "2026-08-05T01:05:36.333413192Z",
   "docid": "spec.md",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "http://localhost:8383/xregistryspecs/cloudevents-v1/docs/spec.md/meta",
-  "modifiedat": "2026-08-05T01:02:03.185481113Z",
+  "modifiedat": "2026-08-05T01:05:36.333413192Z",
   "self": "http://localhost:8383/xregistryspecs/cloudevents-v1/docs/spec.md$details",
   "versionid": "v1.0-rc1",
   "versionscount": 1,

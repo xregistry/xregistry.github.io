@@ -1,10 +1,10 @@
 {
   "ancestorid": "v1.0-rc1",
-  "createdat": "2026-08-05T01:02:05.138015402Z",
+  "createdat": "2026-08-05T01:05:37.954670115Z",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "http://localhost:8383/xregistryspecs/cloudevents-v1/samples/README.md/meta",
-  "modifiedat": "2026-08-05T01:02:05.138015402Z",
+  "modifiedat": "2026-08-05T01:05:37.954670115Z",
   "sampleid": "README.md",
   "self": "http://localhost:8383/xregistryspecs/cloudevents-v1/samples/README.md$details",
   "versionid": "v1.0-rc1",

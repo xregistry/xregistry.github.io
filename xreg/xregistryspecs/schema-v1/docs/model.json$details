@@ -1,11 +1,11 @@
 {
   "ancestorid": "v1.0-rc1",
-  "createdat": "2026-08-05T01:02:11.884871514Z",
+  "createdat": "2026-08-05T01:05:43.374756912Z",
   "docid": "model.json",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "http://localhost:8383/xregistryspecs/schema-v1/docs/model.json/meta",
-  "modifiedat": "2026-08-05T01:02:11.884871514Z",
+  "modifiedat": "2026-08-05T01:05:43.374756912Z",
   "self": "http://localhost:8383/xregistryspecs/schema-v1/docs/model.json$details",
   "versionid": "v1.0-rc1",
   "versionscount": 1,

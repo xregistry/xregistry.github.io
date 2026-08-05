@@ -1,9 +1,9 @@
 {
   "ancestorid": "v1.0-rc1",
-  "createdat": "2026-08-05T01:02:10.585537019Z",
+  "createdat": "2026-08-05T01:05:42.292045205Z",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2026-08-05T01:02:10.585537019Z",
+  "modifiedat": "2026-08-05T01:05:42.292045205Z",
   "schemaid": "document-schema.json",
   "self": "http://localhost:8383/xregistryspecs/endpoint-v1/schemas/document-schema.json/versions/v1.0-rc1$details",
   "versionid": "v1.0-rc1",

@@ -1,10 +1,10 @@
 {
   "ancestorid": "v1.0-rc1",
-  "createdat": "2026-08-05T01:02:03.276998888Z",
+  "createdat": "2026-08-05T01:05:36.412381146Z",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "http://localhost:8383/xregistryspecs/cloudevents-v1/schemas/document-schema.avsc/meta",
-  "modifiedat": "2026-08-05T01:02:03.276998888Z",
+  "modifiedat": "2026-08-05T01:05:36.412381146Z",
   "schemaid": "document-schema.avsc",
   "self": "http://localhost:8383/xregistryspecs/cloudevents-v1/schemas/document-schema.avsc$details",
   "versionid": "v1.0-rc1",

@@ -1,10 +1,10 @@
 {
-  "createdat": "2026-08-05T01:02:04.155130104Z",
+  "createdat": "2026-08-05T01:05:37.134494136Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
   "defaultversionurl": "http://localhost:8383/xregistryspecs/cloudevents-v1/samples/inkjet-proto3.xreg.json/versions/v1.0-rc1$details",
   "epoch": 1,
-  "modifiedat": "2026-08-05T01:02:04.155130104Z",
+  "modifiedat": "2026-08-05T01:05:37.134494136Z",
   "readonly": false,
   "sampleid": "inkjet-proto3.xreg.json",
   "self": "http://localhost:8383/xregistryspecs/cloudevents-v1/samples/inkjet-proto3.xreg.json/meta",

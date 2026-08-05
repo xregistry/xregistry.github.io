@@ -1,11 +1,11 @@
 {
   "ancestorid": "v1.0-rc1",
-  "createdat": "2026-08-05T01:02:09.394746604Z",
+  "createdat": "2026-08-05T01:05:41.265131969Z",
   "docid": "spec.md",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "http://localhost:8383/xregistryspecs/core-v1/docs/spec.md/meta",
-  "modifiedat": "2026-08-05T01:02:09.394746604Z",
+  "modifiedat": "2026-08-05T01:05:41.265131969Z",
   "self": "http://localhost:8383/xregistryspecs/core-v1/docs/spec.md$details",
   "versionid": "v1.0-rc1",
   "versionscount": 1,

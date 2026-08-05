@@ -1,11 +1,11 @@
 {
   "ancestorid": "v1.0-rc1",
-  "createdat": "2026-08-05T01:02:05.472382737Z",
+  "createdat": "2026-08-05T01:05:38.260620386Z",
   "docid": "events.md",
   "epoch": 1,
   "isdefault": true,
   "metaurl": "http://localhost:8383/xregistryspecs/core-v1/docs/events.md/meta",
-  "modifiedat": "2026-08-05T01:02:05.472382737Z",
+  "modifiedat": "2026-08-05T01:05:38.260620386Z",
   "self": "http://localhost:8383/xregistryspecs/core-v1/docs/events.md$details",
   "versionid": "v1.0-rc1",
   "versionscount": 1,

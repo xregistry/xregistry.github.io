@@ -1,11 +1,11 @@
 {
-  "createdat": "2026-08-05T01:02:07.994414123Z",
+  "createdat": "2026-08-05T01:05:40.185500177Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
   "defaultversionurl": "http://localhost:8383/xregistryspecs/core-v1/docs/resource.md/versions/v1.0-rc1$details",
   "docid": "resource.md",
   "epoch": 1,
-  "modifiedat": "2026-08-05T01:02:07.994414123Z",
+  "modifiedat": "2026-08-05T01:05:40.185500177Z",
   "readonly": false,
   "self": "http://localhost:8383/xregistryspecs/core-v1/docs/resource.md/meta",
   "xid": "/xregistryspecs/core-v1/docs/resource.md/meta"

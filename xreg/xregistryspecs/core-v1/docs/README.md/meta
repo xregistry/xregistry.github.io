@@ -1,11 +1,11 @@
 {
-  "createdat": "2026-08-05T01:02:05.377070644Z",
+  "createdat": "2026-08-05T01:05:38.182229956Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
   "defaultversionurl": "http://localhost:8383/xregistryspecs/core-v1/docs/README.md/versions/v1.0-rc1$details",
   "docid": "README.md",
   "epoch": 1,
-  "modifiedat": "2026-08-05T01:02:05.377070644Z",
+  "modifiedat": "2026-08-05T01:05:38.182229956Z",
   "readonly": false,
   "self": "http://localhost:8383/xregistryspecs/core-v1/docs/README.md/meta",
   "xid": "/xregistryspecs/core-v1/docs/README.md/meta"
