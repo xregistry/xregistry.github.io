@@ -1,11 +1,11 @@
 {
   "ancestorid": "v1.0-rc1",
-  "createdat": "2026-08-05T01:05:43.374756912Z",
+  "createdat": "2000-01-01T12:00:00.00Z",
   "docid": "model.json",
   "epoch": 1,
   "isdefault": true,
-  "modifiedat": "2026-08-05T01:05:43.374756912Z",
-  "self": "http://localhost:8383/xregistryspecs/schema-v1/docs/model.json/versions/v1.0-rc1$details",
+  "modifiedat": "2000-01-01T12:00:00.00Z",
+  "self": "https://xregistry.io/xreg/xregistryspecs/schema-v1/docs/model.json/versions/v1.0-rc1",
   "versionid": "v1.0-rc1",
   "xid": "/xregistryspecs/schema-v1/docs/model.json/versions/v1.0-rc1"
 }

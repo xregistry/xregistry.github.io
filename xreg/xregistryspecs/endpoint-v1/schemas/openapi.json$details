@@ -1,14 +1,14 @@
 {
   "ancestorid": "v1.0-rc1",
-  "createdat": "2026-08-05T01:05:42.561534749Z",
+  "createdat": "2000-01-01T12:00:00.00Z",
   "epoch": 1,
   "isdefault": true,
-  "metaurl": "http://localhost:8383/xregistryspecs/endpoint-v1/schemas/openapi.json/meta",
-  "modifiedat": "2026-08-05T01:05:42.561534749Z",
+  "metaurl": "https://xregistry.io/xreg/xregistryspecs/endpoint-v1/schemas/openapi.json/meta",
+  "modifiedat": "2000-01-01T12:00:00.00Z",
   "schemaid": "openapi.json",
-  "self": "http://localhost:8383/xregistryspecs/endpoint-v1/schemas/openapi.json$details",
+  "self": "https://xregistry.io/xreg/xregistryspecs/endpoint-v1/schemas/openapi.json",
   "versionid": "v1.0-rc1",
   "versionscount": 1,
-  "versionsurl": "http://localhost:8383/xregistryspecs/endpoint-v1/schemas/openapi.json/versions",
+  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/endpoint-v1/schemas/openapi.json/versions",
   "xid": "/xregistryspecs/endpoint-v1/schemas/openapi.json"
 }

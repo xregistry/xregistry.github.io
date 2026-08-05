@@ -1,12 +1,12 @@
 {
-  "createdat": "2026-08-05T01:05:41.587219415Z",
+  "createdat": "2000-01-01T12:00:00.00Z",
   "defaultversionid": "v1.0-rc1",
   "defaultversionsticky": false,
-  "defaultversionurl": "http://localhost:8383/xregistryspecs/core-v1/samples/doc-store-model.json/versions/v1.0-rc1$details",
+  "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/samples/doc-store-model.json/versions/v1.0-rc1",
   "epoch": 1,
-  "modifiedat": "2026-08-05T01:05:41.587219415Z",
+  "modifiedat": "2000-01-01T12:00:00.00Z",
   "readonly": false,
   "sampleid": "doc-store-model.json",
-  "self": "http://localhost:8383/xregistryspecs/core-v1/samples/doc-store-model.json/meta",
+  "self": "https://xregistry.io/xreg/xregistryspecs/core-v1/samples/doc-store-model.json/meta",
   "xid": "/xregistryspecs/core-v1/samples/doc-store-model.json/meta"
 }

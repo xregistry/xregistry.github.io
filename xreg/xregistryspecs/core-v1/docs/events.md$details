@@ -1,14 +1,14 @@
 {
   "ancestorid": "v1.0-rc1",
-  "createdat": "2026-08-05T01:05:38.260620386Z",
+  "createdat": "2000-01-01T12:00:00.00Z",
   "docid": "events.md",
   "epoch": 1,
   "isdefault": true,
-  "metaurl": "http://localhost:8383/xregistryspecs/core-v1/docs/events.md/meta",
-  "modifiedat": "2026-08-05T01:05:38.260620386Z",
-  "self": "http://localhost:8383/xregistryspecs/core-v1/docs/events.md$details",
+  "metaurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/events.md/meta",
+  "modifiedat": "2000-01-01T12:00:00.00Z",
+  "self": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/events.md",
   "versionid": "v1.0-rc1",
   "versionscount": 1,
-  "versionsurl": "http://localhost:8383/xregistryspecs/core-v1/docs/events.md/versions",
+  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/core-v1/docs/events.md/versions",
   "xid": "/xregistryspecs/core-v1/docs/events.md"
 }

@@ -1,14 +1,14 @@
 {
   "ancestorid": "v1.0-rc1",
-  "createdat": "2026-08-05T01:05:42.054989048Z",
+  "createdat": "2000-01-01T12:00:00.00Z",
   "docid": "spec.md",
   "epoch": 1,
   "isdefault": true,
-  "metaurl": "http://localhost:8383/xregistryspecs/endpoint-v1/docs/spec.md/meta",
-  "modifiedat": "2026-08-05T01:05:42.054989048Z",
-  "self": "http://localhost:8383/xregistryspecs/endpoint-v1/docs/spec.md$details",
+  "metaurl": "https://xregistry.io/xreg/xregistryspecs/endpoint-v1/docs/spec.md/meta",
+  "modifiedat": "2000-01-01T12:00:00.00Z",
+  "self": "https://xregistry.io/xreg/xregistryspecs/endpoint-v1/docs/spec.md",
   "versionid": "v1.0-rc1",
   "versionscount": 1,
-  "versionsurl": "http://localhost:8383/xregistryspecs/endpoint-v1/docs/spec.md/versions",
+  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/endpoint-v1/docs/spec.md/versions",
   "xid": "/xregistryspecs/endpoint-v1/docs/spec.md"
 }

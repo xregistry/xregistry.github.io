@@ -1,14 +1,14 @@
 {
   "ancestorid": "v1.0-rc1",
-  "createdat": "2026-08-05T01:05:36.597304254Z",
+  "createdat": "2000-01-01T12:00:00.00Z",
   "epoch": 1,
   "isdefault": true,
-  "metaurl": "http://localhost:8383/xregistryspecs/cloudevents-v1/schemas/document-schema.json/meta",
-  "modifiedat": "2026-08-05T01:05:36.597304254Z",
+  "metaurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/schemas/document-schema.json/meta",
+  "modifiedat": "2000-01-01T12:00:00.00Z",
   "schemaid": "document-schema.json",
-  "self": "http://localhost:8383/xregistryspecs/cloudevents-v1/schemas/document-schema.json$details",
+  "self": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/schemas/document-schema.json",
   "versionid": "v1.0-rc1",
   "versionscount": 1,
-  "versionsurl": "http://localhost:8383/xregistryspecs/cloudevents-v1/schemas/document-schema.json/versions",
+  "versionsurl": "https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/schemas/document-schema.json/versions",
   "xid": "/xregistryspecs/cloudevents-v1/schemas/document-schema.json"
 }
