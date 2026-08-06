@@ -988,6 +988,12 @@ is no existing Version then the new Version becomes a root and its
 <li>Deleted Ancestor: if a Version's ancestor is deleted, then this Version
 MUST become a root, and its <code>ancestorid</code> value MUST be set to its
 <code>versionid</code> value.</li>
+<li>The name of this versionmode is a bit of a misnomer in that it is not
+100% &quot;manual&quot;. As stated above, as a convenience, by default new
+Versions will point to the &quot;latest&quot; Version as its ancestor. If this
+behavior is not desired, then during the &quot;create&quot; operation, the
+<code>ancestorid</code> can be set to point to itself (or any other Version) if
+desired.</li>
 </ul>
 </li>
 <li>
