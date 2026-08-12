@@ -171,7 +171,7 @@ of a CloudEvent.</p>
 <ol>
 <li>
 <p>A message definition is a template. When an application needs to raise an
-event, the message definition declares precisely, which attributes,
+event, the message definition declares precisely which attributes,
 headers or properties need to be set on the event envelope or on the
 protocol message, and which constant values are to be set, or which type of
 pattern constraints apply. Such templates can be evaluated by tools and
@@ -246,7 +246,7 @@ subject property or CloudEvents’ type attribute.</p>
 <p>The <code>uritemplate</code> type permits the values to have embedded placeholders (Level
 1 URI templates), which turns the values into templates for publishers where
 the application inserts context information into designated places. For
-consumers, the templates act as pattern matching filters and to extract
+consumers, the templates act as pattern-matching filters and extract
 context values into named variables.</p>
 <h3 id="context-attributes">Context Attributes <a class="anchor" href="#context-attributes">🔗</a></h3>
 <p>The embedded placeholders in values of the <code>uritemplate</code> type can refer to
@@ -261,7 +261,7 @@ if a message is received with a URI that matches the template, the values can
 be extracted and made available as context attributes.</p>
 <p>A further use of such context attributes is the mapping of protocol-native
 messages to CloudEvents. An application evaluating message definitions that
-contain both, a <code>protocol</code> and an <code>envelope</code> definition might nevertheless
+contain both a <code>protocol</code> and an <code>envelope</code> definition might nevertheless
 choose to accept protocol-native messages that are not CloudEvents and then
 use context attributes to map them to the CloudEvents model.</p>
 <p>For example, let there be this definition:</p>
@@ -333,16 +333,16 @@ of a message might need to &quot;match&quot; it to the corresponding Message def
 that the message is meant to adhere to. This specification does not mandate how
 this &quot;matching&quot; is done. For example, matching headers or schema of the
 incoming message to the Message definitions in the Registry is one option.</p>
-<p>In a Registry with many Message definitions, and each one of those having
-potentially multiple Versions, results in a 2-dimensional collection of
-Message definitions to match against, which could make finding the exact
-Message definition complex, non-deterministic or very slow. To help with these
+<p>A Registry with many Message definitions, each potentially having
+multiple Versions, results in a 2-dimensional collection of Message
+definitions to match against, which could make finding the exact Message
+definition complex, non-deterministic or very slow. To help with these
 situations, this specification provides the following guidance:</p>
 <ul>
 <li>Use of CloudEvents is RECOMMENDED as it will provide well-defined
 metadata that will appear in each Message to help differentiate Message
 definitions.</li>
-<li>Messages definitions SHOULD have a <code>messageid</code> value that is the same as the
+<li>Message definitions SHOULD have a <code>messageid</code> value that is the same as the
 CloudEvents' <code>type</code> context attribute defined for that Message. This will
 allow for an exact mapping from the incoming Message's <code>type</code> attribute to
 its related Message definition.</li>
@@ -351,13 +351,14 @@ eliminates the need for each incoming Message to include some unique
 Version discriminator.</li>
 <li>Modifications to Message definitions SHOULD NOT result in &quot;on the wire&quot;
 changes to the resulting messages as that could break existing systems.
-Rather, new Messages definitions SHOULD be created, with new <code>type</code> and
+Rather, new Message definitions SHOULD be created, with new <code>type</code> and
 <code>messageid</code> values, and referenced through the use of the <code>deprecated</code>
 attribute.</li>
 </ul>
-<p>Implementations, and Registry model authors, MAY deviate from these
-recommendations however they are then responsible for defining the mechanisms
-by which a unique Message definition is matched to incoming messages.</p>
+<p>Implementations and Registry model authors MAY deviate from these
+recommendations; however, they are then responsible for defining the
+mechanisms by which a unique Message definition is matched to incoming
+messages.</p>
 <h2 id="message-groups">Message Groups <a class="anchor" href="#message-groups">🔗</a></h2>
 <p>All message definitions MUST be contained in a group. A message group can be
 formed for many reasons. At a minimum, the group will be an access control
@@ -393,13 +394,14 @@ options using the &quot;basemessage&quot; mechanism. (sample also to follow)</p>
 <p>The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;, &quot;SHOULD&quot;,
 &quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;, &quot;MAY&quot;, and &quot;OPTIONAL&quot; in this document are to be
 interpreted as described in <a href="https://tools.ietf.org/html/rfc2119">RFC 2119</a>.</p>
-<p>For clarity, OPTIONAL attributes (specification-defined and extensions) are
-OPTIONAL for clients to use, but the servers' responsibility will vary.
+<p>For clarity, OPTIONAL attributes, whether specification-defined or extension
+attributes, are OPTIONAL for clients to use, but the servers' responsibility
+will vary.
 Server-unknown extension attributes MUST be silently stored in the backing
-datastore. Specification-defined, and server-known extension, attributes MUST
-generate an error if corresponding feature is not supported or enabled.
+datastore. Specification-defined and server-known extension attributes MUST
+generate an error if the corresponding feature is not supported or enabled.
 However, as with all attributes, if accepting the attribute would result in a
-bad state (such as exceeding a size limit, or results in a security issue),
+bad state (such as exceeding a size limit or causing a security issue),
 then the server MAY choose to reject the request.</p>
 <p>In the pseudo JSON format snippets <code>?</code> means the preceding attribute is
 OPTIONAL, <code>*</code> means the preceding attribute MAY appear zero or more times,
@@ -623,23 +625,23 @@ the core xRegistry Resource
 base for this message definition. By following the reference, the base
 message can be retrieved and extended with the properties of this message.
 This is useful for defining variants of messages that only differ in minor
-additive aspects to avoid repetition. For example, messages that only have a
-<code>envelope</code> with associated <code>envelopemetadata</code> to be bound to various
-protocols.</p>
+additive aspects to avoid repetition. For example, this applies to messages
+that only have an <code>envelope</code> with associated <code>envelopemetadata</code> to be bound
+to various protocols.</p>
 <p>When the value is a relative reference (begins with <code>/</code>), it MUST be a
 valid XID referencing a Resource, or Version, of type <code>message</code> within the
 same registry. When the value is an absolute URI, it MUST point to a
 message definition in an external registry, but the server is not mandated
 to validate or resolve external references.</p>
-<p>Referenced messages MAY themselves have a <code>basemessage</code> value, however,
+<p>Referenced messages MAY themselves have a <code>basemessage</code> value; however,
 the chain of messages MUST NOT be recursive.</p>
-<p>The processing that a client SHOULD take to materialize the message is
+<p>The process that a client SHOULD follow to materialize the message is
 to follow the <code>basemessage</code> references to the end of the chain of messages,
 get that message's attributes, and then walk back up the chain performing a
-&quot;merge&quot; operation of the next message's attributes. Note in the case of an
-inherited attribute being a complex type (e.g. map, object), and the
-overlaying attribute is scalar, then the entire inherited attribute (and
-nested values) are replaced by that scalar value. For complex types, the
+&quot;merge&quot; operation of the next message's attributes. Note that if an
+inherited attribute is a complex type (e.g. map, object) and the overlaying
+attribute is scalar, then the entire inherited attribute (and nested
+values) are replaced by that scalar value. For complex types, the
 merge is &quot;deep&quot;, meaning each level of the complex type is merged
 appropriately rather than it being a complete replacement of the entire
 complex type.</p>
@@ -831,7 +833,7 @@ concrete schema object.</li>
 <ul>
 <li>Type: XID</li>
 <li>Description: Contains the <code>xid</code> of the xRegistry <code>schema</code> Resource entity
-associated with the <code>dataschemauri</code> referenced schema document. Note that
+associated with the schema document referenced by <code>dataschemauri</code>. Note that
 this means the entity MUST be located within the same Registry.</li>
 <li>Constraints:
 <ul>
@@ -851,10 +853,10 @@ URL of the entity referenced by this attribute.</li>
 duplicative with some other metadata within the message definition. For
 example, in the case of using CloudEvents, the <code>envelopemetadata</code> attribute
 might include the <code>datacontenttype</code> attribute. This possible duplication
-of data is expected so as to allow for a more consistent, and easy, discovery
+of data is expected so as to allow for easy, more consistent discovery
 of the message's format. This means that if this information does appear in
-more than one location within the message metadata they MUST all have the
-same values.</p>
+more than one location within the message metadata, all occurrences MUST
+have the same value.</p>
 <p>Note that when an <code>envelope</code> is defined for a message and the data of
 interest is serialized as being nested within the envelope (e.g.
 CloudEvents &quot;structured&quot; mode), then this attribute MUST be the content type
@@ -886,10 +888,10 @@ protocol like AMQP, MQTT or Kafka.</p>
 <p>If a message only uses a metadata <code>envelope</code>, any implicit protocol bindings
 defined by the envelope apply. For instance, a message definition that uses the
 &quot;CloudEvents/1.0&quot; envelope but no explicit <code>protocol</code> implicitly applies to all
-protocols for which CloudEvents bindings exist, and using the respective
-protocol binding rules.</p>
+protocols for which CloudEvents bindings exist, using the respective protocol
+binding rules.</p>
 <p>If a message uses both a metadata <code>envelope</code> and a message <code>protocol</code>, the
-message binding rules takes precedence over the metadata envelope rules. For
+message binding rules take precedence over the metadata envelope rules. For
 instance, if a message definition uses the &quot;CloudEvents/1.0&quot; envelope and an
 &quot;AMQP/1.0&quot; protocol, then the implicit protocol bindings of the
 &quot;CloudEvents/1.0&quot; envelope are overridden by the &quot;AMQP/1.0&quot; protocol rules.</p>
@@ -897,7 +899,7 @@ instance, if a message definition uses the &quot;CloudEvents/1.0&quot; envelope 
 defined by the message <code>protocol</code> rules apply.</p>
 <h4 id="property-definitions">Property Definitions <a class="anchor" href="#property-definitions">🔗</a></h4>
 <p>The following attributes are used to define the properties associated with
-the headers, properties or attributes defined for message:</p>
+the headers, properties or attributes defined for a message:</p>
 <h5 id="description"><code>description</code> <a class="anchor" href="#description">🔗</a></h5>
 <ul>
 <li>Type: String</li>
@@ -976,9 +978,9 @@ message to be considered conformant with the message definition.</li>
 </ul>
 <p>If the <code>type</code> property has the value <code>uritemplate</code>, <code>value</code> MAY contain
 placeholders. As defined in <a href="https://www.rfc-editor.org/rfc/rfc6570">RFC6570</a> (Level 1), the placeholders MUST
-be enclosed in curly braces (<code>{</code> and <code>}</code>) and MUST be a valid <code>symbol</code>.
+be enclosed in curly braces (<code>{</code> and <code>}</code>) and each MUST be a valid <code>symbol</code>.
 Placeholders that are used multiple times in the same message definition MUST
-to represent identical values.</p>
+represent identical values.</p>
 <p>When validating a message property against this value, the placeholders act as
 wildcards. For example, the value <code>{foo}/bar</code> would match the value <code>abc/bar</code>
 or <code>xyz/bar</code>.</p>
@@ -1052,7 +1054,7 @@ value &quot;1.0&quot;.</li>
 <li>The <code>type</code>, <code>id</code>, and <code>source</code> attributes implicitly have the <code>required</code> flag
 set to <code>true</code> and MUST NOT be declared as <code>required: false</code>.</li>
 <li>The <code>id</code> attribute's <code>value</code> SHOULD NOT be defined.</li>
-<li>The <code>time</code> attribute's <code>value</code> default value MUST be <code>0000-01-01T00:00:00Z</code>
+<li>The <code>time</code> attribute's <code>value</code> MUST default to <code>0000-01-01T00:00:00Z</code>
 (&quot;current time&quot;) and SHOULD NOT be declared with a different value.</li>
 <li>The <code>datacontenttype</code> attribute's <code>value</code> is inferred from the
 <a href="#dataschemaformat"><code>dataschemaformat</code></a> attribute of the message definition
@@ -1064,7 +1066,7 @@ absent. If present, the value MUST match the <code>dataschemauri</code> attribut
 message definition.</li>
 <li>The <code>type</code> of the property definition defaults to the CloudEvents type
 definition for the attribute, if any. The <code>type</code> of an attribute MAY be
-modified be to further constrained. For instance, the <code>source</code> type
+modified to be further constrained. For instance, the <code>source</code> type
 <code>uri</code> MAY be changed to <code>uritemplate</code> or the <code>subject</code> type <code>string</code> MAY be
 constrained to a <code>uri</code> or <code>stringified integer</code>. If no CloudEvents type
 definition exists, the default value MUST be <code>string</code>.</li>
@@ -1114,7 +1116,7 @@ a message (see the <a href="./model.json">model file</a> for the complete defini
 </code></pre>
 <p>The following example declares a CloudEvent with a JSON payload. The attribute
 <code>id</code> is REQUIRED in the declared event per the CloudEvents specification in
-spite of such a declaration being absent here, the <code>type</code> of the <code>type</code>
+spite of such a declaration being absent here; the <code>type</code> of the <code>type</code>
 attribute is <code>string</code> and the attribute is <code>required</code> even though the
 declarations are absent. The <code>time</code> attribute is made <code>required</code> contrary to
 the CloudEvents base specification. The implied CloudEvents <code>datacontenttype</code>
@@ -1385,7 +1387,7 @@ following properties are defined, with type constraints:</p>
 </tbody>
 </table>
 <p>The <code>message-id</code> permits the types <code>ulong</code>, <code>uuid</code>, <code>binary</code>, <code>string</code>, and
-<code>uritemplate</code>. A <code>value</code> constraint for <code>message-id</code> property SHOULD NOT be
+<code>uritemplate</code>. A <code>value</code> constraint for the <code>message-id</code> property SHOULD NOT be
 defined in the message definition except for the case where the <code>message-id</code>
 is a <code>uritemplate</code>.</p>
 <h5 id="application-properties-amqp-10"><code>application-properties</code> (AMQP 1.0) <a class="anchor" href="#application-properties-amqp-10">🔗</a></h5>
@@ -1539,7 +1541,7 @@ indicate whether the property is supported for the respective MQTT version.</p>
 </tr>
 </tbody>
 </table>
-<p>Like HTTP, the MQTT allows for multiple user properties with the same name,
+<p>Like HTTP, MQTT allows for multiple user properties with the same name,
 so the <code>user_properties</code> property is an array of objects, each of which
 contains a single property name and value.</p>
 <p>The values of all <code>string</code>, <code>symbol</code>, and <code>uritemplate</code>-typed properties and
@@ -1613,10 +1615,10 @@ present at the same time.</p>
 <p>The <code>partition</code> property is included because there are cases where applications
 use partitions explicitly for addressing and routing messages within the scope
 of a topic.</p>
-<p>The values of all <code>string</code>, <code>symbol</code>, <code>uritemplate</code>-typed properties
+<p>The values of all <code>string</code>-, <code>symbol</code>-, and <code>uritemplate</code>-typed properties
 and headers MAY contain placeholders using the <a href="https://www.rfc-editor.org/rfc/rfc6570">RFC6570</a> Level 1 URI
-Template syntax. When the same placeholder is used in multiple properties, the
-value of the placeholder is assumed to be identical.</p>
+Template syntax. When the same placeholder is used in multiple properties,
+the value of the placeholder is assumed to be identical.</p>
 <p>Example:</p>
 <pre><code class="language-yaml">{
   &quot;protocol&quot;: &quot;Kafka&quot;,
@@ -1658,10 +1660,10 @@ elements of the NATS message for the <code>HPUB</code> operation.</p>
 </tr>
 </tbody>
 </table>
-<p>The values of all <code>string</code>, <code>symbol</code>, <code>uritemplate</code>-typed properties
+<p>The values of all <code>string</code>-, <code>symbol</code>-, and <code>uritemplate</code>-typed properties
 and headers MAY contain placeholders using the <a href="https://www.rfc-editor.org/rfc/rfc6570">RFC6570</a> Level 1 URI
-Template syntax. When the same placeholder is used in multiple properties, the
-value of the placeholder is assumed to be identical.</p>
+Template syntax. When the same placeholder is used in multiple properties,
+the value of the placeholder is assumed to be identical.</p>
 <p>Example:</p>
 <pre><code class="language-yaml">{
   &quot;protocol&quot;: &quot;NATS&quot;,

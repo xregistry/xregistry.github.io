@@ -25,7 +25,7 @@ jobs:
           echo "${{ github.workspace }}/bin" >> $GITHUB_PATH
 
       - name: Run local script
-        run: ./tools/buildsite
+        run: ./tools/buildsite && rm -rf bin
 
       - name: Commit and push changes
         run: |

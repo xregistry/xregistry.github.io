@@ -159,7 +159,7 @@ locally, all in one compact construct.</p>
 a message registry, and which have the advantage of being shareable across
 multiple Endpoints.</p>
 <p>For describing a message broker queue, the best approach is to define a
-message group that defines the messages that are be allowed to flow on the
+message group that defines the messages that are allowed to flow on the
 queue and for that message group to then be referenced from the <code>producer</code> and
 the <code>consumer</code> endpoints of the queue, whereby both of those endpoints share
 the same <code>channel</code> identifier.</p>
@@ -174,13 +174,13 @@ the client is within the same network scope. If the flag is set to <code>false</
 the endpoint definition is to be treated like a template where configuration
 elements like the endpoint URI will have to be supplied by external
 configuration for the client to become functional.</p>
-<p>A possible application of the latter are Endpoint definitions that define
-endpoint patterns as they are common for applications of the MQTT protocol.
+<p>The latter can be used for Endpoint definitions that define endpoint patterns
+common in applications of the MQTT protocol.
 For instance, the <a href="https://sparkplug.eclipse.org/">Eclipse Sparkplug</a> protocol
 is a convention that defines endpoint roles and messages and schemas for MQTT,
 and the
 <a href="./../../cloudevents-v1/samples/mqtt-sparkplugB.xreg.json">SparkPlugB</a>
-example that illustrates how Registry Endpoints can model the convention in
+example illustrates how Registry Endpoints can model the convention in
 formal terms.</p>
 <h2 id="notations-and-terminology">Notations and Terminology <a class="anchor" href="#notations-and-terminology">🔗</a></h2>
 <h3 id="notational-conventions">Notational Conventions <a class="anchor" href="#notational-conventions">🔗</a></h3>
@@ -190,10 +190,11 @@ interpreted as described in <a href="https://tools.ietf.org/html/rfc2119">RFC 21
 <p>For clarity, OPTIONAL attributes (specification-defined and extensions) are
 OPTIONAL for clients to use, but the servers' responsibility will vary.
 Server-unknown extension attributes MUST be silently stored in the backing
-datastore. Specification-defined, and server-known extension, attributes MUST
-generate an error if the corresponding feature is not supported or enabled.
+datastore. Specification-defined attributes and server-known extension
+attributes MUST generate an error if the corresponding feature is not supported
+or enabled.
 However, as with all attributes, if accepting the attribute would result in a
-bad state (such as exceeding a size limit, or results in a security issue),
+bad state (such as exceeding a size limit or resulting in a security issue),
 then the server MAY choose to reject the request.</p>
 <p>In the pseudo JSON format snippets <code>?</code> means the preceding attribute is
 OPTIONAL, <code>*</code> means the preceding attribute MAY appear zero or more times,
@@ -210,7 +211,7 @@ available via subscription for delivery to a consumer-designated endpoint.</p>
 <h2 id="endpoint-registry-model">Endpoint Registry Model <a class="anchor" href="#endpoint-registry-model">🔗</a></h2>
 <p>The Endpoint Registry is a registry of metadata definitions for abstract and
 concrete network endpoints to which messages can be produced, from which
-messages can be consumed, or which makes messages available via subscription
+messages can be consumed, or which make messages available via subscription
 and delivery to a consumer-designated endpoint.</p>
 <p>As discussed in the <a href="./../../cloudevents-v1/docs/spec.html">CloudEvents Registry overview</a>,
 endpoints are supersets of
@@ -459,7 +460,7 @@ pre-/post-processing, etc.</p>
 <li>&quot;producer&quot;</li>
 </ul>
 </li>
-<li>MUST be an array of at least one.</li>
+<li>MUST be an array of at least one value.</li>
 <li>MUST declare exactly one usage value, except for the single combination
 permitted below.</li>
 <li>MUST NOT combine <code>producer</code> with any other value.</li>
@@ -542,8 +543,8 @@ Group, and MUST NOT expand it. For example, if a Group had a
 <code>envelope</code> value of <code>myspec</code>, then Resources within that Group can have
 <code>envelope</code> values of <code>myspec</code> or <code>myspec/1.0</code>. However, if a Group has a
 value of <code>myspec/1.0</code>, it would be invalid for a Resource to have a value
-of <code>myspec/2.0</code> or just <code>myspec</code>. Additionally, if a Group does not have
-a <code>envelope</code> attribute then there are no constraints on its Resources
+of <code>myspec/2.0</code> or just <code>myspec</code>. Additionally, if a Group does not have an
+<code>envelope</code> attribute, then there are no constraints on its Resources'
 <code>envelope</code> attributes.</li>
 <li>This specification places no restriction on the syntax of the
 <code>&lt;VERSION&gt;</code> value.</li>
@@ -625,7 +626,7 @@ below. For others, refer to the protocol specifications.</p>
 <li>MUST be a non-empty case-insensitive string.</li>
 <li>SHOULD follow the naming convention <code>&lt;NAME&gt;/&lt;VERSION&gt;</code>,
 whereby <code>&lt;NAME&gt;</code> is the name of the protocol and <code>&lt;VERSION&gt;</code> is the
-version of protocol.</li>
+version of the protocol.</li>
 </ul>
 </li>
 <li>
@@ -644,7 +645,7 @@ version of protocol.</li>
 </li>
 <li>
 <p>Description: Configuration details of the endpoint related to the protocol
-used to transmit the messages. An endpoint MAY be defined without detail
+used to transmit the messages. An endpoint MAY be defined without detailed
 configuration. In this case, the endpoint is considered to be &quot;abstract&quot;.
 For per-protocol option definitions, see <a href="#protocol-options">Protocol Options</a>.</p>
 </li>
@@ -761,7 +762,7 @@ one of the following:</p>
 <li><code>OAuth2</code>: <a href="https://www.rfc-editor.org/rfc/rfc6749">OAuth 2.0</a> authorization is used. The
 <a href="#protocoloptionsauthorizationauthorityuri"><code>authorityuri</code></a> SHOULD
 reference authorization server metadata as defined by <a href="https://www.rfc-editor.org/rfc/rfc8414">RFC 8414</a>.</li>
-<li><code>Plain</code>: The client uses username with a plaintext password for
+<li><code>Plain</code>: The client uses a username with a plaintext password for
 authentication and authorization. For HTTP, see the
 <a href="#http-options">HTTP options</a> <code>plainscheme</code>, <code>plainusernamefield</code>, and
 <code>plainpasswordfield</code>; for other protocols, equivalent transport-specific
@@ -929,14 +930,15 @@ message to its related message definition.</p>
 where an Endpoint might have the same semantic message defined twice, once for
 a JSON serialization and once for an XML serialization. Using the same
 <code>messageid</code> value is not possible (even though the CloudEvent <code>type</code> attribute
-would be the same for both runtime messages), so one (or both) message
-definition's <code>messageid</code> values might not match the runtime message's <code>type</code>
-value. In those cases, finding the appropriate message definition will need to
-be done via examination of some other metadata - such as the message's
+would be the same for both runtime messages), so the <code>messageid</code> value of one
+message definition (or the values of both) might not match the runtime
+message's <code>type</code> value. In those cases, finding the appropriate message
+definition will need to be done via examination of some other metadata - such
+as the message's
 <code>envelopemetadata.type</code> value along with its <code>envelopeoptions.format</code> value.
 These details are out of scope for this specification to define and are left as
 an implementation detail.</p>
-<p>Implementations MAY choose to generate an error if it detects duplicate
+<p>Implementations MAY choose to generate an error if they detect duplicate
 <code>messageid</code> values across the <code>messages</code> collection message definitions and
 the <code>messagegroups</code> referenced message definitions, if that is the desired
 constraint for their users.</p>
