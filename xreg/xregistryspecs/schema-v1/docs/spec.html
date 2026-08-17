@@ -205,11 +205,11 @@ interpreted as described in <a href="https://tools.ietf.org/html/rfc2119">RFC 21
 <p>For clarity, OPTIONAL attributes (specification-defined and extensions) are
 OPTIONAL for clients to use, but the servers' responsibility will vary.
 Server-unknown extension attributes MUST be silently stored in the backing
-datastore. Specification-defined, and server-known extension, attributes MUST
-generate an error if the corresponding feature is not supported or enabled.
-However, as with all attributes, if accepting the attribute would result in a
-bad state (such as exceeding a size limit, or results in a security issue),
-then the server MAY choose to reject the request.</p>
+datastore. Specification-defined attributes and server-known extension
+attributes MUST generate an error if the corresponding feature is not supported
+or enabled. However, as with all attributes, if accepting the attribute results
+in a bad state (such as exceeding a size limit or resulting in a security
+issue), then the server MAY choose to reject the request.</p>
 <p>In the pseudo JSON format snippets <code>?</code> means the preceding attribute is
 OPTIONAL, <code>*</code> means the preceding attribute MAY appear zero or more times,
 and <code>+</code> means the preceding attribute MUST appear at least once. The presence

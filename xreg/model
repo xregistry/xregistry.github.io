@@ -4,7 +4,8 @@
       "name": "specversion",
       "type": "string",
       "readonly": true,
-      "required": true
+      "required": true,
+      "default": "1.0-rc3"
     },
     "registryid": {
       "name": "registryid",

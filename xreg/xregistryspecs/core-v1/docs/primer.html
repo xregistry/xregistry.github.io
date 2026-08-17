@@ -47,7 +47,7 @@
 </head>
 <h1 id="xregistry-primer">xRegistry Primer <a class="anchor" href="#xregistry-primer">🔗</a></h1>
 <!-- words: validatecompatibility validateformat strickvalidation -->
-<!-- words: strictvalidation matchversions readme -->
+<!-- words: strictvalidation matchversions readme upserts -->
 <!-- no verify-specs -->
 <h2 id="1-abstract">1. Abstract <a class="anchor" href="#1-abstract">🔗</a></h2>
 <p>This non-normative document provides an overview of the <a href="https://github.com/xregistry/spec/blob/main/core/spec.md">xRegistry
@@ -60,95 +60,357 @@ normative technical details.</p>
 <ul>
 <li><a href="#1-abstract">1. Abstract</a></li>
 <li><a href="#2-table-of-contents">2. Table of Contents</a></li>
-<li><a href="#3-history">3. History</a></li>
-<li><a href="#4-value-proposition">4. Value proposition</a>
+<li><a href="#3-a-quick-introduction-to-xregistry">3. A Quick Introduction to xRegistry</a>
 <ul>
-<li><a href="#41-why-build-something-new">4.1. Why build something new?</a></li>
-<li><a href="#42-discovery">4.2. Discovery</a></li>
-<li><a href="#43-vendor-agnostic">4.3. Vendor-agnostic</a></li>
-<li><a href="#44-versioning">4.4. Versioning</a></li>
-<li><a href="#45-schema-validation">4.5. Schema validation</a></li>
-<li><a href="#46-payload-reduction">4.6. Payload reduction</a></li>
-<li><a href="#47-schema-based-data-contract-generation">4.7. Schema-based data contract generation</a></li>
-<li><a href="#48-producer-and-consumer-generation">4.8. Producer and consumer generation</a></li>
-<li><a href="#49-basis-for-further-developments">4.9. Basis for further developments</a></li>
+<li><a href="#31-what-is-xregistry">3.1. What is xRegistry?</a></li>
+<li><a href="#32-core-http-interactions">3.2. Core HTTP Interactions</a>
+<ul>
+<li><a href="#321-reading-things">3.2.1. Reading things</a></li>
+<li><a href="#322-creating--updating-things">3.2.2. Creating / updating things</a></li>
+<li><a href="#323-resources-metadata-vs-the-actual-document">3.2.3. Resources: metadata vs. the actual document</a></li>
+<li><a href="#324-versions">3.2.4. Versions</a></li>
+<li><a href="#325-deleting">3.2.5. Deleting</a></li>
+<li><a href="#326-errors">3.2.6. Errors</a></li>
 </ul>
 </li>
-<li><a href="#5-motivation">5. Motivation</a></li>
-<li><a href="#6-design-goals">6. Design Goals</a>
+<li><a href="#33-defining-a-basic-model">3.3. Defining a Basic Model</a>
 <ul>
-<li><a href="#61-non-goals">6.1. Non-Goals</a></li>
+<li><a href="#331-adding-your-own-attributes-extensions">3.3.1. Adding your own attributes (extensions)</a></li>
 </ul>
 </li>
-<li><a href="#7-representations">7. Representations</a>
-<ul>
-<li><a href="#71-file">7.1. File</a></li>
-<li><a href="#72-static-file-server">7.2. Static File Server</a></li>
-<li><a href="#73-api-server">7.3. API Server</a></li>
+<li><a href="#34-where-to-go-next">3.4. Where to go next</a></li>
 </ul>
 </li>
-<li><a href="#8-embeddings-references-and-federation">8. Embeddings, References, and Federation</a>
+<li><a href="#4-history">4. History</a></li>
+<li><a href="#5-value-proposition">5. Value proposition</a>
 <ul>
-<li><a href="#81-formats-and-contentmedia-types">8.1. Formats and Content/Media-Types</a></li>
-<li><a href="#82-embeddings-and-links">8.2. Embeddings and Links</a></li>
-<li><a href="#83-federation">8.3. Federation</a>
-<ul>
-<li><a href="#831-composing-registries-in-memory">8.3.1. Composing registries in memory</a></li>
-<li><a href="#832-shadowing">8.3.2. Shadowing</a></li>
-<li><a href="#833-identifiers">8.3.3. Identifiers</a></li>
-<li><a href="#834-api-servers-and-proxies">8.3.4. API Servers and Proxies</a></li>
+<li><a href="#51-why-build-something-new">5.1. Why build something new?</a></li>
+<li><a href="#52-discovery">5.2. Discovery</a></li>
+<li><a href="#53-vendor-agnostic">5.3. Vendor-agnostic</a></li>
+<li><a href="#54-versioning">5.4. Versioning</a></li>
+<li><a href="#55-schema-validation">5.5. Schema validation</a></li>
+<li><a href="#56-payload-reduction">5.6. Payload reduction</a></li>
+<li><a href="#57-schema-based-data-contract-generation">5.7. Schema-based data contract generation</a></li>
+<li><a href="#58-producer-and-consumer-generation">5.8. Producer and consumer generation</a></li>
+<li><a href="#59-basis-for-further-developments">5.9. Basis for further developments</a></li>
 </ul>
 </li>
+<li><a href="#6-motivation">6. Motivation</a></li>
+<li><a href="#7-design-goals">7. Design Goals</a>
+<ul>
+<li><a href="#71-non-goals">7.1. Non-Goals</a></li>
 </ul>
 </li>
-<li><a href="#9-possible-use-cases">9. Possible Use Cases</a>
+<li><a href="#8-representations">8. Representations</a>
 <ul>
-<li><a href="#91-cloudevents">9.1. CloudEvents</a></li>
-<li><a href="#92-business-objects">9.2. Business objects</a></li>
-<li><a href="#93-metadata-files-in-repositories">9.3. Metadata files in repositories</a></li>
+<li><a href="#81-file">8.1. File</a></li>
+<li><a href="#82-static-file-server">8.2. Static File Server</a></li>
+<li><a href="#83-api-server">8.3. API Server</a></li>
 </ul>
 </li>
-<li><a href="#10-design-decisions-or-topics-of-interest">10. Design decisions or topics of interest</a>
+<li><a href="#9-embeddings-references-and-federation">9. Embeddings, References, and Federation</a>
 <ul>
-<li><a href="#101-resourceid-vs-resourceversionid">10.1. Resource.ID vs Resource.Version.ID</a></li>
-<li><a href="#102-valid-characters">10.2. Valid Characters</a></li>
-<li><a href="#103-extensions">10.3. Extensions</a></li>
-<li><a href="#104-group-organization">10.4. Group organization</a></li>
-<li><a href="#105-deleting-entities">10.5. Deleting entities</a></li>
-<li><a href="#106-detection-of-referenced-resources">10.6. Detection of Referenced Resources</a></li>
-<li><a href="#107-sharedreferenced-resources">10.7. Shared/Referenced Resources</a>
+<li><a href="#91-formats-and-contentmedia-types">9.1. Formats and Content/Media-Types</a></li>
+<li><a href="#92-embeddings-and-links">9.2. Embeddings and Links</a></li>
+<li><a href="#93-federation">9.3. Federation</a>
 <ul>
-<li><a href="#1071-default-version-and-maximum-versions">10.7.1. Default Version and Maximum Versions</a></li>
-<li><a href="#1072-potential-extensions">10.7.2. Potential Extensions</a></li>
-<li><a href="#1073-why-epoch">10.7.3. Why Epoch?</a></li>
-<li><a href="#1074-naming-and-case-sensitivity">10.7.4. Naming and Case Sensitivity</a></li>
-<li><a href="#1075-why-the-lower-character-limit-on-some-group-and-resource-type-names">10.7.5. Why the lower character limit on some Group and Resource type names?</a></li>
-<li><a href="#1076-why-must-group-type-and-resource-type-names-be-valid-attribute-names">10.7.6. Why must Group type and Resource type names be valid attribute names?</a></li>
-<li><a href="#1077-choosing-unique-group-and-resource-names">10.7.7. Choosing unique Group and Resource names</a></li>
-<li><a href="#1078-are-self-and-shortself-attributes-static">10.7.8. Are <code>self</code> and <code>shortself</code> attributes static?</a></li>
-<li><a href="#1079-why-does-an-unknown-query-parameter-not-generate-an-error">10.7.9. Why does an unknown query parameter not generate an error?</a></li>
-<li><a href="#10710-updating-attributes-with-ifvalues">10.7.10. Updating attributes with <code>ifvalues</code></a></li>
-<li><a href="#10711-multi-root-ancestor-hierarchies">10.7.11. Multi-root ancestor hierarchies</a></li>
-<li><a href="#10712-singleversionroot-policy-enforcement">10.7.12. <code>singleversionroot</code> Policy Enforcement</a></li>
-<li><a href="#10713-pruning-versions-with-singleversionroot-enabled">10.7.13. Pruning Versions with <code>singleversionroot</code> enabled</a></li>
-<li><a href="#10714-whats-the-oldestnewest-version-of-a-resource">10.7.14. What's the oldest/newest Version of a Resource?</a></li>
-<li><a href="#10715-can-validatecompatibility-and-validateformat-be-true-for-file-servers">10.7.15. Can <code>validatecompatibility</code> and <code>validateformat</code> be <code>true</code> for file-servers?</a></li>
-<li><a href="#10716-detecting-circular-references-between-versions">10.7.16. Detecting circular references between Versions</a></li>
-<li><a href="#10717-optional-required-fields-in-requests">10.7.17. Optional required fields in requests</a></li>
-<li><a href="#10718-deprecation-of-entities-in-an-xregistry">10.7.18. Deprecation of entities in an xRegistry</a></li>
+<li><a href="#931-composing-registries-in-memory">9.3.1. Composing registries in memory</a></li>
+<li><a href="#932-shadowing">9.3.2. Shadowing</a></li>
+<li><a href="#933-identifiers">9.3.3. Identifiers</a></li>
+<li><a href="#934-api-servers-and-proxies">9.3.4. API Servers and Proxies</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#11-the-format-attribute-in-the-schema-spec">11. The <code>format</code> attribute in the Schema spec</a></li>
-<li><a href="#12-problematic-characters-in-attributes">12. Problematic characters in attributes</a></li>
-<li><a href="#13-why-do-resources-have-3-levels-of-data">13. Why do Resources have 3 levels of data?</a></li>
-<li><a href="#14-why-are-some-conditional-read-only-attributes-not-ignored">14. Why are some (conditional) read-only attributes not ignored?</a></li>
-<li><a href="#15-why-isnt-put-idempotent">15. Why isn't <code>PUT</code> idempotent?</a></li>
-<li><a href="#16-defining-extensions">16. Defining Extensions</a></li>
-<li><a href="#17-validation">17. Validation</a></li>
+<li><a href="#10-possible-use-cases">10. Possible Use Cases</a>
+<ul>
+<li><a href="#101-cloudevents">10.1. CloudEvents</a></li>
+<li><a href="#102-business-objects">10.2. Business objects</a></li>
+<li><a href="#103-metadata-files-in-repositories">10.3. Metadata files in repositories</a></li>
 </ul>
-<h2 id="3-history">3. History <a class="anchor" href="#3-history">🔗</a></h2>
+</li>
+<li><a href="#11-design-decisions-or-topics-of-interest">11. Design decisions or topics of interest</a>
+<ul>
+<li><a href="#111-resourceid-vs-resourceversionid">11.1. Resource.ID vs Resource.Version.ID</a></li>
+<li><a href="#112-valid-characters">11.2. Valid Characters</a></li>
+<li><a href="#113-extensions">11.3. Extensions</a></li>
+<li><a href="#114-group-organization">11.4. Group organization</a></li>
+<li><a href="#115-deleting-entities">11.5. Deleting entities</a></li>
+<li><a href="#116-detection-of-referenced-resources">11.6. Detection of Referenced Resources</a></li>
+<li><a href="#117-sharedreferenced-resources">11.7. Shared/Referenced Resources</a></li>
+<li><a href="#118-default-version-and-maximum-versions">11.8. Default Version and Maximum Versions</a></li>
+<li><a href="#119-potential-extensions">11.9. Potential Extensions</a></li>
+<li><a href="#1110-why-epoch">11.10. Why Epoch?</a></li>
+<li><a href="#1111-naming-and-case-sensitivity">11.11. Naming and Case Sensitivity</a></li>
+<li><a href="#1112-why-the-lower-character-limit-on-some-group-and-resource-type-names">11.12. Why the lower character limit on some Group and Resource type names?</a></li>
+<li><a href="#1113-why-must-group-type-and-resource-type-names-be-valid-attribute-names">11.13. Why must Group type and Resource type names be valid attribute names?</a></li>
+<li><a href="#1114-choosing-unique-group-and-resource-names">11.14. Choosing unique Group and Resource names</a></li>
+<li><a href="#1115-are-self-and-shortself-attributes-static">11.15. Are <code>self</code> and <code>shortself</code> attributes static?</a></li>
+<li><a href="#1116-why-does-an-unknown-query-parameter-not-generate-an-error">11.16. Why does an unknown query parameter not generate an error?</a></li>
+<li><a href="#1117-updating-attributes-with-ifvalues">11.17. Updating attributes with <code>ifvalues</code></a></li>
+<li><a href="#1118-multi-root-ancestor-hierarchies">11.18. Multi-root ancestor hierarchies</a></li>
+<li><a href="#1119-singleversionroot-policy-enforcement">11.19. <code>singleversionroot</code> Policy Enforcement</a></li>
+<li><a href="#1120-pruning-versions-with-singleversionroot-enabled">11.20. Pruning Versions with <code>singleversionroot</code> enabled</a></li>
+<li><a href="#1121-whats-the-oldestnewest-version-of-a-resource">11.21. What's the oldest/newest Version of a Resource?</a></li>
+<li><a href="#1122-can-validatecompatibility-and-validateformat-be-true-for-file-servers">11.22. Can <code>validatecompatibility</code> and <code>validateformat</code> be <code>true</code> for file-servers?</a></li>
+<li><a href="#1123-detecting-circular-references-between-versions">11.23. Detecting circular references between Versions</a></li>
+<li><a href="#1124-optional-required-fields-in-requests">11.24. Optional required fields in requests</a></li>
+<li><a href="#1125-deprecation-of-entities-in-an-xregistry">11.25. Deprecation of entities in an xRegistry</a></li>
+</ul>
+</li>
+<li><a href="#12-the-format-attribute-in-the-schema-spec">12. The <code>format</code> attribute in the Schema spec</a></li>
+<li><a href="#13-problematic-characters-in-attributes">13. Problematic characters in attributes</a></li>
+<li><a href="#14-why-do-resources-have-3-levels-of-data">14. Why do Resources have 3 levels of data?</a></li>
+<li><a href="#15-why-are-some-conditional-read-only-attributes-not-ignored">15. Why are some (conditional) read-only attributes not ignored?</a></li>
+<li><a href="#16-why-isnt-put-idempotent">16. Why isn't <code>PUT</code> idempotent?</a></li>
+<li><a href="#17-defining-extensions">17. Defining Extensions</a></li>
+<li><a href="#18-validation">18. Validation</a></li>
+</ul>
+<h2 id="3-a-quick-introduction-to-xregistry">3. A Quick Introduction to xRegistry <a class="anchor" href="#3-a-quick-introduction-to-xregistry">🔗</a></h2>
+<p><em>A quick-start guide for developers who just want to use xRegistry, not read
+the whole spec.</em></p>
+<p>This section is a short, informal introduction to xRegistry. It intentionally
+skips edge cases, admin-level configuration and formal <code>MUST</code>/<code>SHOULD</code>
+language. If you need the full details later, see <a href="./spec.html"><code>spec.md</code></a>,
+<a href="./http.html"><code>http.md</code></a> and <a href="./model.html"><code>model.md</code></a>. This guide assumes you
+already know how typical REST APIs work (<code>GET</code>/<code>POST</code>/<code>PUT</code>/<code>PATCH</code>/<code>DELETE</code>,
+JSON bodies, HTTP status codes).</p>
+<h3 id="31-what-is-xregistry">3.1. What is xRegistry? <a class="anchor" href="#31-what-is-xregistry">🔗</a></h3>
+<p>xRegistry is a generic way to expose and manage collections of metadata (and
+optionally documents) over HTTP, using a consistent, predictable URL/JSON
+shape - so tooling written against one xRegistry-based API mostly works
+against any other one.</p>
+<p>Think of it like a filesystem exposed over HTTP:</p>
+<ul>
+<li>A <strong>Registry</strong> is the root of the whole thing - like the root of a
+filesystem/drive.</li>
+<li><strong>Groups</strong> are like folders - they organize related things together.
+Example: <code>endpoints</code>.</li>
+<li><strong>Resources</strong> are like files - the actual &quot;things&quot; you care about.
+Example: <code>messages</code> (inside an <code>endpoint</code>).</li>
+<li><strong>Versions</strong> are like a file's revision history - a Resource can have one
+or more Versions over time. If you don't care about versioning, just
+ignore Versions and treat the Resource as if it has one version.</li>
+</ul>
+<p>A picture is worth it:</p>
+<pre><code>Registry
+ └── &lt;GROUPS&gt;/&lt;GID&gt;                      e.g. endpoints/ep1
+      └── &lt;RESOURCES&gt;/&lt;RID&gt;              e.g. messages/msg1
+           └── versions/&lt;VID&gt;            e.g. versions/1
+</code></pre>
+<p>Every Registry has a <strong>model</strong> that declares what Group and Resource types
+it supports (their names, and any extra attributes they carry). Clients can
+fetch this model at runtime, so tooling can be written generically without
+hard-coding knowledge of a specific Registry's shape.</p>
+<p>Everything (Registries, Groups, Resources, Versions) shares a small set of
+common metadata attributes, the most important being:</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;TYPE&gt;id</code></td>
+<td>The unique ID of the entity, e.g. <code>messageid</code></td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td>A human-friendly display name (optional)</td>
+</tr>
+<tr>
+<td><code>epoch</code></td>
+<td>A number that increments on every change (for concurrency)</td>
+</tr>
+<tr>
+<td><code>self</code></td>
+<td>The absolute URL of this entity</td>
+</tr>
+<tr>
+<td><code>createdat</code> / <code>modifiedat</code></td>
+<td>Timestamps</td>
+</tr>
+</tbody>
+</table>
+<p>You don't need to memorize these - they just show up automatically in
+responses.</p>
+<h3 id="32-core-http-interactions">3.2. Core HTTP Interactions <a class="anchor" href="#32-core-http-interactions">🔗</a></h3>
+<p>xRegistry maps directly onto normal REST/HTTP verbs. The URL patterns are:</p>
+<pre><code>GET/PUT/PATCH        /                                        # the Registry itself
+GET                  /model                                   # the model definition
+GET/PUT              /modelsource                              # the model, as you defined it
+
+GET/POST/PATCH       /&lt;GROUPS&gt;                                 # e.g. GET /endpoints
+GET/PUT/PATCH/DELETE /&lt;GROUPS&gt;/&lt;GID&gt;                            # e.g. .../endpoints/ep1
+
+GET/POST/PATCH       /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;                # e.g. .../endpoints/ep1/messages
+GET/PUT/PATCH/DELETE /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;           # a Resource (its default Version)
+
+GET/PUT/PATCH/DELETE /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;/versions/&lt;VID&gt;  # a specific Version
+</code></pre>
+<p><code>&lt;GROUPS&gt;</code> and <code>&lt;RESOURCES&gt;</code> are whatever plural names your Registry's model
+defines (e.g. <code>endpoints</code>, <code>messages</code>) - they're not literal.</p>
+<h4 id="321-reading-things">3.2.1. Reading things <a class="anchor" href="#321-reading-things">🔗</a></h4>
+<p>A plain <code>GET</code> on any entity returns its metadata as JSON:</p>
+<pre><code>GET /endpoints/ep1
+
+{
+  &quot;endpointid&quot;: &quot;ep1&quot;,
+  &quot;self&quot;: &quot;https://example.com/endpoints/ep1&quot;,
+  &quot;epoch&quot;: 3,
+  &quot;name&quot;: &quot;My Endpoint&quot;,
+  &quot;messagesurl&quot;: &quot;https://example.com/endpoints/ep1/messages&quot;,
+  &quot;messagescount&quot;: 5
+}
+</code></pre>
+<p>Notice collections aren't inlined by default - you get a <code>&lt;COLLECTION&gt;url</code>
+and <code>&lt;COLLECTION&gt;count</code> instead, and you <code>GET</code> that URL to see the actual
+list. (You can ask for things to be inlined with <code>?inline</code>, but that's an
+advanced topic.)</p>
+<p><code>GET</code>-ing a collection (e.g. <code>GET /endpoints</code>) returns a map of <code>id -&gt; entity</code>
+for everything in it.</p>
+<h4 id="322-creating--updating-things">3.2.2. Creating / updating things <a class="anchor" href="#322-creating--updating-things">🔗</a></h4>
+<ul>
+<li><code>POST</code> on a <strong>collection</strong> creates (or upserts) one or more entities in it.</li>
+<li><code>PUT</code>/<code>PATCH</code> on a <strong>specific entity</strong> creates it (if it doesn't exist) or
+updates it.
+<ul>
+<li><code>PUT</code> = full replacement (anything you omit gets reset/cleared).</li>
+<li><code>PATCH</code> = partial update (only what you include is changed; <code>null</code>
+deletes an attribute).</li>
+</ul>
+</li>
+</ul>
+<p>Example - create a Group:</p>
+<pre><code>PUT /endpoints/ep1
+Content-Type: application/json
+
+{ &quot;name&quot;: &quot;My Endpoint&quot; }
+</code></pre>
+<pre><code>HTTP/1.1 201 Created
+
+{
+  &quot;endpointid&quot;: &quot;ep1&quot;,
+  &quot;self&quot;: &quot;https://example.com/endpoints/ep1&quot;,
+  &quot;epoch&quot;: 1,
+  &quot;name&quot;: &quot;My Endpoint&quot;,
+  &quot;createdat&quot;: &quot;...&quot;,
+  &quot;modifiedat&quot;: &quot;...&quot;
+}
+</code></pre>
+<h4 id="323-resources-metadata-vs-the-actual-document">3.2.3. Resources: metadata vs. the actual document <a class="anchor" href="#323-resources-metadata-vs-the-actual-document">🔗</a></h4>
+<p>This is the one twist compared to a plain REST API. A Resource (e.g. a
+<code>message</code> or a <code>schema</code>) can have its own domain-specific &quot;document&quot; (its
+actual content) in addition to its xRegistry metadata (<code>epoch</code>, <code>name</code>,
+etc).</p>
+<ul>
+<li><code>GET /endpoints/ep1/messages/msg1</code> → returns the Resource's <strong>document</strong>
+(its raw content) directly in the HTTP body.</li>
+<li><code>GET /endpoints/ep1/messages/msg1$details</code> → returns the Resource's
+<strong>metadata</strong> as JSON instead (with the document's metadata such as
+<code>contenttype</code>, but not the document body itself).</li>
+</ul>
+<p>Same idea applies for <code>PUT</code>: <code>PUT .../msg1</code> with a raw body sets the
+document content; <code>PUT .../msg1$details</code> with a JSON body sets/updates just
+the metadata.</p>
+<p>If a Resource type doesn't have its own separate document (just metadata),
+then <code>$details</code> isn't needed - plain requests just return the metadata.</p>
+<h4 id="324-versions">3.2.4. Versions <a class="anchor" href="#324-versions">🔗</a></h4>
+<p>If you don't care about history, ignore <code>versions</code> entirely - just treat
+<code>/&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;</code> as &quot;the Resource&quot;, and every update just
+changes its one Version in place.</p>
+<p>If you do want history, <code>POST</code> to the <code>versions</code> collection to add a new
+Version, and <code>GET .../versions</code> to list them all. The most recent (or
+explicitly-chosen &quot;default&quot;) Version is always what you get back when you
+address the Resource directly, without a specific <code>versionid</code>.</p>
+<h4 id="325-deleting">3.2.5. Deleting <a class="anchor" href="#325-deleting">🔗</a></h4>
+<p><code>DELETE</code> on any entity or collection member removes it, cascading to
+everything beneath it (delete a Group, its Resources go too).</p>
+<h4 id="326-errors">3.2.6. Errors <a class="anchor" href="#326-errors">🔗</a></h4>
+<p>Errors come back as normal HTTP status codes with a JSON body describing
+what went wrong, e.g.:</p>
+<pre><code class="language-json">{
+  &quot;type&quot;: &quot;https://...#not_found&quot;,
+  &quot;title&quot;: &quot;Not found&quot;,
+  &quot;detail&quot;: &quot;...&quot;
+}
+</code></pre>
+<h3 id="33-defining-a-basic-model">3.3. Defining a Basic Model <a class="anchor" href="#33-defining-a-basic-model">🔗</a></h3>
+<p>Before you can create Groups/Resources, the Registry needs a <strong>model</strong>
+telling it what types of Groups and Resources are allowed. At its simplest,
+this is just names:</p>
+<pre><code class="language-json">{
+  &quot;groups&quot;: {
+    &quot;endpoints&quot;: {
+      &quot;singular&quot;: &quot;endpoint&quot;,
+      &quot;resources&quot;: {
+        &quot;messages&quot;: {
+          &quot;singular&quot;: &quot;message&quot;
+        }
+      }
+    }
+  }
+}
+</code></pre>
+<p>This says: &quot;there's a Group type called <code>endpoints</code> (singular <code>endpoint</code>),
+and each <code>endpoint</code> can contain <code>messages</code> (singular <code>message</code>).&quot; That's a
+complete, valid model - you can have as many Group types as you like, and
+each Group type can have as many Resource types as you like.</p>
+<p>You load this via:</p>
+<pre><code>PUT /modelsource
+Content-Type: application/json
+
+{ ... model json above ... }
+</code></pre>
+<p>Once loaded, you can immediately do things like:</p>
+<pre><code>PUT /endpoints/ep1
+PUT /endpoints/ep1/messages/msg1
+</code></pre>
+<h4 id="331-adding-your-own-attributes-extensions">3.3.1. Adding your own attributes (extensions) <a class="anchor" href="#331-adding-your-own-attributes-extensions">🔗</a></h4>
+<p>If you want Resources/Groups to carry extra domain-specific fields, add
+them under <code>attributes</code>:</p>
+<pre><code class="language-json">{
+  &quot;groups&quot;: {
+    &quot;endpoints&quot;: {
+      &quot;singular&quot;: &quot;endpoint&quot;,
+      &quot;resources&quot;: {
+        &quot;messages&quot;: {
+          &quot;singular&quot;: &quot;message&quot;,
+          &quot;attributes&quot;: {
+            &quot;format&quot;: {
+              &quot;type&quot;: &quot;string&quot;,
+              &quot;required&quot;: true
+            }
+          }
+        }
+      }
+    }
+  }
+}
+</code></pre>
+<p>Now every <code>message</code> Resource must include a <code>format</code> string attribute, e.g.:</p>
+<pre><code class="language-json">{ &quot;messageid&quot;: &quot;msg1&quot;, &quot;format&quot;: &quot;avro&quot; }
+</code></pre>
+<p>Common <code>type</code> values you'll use most often: <code>string</code>, <code>boolean</code>, <code>integer</code>,
+<code>uinteger</code>, <code>decimal</code>, <code>timestamp</code>, <code>uri</code>, <code>array</code>, <code>map</code>, <code>object</code>. Useful
+attribute flags: <code>required</code>, <code>default</code>, <code>readonly</code>, <code>enum</code> (restrict to a
+fixed set of values).</p>
+<p>That's genuinely enough to get going. Everything else in the full model
+spec (constraints, versioning policies, <code>xid</code> targets, <code>ifvalues</code>, etc.) is
+there for more advanced scenarios - come back to <a href="./model.html"><code>model.md</code></a>
+when you need it.</p>
+<h3 id="34-where-to-go-next">3.4. Where to go next <a class="anchor" href="#34-where-to-go-next">🔗</a></h3>
+<ul>
+<li><a href="./spec.html"><code>spec.md</code></a> - the full core specification (concepts, entities,
+capabilities).</li>
+<li><a href="./http.html"><code>http.md</code></a> - the full HTTP binding (every API, header, and
+query parameter in detail).</li>
+<li><a href="./model.html"><code>model.md</code></a> - the full model specification (every model
+attribute and option).</li>
+</ul>
+<h2 id="4-history">4. History <a class="anchor" href="#4-history">🔗</a></h2>
 <p>The CNCF Serverless Working group was originally created by the CNCF's Technical
 Oversight Committee to investigate Serverless Technology and to recommend some
 possible next steps for some CNCF related activities in this space. After
@@ -159,19 +421,19 @@ associating those declarations with application endpoints. As a result, the
 xRegistry (extensible registry) specification was created.</p>
 <p>xRegistry was initially part of CloudEvents, called &quot;CloudEvents Discovery&quot; but
 later moved into its own repository.</p>
-<h2 id="4-value-proposition">4. Value proposition <a class="anchor" href="#4-value-proposition">🔗</a></h2>
+<h2 id="5-value-proposition">5. Value proposition <a class="anchor" href="#5-value-proposition">🔗</a></h2>
 <p>xRegistry provides a specification to define metadata and extensions for
 resources in an abstract model that can be used to centralize and standardize
 information about resources in a system. The core specification defines the
 basic building blocks for managing metadata about resources and provides
-multiple formats to <a href="#7-representations">represent</a> this information.</p>
+multiple formats to <a href="#8-representations">represent</a> this information.</p>
 <p>xRegistry can be used to represent any type of metadata, as long as it adheres
 to the basic model in which a registry consists of groups, which in turn
 consists of multiple resources which can have multiple versions defined. This
 model is useful for any metadata that is crucial to the operation of a system or
 helps facilitate the interaction between systems. The use cases for xRegistry
 are therefore very broad. See
-<a href="#9-possible-use-cases">possible use cases</a> for more examples.</p>
+<a href="#10-possible-use-cases">possible use cases</a> for more examples.</p>
 <p>In addition to the core specification, xRegistry provides secondary
 specifications for <a href="./../../endpoint-v1/docs/spec.html">endpoints</a>,
 <a href="./../../schema-v1/docs/spec.html">schemas</a>, and <a href="./../../message-v1/docs/spec.html">messages</a>, that further
@@ -179,7 +441,7 @@ build upon the core to provide more domain-specific standardization in the
 context of event-driven systems. The following subsections provide a more
 specific overview of how xRegistry can be used to address common challenges in
 the event-driven space.</p>
-<h3 id="41-why-build-something-new">4.1. Why build something new? <a class="anchor" href="#41-why-build-something-new">🔗</a></h3>
+<h3 id="51-why-build-something-new">5.1. Why build something new? <a class="anchor" href="#51-why-build-something-new">🔗</a></h3>
 <p>There are numerous metadata registries available today. Several schema
 registries exist. There are standards for container image registries, package
 registries, and API registries. When this effort was started, there was no
@@ -202,7 +464,7 @@ these resources and their relationships to be expressed in a single model, and
 it can yet leave the authoritative management of the individual resources to
 the respective registries as those can be proxied with an xRegistry API or
 import/exported into an xRegistry representation.</p>
-<h3 id="42-discovery">4.2. Discovery <a class="anchor" href="#42-discovery">🔗</a></h3>
+<h3 id="52-discovery">5.2. Discovery <a class="anchor" href="#52-discovery">🔗</a></h3>
 <p>One of the pain points of event-driven systems is the need to create and
 maintain documentation about endpoints and the events they expose, enabling
 consumers from other teams or even other organizations to have all relevant
@@ -214,7 +476,7 @@ describe events on more detailed levels. As an example, it is possible to define
 an event, and mark specific metadata that are required. Due to its rich metadata
 model, metadata can also be expressed in human language, making it easier for
 developers, data-analysts, or even business analysts to understand.</p>
-<h3 id="43-vendor-agnostic">4.3. Vendor-agnostic <a class="anchor" href="#43-vendor-agnostic">🔗</a></h3>
+<h3 id="53-vendor-agnostic">5.3. Vendor-agnostic <a class="anchor" href="#53-vendor-agnostic">🔗</a></h3>
 <p>xRegistry provides a specification to define, query, group, version and enforce
 schemas for systems. Multiple schema registry solutions exist already, including
 <a href="https://docs.confluent.io/platform/current/schema-registry/index.html">Confluent Schema
@@ -231,7 +493,7 @@ across registries, for example when validating event structures, hindering
 interoperability and, therefore, complicating integration scenarios. xRegistry
 aims to address this with an agnostic specification, providing a common base
 across these offerings.</p>
-<h3 id="44-versioning">4.4. Versioning <a class="anchor" href="#44-versioning">🔗</a></h3>
+<h3 id="54-versioning">5.4. Versioning <a class="anchor" href="#54-versioning">🔗</a></h3>
 <p>As systems evolve, the endpoints that emit events may change, as may the events
 themselves. Changes can sometimes break consumers making compatibility
 strategies essential to indicate to consumers how they may expect events or
@@ -241,7 +503,7 @@ mistakes. The specifications further also enables marking endpoints as
 deprecated, possibly providing an alternative endpoint, making these easier to
 discover for consumers. Finally, event schemas are also version aware, storing
 multiple versions of an event’s data schema.</p>
-<h3 id="45-schema-validation">4.5. Schema validation <a class="anchor" href="#45-schema-validation">🔗</a></h3>
+<h3 id="55-schema-validation">5.5. Schema validation <a class="anchor" href="#55-schema-validation">🔗</a></h3>
 <p>The registry contains granular definitions for events defining their schemas,
 which serve as a contract between publishers and consumers. This doesn’t only
 apply to the message payload, but also to the message metadata, allowing
@@ -250,14 +512,14 @@ only serve as a definition of the required schemas, but can also be used to
 enforce it. A registry service could use the registry to perform validation
 on-publish, rejecting any events that don’t adhere to the schema for that
 context, avoiding the problem of poison messages.</p>
-<h3 id="46-payload-reduction">4.6. Payload reduction <a class="anchor" href="#46-payload-reduction">🔗</a></h3>
+<h3 id="56-payload-reduction">5.6. Payload reduction <a class="anchor" href="#56-payload-reduction">🔗</a></h3>
 <p>Schema information enables real-time analysis of incoming data based on its
 contextual meaning, which is why applications often use serialization mechanisms
 which include schema information (such as JSON) in payloads. Having a
 centralized registry, enables applications to rely on lighter weight
 serialization formats, significantly reducing bandwidth, while still allowing
 accurate real-time analysis of incoming data using the registry.</p>
-<h3 id="47-schema-based-data-contract-generation">4.7. Schema-based data contract generation <a class="anchor" href="#47-schema-based-data-contract-generation">🔗</a></h3>
+<h3 id="57-schema-based-data-contract-generation">5.7. Schema-based data contract generation <a class="anchor" href="#57-schema-based-data-contract-generation">🔗</a></h3>
 <p>xRegistry provides a specification to manage metadata in files which can be
 stored next to the corresponding source code. This enables storing versions of
 the model with their corresponding code in source control. This greatly
@@ -271,7 +533,7 @@ the metadata.</p>
 <p>This enables teams to use code generation to generate relevant data contracts
 when interacting with endpoints. This removes the need for shared code packages
 and avoids any bugs on the data contract level.</p>
-<h3 id="48-producer-and-consumer-generation">4.8. Producer and consumer generation <a class="anchor" href="#48-producer-and-consumer-generation">🔗</a></h3>
+<h3 id="58-producer-and-consumer-generation">5.8. Producer and consumer generation <a class="anchor" href="#58-producer-and-consumer-generation">🔗</a></h3>
 <p>Further, building upon the idea of schema-based data contract generation, even
 client-code can be generated. When the schema is defined in a vendor-agnostic,
 well-defined format, tooling can be built upon this foundation to generate
@@ -282,7 +544,7 @@ development of both producers and consumers, significantly reducing development
 and testing time and minimizing the risk of introducing bugs at this level.
 Clemens Vasters built a proof-of-concept that shows this approach in
 the <a href="https://github.com/clemensv/avrotize">Avrotize VS Code Extension</a>.</p>
-<h3 id="49-basis-for-further-developments">4.9. Basis for further developments <a class="anchor" href="#49-basis-for-further-developments">🔗</a></h3>
+<h3 id="59-basis-for-further-developments">5.9. Basis for further developments <a class="anchor" href="#59-basis-for-further-developments">🔗</a></h3>
 <p>CloudEvents serve as a mechanism to aid in the delivery of events from a
 producer to a consumer, which is applicable independently of the protocol (MQTT,
 HTTP, Kafka, and AMQP) or encoding (JSON, XML, SOAP, Avro, etc.). xRegistry
@@ -295,7 +557,7 @@ endpoints system-wide. This will eventually lead to the definition of event
 flows, making these discoverable and predictable, as opposed to relying on
 human-produced documentation or observability on emerging behavior to understand
 complex flows.</p>
-<h2 id="5-motivation">5. Motivation <a class="anchor" href="#5-motivation">🔗</a></h2>
+<h2 id="6-motivation">6. Motivation <a class="anchor" href="#6-motivation">🔗</a></h2>
 <p>While CloudEvents are harmonizing different event structures across event
 providers and increase interoperability between different brokers and their
 protocols, they do not address:</p>
@@ -322,9 +584,9 @@ increase interoperability and decouple event handling from broker products and
 protocols.</p>
 <p>Even though xRegistry was built with eventing in mind, the concept of this
 registry specification is far more powerful and can be used for the exchange for
-any type of message. Take a look at the <a href="#9-possible-use-cases">Possible Use
+any type of message. Take a look at the <a href="#10-possible-use-cases">Possible Use
 Cases</a> for examples outside the eventing world.</p>
-<h2 id="6-design-goals">6. Design Goals <a class="anchor" href="#6-design-goals">🔗</a></h2>
+<h2 id="7-design-goals">7. Design Goals <a class="anchor" href="#7-design-goals">🔗</a></h2>
 <ul>
 <li><strong>Interoperability:</strong> Enable effortless discovery, validation and versioning
 of resources.</li>
@@ -339,7 +601,7 @@ NATS, HTTP..) and schema languages (JSON Schema, Avro Schema, Protobuf..)
 <li><strong>Simplicity:</strong> Allow simple use cases that do not need versioning of
 resources or a full-blown schema registry on the server.</li>
 </ul>
-<h3 id="61-non-goals">6.1. Non-Goals <a class="anchor" href="#61-non-goals">🔗</a></h3>
+<h3 id="71-non-goals">7.1. Non-Goals <a class="anchor" href="#71-non-goals">🔗</a></h3>
 <ul>
 <li><strong>Authentication and Authorization:</strong> Rely on established security standards
 depending on the registry representation.</li>
@@ -347,12 +609,12 @@ depending on the registry representation.</li>
 single event channel before standardizing the relationships between event
 channels.</li>
 </ul>
-<h2 id="7-representations">7. Representations <a class="anchor" href="#7-representations">🔗</a></h2>
+<h2 id="8-representations">8. Representations <a class="anchor" href="#8-representations">🔗</a></h2>
 <p>An xRegistry can be represented in a few different ways: a JSON file, a static
 file server and an API server - with some further nuances. Resources
 (user-supplied data) will most often be embedded in the registry, but the
 resource metadata might also point to an external location where such data
-exists; also see the discussion about <a href="#8-embeddings-references-and-federation">embeddings and
+exists; also see the discussion about <a href="#9-embeddings-references-and-federation">embeddings and
 references</a>.</p>
 <p>When building up this spec, the API server had the highest priority, followed
 by the file representation and the static file server as an option to
@@ -362,7 +624,7 @@ design goals is the symmetry between all representations.</p>
 you will realistically want to use the API server or CLI to create the registry
 and then use its export function to generate files for the file or static file
 server representation.</p>
-<h3 id="71-file">7.1. File <a class="anchor" href="#71-file">🔗</a></h3>
+<h3 id="81-file">8.1. File <a class="anchor" href="#81-file">🔗</a></h3>
 <p>The registry is represented as a single JSON file.</p>
 <p>The primary use case for this representation is a registry whose purpose is to
 be used where file-based access is preferred over network-based access.</p>
@@ -378,7 +640,7 @@ deployed, so that other participants in the system can understand the
 raised events.</p>
 <p>Writing up a registry by hand can be a great way of getting the idea, but it can
 get tedious quickly. This is when you want to use the API server.</p>
-<h3 id="72-static-file-server">7.2. Static File Server <a class="anchor" href="#72-static-file-server">🔗</a></h3>
+<h3 id="82-static-file-server">8.2. Static File Server <a class="anchor" href="#82-static-file-server">🔗</a></h3>
 <p>The registry is represented by multiple JSON files, where each one represents a
 single entity within the registry, served via a static file server (e.g. S3 or
 similar) that follows the folder and file structure of the API server.</p>
@@ -397,7 +659,7 @@ If you want to directly write to the server or need sophisticated searching and
 filtering, you might consider using the API server instead. Adding server logic
 to the static file server to make up for the features of the API server is
 considered an anti pattern.</p>
-<h3 id="73-api-server">7.3. API Server <a class="anchor" href="#73-api-server">🔗</a></h3>
+<h3 id="83-api-server">8.3. API Server <a class="anchor" href="#83-api-server">🔗</a></h3>
 <p>The API server is the most sophisticated representation of xRegistry. When you
 have multiple teams that are using the same registry with distributed ownership
 of the managed resources, therefore differentiated authorization – then the API
@@ -412,7 +674,7 @@ options.</p>
 layer and maintain both. In exchange you get all the benefits listed above.
 While starting with the API server might be a little more work upfront, it saves
 you from migrating representations as your registry grows.</p>
-<h2 id="8-embeddings-references-and-federation">8. Embeddings, References, and Federation <a class="anchor" href="#8-embeddings-references-and-federation">🔗</a></h2>
+<h2 id="9-embeddings-references-and-federation">9. Embeddings, References, and Federation <a class="anchor" href="#9-embeddings-references-and-federation">🔗</a></h2>
 <p>The purpose of a registry is to act as a catalog more than as a container.</p>
 <p>xRegistry is extensible with models so that the catalog entries can be
 customized for the described kind of resource. You could fairly precisely
@@ -423,7 +685,7 @@ quite obviously not exist inside of it.</p>
 xRegistry can indeed embed content, like schema documents. The shape of those
 documents is not declared by the model, but may be constrained by convention
 (and implementation choice) based on the <a href="./spec.html#format-attribute"><code>format</code></a> attribute.</p>
-<h3 id="81-formats-and-contentmedia-types">8.1. Formats and Content/Media-Types <a class="anchor" href="#81-formats-and-contentmedia-types">🔗</a></h3>
+<h3 id="91-formats-and-contentmedia-types">9.1. Formats and Content/Media-Types <a class="anchor" href="#91-formats-and-contentmedia-types">🔗</a></h3>
 <p><code>format</code> and the supported values are a convention chosen for this
 specification because the IANA &quot;media-types&quot; are not consistently available for
 many document types that are in focus. There is additionally a
@@ -442,7 +704,7 @@ allows the server to validate embedded data directly.</p>
 that are under its own control. If a document is external, meaning that the
 resource entry does not embed it but links to it, the document might change at
 the external location without the registry knowing.</p>
-<h3 id="82-embeddings-and-links">8.2. Embeddings and Links <a class="anchor" href="#82-embeddings-and-links">🔗</a></h3>
+<h3 id="92-embeddings-and-links">9.2. Embeddings and Links <a class="anchor" href="#92-embeddings-and-links">🔗</a></h3>
 <p>When the resource is declared to be a document, it can be stored inside the
 registry either as a directly <a href="./spec.html#resource-attribute">embedded object</a>, a
 <a href="./spec.html#resourcebase64-attribute">binary blob</a>, or an <a href="./spec.html#resourceurl-attribute">external URL
@@ -474,15 +736,15 @@ registry will not resolve it and load the content; that is left to clients.</p>
 <p>External links also make it possible to overlay xRegistry on top of a
 completely different registry model, proxy the metadata through an xRegistry
 API, but provide passthrough access to the other registry's content.</p>
-<h3 id="83-federation">8.3. Federation <a class="anchor" href="#83-federation">🔗</a></h3>
+<h3 id="93-federation">9.3. Federation <a class="anchor" href="#93-federation">🔗</a></h3>
 <p>xRegistry does not have a synchronization API, by intent. Since xRegistry is
 both a document format model and an API, the integration of multiple registries
 (&quot;federation&quot;) does not rely on making copies but is intended to work via
-cross-referencing and &quot;shadowing&quot; across the <a href="#7-representations">representations</a>
+cross-referencing and &quot;shadowing&quot; across the <a href="#8-representations">representations</a>
 described earlier.</p>
-<h4 id="831-composing-registries-in-memory">8.3.1. Composing registries in memory <a class="anchor" href="#831-composing-registries-in-memory">🔗</a></h4>
-<p>A registry document, whether a single <a href="#71-file">file</a> or the root of a
-<a href="#72-static-file-server">static file server</a> layout, is meant to be loaded into
+<h4 id="931-composing-registries-in-memory">9.3.1. Composing registries in memory <a class="anchor" href="#931-composing-registries-in-memory">🔗</a></h4>
+<p>A registry document, whether a single <a href="#81-file">file</a> or the root of a
+<a href="#82-static-file-server">static file server</a> layout, is meant to be loaded into
 an application as a local, in-memory registry. While a document technically
 needs to embed a model to be valid, servers often choose to allow that the
 models they know about are implicitly available, so that a registry document
@@ -493,9 +755,9 @@ are several examples of such documents in the
 application can load the root document and traverse <code>&lt;RESOURCE&gt;url</code> links to
 individual documents on demand, building an in-memory view that combines the
 root document with only those branches that are relevant to the application. The
-same applies when the root sits behind an <a href="#73-api-server">API server</a> or proxy:
+same applies when the root sits behind an <a href="#83-api-server">API server</a> or proxy:
 the client fetches and caches just the branches it needs.</p>
-<h4 id="832-shadowing">8.3.2. Shadowing <a class="anchor" href="#832-shadowing">🔗</a></h4>
+<h4 id="932-shadowing">9.3.2. Shadowing <a class="anchor" href="#932-shadowing">🔗</a></h4>
 <p>Federation in xRegistry is intended to be built on <em>shadowing</em>: an application's
 view is a layered combination of registries, where a local registry can override
 or extend entries from an underlying one without modifying it. We say &quot;intended&quot;
@@ -520,7 +782,7 @@ their versions are merged and constraints are not fully aligned. We believe that
 composition and shadowing is the best approach to federation, but the project
 will need to gain more experience with it in practice before it can be
 formalized.</p>
-<h4 id="833-identifiers">8.3.3. Identifiers <a class="anchor" href="#833-identifiers">🔗</a></h4>
+<h4 id="933-identifiers">9.3.3. Identifiers <a class="anchor" href="#933-identifiers">🔗</a></h4>
 <p>For shadowing and cross-referencing to work, identifiers need to be stable
 across registries. Group identifiers should be treated as globally unique, so
 that the same group can be recognized across different registries. Resource
@@ -536,7 +798,7 @@ to reach a registry hosted in a public cloud, so the same content may need to be
 served from a local registry on a private DNS name. Treating the authority as an
 endpoint identifier rather than a resource identifier is what makes that
 possible.</p>
-<h4 id="834-api-servers-and-proxies">8.3.4. API Servers and Proxies <a class="anchor" href="#834-api-servers-and-proxies">🔗</a></h4>
+<h4 id="934-api-servers-and-proxies">9.3.4. API Servers and Proxies <a class="anchor" href="#934-api-servers-and-proxies">🔗</a></h4>
 <p>An API server can also act as a proxy that presents multiple underlying
 registries - including non-xRegistry ones - through a single xRegistry
 interface. The <a href="https://github.com/xregistry/xrproxy">xrproxy</a> project provides
@@ -546,8 +808,8 @@ model.</p>
 <p>Shadowing applies here too: any API client can shadow the API server with a
 local registry to add or modify entries without affecting the underlying
 registry, and a proxying API server can do the same on behalf of its clients.</p>
-<h2 id="9-possible-use-cases">9. Possible Use Cases <a class="anchor" href="#9-possible-use-cases">🔗</a></h2>
-<h3 id="91-cloudevents">9.1. CloudEvents <a class="anchor" href="#91-cloudevents">🔗</a></h3>
+<h2 id="10-possible-use-cases">10. Possible Use Cases <a class="anchor" href="#10-possible-use-cases">🔗</a></h2>
+<h3 id="101-cloudevents">10.1. CloudEvents <a class="anchor" href="#101-cloudevents">🔗</a></h3>
 <p>Since xRegistry emerged from the CloudEvents project and initially was called
 &quot;CloudEvents Discovery&quot; the obvious use case is to manage all the CloudEvents of
 your event-driven architecture inside xRegistry. The spec supports &quot;CloudEvents&quot;
@@ -556,19 +818,19 @@ CloudEvents look, what extensions they use or which fields are required for your
 specific use-case even though the original spec marks them as optional. In
 addition, the <code>dataschema</code> attribute of a CloudEvent can then point to a
 xRegistry schema document making this two projects that work hand in hand.</p>
-<h3 id="92-business-objects">9.2. Business objects <a class="anchor" href="#92-business-objects">🔗</a></h3>
+<h3 id="102-business-objects">10.2. Business objects <a class="anchor" href="#102-business-objects">🔗</a></h3>
 <p>When defining the schemas of business objects in an enterprise, xRegistry can be
 the schema store for these definitions. One can then reference them in a data
 catalogue as well as in OpenAPI and AsyncAPI documents without repeating the
 schemas for the actual business objects.</p>
-<h3 id="93-metadata-files-in-repositories">9.3. Metadata files in repositories <a class="anchor" href="#93-metadata-files-in-repositories">🔗</a></h3>
+<h3 id="103-metadata-files-in-repositories">10.3. Metadata files in repositories <a class="anchor" href="#103-metadata-files-in-repositories">🔗</a></h3>
 <p>Open source repositories could provide an xRegistry represented as a simple JSON
 file on the top level of the folder structure and list all metadata files this
 repository contains like a <code>package.json</code>. This would allow machine-readable
 access to project dependencies and configurations as well as consistent
 management of metadata across different tools and environments.</p>
-<h2 id="10-design-decisions-or-topics-of-interest">10. Design decisions or topics of interest <a class="anchor" href="#10-design-decisions-or-topics-of-interest">🔗</a></h2>
-<h3 id="101-resourceid-vs-resourceversionid">10.1. Resource.ID vs Resource.Version.ID <a class="anchor" href="#101-resourceid-vs-resourceversionid">🔗</a></h3>
+<h2 id="11-design-decisions-or-topics-of-interest">11. Design decisions or topics of interest <a class="anchor" href="#11-design-decisions-or-topics-of-interest">🔗</a></h2>
+<h3 id="111-resourceid-vs-resourceversionid">11.1. Resource.ID vs Resource.Version.ID <a class="anchor" href="#111-resourceid-vs-resourceversionid">🔗</a></h3>
 <p>Resources, like all xRegistry entities, have unique <code>id</code> values. Resource
 <code>id</code>s are often user-friendly values that often have an implied semantic
 meaning of the purpose of the underlying Resource document. Also, since they
@@ -584,7 +846,7 @@ allowable, it has no influence on any specification defined semantics of the
 xRegistry model. As a result, implementations might want to avoid using <code>id</code>
 values that could appear on a Resource and one of its Versions simply to avoid
 potential confusion for their end-users.</p>
-<h3 id="102-valid-characters">10.2. Valid Characters <a class="anchor" href="#102-valid-characters">🔗</a></h3>
+<h3 id="112-valid-characters">11.2. Valid Characters <a class="anchor" href="#112-valid-characters">🔗</a></h3>
 <p>The xRegistry specification restricts the allowable characters for attribute
 and map key names. While it can be considered overly restrictive, for example
 uppercase characters are not permitted, this was done because considerations
@@ -618,7 +880,7 @@ limiting the allowable characters.</p>
 attribute names because map key names are not usually mapped to well-defined
 variable or structure property names - they're usually just stored as
 &quot;strings&quot; a map data structure.</p>
-<h3 id="103-extensions">10.3. Extensions <a class="anchor" href="#103-extensions">🔗</a></h3>
+<h3 id="113-extensions">11.3. Extensions <a class="anchor" href="#113-extensions">🔗</a></h3>
 <ul>
 <li>
 <p>it's RECOMMENDED that all extensions be defined in advance as part of the
@@ -675,7 +937,7 @@ but a nested attribute is optional, or also required (and visa-versa)</p>
 </ul>
 </li>
 </ul>
-<h3 id="104-group-organization">10.4. Group organization <a class="anchor" href="#104-group-organization">🔗</a></h3>
+<h3 id="114-group-organization">11.4. Group organization <a class="anchor" href="#114-group-organization">🔗</a></h3>
 <p>Groups are intentionally a single organizational dimension above Resources:
 the model is always Registry → Group → Resource → Version, and Groups
 themselves do not contain other Groups. This is a deliberate design choice.
@@ -699,7 +961,7 @@ and are encouraged to, support filtering and lookup by labels (see the
 filter examples in the core spec), which makes labels a powerful
 complement to the single Group dimension for cross-cutting discovery
 scenarios that a strict hierarchy could not express.</p>
-<h3 id="105-deleting-entities">10.5. Deleting entities <a class="anchor" href="#105-deleting-entities">🔗</a></h3>
+<h3 id="115-deleting-entities">11.5. Deleting entities <a class="anchor" href="#115-deleting-entities">🔗</a></h3>
 <p>The &quot;delete&quot; operation typically has two variants:</p>
 <ul>
 <li><code>DELETE .../&lt;ID&gt;[?setdefaultversionid=VID]</code></li>
@@ -727,7 +989,7 @@ been deleted successfully. It can be used even if the current &quot;default&quot
 Version isn't being deleted. Note that a <code>404</code> in the <code>DELETE .../&lt;ID&gt;</code> case
 is an error and no changes to the &quot;default&quot; Version will occur.</li>
 </ul>
-<h3 id="106-detection-of-referenced-resources">10.6. Detection of Referenced Resources <a class="anchor" href="#106-detection-of-referenced-resources">🔗</a></h3>
+<h3 id="116-detection-of-referenced-resources">11.6. Detection of Referenced Resources <a class="anchor" href="#116-detection-of-referenced-resources">🔗</a></h3>
 <p>The xRegistry specification allows for Resources to appear in multiple Groups
 via use of the <code>xref</code> feature. This could lead to situations where a user
 deletes a Resource without knowing that other Resources reference it -
@@ -740,7 +1002,7 @@ impending &quot;dangling pointer&quot; state prior to doing the delete, or provi
 some kind of &quot;xref counter&quot; extension on the target Resource. The specification
 might consider adding some feature to address this in the future, but as of now
 it is left as an implementation choice.</p>
-<h3 id="107-sharedreferenced-resources">10.7. Shared/Referenced Resources <a class="anchor" href="#107-sharedreferenced-resources">🔗</a></h3>
+<h3 id="117-sharedreferenced-resources">11.7. Shared/Referenced Resources <a class="anchor" href="#117-sharedreferenced-resources">🔗</a></h3>
 <p>As discussed above, Resource may appear in multiple Groups via use of the
 <code>xref</code> feature. Users of the Registry may wish to consider how best to manage
 these &quot;shared&quot; Resources within their associated Groups. For example, if a
@@ -753,7 +1015,7 @@ be part of the Resource's unique identifier forever.</p>
 <p>Additionally, how the implementation of the xRegistry manages
 access-control-rights of Resources (often via Groups) might influence the
 initial placement into a Group of a new Resource.</p>
-<h4 id="1071-default-version-and-maximum-versions">10.7.1. Default Version and Maximum Versions <a class="anchor" href="#1071-default-version-and-maximum-versions">🔗</a></h4>
+<h3 id="118-default-version-and-maximum-versions">11.8. Default Version and Maximum Versions <a class="anchor" href="#118-default-version-and-maximum-versions">🔗</a></h3>
 <p>Each Resource type can specify the maximum number of Versions that the
 server must save. Once that limit is reached then it must delete Versions
 to stay within the limit - by deleting oldest Versions first. However, since
@@ -786,7 +1048,7 @@ it tagged as &quot;default&quot;</li>
 <li>The result is: v8 regardless of whether v8 was created with isdefault=true or
 not</li>
 </ul>
-<h4 id="1072-potential-extensions">10.7.2. Potential Extensions <a class="anchor" href="#1072-potential-extensions">🔗</a></h4>
+<h3 id="119-potential-extensions">11.9. Potential Extensions <a class="anchor" href="#119-potential-extensions">🔗</a></h3>
 <ul>
 <li>
 <p><code>createdby</code>, <code>modifiedby</code><br>
@@ -800,7 +1062,7 @@ However, if an implementation does track this information, these attributes
 might be of interest.</p>
 </li>
 </ul>
-<h4 id="1073-why-epoch">10.7.3. Why Epoch? <a class="anchor" href="#1073-why-epoch">🔗</a></h4>
+<h3 id="1110-why-epoch">11.10. Why Epoch? <a class="anchor" href="#1110-why-epoch">🔗</a></h3>
 <p>Why such an unusual name? As the specification describes, <code>epoch</code> is used as a
 way to help detect when an entity has been modified. It is very similar to
 HTTP's <a href="https://datatracker.ietf.org/doc/html/rfc9110#name-etag">ETag</a>
@@ -815,7 +1077,7 @@ this entity's history changed?</p>
 they know what it means due to some other usage in this technology space
 seemed unlikely. In fact, use of this word might pique people's curiosity
 and cause them to look it up in the specification to find out more about it.</p>
-<h4 id="1074-naming-and-case-sensitivity">10.7.4. Naming and Case Sensitivity <a class="anchor" href="#1074-naming-and-case-sensitivity">🔗</a></h4>
+<h3 id="1111-naming-and-case-sensitivity">11.11. Naming and Case Sensitivity <a class="anchor" href="#1111-naming-and-case-sensitivity">🔗</a></h3>
 <p>The following explains some of the reasoning behind the casing and case
 sensitivity rules in the specification.</p>
 <ul>
@@ -875,7 +1137,7 @@ unexpected casing and could be confused or believe there was an error.</p>
 in case insensitively.</p>
 </li>
 </ul>
-<h4 id="1075-why-the-lower-character-limit-on-some-group-and-resource-type-names">10.7.5. Why the lower character limit on some Group and Resource type names? <a class="anchor" href="#1075-why-the-lower-character-limit-on-some-group-and-resource-type-names">🔗</a></h4>
+<h3 id="1112-why-the-lower-character-limit-on-some-group-and-resource-type-names">11.12. Why the lower character limit on some Group and Resource type names? <a class="anchor" href="#1112-why-the-lower-character-limit-on-some-group-and-resource-type-names">🔗</a></h3>
 <p>Attribute names and key names are limited to 63 characters, so why are some
 Group and Resource names limited to less? Because when they appear as part of
 attribute names and they can be appended with phrases like <code>url</code>, <code>count</code>
@@ -883,11 +1145,11 @@ or <code>base64</code>, and they still have to fit within the 63-character limit
 we need to take into account the length of those phrases. As a result, both
 Group and Resource type names (both singular and plural) are limited to
 57 characters.</p>
-<h4 id="1076-why-must-group-type-and-resource-type-names-be-valid-attribute-names">10.7.6. Why must Group type and Resource type names be valid attribute names? <a class="anchor" href="#1076-why-must-group-type-and-resource-type-names-be-valid-attribute-names">🔗</a></h4>
+<h3 id="1113-why-must-group-type-and-resource-type-names-be-valid-attribute-names">11.13. Why must Group type and Resource type names be valid attribute names? <a class="anchor" href="#1113-why-must-group-type-and-resource-type-names-be-valid-attribute-names">🔗</a></h3>
 <p>Since Group type and Resource type names will appear as attribute names (e.g.
 <code>&lt;GROUPS&gt;count</code> and <code>&lt;RESOURCE&gt;url</code>), the character set (and length) of their
 names need to be restricted in the same way as a attribute names.</p>
-<h4 id="1077-choosing-unique-group-and-resource-names">10.7.7. Choosing unique Group and Resource names <a class="anchor" href="#1077-choosing-unique-group-and-resource-names">🔗</a></h4>
+<h3 id="1114-choosing-unique-group-and-resource-names">11.14. Choosing unique Group and Resource names <a class="anchor" href="#1114-choosing-unique-group-and-resource-names">🔗</a></h3>
 <p>Aside from choosing names that give some descriptive meaning to the purpose
 of these entities, care should be taken when choosing names for entities that
 might be imported into other Registries. For example, Group names are often
@@ -895,7 +1157,7 @@ suffixed (or prefixed) with domain (or company) specific words to avoid
 name collisions with other similarly named entities. This might be useful
 for Resource names too (if they might co-exist under shared Groups), but
 normally ensuring uniqueness at the Group level is sufficient.</p>
-<h4 id="1078-are-self-and-shortself-attributes-static">10.7.8. Are <code>self</code> and <code>shortself</code> attributes static? <a class="anchor" href="#1078-are-self-and-shortself-attributes-static">🔗</a></h4>
+<h3 id="1115-are-self-and-shortself-attributes-static">11.15. Are <code>self</code> and <code>shortself</code> attributes static? <a class="anchor" href="#1115-are-self-and-shortself-attributes-static">🔗</a></h3>
 <p>In general any URL reference to an entity in the Registry should remain
 static for the lifetime of the entity, otherwise anything persisting that
 reference will break when it attempts to use it. So, in this sense, yes
@@ -908,7 +1170,7 @@ needs to switch to a new &quot;URL shortener&quot; service and so all of the &qu
 values need to change.</p>
 <p>Obviously, situations like these should be rare but the specification needs
 to allow for them.</p>
-<h4 id="1079-why-does-an-unknown-query-parameter-not-generate-an-error">10.7.9. Why does an unknown query parameter not generate an error? <a class="anchor" href="#1079-why-does-an-unknown-query-parameter-not-generate-an-error">🔗</a></h4>
+<h3 id="1116-why-does-an-unknown-query-parameter-not-generate-an-error">11.16. Why does an unknown query parameter not generate an error? <a class="anchor" href="#1116-why-does-an-unknown-query-parameter-not-generate-an-error">🔗</a></h3>
 <p>People have identified cases where query parameters might be added to request
 URLs without the client (or developer) having control to prevent it. It might
 be client-side tooling or intermediaries (e.g. proxies) that might modify
@@ -918,7 +1180,7 @@ the authors chose to have the server ignore unknown query parameters. It is
 worth noting that the specification says they SHOULD be ignored, not that they
 MUST be ignored. So there is room for an implementation to be very picky if
 needed, but at the risk of potentially causing interoperability problems.</p>
-<h4 id="10710-updating-attributes-with-ifvalues">10.7.10. Updating attributes with <code>ifvalues</code> <a class="anchor" href="#10710-updating-attributes-with-ifvalues">🔗</a></h4>
+<h3 id="1117-updating-attributes-with-ifvalues">11.17. Updating attributes with <code>ifvalues</code> <a class="anchor" href="#1117-updating-attributes-with-ifvalues">🔗</a></h3>
 <p>The <code>ifvalues</code> feature might be a new concept for some readers, so a point
 of clarification might be useful. If an attribute is defined with an <code>ifvalues</code>
 aspect, then if that attribute's value changes it is possible that the
@@ -931,7 +1193,7 @@ removes attributes then the client might need to also change other attributes
 in the entity in order to be model compliant.</p>
 <p>Likewise, implementations of the server must validate the entire entity
 against the new model, not just a subset of the entity's attributes.</p>
-<h4 id="10711-multi-root-ancestor-hierarchies">10.7.11. Multi-root ancestor hierarchies <a class="anchor" href="#10711-multi-root-ancestor-hierarchies">🔗</a></h4>
+<h3 id="1118-multi-root-ancestor-hierarchies">11.18. Multi-root ancestor hierarchies <a class="anchor" href="#1118-multi-root-ancestor-hierarchies">🔗</a></h3>
 <p>The <a href="./spec.html#ancestorid-attribute"><code>ancestorid</code> attribute</a> is used to build a
 hierarchy of Versions to facilitate compatibility checking when the
 <a href="./spec.html#compatibility-attribute"><code>compatibility</code> attribute</a> is set. There
@@ -947,7 +1209,7 @@ attribute has its value set to the Version's <code>versionid</code> attribute. T
 makes the ancestor explicit, and the possible ambiguity of using another
 value such as null which, based on the scenario, could mean &quot;no ancestor&quot; or
 &quot;default to the newest&quot;.</p>
-<h4 id="10712-singleversionroot-policy-enforcement">10.7.12. <code>singleversionroot</code> Policy Enforcement <a class="anchor" href="#10712-singleversionroot-policy-enforcement">🔗</a></h4>
+<h3 id="1119-singleversionroot-policy-enforcement">11.19. <code>singleversionroot</code> Policy Enforcement <a class="anchor" href="#1119-singleversionroot-policy-enforcement">🔗</a></h3>
 <p>Related to the previous discussions concerning the <code>ancestorid</code> attribute,
 the <a href="./model.html#registry-model">Resource Model</a> <code>singleversionroot</code> attribute
 controls whether a Resource is allowed to have more than one &quot;root&quot; Version,
@@ -980,7 +1242,7 @@ enforcer of a semantic versioning policy.</p>
 <p>These examples are not meant to be complete. The flexibility of the
 specification allows for model authors to choose the most appropriate value
 for their needs.</p>
-<h4 id="10713-pruning-versions-with-singleversionroot-enabled">10.7.13. Pruning Versions with <code>singleversionroot</code> enabled <a class="anchor" href="#10713-pruning-versions-with-singleversionroot-enabled">🔗</a></h4>
+<h3 id="1120-pruning-versions-with-singleversionroot-enabled">11.20. Pruning Versions with <code>singleversionroot</code> enabled <a class="anchor" href="#1120-pruning-versions-with-singleversionroot-enabled">🔗</a></h3>
 <p>There are cases in which the server will need to prune Versions. For
 example, this can happen when attempting to create a new Version that would
 exceed the value set on the <code>groups.resources.maxversions</code> attribute of the
@@ -1002,7 +1264,7 @@ Therefore, the server is unable to prune Versions and will block the
 creation of a new Version. To resolve this, the user will have to manually
 delete v2 or v3 to allow the server to prune the oldest Version (v1) before
 creating a new Version.</p>
-<h4 id="10714-whats-the-oldestnewest-version-of-a-resource">10.7.14. What's the oldest/newest Version of a Resource? <a class="anchor" href="#10714-whats-the-oldestnewest-version-of-a-resource">🔗</a></h4>
+<h3 id="1121-whats-the-oldestnewest-version-of-a-resource">11.21. What's the oldest/newest Version of a Resource? <a class="anchor" href="#1121-whats-the-oldestnewest-version-of-a-resource">🔗</a></h3>
 <p>The oldest Version of a Resource isn't necessarily the one with the oldest
 <code>createdat</code> timestamp, because the <code>ancestorid</code> attribute takes precedence
 over the <code>createdat</code> attribute. This is because the ancestor tree more
@@ -1017,7 +1279,7 @@ one with the newest <code>createdat</code> timestamp. In the case that multiple
 Versions exist with the same <code>createdat</code> timestamp, those Versions are
 sorted in an descending alphabetical order, and the first is the newest
 Version.</p>
-<h4 id="10715-can-validatecompatibility-and-validateformat-be-true-for-file-servers">10.7.15. Can <code>validatecompatibility</code> and <code>validateformat</code> be <code>true</code> for file-servers? <a class="anchor" href="#10715-can-validatecompatibility-and-validateformat-be-true-for-file-servers">🔗</a></h4>
+<h3 id="1122-can-validatecompatibility-and-validateformat-be-true-for-file-servers">11.22. Can <code>validatecompatibility</code> and <code>validateformat</code> be <code>true</code> for file-servers? <a class="anchor" href="#1122-can-validatecompatibility-and-validateformat-be-true-for-file-servers">🔗</a></h3>
 <p>In general, the <code>validatecompatibility</code> and <code>validateformat</code> attributes are
 meant to enable server-side policy validation. However, they also convey to
 clients that the data within the Registry adheres to the specified
@@ -1032,7 +1294,7 @@ the data (i.e. it was exported to the file-server), and there's a desire to
 not expose this implementation/deployment choice to the end-user. In other
 words, the use of the file-server as a caching service should be transparent
 to their users.</p>
-<h4 id="10716-detecting-circular-references-between-versions">10.7.16. Detecting circular references between Versions <a class="anchor" href="#10716-detecting-circular-references-between-versions">🔗</a></h4>
+<h3 id="1123-detecting-circular-references-between-versions">11.23. Detecting circular references between Versions <a class="anchor" href="#1123-detecting-circular-references-between-versions">🔗</a></h3>
 <p>The specification mentions that the Version's <code>ancestorid</code> attribute should not
 be set in such a way as to cause a circular dependency list between Versions.
 However, when talking about the server generating an error in such conditions
@@ -1049,7 +1311,7 @@ negative ramifications. For example, when performing backwards compatibility
 checking, they may need to add extra logic to ensure they don't go caught in
 an infinite loop. Additionally, implementations should also document that they
 do not enforce this check to set the proper expectation levels for their users.</p>
-<h4 id="10717-optional-required-fields-in-requests">10.7.17. Optional required fields in requests <a class="anchor" href="#10717-optional-required-fields-in-requests">🔗</a></h4>
+<h3 id="1124-optional-required-fields-in-requests">11.24. Optional required fields in requests <a class="anchor" href="#1124-optional-required-fields-in-requests">🔗</a></h3>
 <p>One of the design principles of the specification was to try to make each
 object be fully self-describing, within reason. For example, this is why when
 objects appear within maps the map key is often replicated within the object
@@ -1078,7 +1340,7 @@ the client or calculated/inferred by the server is an implementation detail.</p>
 messages (aside from when special flags, like the <code>?doc</code> flag, is enabled)
 must include all required attributes, even if they are duplicated elsewhere
 in the message.</p>
-<h4 id="10718-deprecation-of-entities-in-an-xregistry">10.7.18. Deprecation of entities in an xRegistry <a class="anchor" href="#10718-deprecation-of-entities-in-an-xregistry">🔗</a></h4>
+<h3 id="1125-deprecation-of-entities-in-an-xregistry">11.25. Deprecation of entities in an xRegistry <a class="anchor" href="#1125-deprecation-of-entities-in-an-xregistry">🔗</a></h3>
 <p>The core specification defines a <code>deprecated</code> attribute that may appear
 under a Resource's <code>meta</code> sub-object. This attribute was added to the Resource
 itself rather than to the Version because it was determined that the most
@@ -1091,7 +1353,7 @@ When doing so it is recommended to use the same attribute definition as
 defined in the core specification for consistency. It is worth noting that
 the Endpoint <a href="./../../endpoint-v1/docs/spec.html">specification</a> does exactly this to
 indicate when an Endpoint (i.e. a Group) is deprecated.</p>
-<h2 id="11-the-format-attribute-in-the-schema-spec">11. The <code>format</code> attribute in the Schema spec <a class="anchor" href="#11-the-format-attribute-in-the-schema-spec">🔗</a></h2>
+<h2 id="12-the-format-attribute-in-the-schema-spec">12. The <code>format</code> attribute in the Schema spec <a class="anchor" href="#12-the-format-attribute-in-the-schema-spec">🔗</a></h2>
 <p>The <code>format</code> attribute in the Schema spec is required when the
 <code>compatibility</code> attribute is set to a value other than <code>none</code>. This may
 appear to be overly restrictive, especially if your Registry implementation
@@ -1100,7 +1362,7 @@ to ease interoperability of registries through export-import functionality.
 That means that when exporting a Schema Registry that only supports a single
 format, the <code>format</code> attribute will already be set, avoiding issues when
 importing this Registry into a server that may support multiple formats.</p>
-<h2 id="12-problematic-characters-in-attributes">12. Problematic characters in attributes <a class="anchor" href="#12-problematic-characters-in-attributes">🔗</a></h2>
+<h2 id="13-problematic-characters-in-attributes">13. Problematic characters in attributes <a class="anchor" href="#13-problematic-characters-in-attributes">🔗</a></h2>
 <p>Certain attributes might be used for purposes outside of the scope of the
 xRegistry specification. For example, the <code>name</code> or ID-values might be used
 as a file name. While some care was taken to limit the allowable characters
@@ -1113,7 +1375,7 @@ problematic characters. The specification makes no statement as to how
 these situations are handled, or even if they're supported. In other words,
 tooling might reject such cases, or force uses to use non-problematic
 characters.</p>
-<h2 id="13-why-do-resources-have-3-levels-of-data">13. Why do Resources have 3 levels of data? <a class="anchor" href="#13-why-do-resources-have-3-levels-of-data">🔗</a></h2>
+<h2 id="14-why-do-resources-have-3-levels-of-data">14. Why do Resources have 3 levels of data? <a class="anchor" href="#14-why-do-resources-have-3-levels-of-data">🔗</a></h2>
 <p>Resource attributes are split into 3 categories:</p>
 <ul>
 <li>Resource level</li>
@@ -1168,7 +1430,7 @@ reason for the Resource to exist.</p>
 Version should be driven by whether the use cases being supported by the
 Resource type definition requires that attribute to be consistent across all
 Versions or have a Version-specific value.</p>
-<h2 id="14-why-are-some-conditional-read-only-attributes-not-ignored">14. Why are some (conditional) read-only attributes not ignored? <a class="anchor" href="#14-why-are-some-conditional-read-only-attributes-not-ignored">🔗</a></h2>
+<h2 id="15-why-are-some-conditional-read-only-attributes-not-ignored">15. Why are some (conditional) read-only attributes not ignored? <a class="anchor" href="#15-why-are-some-conditional-read-only-attributes-not-ignored">🔗</a></h2>
 <p>Attributes that are always defined as &quot;read-only&quot; normally have semantics such
 that attempts to update them are silently ignored. This is especially useful
 for attributes that might change over time so that clients do not need to
@@ -1185,7 +1447,7 @@ adhere to was considered more important.</p>
 aspect set to <code>false</code> then the <code>meta.defaultversionid</code> attribute of instances
 of that Resource becomes &quot;read-only&quot;. And any attempt to update it will result
 in an error being generated.</p>
-<h2 id="15-why-isnt-put-idempotent">15. Why isn't <code>PUT</code> idempotent? <a class="anchor" href="#15-why-isnt-put-idempotent">🔗</a></h2>
+<h2 id="16-why-isnt-put-idempotent">16. Why isn't <code>PUT</code> idempotent? <a class="anchor" href="#16-why-isnt-put-idempotent">🔗</a></h2>
 <p>As stated in the <a href="./spec.html">core</a> specification, the <code>PUT</code> operations are
 almost idempotent, per the HTTP specification. For the most part, multiple
 similar <code>PUT</code> requests will have the same effect as a single one, with the
@@ -1195,14 +1457,14 @@ of check on all attributes to determine if anything changed, and then only
 &quot;bumping&quot; those attributes' values if there was a change. This could be an
 expensive or ambiguous check to perform, so it was determined it would be best
 to avoid it all together.</p>
-<h2 id="16-defining-extensions">16. Defining Extensions <a class="anchor" href="#16-defining-extensions">🔗</a></h2>
+<h2 id="17-defining-extensions">17. Defining Extensions <a class="anchor" href="#17-defining-extensions">🔗</a></h2>
 <p>When defining extensions for xRegistry, whether it is via a model definition
 or by extending the functionality of the specification itself (e.g. adding
 new APIs), care should be taken to limit the possibility of overlapping with
 any future xRegistry work. While it is impossible to predict the future, some
 steps can be taken to lessen the concern. For example, using domain, or
 company, specific terms when naming things.</p>
-<h2 id="17-validation">17. Validation <a class="anchor" href="#17-validation">🔗</a></h2>
+<h2 id="18-validation">18. Validation <a class="anchor" href="#18-validation">🔗</a></h2>
 <p>There is one scenario worth pointing out with respect to <code>format</code> and
 <code>compatibility</code> validation. If a Resource's model definition has both the
 <code>validateformat</code> and <code>strictvalidation</code> aspects set to <code>true</code>, and the
