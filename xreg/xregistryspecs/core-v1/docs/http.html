@@ -229,7 +229,7 @@ includes specification-defined but unsupported query parameters.</li>
 saying that the <code>PUT</code> method is idempotent, this specification does not
 adhere to that rule when it comes to the <code>epoch</code> and <code>modifiedat</code> attributes.
 While multiple identical <code>PUT</code> requests will yield the same semantic effect
-as single <code>PUT</code> for all other attributes, the <code>epoch</code> and <code>modifiedat</code>
+as a single <code>PUT</code> for all other attributes, the <code>epoch</code> and <code>modifiedat</code>
 attributes are designed to always be updated on each write operation to that
 entity.</li>
 </ul>
@@ -238,7 +238,7 @@ entity.</li>
 discussion about <a href="./spec.html#design-no-code-servers">&quot;no-code servers&quot;</a>. In the
 case of HTTP, simple file servers SHOULD support exposing Resources where the
 HTTP body response contains the Resource's domain-specific &quot;document&quot; as well
-exposing the serialization of the Resource's xRegistry metadata via the
+as exposing the serialization of the Resource's xRegistry metadata via the
 <a href="#resource-metadata-vs-resource-document"><code>$details</code></a> suffix on the URL path.
 This can be achieved by creating a secondary, sibling, file on disk with
 <code>$details</code> at the end of its filename.</p>
@@ -317,7 +317,7 @@ as defined for <code>POST</code> to the nested xRegistry collection where the ma
 entry's value is the input.</li>
 <li>The root of the JSON object in the HTTP body MUST NOT contain any
 attributes of the targeted entity other than the nested collections, and
-none of those entity's attribute are to be updated. This operation allows
+none of that entity's attribute are to be updated. This operation allows
 for an update to multiple nested collections in a single operation without
 modifying the owning entity.</li>
 <li>The response message MUST be a map of the nested entity types with just
@@ -332,8 +332,8 @@ created, however, it MAY include Resource-level read-only attributes (such
 as <code>versionscount</code>), and if they are present, then they MUST be silently
 ignored by the server. This is done as a convenience for users who might
 have obtained the Version's serialization from a query to a Resource (not
-a specific Version), in which case those extra Resource-level would be
-included in the serialization.</li>
+a specific Version), in which case those extra Resource-level attributes
+would be included in the serialization.</li>
 <li>The 'PUT' variant rules above MUST apply to the new Version entity.</li>
 </ul>
 <p>The <code>PATCH</code> variant when directed at an xRegistry collection, MUST adhere to
@@ -407,7 +407,7 @@ non-null value, the HTTP body MUST be empty. If the <code>&lt;RESOURCE&gt;url</c
 attribute is absent, then the contents of the HTTP body (even if empty) are
 to be used as the entity's document.</li>
 <li>The <code>&lt;RESOURCE&gt;</code> and <code>&lt;RESOURCEbase64&gt;</code> attributes MUST never appear as
-xRegistry HTTP headers, and if present on an write request MUST generate
+xRegistry HTTP headers, and if present on a write request MUST generate
 an error (<a href="#extra_xregistry_header">extra_xregistry_header</a>).</li>
 </ul>
 <p>A successful response MUST return the same response as a <code>GET</code> to the entity
@@ -509,7 +509,7 @@ pagination specification MUST only be used when the request is directed at a
 collection, not at its owning entity (such as the root of the Registry, or at
 an individual Group or Resource).</p>
 <p>In the remainder of this specification, the presence of the <code>Link</code> HTTP header
-indicates the use of the <a href="./../../pagination-v1/docs/spec.html">pagination specification</a>
+indicates that the <a href="./../../pagination-v1/docs/spec.html">pagination specification</a>
 MAY be used for that API.</p>
 <h4 id="http-options-method">HTTP OPTIONS Method <a class="anchor" href="#http-options-method">🔗</a></h4>
 <p>A server MAY support clients querying the list of supported HTTP methods
@@ -533,7 +533,7 @@ by that API.</li>
 specification.</li>
 </ul>
 <p><strong>Examples:</strong></p>
-<p>Retrieve supported list of HTTP method at the root of the Registry:</p>
+<p>Retrieve the supported list of HTTP methods at the root of the Registry:</p>
 <pre><code class="language-yaml">OPTIONS /
 </code></pre>
 <pre><code class="language-yaml">HTTP/1.1 200 OK
@@ -765,7 +765,7 @@ Content-Type: application/json; charset=utf-8
 <h3 id="registry-capabilities">Registry Capabilities <a class="anchor" href="#registry-capabilities">🔗</a></h3>
 <h4 id="get-capabilities"><code>GET /capabilities</code> <a class="anchor" href="#get-capabilities">🔗</a></h4>
 <p>A server SHOULD support clients retrieving the set of
-<a href="./spec.html#registry-capabilities">capabilities</a>(features) it supports via
+<a href="./spec.html#registry-capabilities">capabilities</a> (features) it supports via
 an HTTP <code>GET</code> directed to the stand-alone <code>capabilities</code> map.</p>
 <p>The request MUST be of the form:</p>
 <pre><code class="language-yaml">GET /capabilities
@@ -987,7 +987,7 @@ Content-Type: application/json; charset=utf-8
 <a href="./spec.html#registry-entity">Registry entity</a>, you can include the attribute
 as part of the <a href="#patch-and-put-"><code>PUT /</code></a> request.</p>
 <p>Note: the HTTP body MUST be a JSON object and an empty request MUST generate
-an error (<a href="#missing_body">missing_body</a>). To denote an empty model <code>{}</code> SHOULD
+an error (<a href="#missing_body">missing_body</a>). To denote an empty model, <code>{}</code> SHOULD
 be used instead.</p>
 <h3 id="group-entity">Group Entity <a class="anchor" href="#group-entity">🔗</a></h3>
 <h4 id="get-groups"><code>GET /&lt;GROUPS&gt;</code> <a class="anchor" href="#get-groups">🔗</a></h4>
@@ -1350,7 +1350,7 @@ Resource's xRegistry metadata MAY appear as HTTP headers in messages.</p>
 Resource SHOULD appear as HTTP headers where the header name is the name of the
 attribute prefixed with <code>xRegistry-</code>. Note, the optionality of this requirement
 is not to allow for servers to decide whether or not to do so, rather it is to
-allow for <a href="#no-code-servers">No-Code Servers</a> servers that might not be
+allow for <a href="#no-code-servers">No-Code Servers</a> that might not be
 able to control the HTTP response headers.</p>
 <p>The <code>&lt;RESOURCE&gt;</code> and <code>&lt;RESOURCEbase64&gt;</code> attributes MUST NOT be serialized as
 HTTP headers, even if their values can be considered &quot;scalar&quot;, because their
@@ -1379,7 +1379,7 @@ request to delete that attribute.</p>
 in their entirety and any missing keys MUST be interpreted as a request to
 delete those keys from the map.</p>
 <p>Since only some types of attributes can appear as HTTP headers, in order
-to manage the full set of attributes the xRegistry metadata view (via use
+to manage the full set of attributes, the xRegistry metadata view (via use
 of the <code>$details</code> URL suffix) MUST be used instead.</p>
 <p>When a Resource (not a Version) is serialized with the Resource document
 in the HTTP body, it MUST adhere to this form:</p>
@@ -2164,7 +2164,7 @@ Link: &lt;URL&gt;;rel=next;count=&lt;UINTEGER&gt; ?
 }
 </code></pre>
 <p><strong>Examples:</strong></p>
-<p>Retrieve all Version of a <code>message</code> Resource:</p>
+<p>Retrieve all Versions of a <code>message</code> Resource:</p>
 <pre><code class="language-yaml">GET /endpoints/ep1/messages/msg1/versions
 </code></pre>
 <pre><code class="language-yaml">HTTP/1.1 200 OK
@@ -2259,7 +2259,7 @@ Content-Type: application/json; charset=utf-8
   }
 ]
 </code></pre>
-<p>Note that in this case, the new &quot;label&quot; replaces all existing labels, it is
+<p>Note that in this case, the new &quot;label&quot; replaces all existing labels; it is
 not a &quot;merge&quot; operation because all attributes need to be specified in their
 entirety.</p>
 <h4 id="delete-groupsgidresourcesridversions"><code>DELETE /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;/versions</code> <a class="anchor" href="#delete-groupsgidresourcesridversions">🔗</a></h4>
@@ -2626,7 +2626,8 @@ appear - per the <a href="./spec.html#filter-flag">core specification</a>.</li>
 <p>The abstract processing logic would be:</p>
 <ul>
 <li>For each <code>?filter</code> query parameter, find all entities that satisfy all
-<code>&lt;EXPRESSION&gt;</code> for that <code>?filter</code>. Each will result in a sub-tree of entities.</li>
+<code>&lt;EXPRESSION&gt;</code> values for that <code>?filter</code>. Each will result in a sub-tree of
+entities.</li>
 <li>After processing all individual <code>?filter</code> query parameters, combine those
 sub-trees into one result set and remove any duplicates - adjusting any
 collection <code>url</code> and <code>count</code> values as needed.</li>
@@ -2634,14 +2635,14 @@ collection <code>url</code> and <code>count</code> values as needed.</li>
 <h3 id="ignore-flag"><code>?ignore</code> Flag <a class="anchor" href="#ignore-flag">🔗</a></h3>
 <p>A server MAY support the <code>?ignore</code> query parameter on any write operation
 to indicate that certain aspects of the request message MUST be ignored
-by the server).</p>
+by the server.</p>
 <p>See <a href="./spec.html#ignore-flag">Ignore Flag</a> for more information.</p>
 <p>This query parameter MUST be serialized as:</p>
 <pre><code class="language-yaml">?ignore[=&lt;value&gt;[,...]*]
 </code></pre>
 <p>Where:</p>
 <ul>
-<li><code>&lt;value&gt;</code> indicate which aspect of the request message to ignore.</li>
+<li><code>&lt;value&gt;</code> indicates which aspect of the request message to ignore.</li>
 <li>A value of <code>*</code> is an alias for all server supported values.</li>
 <li>No value, or an empty string, is an alias for <code>*</code>.</li>
 <li>The <code>?ignore</code> query parameter MAY be specified more than once.</li>
@@ -2754,7 +2755,7 @@ Content-Type: application/json; charset=utf-8
 </code></pre>
 <p>See the <a href="./spec.html#error-processing">Error Processing</a> section in the
 <a href="./spec.html">core specification</a> for more information.</p>
-<p>The following list of HTTP protocol specific errors are defined:</p>
+<p>The following list of HTTP protocol-specific errors are defined:</p>
 <!-- start-err-def -->
 <h3 id="api_not_found">api_not_found <a class="anchor" href="#api_not_found">🔗</a></h3>
 <ul>

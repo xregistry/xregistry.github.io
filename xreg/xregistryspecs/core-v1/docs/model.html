@@ -297,7 +297,7 @@ of this Resource type, not the Resource itself.</li>
 </li>
 <li>An <code>xid</code> entity attribute that includes a <code>target</code> value as part of
 its model definition MUST match the <code>target</code> entity type specified. An
-<code>xid</code> attribute that does not include <code>target</code> definition has no
+<code>xid</code> attribute that does not include a <code>target</code> definition has no
 such restriction and MAY be any valid <code>xid</code> value.</li>
 <li>A URI/URL entity attribute MAY include <code>target</code> as part of its
 definition. If so, then any runtime value that is a relative URI/URL
@@ -371,14 +371,14 @@ advertise this extension.</p>
 <h3 id="attributesstringenum"><code>attributes.&lt;STRING&gt;.enum</code> <a class="anchor" href="#attributesstringenum">🔗</a></h3>
 <ul>
 <li>
-<p>Type: Array of values of type <code>attributes.&lt;STRING&gt;.type</code>..</p>
+<p>Type: Array of values of type <code>attributes.&lt;STRING&gt;.type</code>.</p>
 </li>
 <li>
 <p>OPTIONAL.</p>
 </li>
 <li>
 <p>A list of possible values for this attribute. Each item in the array MUST
-be of type defined by <code>type</code>. When not specified, or an empty array, there
+be of the type defined by <code>type</code>. When not specified, or an empty array, there
 are no restrictions on the value set of this attribute. This MUST only be
 used when the <code>type</code> is a scalar. See the <code>strict</code> attribute below.</p>
 <p>When specified without <code>strict</code> being <code>true</code>, this list is just a
@@ -421,7 +421,7 @@ be generated.</li>
 <li>Are within a <a href="#groupsstringresourcesstringattributes">Resource type's versioned
 attributes</a> section.</li>
 <li>Are for scalar typed attributes.</li>
-<li>Are statically defined. Meaning, not defined as part of a <code>ifvalues</code> clause
+<li>Are statically defined. Meaning, not defined as part of an <code>ifvalues</code> clause
 or via a <code>*</code> extension definition</li>
 <li>Are not defined within an array or map. Within an object is allowed.</li>
 </ul>
@@ -482,11 +482,11 @@ the server.</p>
 <li>Indicates whether this attribute is REQUIRED to have a non-null value.</li>
 <li>When set to <code>true</code>, this specification does not mandate how this
 attribute's value is populated (i.e. by a client, the server or via a
-default value), just that by the end of the server's processing any request
+default value), just that by the end of the server's processing of any request
 it MUST have a non-null value, and generate an error
 (<a href="./spec.html#invalid_attribute">invalid_attribute</a>) if not. Note that this
 implies that a REQUIRED attribute does not mean that clients are mandated to
-include that attribute in its requests. If the attribute will automatically
+include that attribute in their requests. If the attribute will automatically
 be populated by the server (e.g. it has a default value defined) the client
 MAY omit it.</li>
 <li>A <code>true</code> value also implies that this attribute MUST be serialized in any
@@ -508,7 +508,7 @@ MUST generate an error
 <li>OPTIONAL.</li>
 <li>This value MUST be used to populate this attribute's value if one was
 not provided by a client. An attribute with a default value does not mean
-that its owning Object is mandated to be present, rather the attribute
+that its owning Object is mandated to be present; rather the attribute
 would only appear when the owning Object is present. By default,
 attributes have no default values.</li>
 <li>When not specified, this attribute has no default value and has the same
@@ -520,8 +520,8 @@ defined MUST also have its <code>required</code> aspect set to <code>true</code>
 <li>If the default value of an attribute changes over time, all existing
 instances of that attribute MUST retain their current values and not
 be automatically changed to the new default value. In other words, a new
-default value MUST only apply to new, or subsequent updates (when set to
-<code>null</code>, which would reset it to the current default value) of existing,
+default value MUST only apply to new or subsequent updates (when set to
+<code>null</code>, which would reset it to the current default value) of existing
 instances of the attribute.</li>
 <li>If the attribute is defined to have an <code>enum</code> list, and its <code>strict</code> aspect
 is <code>true</code>, then if a <code>default</code> value is specified it MUST be one of those
@@ -598,7 +598,7 @@ contain any value that is not specified in the <code>enum</code> array.</p>
 of this <code>ifvalues</code> and MUST NOT match a named attribute defined at this
 level of the entity. If multiple <code>ifvalues</code> sections, at the same entity
 level, are active at the same time then there MUST NOT be duplicate
-<code>ifvalues</code> attributes names between those <code>ifvalues</code> sections.</p>
+<code>ifvalues</code> attribute names between those <code>ifvalues</code> sections.</p>
 </li>
 <li>
 <p><code>ifvalues</code> <code>&lt;STRING&gt;</code> MUST NOT be an empty string.</p>
@@ -663,7 +663,7 @@ MUST NOT exceed 63 characters.</li>
 </ul>
 <h3 id="groupsstringlabels"><code>groups.&lt;STRING&gt;.labels</code> <a class="anchor" href="#groupsstringlabels">🔗</a></h3>
 <ul>
-<li>See [<code>labels</code>]((./spec.md#labels) above.</li>
+<li>See <a href="#labels"><code>labels</code></a> above.</li>
 <li>OPTIONAL.</li>
 </ul>
 <h3 id="groupsstringmodelversion"><code>groups.&lt;STRING&gt;.modelversion</code> <a class="anchor" href="#groupsstringmodelversion">🔗</a></h3>
@@ -725,12 +725,12 @@ detected.</p>
 <p>When possible these constraints are best described when defining the Resource
 attributes in question, rather than here. However, there are cases where this
 might not be possible, such as when Resources are added to a Group type via the
-<code>ximportresources</code> feature, Resource are added to Groups via the <code>xref</code>
+<code>ximportresources</code> feature, Resources are added to Groups via the <code>xref</code>
 features, or defining a relationship between Group and Resource attributes -
 such is the case for the <code>equals</code> constraint defined below.</p>
 <p>Inclusion of a Resource in a Group instance via the
 <a href="./spec.html#cross-referencing-resources"><code>meta.xref</code></a> mechanism introduces
-some special considerations. The following describes the how the aspects of
+some special considerations. The following describes how the aspects of
 a constraint are applied to such xref'd Resources:</p>
 <ul>
 <li>The <code>enum</code> and <code>equals</code> constraints, if specified, MUST be adhered to by the
@@ -774,10 +774,10 @@ list's values MUST be valid per the Resource attribute's model definition
 (i.e. a proper subset of any <code>enum</code> defined if the Resource's <code>enum</code> is
 <a href="#attributesstringstrict"><code>strict</code></a>, and of the same type).</p>
 <p>As with the <a href="#attributesstringenum"><code>enum</code> attribute</a> defined for attributes,
-an empty <code>enum</code> list in a constraints MUST be treated the same as no <code>enum</code>
+an empty <code>enum</code> list in a constraint MUST be treated the same as no <code>enum</code>
 aspect at all and no further constraints on the allowable attribute values are
 applied beyond what the attribute itself defines.</p>
-<p>If an <code>enum</code> set is defined, but a constraint <code>default</code> values is not, then
+<p>If an <code>enum</code> set is defined, but a constraint <code>default</code> value is not, then
 any <code>default</code> value specified in the attribute itself MUST be part of the
 <code>enum</code> set.</p>
 <h3 id="groupsstringconstraintsresourcespathequals"><code>groups.&lt;STRING&gt;.constraints.&lt;RESOURCES&gt;.&lt;PATH&gt;.equals</code> <a class="anchor" href="#groupsstringconstraintsresourcespathequals">🔗</a></h3>
@@ -796,8 +796,8 @@ enforcement for the Resource attribute MUST be silently ignored.</p>
 <p>This attribute MUST reference a statically defined Group attribute. In other
 words, it can not reference an attribute defined by an <code>ifvalues</code> clause or a
 <code>*</code> extension definition. Nor can it reference an attribute within an array.</p>
-<p>Note that this feature has similar results as setting the Resource attribute's
-<code>matchversions</code> aspect being set to <code>true</code>.</p>
+<p>Note that this feature has similar results to setting the Resource attribute's
+<code>matchversions</code> aspect to <code>true</code>.</p>
 <h3 id="groupsstringresources"><code>groups.&lt;STRING&gt;.resources</code> <a class="anchor" href="#groupsstringresources">🔗</a></h3>
 <ul>
 <li>Type: Map where the key MUST be the plural name (<code>groups.resources.plural</code>)
@@ -849,7 +849,7 @@ scope of its owning Group type.</li>
 </ul>
 <h3 id="groupsstringresourcesstringlabels"><code>groups.&lt;STRING&gt;.resources.&lt;STRING&gt;.labels</code> <a class="anchor" href="#groupsstringresourcesstringlabels">🔗</a></h3>
 <ul>
-<li>See <a href="#attributes"><code>attributes</code></a> above.</li>
+<li>See <a href="#labels"><code>labels</code></a> above.</li>
 <li>OPTIONAL.</li>
 </ul>
 <h3 id="groupsstringresourcesstringmodelversion"><code>groups.&lt;STRING&gt;.resources.&lt;STRING&gt;.modelversion</code> <a class="anchor" href="#groupsstringresourcesstringmodelversion">🔗</a></h3>
@@ -948,12 +948,12 @@ are managed with respect to aspects such as:
 explicitly set by a client.</li>
 </ul>
 </li>
-<li>Implementations MAY defined additional algorithms and MAY defined
+<li>Implementations MAY define additional algorithms and MAY define
 additional aspects that they control, as long as those aspects do not
 conflict with specification-defined semantics.</li>
 <li>Regardless of the algorithm used, implementations MUST ensure that
 the <code>ancestorid</code> attribute of all Versions of a Resource accurately
-represent the relationship of the Versions prior to the completion of
+represents the relationship of the Versions prior to the completion of
 any operation. For example, when the <code>createdat</code> algorithm is used and
 the <code>createdat</code> timestamp of a Version is modified, this might cause a
 reordering of the Versions and the <code>ancestorid</code> attributes might need to
@@ -990,7 +990,7 @@ MUST become a root, and its <code>ancestorid</code> value MUST be set to its
 <code>versionid</code> value.</li>
 <li>The name of this versionmode is a bit of a misnomer in that it is not
 100% &quot;manual&quot;. As stated above, as a convenience, by default new
-Versions will point to the &quot;latest&quot; Version as its ancestor. If this
+Versions will point to the &quot;latest&quot; Version as their ancestor. If this
 behavior is not desired, then during the &quot;create&quot; operation, the
 <code>ancestorid</code> can be set to point to itself (or any other Version) if
 desired.</li>
@@ -1014,7 +1014,7 @@ Version and the Versions sorted in ascending order, where the first
 one will be the &quot;root&quot; (oldest) Version and its <code>ancestorid</code> value
 MUST be its <code>versionid</code>. If there is more than one Version with the
 same <code>createdat</code> timestamp then those MUST be ordered in ascending
-case-insensitive ordered based on their <code>versionid</code> values.</li>
+case-insensitive order based on their <code>versionid</code> values.</li>
 <li>Deleted Ancestor: if a Version's ancestor is deleted, then this Version's
 <code>ancestorid</code> value MUST be determined by the &quot;ancestor processing&quot; logic
 as stated above.</li>
@@ -1041,7 +1041,7 @@ value per the <a href="https://semver.org/">Semantic Versioning</a>
 specification's &quot;precedence&quot; ordering rules. Note that this MUST also
 be the one and only &quot;root&quot; Version.</li>
 <li>Ancestor Processing: The <code>ancestorid</code> value of each Version MUST either
-be its <code>versionid</code> value (if it it the oldest Version), or the
+be its <code>versionid</code> value (if it is the oldest Version), or the
 <code>versionid</code> of the next oldest Version per the
 <a href="https://semver.org/">Semantic Versioning</a> specification's
 &quot;precedence&quot; ordering rules.</li>
@@ -1069,7 +1069,7 @@ be a root, and the server MUST generate an error
 (<a href="./spec.html#multiple_roots">multiple_roots</a>) if any request results in a
 state where more than one Version of a Resource is a root of an ancestor
 tree.</li>
-<li>Note that if the Resource's <code>versionmode</code> value might influence
+<li>Note that the Resource's <code>versionmode</code> value might influence
 the permissible values of this aspect.</li>
 <li>See the
 <a href="./primer.html#1119-singleversionroot-policy-enforcement"><code>singleversionroot</code> Policy
@@ -1080,7 +1080,7 @@ the Primer for more information.</li>
 <ul>
 <li>Type: Boolean (<code>true</code> or <code>false</code>, case-sensitive).</li>
 <li>OPTIONAL.</li>
-<li>Indicated whether the server MUST validate that all Versions of this
+<li>Indicates whether the server MUST validate that all Versions of this
 Resource type adhere to the rules as defined by the Version's <code>format</code>
 value.</li>
 <li>When not specified, the default value MUST be <code>false</code>.</li>
@@ -1113,11 +1113,11 @@ checking for Versions of Resources of this Resource type.</li>
 <ul>
 <li>Type: Boolean (<code>true</code> or <code>false</code>, case-sensitive).</li>
 <li>OPTIONAL.</li>
-<li>Indicated whether the server MUST validate that all Versions of this
+<li>Indicates whether the server MUST validate that all Versions of this
 Resource type adhere to its owning Resource's <code>meta.compatibility</code> value.</li>
 <li>When not specified, the default value MUST be <code>false</code>.</li>
 <li>A value of <code>true</code> indicates that the server MUST generate an error
-<a href="./spec.html#compatibility_violation">compatibility_violation</a>) if any Version
+(<a href="./spec.html#compatibility_violation">compatibility_violation</a>) if any Version
 of a Resource instance of this Resource type does not adhere to the rules of
 the <code>meta.compatibility</code> value for that Resource's <code>format</code> value.
 See <a href="#groupsstringresourcesstringstrictvalidation"><code>strictvalidation</code></a> for
@@ -1181,7 +1181,7 @@ instances of any character at that position in the string - similar to a
 <p>When a Resource's metadata is serialized in a response and the
 <code>?inline=&lt;RESOURCE&gt;</code> feature is enabled, the server will attempt to
 serialize the Resource's &quot;document&quot; under the <code>&lt;RESOURCE&gt;</code> attribute.
-However, this can only happen under two situations:<br>
+However, this can only happen in two situations:<br>
 1 - The Resource document's bytes are already in the same format as
 the xRegistry metadata - in other words JSON, or<br>
 2 - The Resource's document can be considered a &quot;string&quot; and therefore
@@ -1211,7 +1211,7 @@ not all the same, then <code>binary</code> MUST be used.</p>
 <p>Implementations MAY define additional values.</p>
 <p>A value of <code>binary</code> indicates that the Resource's document is to be treated
 as an array of bytes and serialized under the <code>&lt;RESOURCE&gt;base64</code> attribute,
-even if the <code>contenttype</code> is of the same type of the xRegistry metadata
+even if the <code>contenttype</code> is of the same type as the xRegistry metadata
 (e.g. <code>application/json</code>). This is useful when it is desirable to not
 have the server potentially modify the document (e.g. &quot;pretty-print&quot; it).</p>
 <p>A value of <code>json</code> indicates that the Resource's document is JSON and MUST
@@ -1276,7 +1276,7 @@ Version-level extensions would appear in the <code>attributes</code> list.</li>
 <li>While it is NOT RECOMMENDED, implementations MAY add additional attributes
 to this list if they are necessary to help with model traversal. Otherwise
 the other 2 attribute lists SHOULD be used. The goal is to make the
-Resource entity look at much like the &quot;default&quot; Version as possible,
+Resource entity look as much like the <code>default</code> Version as possible;
 adding additional attributes at the Resource level violates that goal.</li>
 </ul>
 <h3 id="groupsstringresourcesstringmetaattributes"><code>groups.&lt;STRING&gt;.resources.&lt;STRING&gt;.metaattributes</code> <a class="anchor" href="#groupsstringresourcesstringmetaattributes">🔗</a></h3>
@@ -1306,7 +1306,7 @@ Especially when considering the URL path to the &quot;versions&quot; collection 
 not have <code>/meta/</code> in it.</li>
 <li>Additionally, some common attributes (e.g. <code>self</code>) need to appear on both
 Resources as well as Versions but the values need to be different in each
-case. This is why the same attribute names can appear both the
+case. This is why the same attribute names can appear in both the
 <code>resourceattributes</code> and <code>attributes</code> lists, but only specification-defined
 attributes are allowed to have this naming conflict. Extensions are not, as
 that could lead to confusion for users.</li>
@@ -1337,7 +1337,7 @@ type &quot;any&quot;.</li>
 <code>metaurl</code> attributes. Note that the <code>&lt;RESOURCE&gt;*</code> attribute would only appear
 if the
 <a href="#groupsstringresourcesstringhasdocument"><code>hasdocument</code> aspect</a>
-aspect is <code>true</code>.</li>
+is <code>true</code>.</li>
 </ul>
 <p>The &quot;modelsource&quot; view of the model is just what was provided by the user when
 the model was defined, or last edited. It is expected that this view of the
@@ -1353,7 +1353,7 @@ retrieve these two model views as both stand-alone entities and
 <a href="./spec.html#registry-entity">Registry entity</a>.</p>
 <p>For the sake of brevity, this specification doesn't include the full definition
 of the specification-defined attributes as part of the snippets of output.
-However, an example of a full model definition of a Registry can be can be
+However, an example of a full model definition of a Registry can be
 found in this sample <a href="./sample-model-full.json">sample-model-full.json</a>.</p>
 <p>When retrieving the <code>modelsource</code>, the response MUST only include what
 was specified in the request to define the model - it MUST NOT include
@@ -1373,14 +1373,14 @@ with respect to how models are defined or updated:</p>
 <li>Changes to specification-defined attributes MAY be included in the model but
 MUST NOT change them such that they become incompatible with the
 specification. For example, changes to further constrain the allowable values
-of an attribute is typically allowed, but changing its <code>type</code> from <code>string</code>
+of an attribute are typically allowed, but changing its <code>type</code> from <code>string</code>
 to <code>integer</code> is not.</li>
 <li>Specification-defined attributes that are <code>required</code> MUST NOT have this
 aspect changed to <code>false</code>.</li>
 <li>Specification-defined attributes that are <code>readonly</code> MUST NOT have this
 aspect changed to <code>false</code>.</li>
 <li>Specification-defined attributes that define a <code>default</code> value MUST always
-include a <code>default</code> value in its definition.</li>
+include a <code>default</code> value in their definitions.</li>
 </ul>
 <p>Any specification attributes not included in a request to define, or update,
 a model MUST be included in the resulting full model. In other words, the full
@@ -1400,7 +1400,7 @@ of changes are allowed beyond the following requirements:</p>
 <ul>
 <li>Any model change MUST result in a specification compliant model definition.</li>
 <li>Servers MUST ensure that the representation of all entities within the
-Registry adhere to the new model prior to completing the model update
+Registry adheres to the new model prior to completing the model update
 request.</li>
 </ul>
 <p>Any request to update the model that does not adhere to those requirements
@@ -1467,7 +1467,7 @@ via an <code>ximportresources</code>. However, transitive definitions of Resourc
 MUST NOT result in a circular import chain.</li>
 </ul>
 <p>Locally defined Resources MAY be defined within a Group that uses the
-<code>ximportresources</code> feature, however, Resource <code>plural</code> and <code>singular</code> values
+<code>ximportresources</code> feature; however, Resource <code>plural</code> and <code>singular</code> values
 MUST be unique across all imported and locally defined Resources.</p>
 <p>This attribute, while listed in the schema definition of <code>model</code>, and
 <code>modelsource</code> for ease of reading the specification, is only available for
@@ -1476,7 +1476,7 @@ MUST be unique across all imported and locally defined Resources.</p>
 reflected in the <code>model</code>, but the <code>ximportresources</code> directive MUST NOT appear
 in the <code>model</code> serialization.</p>
 <p>See <a href="./spec.html#cross-referencing-resources">Cross Referencing Resources</a> for
-more additional information.</p>
+additional information.</p>
 <h3 id="includes-in-the-xregistry-model-data">Includes in the xRegistry Model Data <a class="anchor" href="#includes-in-the-xregistry-model-data">🔗</a></h3>
 <p>There might be times when it is necessary for an xRegistry model to reuse
 portions of another xRegistry model defined elsewhere. Rather than forcing
@@ -1496,8 +1496,8 @@ second form specifies multiple. The fragment (<code>#...</code>) portion is OPTI
 <p>is asking for the attributes of a Group called <code>mygroup</code> to be included at
 this location of the current model definition.</p>
 <p>These directives MAY be used in any JSON Object or Map entity in an
-xRegistry model definition. The following rules apply for how to process the
-include directive:</p>
+xRegistry model definition. The following rules apply to how the include
+directive is processed:</p>
 <ul>
 <li>The include path reference value MUST be compatible with the environment in
 which the include is being evaluated. For example, in an xRegistry server it
@@ -1529,13 +1529,13 @@ the <code>modelsource</code> attribute/entity. The expanded model (after the res
 of any includes, and after all specification-defined attributes have been
 added), MUST be available via the <code>model</code> attribute/entity. The directives MUST
 only be processed during the initial update of the model. In order to have
-them re-evaluated, a subsequent model update request (with those directive)
+them re-evaluated, a subsequent model update request (with those directives)
 MUST be sent.</p>
 <p>When there is tooling used outside of the server, e.g. in an xRegistry
 client, if that tooling resolves the &quot;include&quot; directives prior to sending
 the model to the server, then the directives will not appear in the
-<code>modelsource</code> view of the the model. Ideally, tooling SHOULD allow users
-to choose whether the resolution of the directives are done locally or by
+<code>modelsource</code> view of the model. Ideally, tooling SHOULD allow users
+to choose whether the resolution of the directives is done locally or by
 the server.</p>
 <p><strong>Examples:</strong></p>
 <p>A model definition that includes xRegistry attributes from a file on a remote

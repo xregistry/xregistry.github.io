@@ -175,8 +175,8 @@ issue), then the server MAY choose to reject the request.</p>
 preceding item MUST appear at least once. The presence of the <code>#</code> character
 means the remaining portion of the line is a comment. Whitespace characters in
 the JSON snippets are used for readability and are not normative.</p>
-<p>Use of <code>&lt;...&gt;</code> the notation indicates a substitutable value where that is
-meant to be replaced with a runtime situational-specific value as defined by
+<p>Use of the <code>&lt;...&gt;</code> notation indicates a substitutable value that is
+meant to be replaced with a runtime situation-specific value as defined by
 the word/phrase in the angled brackets. For example <code>&lt;NAME&gt;</code> would be expected
 to be replaced by the &quot;name&quot; of the item being discussed.</p>
 <p>Use of <code>&lt;GROUP&gt;</code> and <code>&lt;RESOURCE&gt;</code> are meant to represent the singular name of a
@@ -1494,7 +1494,7 @@ via a query.</p>
 </li>
 </ul>
 <p>Note that an implementation is not mandated to use this attribute in
-advance of removing an entity, but is it RECOMMENDED that they do so.</p>
+advance of removing an entity, but it is RECOMMENDED to do so.</p>
 <p>This attribute can appear on Groups and Resources, however, this
 specification makes no statement as to the relationship, or validity, of the
 values of each with respect to how they might impact each other.</p>
@@ -2203,7 +2203,7 @@ specification supported by the server.</li>
 <p>Implementations MAY support clients updating the capabilities of the server.
 If so, they SHOULD support it via updates to the Registry entity's
 <code>capabilities</code> attribute as well as updates via a stand-alone map independent
-of the the Registry entity (e.g.
+of the Registry entity (e.g.
 <a href="./http.html#patch-and-put-capabilities"><code>PUT /capabilities</code></a> in the HTTP case).</p>
 <p>The request to update the capabilities MUST include a serialization of the
 capability map as described above. Whether it includes the full set of
@@ -2262,7 +2262,7 @@ map, and the corresponding value provides details about the capability
 <li><code>&lt;TYPE&gt;</code> MUST be one of the data types specified in
 <a href="#attributes-and-extensions">Attributes and Extensions</a>.</li>
 <li><code>&quot;enum&quot;</code>, when specified, contains a list of zero or more <code>&lt;VALUE&gt;</code>s whose
-type MUST match either <code>&quot;type&quot;</code> (when scaler) or <code>&quot;item.type&quot;</code> if <code>&quot;type&quot;</code>
+type MUST match either <code>&quot;type&quot;</code> (when scalar) or <code>&quot;item.type&quot;</code> if <code>&quot;type&quot;</code>
 is <code>&quot;array&quot;</code> or <code>&quot;map&quot;</code> and <code>&quot;item.type&quot;</code> is a scalar.</li>
 <li><code>&quot;min&quot;</code> and <code>&quot;max&quot;</code>, when specified, MUST match the same type as either
 <code>&quot;type&quot;</code> or <code>&quot;item.type&quot;</code> if <code>&quot;type&quot;</code> is <code>&quot;array&quot;</code> or <code>&quot;map&quot;</code>. These indicate
@@ -2673,7 +2673,7 @@ can choose whether they want to interact with that document or with the
 xRegistry metadata. In this sense, there are two &quot;views&quot; of the
 Resource/Version that client can choose from.</p>
 <p>Each xRegistry binding specification will define the mechanism by which clients
-can indicate which view of the Resource/Version they want to interacting with.
+can indicate which view of the Resource/Version they want to interact with.
 For HTTP, see the
 <a href="./http.html#resource-metadata-vs-resource-document">Resource Metadata vs Resource Document</a>
 section for more information, in particular about the use of the <code>$details</code>
@@ -2759,7 +2759,7 @@ again after some Versions have been deleted.</li>
 <li>
 <p>Implementation optimizations:</p>
 <ul>
-<li>Implementations MAY choose optimize the order in which the incoming
+<li>Implementations MAY choose to optimize the order in which the incoming
 request's data is processed as long as the net semantic results are as
 defined by this specification.</li>
 <li>For example:
@@ -2836,9 +2836,9 @@ other words, there is no requirement for the server to persist the
 document in the exact byte-for-byte format in which it was provided. If
 that is desired then clients MUST use <code>&lt;RESOURCE&gt;base64</code> instead.</li>
 <li>On a non-patch type of write operation, when <code>&lt;RESOURCE&gt;</code> is present,
-if no <code>contenttype</code> value is provided then the server MUST set it to same
-type as the incoming request, e.g. <code>application/json</code>, even if the entity
-previous had a <code>contenttype</code> value.</li>
+if no <code>contenttype</code> value is provided then the server MUST set it to the
+same type as the incoming request, e.g. <code>application/json</code>, even if the
+entity previously had a <code>contenttype</code> value.</li>
 <li>On a patch type of operation, when <code>&lt;RESOURCE&gt;</code> or <code>&lt;RESOURCE&gt;base64</code> is
 present, if no <code>contenttype</code> value is provided then the server MUST set it
 to the same type as the incoming request, e.g. <code>application/json</code>, only if
@@ -3230,7 +3230,7 @@ Version of the Resource. For example, attributes such as <code>modifiedat</code>
 <code>epoch</code> of the previous or current default Version remain unchanged.
 However, the Resource's <code>meta</code> sub-object's <code>modifiedat</code> and <code>epoch</code> attributes
 MUST be updated.</p>
-<p>For clarity, when the processing a request that results in
+<p>For clarity, when processing a request that results in
 <code>defaultversionsticky</code> being <code>false</code>, then any existing <code>defaultversionid</code>
 value, or value specified in the request, MUST be ignored for the purpose of
 setting its final value.</p>
@@ -3310,7 +3310,7 @@ the newest Version, as defined by the Resource's
 <li>When specified, it MUST be a case-sensitive <code>true</code> or <code>false</code>.</li>
 <li>When specified in a request, a value of <code>null</code> MUST be interpreted as a
 request to delete the attribute, implicitly setting it to <code>false</code>.</li>
-<li>When a Resource type's <code>maxversions</code> is set to <code>1</code>, any attempt to set this
+<li>When a Resource type's <code>maxversions</code> is set to <code>1</code>, any attempt to set
 this attribute to <code>true</code> MUST generate an error
 (<a href="#setdefaultversionsticky_false">setdefaultversionsticky_false</a>) since
 setting a default/sticky Version is unnecessary when there can only be
@@ -3855,7 +3855,7 @@ is set to <code>false</code>.</li>
 </li>
 </ul>
 <hr>
-<p>When accessing a Versions's xRegistry metadata, often it is to
+<p>When accessing a Version's xRegistry metadata, often it is to
 view or update the xRegistry metadata and not the document, as such, including
 the potentially large amount of data from the Version's document in request
 and response messages could be cumbersome. To address this, the <code>&lt;RESOURCE&gt;</code>
@@ -4315,7 +4315,7 @@ will only fail if the attribute has no value at all.</li>
 <p>As previously specified, when a query includes a filter expression, any nested
 xRegistry collections in the response SHOULD result in the specification of a
 <code>&lt;COLLECTION&gt;url</code> attribute that allows clients to easily traverse into that
-collection with the appropriated sub-filter expression to yield the same
+collection with the appropriate sub-filter expression to yield the same
 results as the original filter, but just for that nested collection. However,
 if a collection has zero entities (regardless of whether the empty list is due
 to the filter or due to the collection being empty), server MUST use a special
@@ -4444,7 +4444,7 @@ parts of the request message MUST be ignored by the server. This flag is
 designed for cases where a user wants to import data into a Registry without
 going through the (potentially tedious) process of removing certain parts of
 the data in advance. Typically, in an &quot;export-&gt;import&quot; scenario.</p>
-<p>This flag take a list of strings indicating which aspects of the request
+<p>This flag takes a list of strings indicating which aspects of the request
 message to ignore. This specification defines the following values:</p>
 <ul>
 <li>
@@ -4474,7 +4474,7 @@ MUST be ignored, and any validation to ensure it matches the targeted
 entity's existing <code>&lt;SINGULAR&gt;id</code> value MUST NOT be performed.</p>
 <p>This feature MUST only apply in cases where the request is targeted to a
 single entity not a collection.</p>
-<p>This features is design for cases where an entity is exported and then used
+<p>This feature is designed for cases where an entity is exported and then used
 as input for another entity where that targeted entity needs to use a
 different <code>&lt;SINGULAR&gt;id</code> for the root entity, without needing to transform
 the exported data.</p>
@@ -4509,7 +4509,7 @@ usage of this flag.</li>
 </ul>
 </li>
 </ul>
-<p>Implementations MAY defined additional values.</p>
+<p>Implementations MAY define additional values.</p>
 <p>Specifying the flag without any values, an empty string, or <code>*</code> indicates a
 request to ignore all possible (server supported) aspects of the request
 message.</p>
@@ -4816,7 +4816,7 @@ use of quotes MUST be interpreted as accessing an object/map.</p>
 </tbody>
 </table>
 <p>Depending on the situation in which the notation is being used, there are
-certain special values that MAY be used, a described in the following sections.</p>
+certain special values that MAY be used, as described in the following sections.</p>
 <h3 id="dot-notation-in-filters">Dot-Notation in Filters <a class="anchor" href="#dot-notation-in-filters">🔗</a></h3>
 <p>When using <a href="#filter-flag">filters</a> the following special values MAY be used:</p>
 <table>
@@ -4977,9 +4977,9 @@ following URL:</p>
 <p>If supported, a request (<code>GET</code>) to this location MUST return a document of
 the form:</p>
 <pre><code class="language-yaml">{
-  &quot;registries&quot;: {
+  &quot;registries&quot;: [
     &quot;URL&quot;, *
-  }
+  ]
 }
 </code></pre>
 <p>Where:</p>
@@ -5009,9 +5009,9 @@ servers by supporting a protocol-specific retrieval mechanism.</p>
 <p>Regardless of the exact protocol mechanism, the data returned MUST adhere
 to the same format as the Host-based discovery mechanism:</p>
 <pre><code class="language-yaml">{
-  &quot;registries&quot;: {
+  &quot;registries&quot;: [
     &quot;URL&quot;, *
-  }
+  ]
 }
 </code></pre>
 <p>Where:</p>
@@ -5124,7 +5124,7 @@ be returned back to clients.</p>
 </tr>
 <tr>
 <td>Instance</td>
-<td>OPTIONAL. This non-empty string that can be used by servers to identify details related to the request/error processing. For example, a request or transaction ID of the request that generated the error. This information is not meant to be useful to clients directly, but can be provided to server administrators to help debugging if necessary. This specification places no striction on the format of this value.</td>
+<td>OPTIONAL. This is a non-empty string that can be used by servers to identify details related to the request/error processing. For example, a request or transaction ID of the request that generated the error. This information is not meant to be useful to clients directly, but can be provided to server administrators to help debugging if necessary. This specification places no restriction on the format of this value.</td>
 </tr>
 <tr>
 <td>Source</td>
@@ -5427,7 +5427,7 @@ field is just a substitution value and MUST NOT be empty.</p>
 <li>Subject: <code>&lt;resource_xid&gt;</code></li>
 <li>Args:
 <ul>
-<li><code>path</code>: The dot (<code>.</code>) notion traversal path to the Resource's attribute being constrained.</li>
+<li><code>path</code>: The dot (<code>.</code>) notation traversal path to the Resource's attribute being constrained.</li>
 <li><code>kind</code>: The type of constraint violated, either <code>enum</code> or <code>equals</code>.</li>
 </ul>
 </li>
@@ -5713,7 +5713,8 @@ error SHOULD be used instead.</p>
 </ul>
 <h3 id="parsing_data">parsing_data <a class="anchor" href="#parsing_data">🔗</a></h3>
 <p>This is a fairly generic error, so if a more focused one (e.g.
-<a href="#invalid_attribute">invalid_attribute</a>) can be instead it, then it SHOULD be.</p>
+<a href="#invalid_attribute">invalid_attribute</a>) can be used instead, then it
+SHOULD be.</p>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#parsing_data</code></li>
 <li>Code: <code>400 Bad Request</code></li>

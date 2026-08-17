@@ -64,7 +64,7 @@
 <p>As updates are made to entities within an xRegistry instance, events SHOULD
 be generated to notify interested parties of those changes. This specification
 defines the metadata associated with each event as
-[CloudEvent][https://cloudevents.io) context attributes. Whether CloudEvents
+<a href="https://cloudevents.io">CloudEvent</a> context attributes. Whether CloudEvents
 are used in the generation/serialization of the events is OPTIONAL, but it is
 RECOMMENDED.</p>
 <p>This specification does not mandate the mechanisms by which events are sent
@@ -95,21 +95,21 @@ interpreted as described in <a href="https://tools.ietf.org/html/rfc2119">RFC 21
 preceding item MUST appear at least once. The presence of the <code>#</code> character
 means the remaining portion of the line is a comment. Whitespace characters in
 the JSON snippets are used for readability and are not normative.</p>
-<p>Use of <code>&lt;...&gt;</code> the notation indicates a substitutable value where that is
-meant to be replaced with a runtime situational-specific value as defined by
-the word/phase in the angled brackets. For example <code>&lt;NAME&gt;</code> might be expected
+<p>Use of the <code>&lt;...&gt;</code> notation indicates a substitutable value that is
+meant to be replaced with a runtime situation-specific value as defined by
+the word/phrase in the angled brackets. For example <code>&lt;NAME&gt;</code> might be expected
 to be replaced by the &quot;name&quot; of the item being discussed.</p>
 <h2 id="event-definition">Event Definition <a class="anchor" href="#event-definition">🔗</a></h2>
 <p>Notification of changes to the entities within an xRegistry instance SHOULD be
 exposed as events. These changes could be the result of an end-user interaction
 with the Registry, or due to some other (possibly internal) processing of
 the Registry data.</p>
-<p>A single interaction with the Registry MAY result in multiple events, however,
+<p>A single interaction with the Registry MAY result in multiple events; however,
 within the scope of one interaction (see
-<a href="#xregcorrelationid-extension-context-attribute"><code>xregcorrelationid</code></a>) the
+<a href="#xregcorrelationid-extension-context-attribute"><code>xregcorrelationid</code></a>), the
 following constraints apply:</p>
 <ul>
-<li>Only one of <code>created</code>, <code>updated</code> or <code>deleted</code> event MUST be generated per
+<li>Only one <code>created</code>, <code>updated</code> or <code>deleted</code> event MUST be generated per
 <code>subject</code>.</li>
 <li>If the interaction involved more than one of those actions, then the single
 event generated MUST be chosen in the following order of precedence:
@@ -163,7 +163,7 @@ value MUST result in an absolute URL to the entity (assuming any trailing <code>
 on <code>source</code> is removed since XIDs always start with <code>/</code>).</p>
 <p>This context attribute MUST be present in each event.</p>
 <h3 id="cloudevent-time-core-context-attribute">CloudEvent <a href="https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md#time"><code>time</code></a> Core Context Attribute <a class="anchor" href="#cloudevent-time-core-context-attribute">🔗</a></h3>
-<p>The time of when the interaction occurred. This value MUST be the same for
+<p>The time when the interaction occurred. This value MUST be the same for
 all events generated within the same interaction.</p>
 <p>Its value MUST be an <a href="https://tools.ietf.org/html/rfc3339">RFC3339</a> timestamp
 normalized to UTC. Use of a <code>time-zone</code> notation is RECOMMENDED. The value
@@ -215,7 +215,7 @@ values. Any duplicate attribute names MUST be removed.</p>
 <p>This attribute MUST NOT appear on the <code>created</code> or <code>deleted</code> events.</p>
 </li>
 <li>
-<p>This specification does not mandate any particular order to the attribute
+<p>This specification does not mandate any particular order for the attribute
 names in the array.</p>
 </li>
 </ul>
@@ -227,7 +227,7 @@ the traversal to the attribute of interest.</p>
 interaction, per the rules previously stated, only one <code>updated</code> event
 will be generated. This means the attribute names of all impacted attributes
 MUST be merged into one <code>changed</code> list.</p>
-<p>While <code>changed</code> is OPTIONAL, it is RECOMMENDED to be present on event where
+<p>While <code>changed</code> is OPTIONAL, it is RECOMMENDED to be present on an event where
 it is permitted due to its usefulness for consumers. However, if exposure of
 this information would be inappropriate for some scenarios then it MAY be
 excluded. For example, for privacy/security reasons.</p>
@@ -250,9 +250,9 @@ modified attribute MUST be included in <code>changed</code>, if present.</p>
 <li>
 <p>MUST be generated when a Group is created or deleted, where <code>changed</code>, if
 present, includes (at least) <code>epoch</code>, <code>modifiedat</code>, <code>&lt;GROUPS&gt;</code> and
-<code>&lt;GROUPS&gt;count</code> attributes names.</p>
+<code>&lt;GROUPS&gt;count</code> attribute names.</p>
 <p>While the <code>&lt;GROUPS&gt;</code> attribute is present in <code>changed</code> due to the child
-collection changing, in order to see which specific Groups were impacted
+collection changing, in order to see which specific Groups were impacted,
 the <code>io.xregistry.group.created</code> and <code>io.xregistry.group.deleted</code> events
 would need to be examined.</p>
 </li>
@@ -280,7 +280,7 @@ action.</p>
 <p>MUST NOT include a <code>changed</code> list.</p>
 </li>
 <li>
-<p>A <code>io.xregistry.registry.updated</code> event will also be generated where the
+<p>An <code>io.xregistry.registry.updated</code> event will also be generated where the
 <code>model</code> attribute will be included in <code>changed</code>, if present.</p>
 </li>
 </ul>
@@ -303,7 +303,7 @@ to watch for <code>io.xregistry.model.update</code> events, not
 <p>MUST NOT include a <code>changed</code> list.</p>
 </li>
 <li>
-<p>A <code>io.xregistry.registry.updated</code> event will also be generated where the
+<p>An <code>io.xregistry.registry.updated</code> event will also be generated where the
 <code>modelsource</code> attribute will be included in <code>changed</code>, if present.</p>
 </li>
 </ul>
@@ -325,7 +325,7 @@ events.</p>
 the top-level capability names are included in <code>changed</code>, if present.</p>
 </li>
 <li>
-<p>A <code>io.xregistry.registry.updated</code> event will also be generated where the
+<p>An <code>io.xregistry.registry.updated</code> event will also be generated where the
 <code>capabilities</code> attribute will be included in <code>changed</code>, if present.</p>
 </li>
 </ul>
@@ -340,7 +340,7 @@ the top-level capability names are included in <code>changed</code>, if present.
 <p>MUST be generated when a new Group is created.</p>
 </li>
 <li>
-<p>A <code>io.xregistry.registry.updated</code> event will also be generated where the
+<p>An <code>io.xregistry.registry.updated</code> event will also be generated where the
 <code>&lt;GROUPS&gt;</code> and <code>&lt;GROUPS&gt;count</code> attributes will be included in <code>changed</code>,
 if present.</p>
 </li>
@@ -356,9 +356,9 @@ attribute MUST be included in <code>changed</code>, if present.</p>
 <li>
 <p>MUST be generated when a Resource is created or deleted, where <code>changed</code>,
 if present, includes (at least) <code>epoch</code>, <code>modifiedat</code>, <code>&lt;RESOURCES&gt;</code> and
-<code>&lt;RESOURCES&gt;count</code> attributes names.</p>
+<code>&lt;RESOURCES&gt;count</code> attribute names.</p>
 <p>While the <code>&lt;RESOURCES&gt;</code> attribute is present due to the child
-collection changing, in order to see which specific Resources were impacted
+collection changing, in order to see which specific Resources were impacted,
 the <code>io.xregistry.resource.created</code> and <code>io.xregistry.resource.deleted</code>
 events would need to be examined.</p>
 <p>This includes any updates to the <code>deprecated</code> sub-object, even
@@ -374,13 +374,13 @@ examined.</p>
 <p>Action: <code>deprecation</code></p>
 <ul>
 <li>
-<p>MUST be generated when a Group's <code>deprecated</code> sub-object is set,
-deleted or any of its attributes updated, where &quot;changed&quot;, if present,
-includes the list of top-level attribute names from the <code>deprecated</code>
-sub-object that were modified.</p>
+<p>MUST be generated when a Group's <code>deprecated</code> sub-object is set or
+deleted, or when any of its attributes are updated, where &quot;changed&quot;,
+if present, includes the list of top-level attribute names from the
+<code>deprecated</code> sub-object that were modified.</p>
 </li>
 <li>
-<p>A <code>io.xregistry.group.updated</code> event will also be generated where the
+<p>An <code>io.xregistry.group.updated</code> event will also be generated where the
 <code>deprecated</code> attribute will be included in <code>changed</code>, if present.</p>
 </li>
 </ul>
@@ -392,7 +392,7 @@ sub-object that were modified.</p>
 <p>MUST be generated when a Group is deleted.</p>
 </li>
 <li>
-<p>A <code>io.xregistry.registry.updated</code> event will also be generated where the
+<p>An <code>io.xregistry.registry.updated</code> event will also be generated where the
 <code>&lt;GROUPS&gt;</code> and <code>&lt;GROUPS&gt;count</code> attributes will be included in <code>changed</code>, if
 present.</p>
 </li>
@@ -413,7 +413,7 @@ attribute MUST be included in <code>changed</code>, if present.</p>
 generated since at least one Version will also be created.</p>
 </li>
 <li>
-<p>A <code>io.xregistry.registry.updated</code> event will also be generated where the
+<p>An <code>io.xregistry.registry.updated</code> event will also be generated where the
 <code>&lt;RESOURCES&gt;</code> and <code>&lt;RESOURCES&gt;count</code> attributes will be included in
 <code>changed</code>, if present.</p>
 </li>
@@ -429,7 +429,7 @@ where each modified attribute MUST be included in <code>changed</code>, if prese
 <li>
 <p>MUST be generated when a Resource's <code>meta</code> attribute is updated, where
 <code>changed</code>, if present, includes (at least) the changed top-level <code>meta</code>
-attributes names prefixed with <code>meta.</code>. For example,
+attribute names prefixed with <code>meta.</code>. For example,
 <code>meta.defaultversionid</code>.</p>
 <p>This includes any updates to the <code>deprecated</code> sub-object, even
 though a <code>io.xregistry.resource.deprecation</code> event is also generated. And
@@ -441,16 +441,16 @@ examined.</p>
 <li>
 <p>MUST be generated when a Version is created or deleted, where <code>changed</code>,
 if present, includes (at least) <code>meta.epoch</code>, <code>meta.modifiedat</code>,
-<code>versions</code> and <code>versionscount</code> attributes names.</p>
+<code>versions</code> and <code>versionscount</code> attribute names.</p>
 <p>While the <code>version</code> attribute is present due to the child
-collection changing, in order to see which specific Versions were impacted
+collection changing, in order to see which specific Versions were impacted,
 the <code>io.xregistry.version.created</code> and <code>io.xregistry.version.deleted</code>
 events would need to be examined.</p>
 </li>
 <li>
 <p>Updating a Resource's <code>meta.defaultversionid</code> attribute will
-generate a <code>io.xregistry.resource.updated</code> event but it MUST NOT generate
-a <code>io.xregistry.version.updated</code> event for either the prior or new default
+generate an <code>io.xregistry.resource.updated</code> event but it MUST NOT generate
+an <code>io.xregistry.version.updated</code> event for either the prior or new default
 Version.</p>
 </li>
 </ul>
@@ -459,13 +459,13 @@ Version.</p>
 <p>Action: <code>deprecation</code></p>
 <ul>
 <li>
-<p>MUST be generated when a Resource's <code>meta.deprecated</code> sub-object is set,
-deleted or any of its attributes updated, where &quot;changed&quot;, if present,
-includes the list of top-level attribute names from the <code>deprecated</code>
-sub-object that were modified.</p>
+<p>MUST be generated when a Resource's <code>meta.deprecated</code> sub-object is set
+or deleted, or when any of its attributes are updated, where &quot;changed&quot;,
+if present, includes the list of top-level attribute names from the
+<code>deprecated</code> sub-object that were modified.</p>
 </li>
 <li>
-<p>A <code>io.xregistry.resource.updated</code> event will also be generated where the
+<p>An <code>io.xregistry.resource.updated</code> event will also be generated where the
 <code>deprecated</code> attribute will be included in <code>changed</code>, if present.</p>
 </li>
 </ul>
@@ -481,7 +481,7 @@ sub-object that were modified.</p>
 each Version.</p>
 </li>
 <li>
-<p>A <code>io.xregistry.registry.updated</code> event will also be generated where the
+<p>An <code>io.xregistry.registry.updated</code> event will also be generated where the
 <code>&lt;RESOURCES&gt;</code> and <code>&lt;RESOURCES&gt;count</code> attributes will be included in
 <code>changed</code>, if present.</p>
 </li>
@@ -497,7 +497,7 @@ each Version.</p>
 <p>MUST be generated when a new Version is created.</p>
 </li>
 <li>
-<p>A <code>io.xregistry.resource.updated</code> event will also be generated where the
+<p>An <code>io.xregistry.resource.updated</code> event will also be generated where the
 <code>versions</code> and <code>versionscount</code> attributes will be included in <code>changed</code>, if
 present.</p>
 </li>
@@ -517,7 +517,7 @@ attribute MUST be included in <code>changed</code>, if present.</li>
 <p>MUST be generated when a Version is deleted.</p>
 </li>
 <li>
-<p>A <code>io.xregistry.resource.updated</code> event will also be generated where the
+<p>An <code>io.xregistry.resource.updated</code> event will also be generated where the
 <code>versions</code> and <code>versionscount</code> attributes will be included in <code>changed</code>, if
 present.</p>
 </li>
@@ -792,7 +792,7 @@ Resources, Versions</li>
 </ul>
 </li>
 </ul>
-<p>Note the no <code>io.xregistry.version.updated</code> event is generated.</p>
+<p>Note that no <code>io.xregistry.version.updated</code> event is generated.</p>
 </li>
 </ul>
 <h3 id="update-a-version-attribute-the-default-version">Update a Version attribute (the default Version) <a class="anchor" href="#update-a-version-attribute-the-default-version">🔗</a></h3>
@@ -926,7 +926,7 @@ Resources, Versions</li>
 </ul>
 </li>
 </ul>
-<h3 id="creating-a-group-with-complete-client-http-message-exchange">Creating a Group with complete client HTTP message exchange <a class="anchor" href="#creating-a-group-with-complete-client-http-message-exchange">🔗</a></h3>
+<h3 id="creating-a-group-with-a-complete-client-http-message-exchange">Creating a Group with a complete client HTTP message exchange <a class="anchor" href="#creating-a-group-with-a-complete-client-http-message-exchange">🔗</a></h3>
 <p>Client Request:</p>
 <pre><code class="language-yaml">PUT /dirs/d1
 Host: example.com
