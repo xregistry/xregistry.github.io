@@ -163,7 +163,7 @@ perform live updates. Once data has been published, data serialized based on
 several different versions might exist in a system, in queues, in databases, or
 in files.</p>
 <p>The schema registry therefore allows managing multiple versions of schemas,
-declares their lineage, and state their compatibility policy. The compatibility
+declares their lineage, and states their compatibility policy. The compatibility
 policy is used to determine whether a schema change is compatible with prior
 versions and whether data that has been serialized based on prior versions can
 still be deserialized and/or validated using the new schema. This compatibility
@@ -175,22 +175,17 @@ versioning and compatibility relationship mechanisms.</p>
 <p>The schema registry is a document store and therefore has the
 <a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html#hasdocument"><code>hasdocument</code></a> attribute defined in the xRegistry Core
 attribute (implicitly) defined as <code>true</code> for the <code>schema</code> Resource.</p>
-<p>This means that the schema registry yields a document with the stored
-content-type when a client issues a GET request to the <a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html#self-attribute"><code>self</code></a>
-URL of a schema. The associated metadata is returned in the HTTP headers. The
-<a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html#registry-design">default version</a> of the schema is returned when the
-client issues a GET request to the <a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html#self-attribute"><code>self</code></a> URL of the <code>schema</code>
-Resource.</p>
+<p>This means that the schema registry exposes the schema document through the
+Resource's document view, using the stored media type. When no Version is
+explicitly selected, the <a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html#registry-design">default version</a> is
+exposed. The applicable protocol binding defines how clients select the
+document and metadata views and how those views are retrieved.</p>
 <p>This enables the ability to provide external parties with a link that they can
 use without needing to know any details about xRegistry.</p>
-<p>Storing a new Version of a schema is similarly straightforward for clients that
-do not know xRegistry specifics, by simply using a POST against
-<a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html#self-attribute"><code>self</code></a> URL of the <code>schema</code> Resource in the simplest case.</p>
-<p>To access the metadata of the <code>schema</code>, or the schema version as a JSON
-document, the client can append a <code>$details</code> suffix to the URL, like
-<code>https://example.com/schemagroups/com.example.schemas/schemas/com.example.event/versions/1.0$details</code>
-or
-<code>https://example.com/schemagroups/com.example.schemas/schemas/com.example.event$details</code>.</p>
+<p>The applicable protocol binding also defines how clients create or update
+schema Versions through the document view.</p>
+<p>For example, the xRegistry HTTP Binding uses the <code>$details</code> URL suffix to
+access the metadata view of the schema Resource or a specific Version.</p>
 <p>Beyond this, the <a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html">xRegistry Core</a> specification provides rich
 filtering and export/import capabilities, which can be used to retrieve schema
 documents in bulk, or to export/import schemas and schema Versions in a
@@ -205,11 +200,11 @@ interpreted as described in <a href="https://tools.ietf.org/html/rfc2119">RFC 21
 <p>For clarity, OPTIONAL attributes (specification-defined and extensions) are
 OPTIONAL for clients to use, but the servers' responsibility will vary.
 Server-unknown extension attributes MUST be silently stored in the backing
-datastore. Specification-defined attributes and server-known extension
-attributes MUST generate an error if the corresponding feature is not supported
-or enabled. However, as with all attributes, if accepting the attribute results
-in a bad state (such as exceeding a size limit or resulting in a security
-issue), then the server MAY choose to reject the request.</p>
+datastore. Specification-defined and server-known extension attributes MUST
+generate an error if the corresponding feature is not supported or enabled.
+However, as with all attributes, if accepting the attribute would result in a
+bad state (such as exceeding a size limit, or results in a security issue),
+then the server MAY choose to reject the request.</p>
 <p>In the pseudo JSON format snippets <code>?</code> means the preceding attribute is
 OPTIONAL, <code>*</code> means the preceding attribute MAY appear zero or more times,
 and <code>+</code> means the preceding attribute MUST appear at least once. The presence
@@ -333,7 +328,7 @@ on the contained schemas, meaning that a Schema Group MAY contain schemas of
 different formats.</p>
 <p>Every schema (i.e. the schema Resource) MUST reside inside a Schema Group.</p>
 <p>Example:</p>
-<p>The follow abbreviated Schema Registry's content shows a single Schema Group
+<p>The following abbreviated Schema Registry content shows a single Schema Group
 containing 5 schemas.</p>
 <pre><code class="language-yaml">{
   &quot;specversion&quot;: &quot;1.0-rc3&quot;,
@@ -488,7 +483,7 @@ the schema Resource is a JSON object representing a JSON Schema document
 conformant with the declared version.</p>
 <p>When a URI, like the Message Registry's
 <a href="./../../message-v1/docs/spec.html#dataschemauri"><code>dataschemauri</code></a>, points to a JSON Schema
-document it MAY use a <a href="https://www.rfc-editor.org/rfc/rfc6901">JSON pointer</a> expression to deep link into
+document, it MAY use a <a href="https://www.rfc-editor.org/rfc/rfc6901">JSON pointer</a> expression to deep link into
 the schema document to reference a particular type definition. Otherwise the
 top-level object definition of the schema is used.</p>
 <p>The version of the JSON Schema format is the version of the JSON Schema
@@ -513,13 +508,13 @@ version number.</p>
 <p>The <a href="./../../core-v1/docs/spec.html#format-attribute"><code>format</code></a> identifier for XML Schema is
 <code>XSD</code>. The version of the XML Schema format is the version of the W3C XML
 Schema specification that is used to define the schema.</p>
-<p>When the <code>format</code> attribute is set to <code>XSD</code>, the <code>schema</code> attribute of schema
-Resource is a string containing an XML Schema document conformant with the
-declared version.</p>
+<p>When the <code>format</code> attribute is set to <code>XSD</code>, the <code>schema</code> attribute of the
+schema Resource is a string containing an XML Schema document conformant with
+the declared version.</p>
 <p>When a URI, like the Message Registry's
 <a href="./../../message-v1/docs/spec.html#dataschemauri"><code>dataschemauri</code></a>, points to an XML Schema
-document it MAY use an XPath expression to deep link into the schema document to
-reference a particular type definition. Otherwise the top-level object
+document, it MAY use an XPath expression to deep link into the schema document
+to reference a particular type definition. Otherwise the top-level object
 definition of the schema is used.</p>
 <p>The identifiers for the following XML Schema versions:</p>
 <ul>
@@ -545,7 +540,7 @@ with the declared version.</p>
 </ul>
 <p>When a URI, like the Message Registry's
 <a href="./../../message-v1/docs/spec.html#dataschemauri"><code>dataschemauri</code></a>, points to an Avro Schema
-document it MAY use a URI fragment suffix <code>[:]{record-name}</code> to deep link into
+document, it MAY use a URI fragment suffix <code>[:]{record-name}</code> to deep link into
 the schema document to reference a particular type definition. Otherwise the
 top-level object definition of the schema is used. The ':' character is used as
 a separator when the URI already contains a fragment.</p>
@@ -558,7 +553,7 @@ record.</li>
 <li>If the Avro schema document is a local Schema Registry reference like
 <code>#/schemagroups/com.example.telemetry/schemas/com.example.telemetrydata</code>, in
 which the reference is already in the form of a URI fragment, the suffix is
-appended separated with a colon, for instance
+appended, separated by a colon, for instance
 <code>.../com.example.telemetrydata:TelemetryEvent</code>.</li>
 </ul>
 <h4 id="434-protobuf-schema">4.3.4. Protobuf Schema <a class="anchor" href="#434-protobuf-schema">🔗</a></h4>
@@ -585,8 +580,8 @@ character is used as a separator when the URI already contains a fragment.</p>
 message.</li>
 <li>If the Protobuf schema document is a local Schema Registry reference like
 <code>#/schemagroups/com.example.telemetry/schemas/com.example.telemetrydata</code>, in
-the which the reference is already in the form of a URI fragment, the suffix
-is appended separated with a colon, for instance
+which the reference is already in the form of a URI fragment, the suffix
+is appended, separated by a colon, for instance
 <code>.../com.example.telemetrydata:TelemetryEvent</code>.</li>
 </ul>
 <h4 id="435-json-structure-schema">4.3.5. JSON Structure Schema <a class="anchor" href="#435-json-structure-schema">🔗</a></h4>
