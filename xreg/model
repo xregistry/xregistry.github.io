@@ -10,7 +10,6 @@
     "registryid": {
       "name": "registryid",
       "type": "string",
-      "matchcase": true,
       "readonly": true,
       "immutable": true,
       "required": true
@@ -140,7 +139,6 @@
         "xregistryspecid": {
           "name": "xregistryspecid",
           "type": "string",
-          "matchcase": true,
           "immutable": true,
           "required": true
         },
@@ -348,14 +346,12 @@
             "docid": {
               "name": "docid",
               "type": "string",
-              "matchcase": true,
               "immutable": true,
               "required": true
             },
             "versionid": {
               "name": "versionid",
               "type": "string",
-              "matchcase": true,
               "immutable": true,
               "required": true
             },
@@ -428,7 +424,6 @@
             "ancestorid": {
               "name": "ancestorid",
               "type": "string",
-              "matchcase": true,
               "required": true
             },
             "contenttype": {
@@ -480,7 +475,6 @@
             "docid": {
               "name": "docid",
               "type": "string",
-              "matchcase": true,
               "immutable": true,
               "required": true
             },
@@ -552,7 +546,6 @@
             "docid": {
               "name": "docid",
               "type": "string",
-              "matchcase": true,
               "immutable": true,
               "required": true
             },
@@ -652,7 +645,6 @@
             "defaultversionid": {
               "name": "defaultversionid",
               "type": "string",
-              "matchcase": true,
               "required": true
             },
             "defaultversionurl": {
@@ -684,14 +676,12 @@
             "sampleid": {
               "name": "sampleid",
               "type": "string",
-              "matchcase": true,
               "immutable": true,
               "required": true
             },
             "versionid": {
               "name": "versionid",
               "type": "string",
-              "matchcase": true,
               "immutable": true,
               "required": true
             },
@@ -764,7 +754,6 @@
             "ancestorid": {
               "name": "ancestorid",
               "type": "string",
-              "matchcase": true,
               "required": true
             },
             "contenttype": {
@@ -816,7 +805,6 @@
             "sampleid": {
               "name": "sampleid",
               "type": "string",
-              "matchcase": true,
               "immutable": true,
               "required": true
             },
@@ -888,7 +876,6 @@
             "sampleid": {
               "name": "sampleid",
               "type": "string",
-              "matchcase": true,
               "immutable": true,
               "required": true
             },
@@ -988,7 +975,6 @@
             "defaultversionid": {
               "name": "defaultversionid",
               "type": "string",
-              "matchcase": true,
               "required": true
             },
             "defaultversionurl": {
@@ -1020,14 +1006,12 @@
             "schemaid": {
               "name": "schemaid",
               "type": "string",
-              "matchcase": true,
               "immutable": true,
               "required": true
             },
             "versionid": {
               "name": "versionid",
               "type": "string",
-              "matchcase": true,
               "immutable": true,
               "required": true
             },
@@ -1100,7 +1084,6 @@
             "ancestorid": {
               "name": "ancestorid",
               "type": "string",
-              "matchcase": true,
               "required": true
             },
             "contenttype": {
@@ -1152,7 +1135,6 @@
             "schemaid": {
               "name": "schemaid",
               "type": "string",
-              "matchcase": true,
               "immutable": true,
               "required": true
             },
@@ -1224,7 +1206,6 @@
             "schemaid": {
               "name": "schemaid",
               "type": "string",
-              "matchcase": true,
               "immutable": true,
               "required": true
             },
@@ -1324,7 +1305,6 @@
             "defaultversionid": {
               "name": "defaultversionid",
               "type": "string",
-              "matchcase": true,
               "required": true
             },
             "defaultversionurl": {

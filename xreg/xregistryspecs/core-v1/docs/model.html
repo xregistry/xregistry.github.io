@@ -47,7 +47,7 @@
 </head>
 <h1 id="xregistry-service-model---version-10-rc3">xRegistry Service Model - Version 1.0-rc3 <a class="anchor" href="#xregistry-service-model---version-10-rc3">🔗</a></h1>
 <!-- words: compat validatecompatibility validateformat strictvalidation -->
-<!-- words: matchcase compatibilityvalidated formatvalidated -->
+<!-- words: compatibilityvalidated formatvalidated -->
 <!-- words: validators matchversions -->
 <h2 id="abstract">Abstract <a class="anchor" href="#abstract">🔗</a></h2>
 <p>This document describes the xRegistry model definition language that is used
@@ -118,7 +118,6 @@ and edit the model of a Registry.</p>
       &quot;description&quot;: &quot;&lt;STRING&gt;&quot;, ?
       &quot;enum&quot;: [ &lt;VALUE&gt; * ], ?         # Array of scalars of type &quot;&lt;TYPE&gt;&quot;
       &quot;strict&quot;: &lt;BOOLEAN&gt;, ?           # Just &quot;enum&quot; values or not. Default=true
-      &quot;matchcase&quot;: &lt;BOOLEAN&gt;, ?        # Strings case-sensitive? Default=false
       &quot;matchversions&quot;: &lt;BOOLEAN&gt;, ?    # Same for all Versions? Default=false
       &quot;readonly&quot;: &lt;BOOLEAN&gt;, ?         # From client's POV. Default=false
       &quot;immutable&quot;: &lt;BOOLEAN&gt;, ?        # Once set, can't change. Default=false
@@ -395,16 +394,6 @@ values used that are not part of the <code>enum</code> set MUST generate an erro
 This attribute has no impact when <code>enum</code> is absent or an empty array.</li>
 <li>When not specified, the default value MUST be <code>true</code>.</li>
 </ul>
-<h3 id="attributesstringmatchcase"><code>attributes.&lt;STRING&gt;.matchcase</code> <a class="anchor" href="#attributesstringmatchcase">🔗</a></h3>
-<ul>
-<li>Type: Boolean.</li>
-<li>OPTIONAL.</li>
-<li>Indicates whether the <code>string</code> attribute's value MUST be compared with
-a matching value in a case-sensitive way, or not.</li>
-<li>This aspect MUST NOT be <code>true</code> if the owning attribute's <code>type</code> (or
-<code>item.type</code> for non-scalars) is not <code>&quot;string&quot;</code>.</li>
-<li>When not specified, the default value MUST be <code>false</code>.</li>
-</ul>
 <h3 id="attributesstringmatchversions"><code>attributes.&lt;STRING&gt;.matchversions</code> <a class="anchor" href="#attributesstringmatchversions">🔗</a></h3>
 <ul>
 <li>Type: Boolean.</li>
@@ -424,9 +413,6 @@ or via a <code>*</code> extension definition</li>
 <li>Are not defined within an array or map. Within an object is allowed.</li>
 </ul>
 </li>
-<li>In the case of the attribute type being a <code>string</code>, the comparison MUST take
-into account the <a href="#attributesstringmatchcase">matchcase</a> aspect of the
-attribute.</li>
 <li>When not specified, the default value MUST be <code>false</code>.</li>
 </ul>
 <h3 id="attributesstringreadonly"><code>attributes.&lt;STRING&gt;.readonly</code> <a class="anchor" href="#attributesstringreadonly">🔗</a></h3>
@@ -438,10 +424,11 @@ attribute.</li>
 <p>OPTIONAL.</p>
 </li>
 <li>
-<p>Indicates whether this attribute is modifiable by a client. During
-creation, or update, of an entity if this attribute is specified, then
-its value MUST be silently ignored by the server even if the value is
-invalid.</p>
+<p>Indicates whether this attribute is modifiable by a client. Unless otherwise
+stated, during creation, or update, of an entity if this attribute is
+specified, then its value MUST be silently ignored by the server even if the
+value is invalid. Note that there are some readonly attributes that are
+examined by a server during a write operation (e.g. <code>epoch</code> and IDs).</p>
 <p>Typically, attributes that are completely under the server's control
 will be <code>readonly</code> - e.g. <code>self</code>.</p>
 </li>
@@ -787,9 +774,7 @@ with the same value as the specified <code>equals</code> attribute in the Group 
 specified at all.</p>
 <p>When present, this aspect MUST contain the
 <a href="./spec.html#xregistry-dot--notation">dot (<code>.</code>) notation</a> path in the
-Group instance that the referenced Resource attribute MUST match. In the
-case of the attribute type being a <code>string</code>, the comparison MUST take into
-account the <a href="#attributesstringmatchcase">matchcase</a> aspect of the attribute.</p>
+Group instance that the referenced Resource attribute MUST match.</p>
 <p>If the Group and Resource attributes are not of the same scalar <code>type</code> then
 an error ([model_error])(./spec.md#model_error) MUST be generated.</p>
 <p>If the referenced Group attribute does not have a value at runtime, then the

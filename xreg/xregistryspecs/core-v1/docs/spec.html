@@ -46,7 +46,7 @@
 </style>
 </head>
 <h1 id="xregistry-service---version-10-rc3">xRegistry Service - Version 1.0-rc3 <a class="anchor" href="#xregistry-service---version-10-rc3">🔗</a></h1>
-<!-- words: validatecompatibility validateformat strictvalidation matchcase -->
+<!-- words: validatecompatibility validateformat strictvalidation -->
 <!-- words: compat formatvalidated compatibilityvalidated -->
 <!-- words: compat formatvalidatedreason compatibilityvalidatedreason -->
 <!-- words: matchversions excludeall -->
@@ -457,7 +457,6 @@ Alternative serialization formats MAY be defined.</p>
         &quot;description&quot;: &quot;&lt;STRING&gt;&quot;, ?
         &quot;enum&quot;: [ &lt;VALUE&gt; * ], ?        # Array of scalars of type `&quot;type&quot;`
         &quot;strict&quot;: &lt;BOOLEAN&gt;, ?          # Just &quot;enum&quot; values? Default=true
-        &quot;matchcase&quot;: &lt;BOOLEAN&gt;, ?       # Strings case-sensitive? Def=false
         &quot;matchversions&quot;: &lt;BOOLEAN&gt;, ?   # Same for all Versions? Def=false
         &quot;readonly&quot;: &lt;BOOLEAN&gt;, ?        # From client's POV. Default=false
         &quot;immutable&quot;: &lt;BOOLEAN&gt;, ?       # Once set, can't change. Default=false
@@ -680,13 +679,15 @@ ignored by receivers of these messages. There is no requirement for
 implementations of this specification to persist these values, to include them
 in responses or to use this information.</p>
 <h3 id="design-implicit-creation-of-parent-entities">Design: Implicit Creation of Parent Entities <a class="anchor" href="#design-implicit-creation-of-parent-entities">🔗</a></h3>
-<p>To reduce the number of interactions needed when creating an entity, all
-nonexisting parent entities specified as part of <code>&lt;PATH&gt;</code> to the entity MUST
-be implicitly created. Each of those entities MUST be created with the
-appropriate <code>&lt;SINGULAR&gt;id</code> specified in the <code>&lt;PATH&gt;</code>. If any of those
-entities have REQUIRED attributes, then they cannot be implicitly created, and
-would need to be created directly. This also means that the creation of the
-original entity would fail and generate an error
+<p>To reduce the number of interactions needed when creating an entity, if any of
+its parent entities do not exist, then they MUST be implicitly created. Each of
+those entities MUST be created with the appropriate <code>&lt;SINGULAR&gt;id</code> as specified
+by the protocol-specific mechanism by which the nested entity is identified.
+For example, in HTTP the <code>&lt;PATH&gt;</code> would include the <code>&lt;SINGULAR&gt;id</code> values
+of the parent entities. If any of those entities have REQUIRED attributes,
+then they cannot be implicitly created, and would need to be created directly.
+This also means that the creation of the original entity would fail and
+generate an error
 (<a href="./spec.html#required_attribute_missing">required_attribute_missing</a>) for the
 appropriate parent entity.</p>
 <h3 id="design-events">Design: Events <a class="anchor" href="#design-events">🔗</a></h3>
@@ -841,13 +842,13 @@ added &quot;URL&quot; constraints mentioned in <a href="https://datatracker.ietf
 4.2</a> with the
 added &quot;URL&quot; constraints mentioned in <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-1.1.3">RFC 3986 Section
 1.1.3</a>.</li>
-<li><code>xid</code> - MUST be a URL (xid) reference to another entity defined within
-the Registry. The actual entity attribute value MAY reference a non-existing
-entity (i.e. be a dangling pointer), but the syntax MUST reference a
-defined/valid type in the Registry. This type of attribute is used in
-place of <code>url</code> so that the Registry can do &quot;type checking&quot; to ensure the
-value references the correct type of Registry entity. See the definition of
-the <a href="./model.html#attributesstringtarget"><code>target</code> model attribute</a> for more
+<li><code>xid</code> - MUST be a case-sensitive URL (xid) reference to another entity
+defined within the Registry. The actual entity attribute value MAY reference
+a non-existing entity (i.e. be a dangling pointer), but the syntax MUST
+reference a defined/valid type in the Registry. This type of attribute is
+used in place of <code>url</code> so that the Registry can do &quot;type checking&quot; to ensure
+the value references the correct type of Registry entity. See the definition
+of the <a href="./model.html#attributesstringtarget"><code>target</code> model attribute</a> for more
 information. Its value MUST start with a <code>/</code>.</li>
 <li><code>xidtype</code> - MUST be a URL reference to an
 <a href="./model.html#registry-model">xRegistry model</a> type. The reference MUST point
@@ -1126,6 +1127,8 @@ and then re-enabled, the <code>shortself</code> values MUST retain their origina
 values. In this sense, implementations might create a <code>shortself</code> that is
 known for the lifetime of the entity and the capability controls whether
 the attribute is serialized or not.</p>
+<p>When the <code>shortself</code> capability is disabled, the attribute name <code>shortself</code>
+is still a reserved attribute name and MUST NOT be used as an extension.</p>
 </li>
 <li>
 <p>Constraints:</p>
@@ -1177,7 +1180,7 @@ attribute</a>).</p>
 <ul>
 <li>REQUIRED.</li>
 <li>MUST be immutable.</li>
-<li>MUST be a non-empty relative URL to the current entity.</li>
+<li>MUST be a case-sensitive non-empty relative URL to the current entity.</li>
 <li>MUST be of the form:
 <code>/[&lt;GROUPS&gt;/&lt;GID&gt;[/&lt;RESOURCES&gt;/&lt;RID&gt;[/meta | /versions/&lt;VID&gt;]]]</code> and
 reference valid Group and Resource types. Otherwise, an error
@@ -3103,7 +3106,8 @@ Resources</a> for more information.</p>
 <p>Constraints:</p>
 <ul>
 <li>OPTIONAL.</li>
-<li>If present, it MUST be the <code>xid</code> of a same-typed Resource in the Registry.</li>
+<li>If present, it MUST be the case-sensitive <code>xid</code> of a same-typed Resource
+in the Registry.</li>
 </ul>
 </li>
 </ul>
@@ -3196,7 +3200,8 @@ compatibility value.</li>
 <p>Type: String</p>
 </li>
 <li>
-<p>Description: The <code>versionid</code> of the default Version of the Resource.</p>
+<p>Description: The case-sensitive <code>versionid</code> of the default Version of the
+Resource.</p>
 </li>
 <li>
 <p>Constraints:</p>
@@ -3488,9 +3493,9 @@ information about this attribute.</p>
 </li>
 <li>
 <p>Description: The <code>versionid</code> of this Version's ancestor.</p>
-<p>The <code>ancestorid</code> attribute MUST be set to the <code>versionid</code> of this Version's
-ancestor. If this Version is a root of an ancestor hierarchy tree then it
-MUST be set to its own <code>versionid</code> value.</p>
+<p>The <code>ancestorid</code> attribute MUST be set to the case-sensitive <code>versionid</code> of
+this Version's ancestor. If this Version is a root of an ancestor hierarchy
+tree then it MUST be set to its own <code>versionid</code> value.</p>
 <p>See the Resource's
 <a href="./model.html#groupsstringresourcesstringversionmode"><code>versionmode</code></a> model
 aspect for more information on how this attribute value can be populated.</p>
@@ -4651,8 +4656,9 @@ wishes to choose a new default Version at the same time - to avoid an incorrect
 one being chosen temporarily.</p>
 <p>Use of this flag on an operation that allows for modifying multiple Resources
 MUST generate an error (<a href="#bad_flag">bad_flag</a>).</p>
-<p>This flag MUST include a single parameter, a string containing the <code>versionid</code>
-of the Version that is to become the new default Version.</p>
+<p>This flag MUST include a single parameter, a string containing the
+case-sensitive <code>versionid</code> of the Version that is to become the new default
+Version.</p>
 <p>The following rules apply:</p>
 <ul>
 <li>A value of <code>null</code> indicates that the client wishes to switch to the
