@@ -91,7 +91,7 @@
     "pagination": false,
     "shortself": false,
     "specversions": [
-      "1.0-rc3"
+      "1.0-rc4"
     ],
     "versionmodes": [
       "createdat",
@@ -193,7 +193,7 @@
         "type": "url"
       },
       "specversion": {
-        "default": "1.0-rc3",
+        "default": "1.0-rc4",
         "name": "specversion",
         "readonly": true,
         "required": true,
@@ -255,7 +255,7 @@
   "modifiedat": "2000-01-01T12:00:00.00Z",
   "registryid": "xRegistry",
   "self": "#/",
-  "specversion": "1.0-rc3",
+  "specversion": "1.0-rc4",
   "xid": "/",
   "xregistryspecs": {
     "cloudevents-v1": {
