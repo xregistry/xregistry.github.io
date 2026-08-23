@@ -5720,11 +5720,13 @@ error SHOULD be used instead.</p>
 <h3 id="parsing_data">parsing_data <a class="anchor" href="#parsing_data">🔗</a></h3>
 <p>This is a fairly generic error, so if a more focused one (e.g.
 <a href="#invalid_attribute">invalid_attribute</a>) can be used instead, then it
-SHOULD be.</p>
+SHOULD be. <code>&lt;data_description&gt;</code> is meant to be a phrase, or identifier, of
+the data being parsed; e.g. <code>/model</code>.</p>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#parsing_data</code></li>
 <li>Code: <code>400 Bad Request</code></li>
-<li>Title: <code>There was an error parsing the data: &lt;error_detail&gt;.</code></li>
+<li>Title: <code>There was an error parsing &quot;&lt;subject&gt;&quot;: &lt;error_detail&gt;.</code></li>
+<li>Subject: <code>&lt;data_description&gt;</code></li>
 <li>Args:
 <ul>
 <li><code>error_detail</code>: Specific details about the error.</li>

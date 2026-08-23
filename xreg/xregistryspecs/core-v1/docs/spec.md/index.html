@@ -5316,11 +5316,13 @@ error SHOULD be used instead.
 
 This is a fairly generic error, so if a more focused one (e.g.
 [invalid_attribute](#invalid_attribute)) can be used instead, then it
-SHOULD be.
+SHOULD be. `<data_description>` is meant to be a phrase, or identifier, of
+the data being parsed; e.g. `/model`.
 
 * Type: `https://github.com/xregistry/spec/blob/main/core/spec.md#parsing_data`
 * Code: `400 Bad Request`
-* Title: `There was an error parsing the data: <error_detail>.`
+* Title: `There was an error parsing "<subject>": <error_detail>.`
+* Subject: `<data_description>`
 * Args:
   - `error_detail`: Specific details about the error.
 
