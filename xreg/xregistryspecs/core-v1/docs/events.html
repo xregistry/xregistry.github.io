@@ -263,7 +263,7 @@ updated and the appropriate attribute MUST appear in <code>changed</code>, if pr
 </ul>
 </li>
 </ul>
-<p>The <code>io.xregistry.registry.created</code> and <code>io.xregistry.registry.updated</code> events
+<p>The <code>io.xregistry.registry.created</code> and <code>io.xregistry.registry.deleted</code> events
 are not defined as part of this specification as those operations are not
 defined in the xRegistry specification. It is expected that the tooling that
 performs those operations will define those events, if needed.</p>
@@ -290,7 +290,7 @@ action.</p>
 will be generated at the same time since model updates are most likely done
 by changing the <code>modelsource</code> attribute. However, since the <code>model</code> might
 change for other reasons, users who are interested in all <code>model</code> changes need
-to watch for <code>io.xregistry.model.update</code> events, not
+to watch for <code>io.xregistry.model.updated</code> events, not
 <code>io.xregistry.modelsource.updated</code> events.</p>
 <h3 id="modelsource-events"><code>modelsource</code> Events <a class="anchor" href="#modelsource-events">🔗</a></h3>
 <ul>
@@ -314,7 +314,7 @@ will be generated at the same time since model updates are most likely done
 by changing the <code>modelsource</code> attribute. However, since the <code>model</code> might
 change for other reasons, users who are only interested in changes related
 to user modifications of the model need to watch for
-<code>io.xregistry.modelsource.update</code> events, not <code>io.xregistry.model.updated</code>
+<code>io.xregistry.modelsource.updated</code> events, not <code>io.xregistry.model.updated</code>
 events.</p>
 <h3 id="capabilities-events"><code>capabilities</code> Events <a class="anchor" href="#capabilities-events">🔗</a></h3>
 <ul>
@@ -381,7 +381,7 @@ if present, includes the list of top-level attribute names from the
 </li>
 <li>
 <p>An <code>io.xregistry.group.updated</code> event will also be generated where the
-<code>deprecated</code> attribute will be included in <code>changed</code>, if present.</p>
+<code>deprecated</code> sub-object will be included in <code>changed</code>, if present.</p>
 </li>
 </ul>
 </li>
@@ -405,15 +405,14 @@ present.</p>
 <p>Action: <code>created</code></p>
 <ul>
 <li>
-<p>MUST be generated when a new Resource is created, where each modified
-attribute MUST be included in <code>changed</code>, if present.</p>
+<p>MUST be generated when a new Resource is created.</p>
 </li>
 <li>
 <p>At least one <code>io.xregistry.version.created</code> event will also be
 generated since at least one Version will also be created.</p>
 </li>
 <li>
-<p>An <code>io.xregistry.registry.updated</code> event will also be generated where the
+<p>An <code>io.xregistry.group.updated</code> event will also be generated where the
 <code>&lt;RESOURCES&gt;</code> and <code>&lt;RESOURCES&gt;count</code> attributes will be included in
 <code>changed</code>, if present.</p>
 </li>
@@ -427,7 +426,7 @@ generated since at least one Version will also be created.</p>
 where each modified attribute MUST be included in <code>changed</code>, if present.</p>
 </li>
 <li>
-<p>MUST be generated when a Resource's <code>meta</code> attribute is updated, where
+<p>MUST be generated when a Resource's <code>meta</code> sub-object is updated, where
 <code>changed</code>, if present, includes (at least) the changed top-level <code>meta</code>
 attribute names prefixed with <code>meta.</code>. For example,
 <code>meta.defaultversionid</code>.</p>
@@ -442,7 +441,7 @@ examined.</p>
 <p>MUST be generated when a Version is created or deleted, where <code>changed</code>,
 if present, includes (at least) <code>meta.epoch</code>, <code>meta.modifiedat</code>,
 <code>versions</code> and <code>versionscount</code> attribute names.</p>
-<p>While the <code>version</code> attribute is present due to the child
+<p>While the <code>versions</code> attribute is present due to the child
 collection changing, in order to see which specific Versions were impacted,
 the <code>io.xregistry.version.created</code> and <code>io.xregistry.version.deleted</code>
 events would need to be examined.</p>
@@ -466,7 +465,7 @@ if present, includes the list of top-level attribute names from the
 </li>
 <li>
 <p>An <code>io.xregistry.resource.updated</code> event will also be generated where the
-<code>deprecated</code> attribute will be included in <code>changed</code>, if present.</p>
+<code>meta.deprecated</code> sub-object will be included in <code>changed</code>, if present.</p>
 </li>
 </ul>
 </li>
@@ -481,7 +480,7 @@ if present, includes the list of top-level attribute names from the
 each Version.</p>
 </li>
 <li>
-<p>An <code>io.xregistry.registry.updated</code> event will also be generated where the
+<p>An <code>io.xregistry.group.updated</code> event will also be generated where the
 <code>&lt;RESOURCES&gt;</code> and <code>&lt;RESOURCES&gt;count</code> attributes will be included in
 <code>changed</code>, if present.</p>
 </li>
@@ -613,7 +612,7 @@ the following model definition:</p>
 </li>
 <li><code>io.xregistry.version.updated</code>
 <ul>
-<li>Subject: <code>/dirs/d1/files/f1/version/v1</code></li>
+<li>Subject: <code>/dirs/d1/files/f1/versions/v1</code></li>
 <li>Changed: <code>epoch</code>, <code>modifiedat</code>, <code>name</code></li>
 </ul>
 </li>
@@ -814,7 +813,7 @@ Resources, Versions</li>
 </li>
 <li><code>io.xregistry.version.updated</code>
 <ul>
-<li>Subject: <code>/dirs/d1/files/f1/version/v1</code></li>
+<li>Subject: <code>/dirs/d1/files/f1/versions/v1</code></li>
 <li>Changed: <code>epoch</code>, <code>modifiedat</code>, <code>name</code></li>
 </ul>
 </li>
@@ -834,7 +833,7 @@ Resources, Versions</li>
 <ul>
 <li><code>io.xregistry.version.updated</code>
 <ul>
-<li>Subject: <code>/dirs/d1/files/f1/version/v2</code></li>
+<li>Subject: <code>/dirs/d1/files/f1/versions/v2</code></li>
 <li>Changed: <code>epoch</code>, <code>modifiedat</code>, <code>name</code></li>
 </ul>
 </li>
@@ -843,7 +842,7 @@ Resources, Versions</li>
 </ul>
 <h3 id="create-a-new-version---not-sticky">Create a new Version - not sticky <a class="anchor" href="#create-a-new-version---not-sticky">🔗</a></h3>
 <ul>
-<li>Current default Version is <code>v1</code></li>
+<li>Current default Version (v1) is not &quot;sticky&quot;</li>
 <li>Interaction:
 <ul>
 <li><code>POST /dirs/d1/files/f1</code></li>
@@ -862,7 +861,7 @@ Resources, Versions</li>
 </li>
 <li><code>io.xregistry.version.created</code>
 <ul>
-<li>Subject: <code>/dirs/d1/files/f1/version/v2</code></li>
+<li>Subject: <code>/dirs/d1/files/f1/versions/v2</code></li>
 </ul>
 </li>
 </ul>
@@ -870,7 +869,7 @@ Resources, Versions</li>
 </ul>
 <h3 id="create-a-new-version---sticky-1">Create a new Version - sticky <a class="anchor" href="#create-a-new-version---sticky-1">🔗</a></h3>
 <ul>
-<li>Current default Version is <code>v1</code></li>
+<li>Current default Version (v1) is &quot;sticky&quot;</li>
 <li>Interaction:
 <ul>
 <li><code>POST /dirs/d1/files/f1</code></li>
@@ -887,7 +886,7 @@ Resources, Versions</li>
 </li>
 <li><code>io.xregistry.version.created</code>
 <ul>
-<li>Subject: <code>/dirs/d1/files/f1/version/v2</code></li>
+<li>Subject: <code>/dirs/d1/files/f1/versions/v2</code></li>
 </ul>
 </li>
 </ul>
