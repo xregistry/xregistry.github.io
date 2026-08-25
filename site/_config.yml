@@ -1,7 +1,7 @@
 title: xRegistry
 description: The Extensible Registry for Metadata Management
 baseurl: ""
-url: "http://xregistry.io"
+url: "https://xregistry.io"
 github_username: xregistry
 
 # Build settings
@@ -11,19 +11,35 @@ plugins:
   - jekyll-remote-theme
   - jekyll-redirect-from
 
+collections:
+  articles:
+    output: true
+    permalink: /blog/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: articles
+    values:
+      layout: article
+
 # Slate theme settings
 remote_theme: pages-themes/slate@v0.2.0
 
 # Navigation
 nav_items:
+  - title: Home
+    url: /
+  - title: Blog
+    url: /blog/
   - title: Core Spec
-    url: /spec/core/spec.html
+    url: /xreg/xregistryspecs/core-v1/docs/spec.html
   - title: Endpoint Spec
-    url: /spec/endpoint/spec.html
+    url: /xreg/xregistryspecs/endpoint-v1/docs/spec.html
   - title: Schema Spec
-    url: /spec/schema/spec.html
+    url: /xreg/xregistryspecs/schema-v1/docs/spec.html
   - title: Message Spec
-    url: /spec/message/spec.html
+    url: /xreg/xregistryspecs/message-v1/docs/spec.html
   - title: GitHub
     url: https://github.com/xregistry/spec
 
@@ -33,6 +49,7 @@ exclude:
   - Gemfile.lock
   - vendor/
   - README.md
+  - editorial/
 
 favicon: https://github.com/cncf/artwork/raw/main/projects/xregistry/icon/color/xregistry-icon-color.svg
 image: https://github.com/cncf/artwork/raw/main/projects/xregistry/horizontal/horizontal/color-whitetext/xregistry-horizontal-color-whitetext.svg
