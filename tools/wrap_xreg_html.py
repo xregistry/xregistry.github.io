@@ -131,6 +131,14 @@ def wrap_document(path: Path, root: Path) -> bool:
 
     original = BeautifulSoup(text, "html.parser")
     if original.select_one("[data-xregistry-shell]"):
+        if path.name == "spec.html":
+            source_path = path.with_name("spec.md") / "index.html"
+            output_path = path.with_name("spec.lines.html")
+            if source_path.exists() and not output_path.exists():
+                heading = original.find("h1")
+                title = heading.get_text(" ", strip=True).removesuffix("🔗").strip() if heading else path.stem
+                source_page(source_path, output_path, root, title)
+                return True
         return False
 
     heading = original.find("h1")
@@ -166,7 +174,7 @@ def wrap_tree(root: Path) -> int:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Wrap generated xRegistry HTML documents in the site reader shell.")
-    parser.add_argument("root", nargs="?", default="xreg", type=Path)
+    parser.add_argument("root", nargs="?", default="site/xreg", type=Path)
     args = parser.parse_args()
     count = wrap_tree(args.root.resolve())
     print(f"Wrapped {count} generated HTML document(s).")

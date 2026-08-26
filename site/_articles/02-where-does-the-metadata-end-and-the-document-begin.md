@@ -6,7 +6,8 @@ series_order: 2
 perspective: Resources and documents
 status: Publication draft
 drafted: 2026-08-25
-date: 2026-09-09
+due: 2026-08-28
+date: 2026-08-28 16:00:00 +0200
 published: false
 reading_time: 8 minutes
 previous_slug: one-registry-three-views

@@ -6,7 +6,8 @@ series_order: 4
 perspective: Deployment capabilities
 status: Publication draft
 drafted: 2026-08-25
-date: 2026-10-07
+due: 2026-09-02
+date: 2026-09-02 16:00:00 +0200
 published: false
 reading_time: 7 minutes
 previous_slug: the-model-is-part-of-the-program

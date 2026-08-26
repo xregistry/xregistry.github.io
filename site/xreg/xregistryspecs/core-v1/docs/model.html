@@ -1,50 +1,45 @@
-<html>
+<!DOCTYPE html>
+
+<html lang="en-US">
 <head>
-<style>
-  .anchor {
-    font-size: 12px ;
-    vertical-align: middle ;
-    text-decoration: none ;
-  }
-  body {
-    font-family: sans-serif ;
-    font-size: 16px ;
-    line-height: 1.5 ;
-    padding: 5% 10% 5% 10% ;
-  }
-  pre {
-    font-size: 80% ;
-    background-color: #f2f2f2 ;
-    padding: 12px ;
-  }
-  code {
-    font-size: 85% ;
-    background-color: #f2f2f2 ;
-    padding: .2em .4em ;
-  }
-  pre code {
-    font-size: inherit ;
-    background-color: inherit ;
-    padding: 0px ;
-  }
-  table {
-    border: 1px solid lightgray ;
-    border-collapse: collapse ;
-    border-spacing: 0px ;
-    line-height: 24px ;
-  }
-  tr:nth-child(even) {
-    background-color: #f2f2f2 ;
-  }
-  td,th {
-    border: 1px solid lightgray ;
-    padding: 5px ;
-  }
-  td code, th code {
-    font-size: inherit ;
-  }
-</style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, maximum-scale=2" name="viewport"/>
+<title>xRegistry Service Model - Version 1.0-rc4 | xRegistry</title>
+<link href="/assets/css/style.css" rel="stylesheet"/>
+<link href="/assets/css/xreg-reader.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<script defer="" src="/assets/js/xreg-reader.js"></script>
 </head>
+<body class="xreg-document xreg-reference-document">
+<header class="outer site-header" data-xregistry-shell="true" id="header_wrap">
+<div class="inner">
+<a href="https://github.com/xregistry/xregistry.github.io" id="forkme_banner">View on GitHub</a>
+<img alt="xRegistry logo" class="header-logo" src="https://github.com/cncf/artwork/raw/main/projects/xregistry/horizontal/color-whitetext/xregistry-horizontal-color-whitetext.svg"/>
+<h2 id="project_tagline">The Extensible Registry for Metadata Management</h2>
+<nav aria-label="Primary navigation" class="site-nav">
+<a href="/">Home</a>
+<a href="/blog/">Blog</a>
+<a href="/xreg/xregistryspecs/core-v1/docs/spec.html">Core Spec</a>
+<a href="/xreg/xregistryspecs/endpoint-v1/docs/spec.html">Endpoint Spec</a>
+<a href="/xreg/xregistryspecs/schema-v1/docs/spec.html">Schema Spec</a>
+<a href="/xreg/xregistryspecs/message-v1/docs/spec.html">Message Spec</a>
+<a href="https://github.com/xregistry/spec">GitHub</a>
+</nav>
+</div>
+</header>
+<div aria-label="xRegistry document path" class="registry-path">
+<div class="registry-path__inner"><i aria-hidden="true" class="fas fa-sitemap"></i><code>xreg/xregistryspecs/core-v1/docs/model.html</code></div>
+</div>
+<main class="xreg-reader-layout">
+<aside aria-label="On this page" class="spec-toc">
+<div class="spec-toc__header">On this page</div>
+<nav class="spec-toc__body"></nav>
+</aside>
+<article class="xreg-reader-content" id="xregistry-content">
+
 <h1 id="xregistry-service-model---version-10-rc4">xRegistry Service Model - Version 1.0-rc4 <a class="anchor" href="#xregistry-service-model---version-10-rc4">🔗</a></h1>
 <!-- words: compat validatecompatibility validateformat strictvalidation -->
 <!-- words: compatibilityvalidated formatvalidated -->
@@ -106,92 +101,92 @@ to dynamically discover it.</p>
 and edit the model of a Registry.</p>
 <p>The overall format of a model definition is as follows:</p>
 <pre><code class="language-yaml">{
-  &quot;description&quot;: &quot;&lt;STRING&gt;&quot;, ?
-  &quot;documentation&quot;: &quot;&lt;URL&gt;&quot;, ?
-  &quot;labels&quot;: { &quot;&lt;STRING&gt;&quot;: &quot;&lt;STRING&gt;&quot; * }, ?
-  &quot;attributes&quot;: {                      # Registry-level extensions
-    &quot;&lt;STRING&gt;&quot;: {                      # Attribute name
-      &quot;name&quot;: &quot;&lt;STRING&gt;&quot;,              # Same as attribute's key
-      &quot;type&quot;: &quot;&lt;TYPE&gt;&quot;,                # boolean, string, array, object, ...
-      &quot;target&quot;: &quot;&lt;XIDTYPE&gt;&quot;, ?         # If &quot;type&quot; is &quot;xid&quot; or &quot;url&quot;
-      &quot;namecharset&quot;: &quot;&lt;STRING&gt;&quot;, ?     # If &quot;type&quot; is &quot;object&quot;
-      &quot;description&quot;: &quot;&lt;STRING&gt;&quot;, ?
-      &quot;enum&quot;: [ &lt;VALUE&gt; * ], ?         # Array of scalars of type &quot;&lt;TYPE&gt;&quot;
-      &quot;strict&quot;: &lt;BOOLEAN&gt;, ?           # Just &quot;enum&quot; values or not. Default=true
-      &quot;matchversions&quot;: &lt;BOOLEAN&gt;, ?    # Same for all Versions? Default=false
-      &quot;readonly&quot;: &lt;BOOLEAN&gt;, ?         # From client's POV. Default=false
-      &quot;immutable&quot;: &lt;BOOLEAN&gt;, ?        # Once set, can't change. Default=false
-      &quot;required&quot;: &lt;BOOLEAN&gt;, ?         # Default=false
-      &quot;default&quot;: &lt;VALUE&gt;, ?            # Scalar attribute's default value
+  "description": "&lt;STRING&gt;", ?
+  "documentation": "&lt;URL&gt;", ?
+  "labels": { "&lt;STRING&gt;": "&lt;STRING&gt;" * }, ?
+  "attributes": {                      # Registry-level extensions
+    "&lt;STRING&gt;": {                      # Attribute name
+      "name": "&lt;STRING&gt;",              # Same as attribute's key
+      "type": "&lt;TYPE&gt;",                # boolean, string, array, object, ...
+      "target": "&lt;XIDTYPE&gt;", ?         # If "type" is "xid" or "url"
+      "namecharset": "&lt;STRING&gt;", ?     # If "type" is "object"
+      "description": "&lt;STRING&gt;", ?
+      "enum": [ &lt;VALUE&gt; * ], ?         # Array of scalars of type "&lt;TYPE&gt;"
+      "strict": &lt;BOOLEAN&gt;, ?           # Just "enum" values or not. Default=true
+      "matchversions": &lt;BOOLEAN&gt;, ?    # Same for all Versions? Default=false
+      "readonly": &lt;BOOLEAN&gt;, ?         # From client's POV. Default=false
+      "immutable": &lt;BOOLEAN&gt;, ?        # Once set, can't change. Default=false
+      "required": &lt;BOOLEAN&gt;, ?         # Default=false
+      "default": &lt;VALUE&gt;, ?            # Scalar attribute's default value
 
-      &quot;attributes&quot;: { ... }, ?         # If &quot;type&quot; above is object
-      &quot;item&quot;: {                        # If &quot;type&quot; above is map,array
-        &quot;type&quot;: &quot;&lt;TYPE&gt;&quot;, ?            # Map value type, or array type
-        &quot;target&quot;: &quot;&lt;XIDTYPE&gt;&quot;, ?       # If this item &quot;type&quot; is xid/url
-        &quot;namecharset&quot;: &quot;&lt;STRING&gt;&quot;, ?   # If this item &quot;type&quot; is object
-        &quot;attributes&quot;: { ... }, ?       # If this item &quot;type&quot; is object
-        &quot;item&quot;: { ... } ?              # If this item &quot;type&quot; is map,array
+      "attributes": { ... }, ?         # If "type" above is object
+      "item": {                        # If "type" above is map,array
+        "type": "&lt;TYPE&gt;", ?            # Map value type, or array type
+        "target": "&lt;XIDTYPE&gt;", ?       # If this item "type" is xid/url
+        "namecharset": "&lt;STRING&gt;", ?   # If this item "type" is object
+        "attributes": { ... }, ?       # If this item "type" is object
+        "item": { ... } ?              # If this item "type" is map,array
       }, ?
 
-      &quot;ifvalues&quot;: {                    # If &quot;type&quot; is scalar
-        &quot;&lt;STRING&gt;&quot;: {
-          &quot;siblingattributes&quot;: { ... } # Siblings to this &quot;attribute&quot;
+      "ifvalues": {                    # If "type" is scalar
+        "&lt;STRING&gt;": {
+          "siblingattributes": { ... } # Siblings to this "attribute"
         } *
       } ?
     } *
   },
 
-  &quot;groups&quot;: {
-    &quot;&lt;STRING&gt;&quot;: {                        # Key=plural name, e.g. &quot;endpoints&quot;
-      &quot;plural&quot;: &quot;&lt;STRING&gt;&quot;,              # E.g. &quot;endpoints&quot;
-      &quot;singular&quot;: &quot;&lt;STRING&gt;&quot;,            # E.g. &quot;endpoint&quot;
-      &quot;description&quot;: &quot;&lt;STRING&gt;&quot;, ?
-      &quot;documentation&quot;: &quot;&lt;URL&gt;&quot;, ?
-      &quot;icon&quot;: &quot;&lt;URL&gt;&quot;, ?
-      &quot;labels&quot;: { &quot;&lt;STRING&gt;&quot;: &quot;&lt;STRING&gt;&quot; * }, ?
-      &quot;modelversion&quot;: &quot;&lt;STRING&gt;&quot;, ?      # Version of the group model
-      &quot;modelcompatiblewith&quot;: &quot;&lt;URI&gt;&quot;, ?  # Statement of compatibility
-      &quot;attributes&quot;: { ... }, ?           # See &quot;attributes&quot; above
-      &quot;ximportresources&quot;: [ &quot;&lt;XIDTYPE&gt;&quot;, * ], ?   # Include these Resources,
-                                                  # only for &quot;modelsource&quot;
-      &quot;constraints&quot;: {
-        &quot;&lt;RESOURCES&gt;.&lt;PATH&gt;&quot;: {          # Resource-plural + attribute path
-          &quot;default&quot;: &lt;VALUE&gt;, ?          # Group specific default
-          &quot;enum&quot;: [ &lt;VALUE&gt; * ], ?       # Allowed subset of values
-          &quot;equals&quot;: &quot;&lt;PATH&gt;&quot; ?           # Matching Group attribute path
+  "groups": {
+    "&lt;STRING&gt;": {                        # Key=plural name, e.g. "endpoints"
+      "plural": "&lt;STRING&gt;",              # E.g. "endpoints"
+      "singular": "&lt;STRING&gt;",            # E.g. "endpoint"
+      "description": "&lt;STRING&gt;", ?
+      "documentation": "&lt;URL&gt;", ?
+      "icon": "&lt;URL&gt;", ?
+      "labels": { "&lt;STRING&gt;": "&lt;STRING&gt;" * }, ?
+      "modelversion": "&lt;STRING&gt;", ?      # Version of the group model
+      "modelcompatiblewith": "&lt;URI&gt;", ?  # Statement of compatibility
+      "attributes": { ... }, ?           # See "attributes" above
+      "ximportresources": [ "&lt;XIDTYPE&gt;", * ], ?   # Include these Resources,
+                                                  # only for "modelsource"
+      "constraints": {
+        "&lt;RESOURCES&gt;.&lt;PATH&gt;": {          # Resource-plural + attribute path
+          "default": &lt;VALUE&gt;, ?          # Group specific default
+          "enum": [ &lt;VALUE&gt; * ], ?       # Allowed subset of values
+          "equals": "&lt;PATH&gt;" ?           # Matching Group attribute path
         } *
       }, ?
 
-      &quot;resources&quot;: {
-        &quot;&lt;STRING&gt;&quot;: {                    # Key=plural name, e.g. &quot;messages&quot;
-          &quot;plural&quot;: &quot;&lt;STRING&gt;&quot;,          # E.g. &quot;messages&quot;
-          &quot;singular&quot;: &quot;&lt;STRING&gt;&quot;,        # E.g. &quot;message&quot;
-          &quot;description&quot;: &quot;&lt;STRING&gt;&quot;, ?
-          &quot;documentation&quot;: &quot;&lt;URL&gt;&quot;, ?
-          &quot;icon&quot;: &quot;&lt;URL&gt;&quot;, ?
-          &quot;labels&quot;: { &quot;&lt;STRING&gt;&quot;: &quot;&lt;STRING&gt;&quot; * }, ?
-          &quot;modelversion&quot;: &quot;&lt;STRING&gt;&quot;, ?     # Version of the resource model
-          &quot;modelcompatiblewith&quot;: &quot;&lt;URI&gt;&quot;, ? # Statement of compatibility
-          &quot;maxversions&quot;: &lt;UINTEGER&gt;, ?   # Num Vers(&gt;=0). Default=0, 0=unlimited
-          &quot;setversionid&quot;: &lt;BOOLEAN&gt;, ?   # vid settable? Default=true
-          &quot;hasdocument&quot;: &lt;BOOLEAN&gt;, ?       # Has separate document. Default=true
-          &quot;versionmode&quot;: &quot;&lt;STRING&gt;&quot;, ?      # Ancestor processing algorithm
-          &quot;singleversionroot&quot;: &lt;BOOLEAN&gt;, ? # Enforce single root. Default=false
-          &quot;validateformat&quot;: &lt;BOOLEAN&gt;, ?    # Do Version format checks. Default=false
-          &quot;validatecompatibility&quot;: &lt;BOOLEAN&gt;, ? # Do Version compat checks. Default=false
-          &quot;strictvalidation&quot;: &lt;BOOLEAN&gt;, ?  # Block unknown format/compat. Default=false
-          &quot;typemap&quot;: &lt;MAP&gt;, ?               # ContentType mappings
-          &quot;attributes&quot;: { ... }, ?          # Version attributes/extensions
-          &quot;resourceattributes&quot;: { ... }, ?  # Resource attributes/extensions
-          &quot;metaattributes&quot;: { ... } ?       # Meta attributes/extensions
+      "resources": {
+        "&lt;STRING&gt;": {                    # Key=plural name, e.g. "messages"
+          "plural": "&lt;STRING&gt;",          # E.g. "messages"
+          "singular": "&lt;STRING&gt;",        # E.g. "message"
+          "description": "&lt;STRING&gt;", ?
+          "documentation": "&lt;URL&gt;", ?
+          "icon": "&lt;URL&gt;", ?
+          "labels": { "&lt;STRING&gt;": "&lt;STRING&gt;" * }, ?
+          "modelversion": "&lt;STRING&gt;", ?     # Version of the resource model
+          "modelcompatiblewith": "&lt;URI&gt;", ? # Statement of compatibility
+          "maxversions": &lt;UINTEGER&gt;, ?   # Num Vers(&gt;=0). Default=0, 0=unlimited
+          "setversionid": &lt;BOOLEAN&gt;, ?   # vid settable? Default=true
+          "hasdocument": &lt;BOOLEAN&gt;, ?       # Has separate document. Default=true
+          "versionmode": "&lt;STRING&gt;", ?      # Ancestor processing algorithm
+          "singleversionroot": &lt;BOOLEAN&gt;, ? # Enforce single root. Default=false
+          "validateformat": &lt;BOOLEAN&gt;, ?    # Do Version format checks. Default=false
+          "validatecompatibility": &lt;BOOLEAN&gt;, ? # Do Version compat checks. Default=false
+          "strictvalidation": &lt;BOOLEAN&gt;, ?  # Block unknown format/compat. Default=false
+          "typemap": &lt;MAP&gt;, ?               # ContentType mappings
+          "attributes": { ... }, ?          # Version attributes/extensions
+          "resourceattributes": { ... }, ?  # Resource attributes/extensions
+          "metaattributes": { ... } ?       # Meta attributes/extensions
         } *
       } ?
     } *
   } ?
 }
 </code></pre>
-<p>Also see the &quot;<a href="#includes-in-the-xregistry-model-data">Includes in the xRegistry Model
-Data</a>&quot; section for use of the
+<p>Also see the "<a href="#includes-in-the-xregistry-model-data">Includes in the xRegistry Model
+Data</a>" section for use of the
 <code>$include(s)</code> directive in <code>modelsource</code>.</p>
 <p>The following describes the attributes of the Registry model:</p>
 <h3 id="description"><code>description</code> <a class="anchor" href="#description">🔗</a></h3>
@@ -264,7 +259,7 @@ with its Resource-level attribute names.</p>
 <ul>
 <li>Type: String.</li>
 <li>REQUIRED.</li>
-<li>The &quot;TYPE&quot; of the attribute being defined. MUST be one of the data types
+<li>The "TYPE" of the attribute being defined. MUST be one of the data types
 (in lower case) defined in <a href="./spec.html#attributes-and-extensions">Attributes and
 Extensions</a>.</li>
 </ul>
@@ -274,7 +269,7 @@ Extensions</a>.</li>
 <li>OPTIONAL.</li>
 <li>The type of entity that this attribute points to when <code>type</code> is set to <code>url</code>,
 <code>uri</code> or <code>xid</code>. <code>target</code> MUST NOT be used for any other type of attribute.</li>
-<li>The value of this model attribute MUST be an &quot;xid template&quot; of one of the
+<li>The value of this model attribute MUST be an "xid template" of one of the
 following forms:
 <ul>
 <li><code>/&lt;GROUPS&gt;</code> - a plural Group type name. An entity attribute of this
@@ -533,7 +528,7 @@ attribute MUST only be used when the owning attribute's <code>type</code> value 
 <ul>
 <li>Type: String.</li>
 <li>REQUIRED.</li>
-<li>The <a href="#attributesstringtype">&quot;TYPE&quot;</a> of this nested entity.</li>
+<li>The <a href="#attributesstringtype">"TYPE"</a> of this nested entity.</li>
 </ul>
 <h3 id="attributesstringitemtarget"><code>attributes.&lt;STRING&gt;.item.target</code> <a class="anchor" href="#attributesstringitemtarget">🔗</a></h3>
 <ul>
@@ -690,11 +685,11 @@ the attribute values in Resource instances within instances of this Group type.<
 specified by the Resource type model. They MUST NOT be used to extend the
 allowable values of the attributes being constrained.</p>
 <p>The format of a constraint map MUST adhere to the following:</p>
-<pre><code class="language-yaml">&quot;constraints&quot;: {
-  &quot;&lt;RESOURCES&gt;.&lt;PATH&gt;&quot;: {          # Resource-plural + attribute path
-    &quot;default&quot;: &lt;VALUE&gt;, ?          # Group specific default
-    &quot;enum&quot;: [ &lt;VALUE&gt; * ], ?       # Allowed subset of values
-    &quot;equals&quot;: &quot;&lt;PATH&gt;&quot; ?           # Matching Group attribute path
+<pre><code class="language-yaml">"constraints": {
+  "&lt;RESOURCES&gt;.&lt;PATH&gt;": {          # Resource-plural + attribute path
+    "default": &lt;VALUE&gt;, ?          # Group specific default
+    "enum": [ &lt;VALUE&gt; * ], ?       # Allowed subset of values
+    "equals": "&lt;PATH&gt;" ?           # Matching Group attribute path
   }
 }
 </code></pre>
@@ -724,7 +719,7 @@ Resource. Note that this includes changes to the Resource in its original
 location that would then violate any of the Groups' constraints that xref
 that Resource.</li>
 <li>The <code>default</code> values specified MUST NOT be applied to the Resource since
-its presence in the Group is just a &quot;reference&quot; (or &quot;read-only&quot;). Write
+its presence in the Group is just a "reference" (or "read-only"). Write
 operations on the Resource need to be done in its original location.</li>
 </ul>
 <h3 id="groupsstringconstraintsresourcespath"><code>groups.&lt;STRING&gt;.constraints.&lt;RESOURCES&gt;.&lt;PATH&gt;</code> <a class="anchor" href="#groupsstringconstraintsresourcespath">🔗</a></h3>
@@ -795,7 +790,7 @@ of the Resource type (<code>&lt;RESOURCES&gt;</code>) being defined.</li>
 <li>REQUIRED if there are any Resource types defined for the Group type.</li>
 <li>A set of zero or more Resource types defined for the Group type.</li>
 </ul>
-<h3 id="groupsstringresourcesstring"><code>groups.&lt;STRING&gt;</code>.resources.<STRING>` <a class="anchor" href="#groupsstringresourcesstring">🔗</a></h3>
+<h3 id="groupsstringresourcesstring"><code>groups.&lt;STRING&gt;</code>.resources.<string>` <a class="anchor" href="#groupsstringresourcesstring">🔗</a></string></h3>
 <ul>
 <li>Type: String.</li>
 <li>REQUIRED.</li>
@@ -866,11 +861,11 @@ it is valid for an implementation to only support one (<code>1</code>) Version w
 <li>When the limit is exceeded, implementations MUST prune Versions by
 deleting the oldest Version first (based on the Resource's
 <a href="#groupsstringresourcesstringversionmode"><code>versionmode</code></a>
-algorithm), skipping the Version marked as &quot;default&quot;.
+algorithm), skipping the Version marked as "default".
 Once the single oldest Version is determined, delete it.
 A special case for the pruning rules is that if <code>maxversions</code> is set to
-one (1), then the &quot;default&quot; Version is not skipped, which means it will be
-deleted and the new Version will become &quot;default&quot;.</li>
+one (1), then the "default" Version is not skipped, which means it will be
+deleted and the new Version will become "default".</li>
 <li>An attempt to change <code>maxversions</code> to <code>1</code> when there are existing Resource
 instances that have their <code>defaultversionsticky</code> attribute set to <code>true</code> MUST
 generate an error
@@ -905,7 +900,7 @@ a <code>versionid</code> is provided then the server MUST generate an error
 <li>
 <p>Indicates whether or not each Resource of this type has a domain-specific
 document associated with it. If <code>false</code> then the xRegistry metadata becomes
-&quot;the document&quot;. Meaning, a query to the Resource's URL will return the
+"the document". Meaning, a query to the Resource's URL will return the
 xRegistry metadata and not a domain-specific document.</p>
 <p>A value of <code>true</code> does not mean that these Resources are guaranteed to
 have a non-empty document, and a query to the Resource MAY return an
@@ -929,8 +924,8 @@ for more information.</p>
 <li>Indicates the algorithm that MUST be used when determining how Versions
 are managed with respect to aspects such as:
 <ul>
-<li>Which Version is the &quot;newest&quot;?</li>
-<li>Which Version is the &quot;oldest&quot;?</li>
+<li>Which Version is the "newest"?</li>
+<li>Which Version is the "oldest"?</li>
 <li>How a Version's <code>ancestorid</code> attribute will be populated when not
 explicitly set by a client.</li>
 </ul>
@@ -964,21 +959,21 @@ that have an <code>ancestorid</code> value that points to itself), then finding
 the one with the oldest <code>createdat</code> timestamp. If there is more than
 one, then the one with the lowest alphabetically case-insensitive
 <code>versionid</code> MUST be chosen.</li>
-<li>Ancestor Processing: typically provided by clients. During a &quot;create&quot;
+<li>Ancestor Processing: typically provided by clients. During a "create"
 operation, all new Versions that do not have an <code>ancestorid</code> value
 provided MUST be sorted/processed by <code>versionid</code> (in case-insensitive
 ascending order) and the <code>ancestorid</code> value of each MUST be set to the
-current &quot;newest Version&quot; per the above semantics. Note that as
-each new Version is created, it MUST become the &quot;newest&quot;. If there
+current "newest Version" per the above semantics. Note that as
+each new Version is created, it MUST become the "newest". If there
 is no existing Version then the new Version becomes a root and its
 <code>ancestorid</code> value MUST be its own <code>versionid</code> attribute value.</li>
 <li>Deleted Ancestor: if a Version's ancestor is deleted, then this Version
 MUST become a root, and its <code>ancestorid</code> value MUST be set to its own
 <code>versionid</code> value.</li>
 <li>The name of this versionmode is a bit of a misnomer in that it is not
-100% &quot;manual&quot;. As stated above, as a convenience, by default new
-Versions will point to the &quot;newest&quot; Version as their ancestor. If this
-behavior is not desired, then during the &quot;create&quot; operation, the
+100% "manual". As stated above, as a convenience, by default new
+Versions will point to the "newest" Version as their ancestor. If this
+behavior is not desired, then during the "create" operation, the
 <code>ancestorid</code> can be set to point to itself (or any other Version) if
 desired.</li>
 </ul>
@@ -994,16 +989,16 @@ value MUST be chosen.</li>
 oldest <code>createdat</code> timestamp. If there is more than one, then the
 one with the lowest alphabetically case-insensitive <code>versionid</code>
 value MUST be chosen. Note that this MUST also be the one and only
-&quot;root&quot; Version.</li>
+"root" Version.</li>
 <li>Ancestor Processing: The <code>ancestorid</code> value of each Version MUST be
 determined via examination of the <code>createdat</code> timestamp of each
 Version and the Versions sorted in ascending order, where the first
-one will be the &quot;root&quot; (oldest) Version and its <code>ancestorid</code> value
+one will be the "root" (oldest) Version and its <code>ancestorid</code> value
 MUST be its <code>versionid</code>. If there is more than one Version with the
 same <code>createdat</code> timestamp then those MUST be ordered in ascending
 case-insensitive order based on their <code>versionid</code> values.</li>
 <li>Deleted Ancestor: if a Version's ancestor is deleted, then this Version's
-<code>ancestorid</code> value MUST be determined by the &quot;ancestor processing&quot; logic
+<code>ancestorid</code> value MUST be determined by the "ancestor processing" logic
 as stated above.</li>
 <li>When this <code>versionmode</code> is used, the <code>singleversionroot</code> aspect
 MUST be set to <code>true</code>.</li>
@@ -1022,18 +1017,18 @@ MUST be set to <code>true</code>.</li>
 <ul>
 <li>Newest Version: MUST be the Version with the highest <code>versionid</code>
 value per the <a href="https://semver.org/">Semantic Versioning</a>
-specification's &quot;precedence&quot; ordering rules.</li>
+specification's "precedence" ordering rules.</li>
 <li>Oldest Version: MUST be the Version with the lowest <code>versionid</code>
 value per the <a href="https://semver.org/">Semantic Versioning</a>
-specification's &quot;precedence&quot; ordering rules. Note that this MUST also
-be the one and only &quot;root&quot; Version.</li>
+specification's "precedence" ordering rules. Note that this MUST also
+be the one and only "root" Version.</li>
 <li>Ancestor Processing: The <code>ancestorid</code> value of each Version MUST either
 be its <code>versionid</code> value (if it is the oldest Version), or the
 <code>versionid</code> of the next oldest Version per the
 <a href="https://semver.org/">Semantic Versioning</a> specification's
-&quot;precedence&quot; ordering rules.</li>
+"precedence" ordering rules.</li>
 <li>Deleted Ancestor: if a Version's ancestor is deleted, then this Version's
-<code>ancestorid</code> value MUST be determined by the &quot;ancestor processing&quot; logic
+<code>ancestorid</code> value MUST be determined by the "ancestor processing" logic
 as stated above.</li>
 <li>When this <code>versionmode</code> is used, the <code>singleversionroot</code> aspect
 MUST be set to <code>true</code>.</li>
@@ -1071,7 +1066,7 @@ the Primer for more information.</li>
 Resource type adhere to the rules as defined by the Version's <code>format</code>
 value.</li>
 <li>When not specified, the default value MUST be <code>false</code>.</li>
-<li>The following rules clarify the &quot;format&quot; validation logic:
+<li>The following rules clarify the "format" validation logic:
 <ul>
 <li>When the validator is checking the Version's domain-specific document,
 it is a format-specific decision as to whether an empty document is
@@ -1079,19 +1074,19 @@ valid or not.</li>
 <li>Validators MUST treat a Resource with its <code>hasdocument</code> model attribute
 set to <code>false</code>, a Version with no domain-specific document even though
 <code>hasdocument</code> is <code>true</code>, and a Version with an empty domain-specific
-document as 3 variants of &quot;the domain-specific document is
-empty (zero bytes in length)&quot; and MUST yield the same semantic results.</li>
+document as 3 variants of "the domain-specific document is
+empty (zero bytes in length)" and MUST yield the same semantic results.</li>
 <li>When <code>hasdocument</code> is <code>true</code>, and a Version uses the <code>&lt;RESOURCE&gt;url</code>
 attribute to reference the document in an external datastore, the
 resulting <a href="./spec.html#format-attribute"><code>formatvalidated</code></a> attribute on the
-Version MUST be <code>&quot;false&quot;</code>.</li>
+Version MUST be <code>"false"</code>.</li>
 </ul>
 </li>
 <li>A value of <code>true</code> indicates that the server MUST generate an error
 (<a href="./spec.html#format_violation">format_violation</a>) if any Version of a Resource
 instance of this Resource type does not adhere to the <code>format</code> value of that
 Version. An absent <code>format</code> value on a Version MUST be treated as a request
-to disable both &quot;format&quot; and &quot;compatibility&quot; verification logic for that
+to disable both "format" and "compatibility" verification logic for that
 Version.</li>
 <li>A value of <code>false</code> indicates that the server MUST NOT perform any <code>format</code>
 checking for Versions of Resources of this Resource type.</li>
@@ -1167,19 +1162,19 @@ for that Version.</li>
 <li>
 <p>When a Resource's metadata is serialized in a response and the
 <code>?inline=&lt;RESOURCE&gt;</code> feature is enabled, the server will attempt to
-serialize the Resource's &quot;document&quot; under the <code>&lt;RESOURCE&gt;</code> attribute.
-However, this can only happen in two situations:<br>
+serialize the Resource's "document" under the <code>&lt;RESOURCE&gt;</code> attribute.
+However, this can only happen in two situations:<br/>
 1 - The Resource document's bytes are already in the same format as
-the xRegistry metadata - in other words JSON, or<br>
-2 - The Resource's document can be considered a &quot;string&quot; and therefore
-can be serialized as a &quot;string&quot;, possibly with some escaping.<br></p>
+the xRegistry metadata - in other words JSON, or<br/>
+2 - The Resource's document can be considered a "string" and therefore
+can be serialized as a "string", possibly with some escaping.<br/></p>
 <p>For some well-known <code>contenttype</code> values (e.g. <code>application/json</code>), the
 first case can be easily determined by the server. However, for custom
 <code>contenttype</code> values the server will need to be explicitly told how to
 interpret its value (e.g. to know if it is a string or JSON).
 The <code>typemap</code> attribute allows for this by defining a mapping of
 <code>contenttype</code> values to well-known xRegistry format types.</p>
-<p>Since the <code>contenttype</code> value is a &quot;media-type&quot; per
+<p>Since the <code>contenttype</code> value is a "media-type" per
 <a href="https://datatracker.ietf.org/doc/html/rfc9110#media.type">RFC9110</a>,
 for purposes of looking it up in the <code>typemap</code>, just the <code>type/subtype</code>
 portion of the value (case-insensitively) MUST be used. Meaning, any
@@ -1205,13 +1200,13 @@ a <code>.*</code> in a regular expression. The key MUST be a case-insensitive st
 as an array of bytes and serialized under the <code>&lt;RESOURCE&gt;base64</code> attribute,
 even if the <code>contenttype</code> is of the same type as the xRegistry metadata
 (e.g. <code>application/json</code>). This is useful when it is desirable to not
-have the server potentially modify the document (e.g. &quot;pretty-print&quot; it).</p>
+have the server potentially modify the document (e.g. "pretty-print" it).</p>
 <p>A value of <code>json</code> indicates that the Resource's document is JSON and MUST
 be serialized under the <code>&lt;RESOURCE&gt;</code> attribute if it is valid JSON. Note
 that if there is a syntax error in the JSON then the server MUST treat the
 document as <code>binary</code> to avoid sending invalid JSON to the client. The
 server MAY choose to modify the formatting of the document (e.g. to
-&quot;pretty-print&quot; it).</p>
+"pretty-print" it).</p>
 <p>A value of <code>string</code> indicates that the Resource's document is to be treated
 as a string and serialized using the default string serialization rules
 for the format being used to serialize the Resource's metadata. For
@@ -1230,10 +1225,10 @@ by an explicit <code>typemap</code> entry:</p>
 </ul>
 </li>
 <li>
-<p>Example:<br></p>
-<pre><code class="language-yaml">&quot;typemap&quot;: {
-  &quot;text/*&quot;: &quot;string&quot;,
-  &quot;text/mine&quot;: &quot;json&quot;
+<p>Example:<br/></p>
+<pre><code class="language-yaml">"typemap": {
+  "text/*": "string",
+  "text/mine": "json"
 }
 </code></pre>
 </li>
@@ -1256,7 +1251,7 @@ overridden by the Resource-level values when serialized.</li>
 <li>See <a href="#attributes"><code>attributes</code></a> above.</li>
 <li>OPTIONAL.</li>
 <li>The list of attributes associated with the Resource, not its Versions,
-that will appear in the Resource itself (as siblings to the &quot;default&quot;
+that will appear in the Resource itself (as siblings to the "default"
 Version attributes).</li>
 <li>These attributes are reserved for system-managed attributes, such as
 <code>metaurl</code>, that exist to help in the navigation of the entities. Users
@@ -1276,7 +1271,7 @@ adding additional attributes at the Resource level violates that goal.</li>
 <li>The list of attributes associated with the Resource, not its Versions,
 that will appear in the <code>meta</code> sub-object of the Resource.</li>
 </ul>
-<hr>
+<hr/>
 <p>Clarifying the  usage of the <code>attributes</code>, <code>resourceattributes</code> and
 <code>metaattributes</code>:</p>
 <ul>
@@ -1291,8 +1286,8 @@ well as avoids making the serialization of the Resource too verbose/noisy.</li>
 <li>However, there are some Resource-level attributes, that if placed in the
 <code>meta</code> sub-object, would appear to be misplaced. For example, the <code>versions</code>
 collection attributes could be confusing to users since <code>meta</code> is not
-the direct parent/owner of the &quot;versions&quot; collection, the Resource is.
-Especially when considering the URL path to the &quot;versions&quot; collection would
+the direct parent/owner of the "versions" collection, the Resource is.
+Especially when considering the URL path to the "versions" collection would
 not have <code>/meta/</code> in it.</li>
 <li>Additionally, some common attributes (e.g. <code>self</code>) need to appear on both
 Resources as well as Versions but the values need to be different in each
@@ -1311,19 +1306,19 @@ verbosely named lists.</li>
 <h2 id="retrieving-the-registry-model">Retrieving the Registry Model <a class="anchor" href="#retrieving-the-registry-model">🔗</a></h2>
 <p>The Registry model is available in two forms:</p>
 <ul>
-<li>The full &quot;model&quot; with all possible aspects of the model defined. This
+<li>The full "model" with all possible aspects of the model defined. This
 includes user-defined model extensions as well as specification-defined
 model aspects.</li>
-<li>The &quot;modelsource&quot; form represents just the model aspects as specified when
+<li>The "modelsource" form represents just the model aspects as specified when
 the model was defined or last updated by authorized users.</li>
 </ul>
-<p>The full &quot;model&quot; view can be thought of as a full schema definition of what the
+<p>The full "model" view can be thought of as a full schema definition of what the
 message exchanges with the server might look like. As such, it MUST include:</p>
 <ul>
 <li>Registry top-level and Group <code>&lt;COLLECTION&gt;*</code> attributes. While the <code>model</code>
 and <code>modelsource</code> attributes MUST appear, their definitions MAY be shallow -
 meaning, they can be defined as just <code>object</code> with one attribute (<code>*</code>) of
-type &quot;any&quot;.</li>
+type "any".</li>
 <li>All Group definitions, including Resource <code>&lt;COLLECTION&gt;*</code> attributes.</li>
 <li>All Resource definitions, including Version <code>&lt;COLLECTION&gt;*</code>, <code>meta</code> and
 <code>metaurl</code> attributes. Note that the <code>&lt;RESOURCE&gt;*</code> attribute would only appear
@@ -1331,7 +1326,7 @@ if the
 <a href="#groupsstringresourcesstringhasdocument"><code>hasdocument</code> aspect</a>
 is <code>true</code>.</li>
 </ul>
-<p>The &quot;modelsource&quot; view of the model is just what was provided by the user when
+<p>The "modelsource" view of the model is just what was provided by the user when
 the model was defined, or last edited. It is expected that this view of the
 model is much smaller than the full model and only includes
 domain-specific information. While specification-defined attributes MAY appear
@@ -1416,7 +1411,7 @@ backwards compatible changes.</p>
 <p>Implementations MAY choose to limit the types of changes made to the model,
 or not support model updates at all.</p>
 <p>The xRegistry model definition used to create a sample xRegistry can be found
-<a href="./sample-model.json">here</a>, while the resulting &quot;full&quot; model (with all of the
+<a href="./sample-model.json">here</a>, while the resulting "full" model (with all of the
 system-defined aspects added) can be found <a href="./sample-model-full.json">here</a>.</p>
 <h3 id="reuse-of-resource-definitions">Reuse of Resource Definitions <a class="anchor" href="#reuse-of-resource-definitions">🔗</a></h3>
 <p>When a Resource type definition is to be shared between Groups, rather than
@@ -1427,25 +1422,25 @@ included within this Group.</p>
 <p>For example, the following abbreviated model definition defines
 one Resource type (<code>messages</code>) under the <code>messagegroups</code> Group, that is
 also used by the <code>endpoints</code> Group.</p>
-<pre><code class="language-yaml">&quot;modelsource&quot;: {
-  &quot;groups&quot;: {
-    &quot;messagegroups&quot;: {
-      &quot;singular&quot;: &quot;messagegroup&quot;,
-      &quot;resources&quot;: {
-        &quot;messages&quot;: {
-          &quot;singular&quot;: &quot;message&quot;
+<pre><code class="language-yaml">"modelsource": {
+  "groups": {
+    "messagegroups": {
+      "singular": "messagegroup",
+      "resources": {
+        "messages": {
+          "singular": "message"
         }
       }
     },
-    &quot;endpoints&quot;: {
-      &quot;singular&quot;: &quot;endpoint&quot;,
-      &quot;ximportresources&quot;: [ &quot;/messagegroups/messages&quot; ]
+    "endpoints": {
+      "singular": "endpoint",
+      "ximportresources": [ "/messagegroups/messages" ]
     }
   }
 }
 </code></pre>
 <p>The format of the <code>ximportresources</code> specification is:</p>
-<pre><code class="language-yaml">&quot;ximportresources&quot;: [ &quot;&lt;XIDTYPE&gt;&quot;, * ]
+<pre><code class="language-yaml">"ximportresources": [ "&lt;XIDTYPE&gt;", * ]
 </code></pre>
 <p>where:</p>
 <ul>
@@ -1472,18 +1467,18 @@ additional information.</p>
 <h3 id="includes-in-the-xregistry-model-data">Includes in the xRegistry Model Data <a class="anchor" href="#includes-in-the-xregistry-model-data">🔗</a></h3>
 <p>There might be times when it is necessary for an xRegistry model to reuse
 portions of another xRegistry model defined elsewhere. Rather than forcing
-the duplication of the model definitions, an &quot;include&quot; type of JSON directive
+the duplication of the model definitions, an "include" type of JSON directive
 MAY be used.</p>
 <p>The general formats of the include are:</p>
-<pre><code class="language-yaml">&quot;$include&quot;: &quot;&lt;PATH-TO-DOCUMENT&gt;#&lt;JSON-POINTER-IN-DOC&gt;&quot;
+<pre><code class="language-yaml">"$include": "&lt;PATH-TO-DOCUMENT&gt;#&lt;JSON-POINTER-IN-DOC&gt;"
 </code></pre>
 <p>or</p>
-<pre><code class="language-yaml">&quot;$includes&quot;: [ &quot;&lt;PATH-TO-DOCUMENT&gt;#&lt;JSON-POINTER-IN-DOC&gt;&quot; * ]
+<pre><code class="language-yaml">"$includes": [ "&lt;PATH-TO-DOCUMENT&gt;#&lt;JSON-POINTER-IN-DOC&gt;" * ]
 </code></pre>
 <p>where the first form specifies a single reference to be included, and the
 second form specifies multiple. The fragment (<code>#...</code>) portion is OPTIONAL.</p>
 <p>For example:</p>
-<pre><code class="language-yaml">&quot;$include&quot;: &quot;http://example.com/xreg-model.json#/groups/mygroup/attributes&quot;
+<pre><code class="language-yaml">"$include": "http://example.com/xreg-model.json#/groups/mygroup/attributes"
 </code></pre>
 <p>is asking for the attributes of a Group called <code>mygroup</code> to be included at
 this location of the current model definition.</p>
@@ -1516,7 +1511,7 @@ directive.</li>
 </ul>
 <p>When the directives are used in a request to update the model, the server MUST
 resolve all includes prior to updating the model. The original (source)
-model definition, with any &quot;include&quot; directives, MUST be available via
+model definition, with any "include" directives, MUST be available via
 the <code>modelsource</code> attribute/entity. The expanded model (after the resolution
 of any includes, and after all specification-defined attributes have been
 added), MUST be available via the <code>model</code> attribute/entity. The directives MUST
@@ -1524,7 +1519,7 @@ only be processed during the initial update of the model. In order to have
 them re-evaluated, a subsequent model update request (with those directives)
 MUST be sent.</p>
 <p>When there is tooling used outside of the server, e.g. in an xRegistry
-client, if that tooling resolves the &quot;include&quot; directives prior to sending
+client, if that tooling resolves the "include" directives prior to sending
 the model to the server, then the directives will not appear in the
 <code>modelsource</code> view of the model. Ideally, tooling SHOULD allow users
 to choose whether the resolution of the directives is done locally or by
@@ -1534,19 +1529,19 @@ the server.</p>
 server, and adds the definition of one attribute to a Group named <code>mygroups</code>
 from an external Group named <code>group1</code> in another xRegistry.</p>
 <pre><code class="language-yaml">{
-  &quot;attributes&quot;: {
-    &quot;$include&quot;: &quot;http://example.com/someattributes&quot;,
-    &quot;myattribute&quot;: {
-      &quot;name&quot;: &quot;myattribute&quot;,
-      &quot;type&quot;: &quot;string&quot;
+  "attributes": {
+    "$include": "http://example.com/someattributes",
+    "myattribute": {
+      "name": "myattribute",
+      "type": "string"
     }
   }
-  &quot;groups&quot;: {
-    &quot;mygroups&quot;: {
-      &quot;singular&quot;: &quot;mygroup&quot;,
-      &quot;attributes&quot;: {
-        &quot;attr1&quot;: {
-          &quot;$include&quot;: &quot;http://example.com/model#/groups/group1/attributes/attr1&quot;
+  "groups": {
+    "mygroups": {
+      "singular": "mygroup",
+      "attributes": {
+        "attr1": {
+          "$include": "http://example.com/model#/groups/group1/attributes/attr1"
         }
         ... remainder of model excluded for brevity ...
       }
@@ -1556,17 +1551,20 @@ from an external Group named <code>group1</code> in another xRegistry.</p>
 </code></pre>
 <p>where <code>http://example.com/someattributes</code> might look like:</p>
 <pre><code class="language-yaml">{
-  &quot;myattr&quot;: {
-    &quot;name&quot;: &quot;myattr&quot;,
-    &quot;type&quot;: &quot;string&quot;
+  "myattr": {
+    "name": "myattr",
+    "type": "string"
   }
 }
 </code></pre>
 <p>and the second include target might look like:</p>
 <pre><code class="language-yaml">{
-  &quot;name&quot;: &quot;attr1&quot;,
-  &quot;type&quot;: &quot;string&quot;
+  "name": "attr1",
+  "type": "string"
 }
 </code></pre>
-
+</article>
+</main>
+<button aria-label="Back to top" class="back-to-top" title="Back to top" type="button"><i aria-hidden="true" class="fas fa-arrow-up"></i></button>
+</body>
 </html>

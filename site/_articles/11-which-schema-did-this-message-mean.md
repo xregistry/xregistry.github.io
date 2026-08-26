@@ -6,7 +6,8 @@ series_order: 11
 perspective: Schema references
 status: Publication draft
 drafted: 2026-08-25
-date: 2027-01-13
+due: 2026-09-18
+date: 2026-09-18 16:00:00 +0200
 published: false
 reading_time: 8 minutes
 previous_slug: versioning-is-five-separate-questions

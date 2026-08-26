@@ -6,7 +6,8 @@ series_order: 12
 perspective: Schema evolution
 status: Publication draft
 drafted: 2026-08-24
-date: 2027-01-27
+due: 2026-09-21
+date: 2026-09-21 16:00:00 +0200
 published: false
 reading_time: 8 minutes
 previous_slug: which-schema-did-this-message-mean

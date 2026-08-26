@@ -6,7 +6,8 @@ series_order: 3
 perspective: Model-driven contracts
 status: Publication draft
 drafted: 2026-08-24
-date: 2026-09-23
+due: 2026-08-31
+date: 2026-08-31 16:00:00 +0200
 published: false
 reading_time: 9 minutes
 previous_slug: where-a-schema-version-stops-being-the-same-schema

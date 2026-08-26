@@ -6,7 +6,8 @@ series_order: 16
 perspective: Contract graph
 status: Publication draft
 drafted: 2026-08-24
-date: 2027-03-24
+due: 2026-09-30
+date: 2026-09-30 16:00:00 +0200
 published: false
 reading_time: 8 minutes
 previous_slug: from-protocol-address-to-operational-contract

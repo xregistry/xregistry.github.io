@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-articles_dir="${1:-_articles}"
+articles_dir="${1:-site/_articles}"
 today="${PUBLISH_DATE:-$(date +%F)}"
 
 if [[ ! "$today" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
@@ -14,18 +14,29 @@ published=0
 
 while IFS= read -r -d '' article; do
   front_matter="$(sed -n '1,/^---[[:space:]]*$/p' "$article")"
-  publication_date="$(printf '%s\n' "$front_matter" | sed -n 's/^date:[[:space:]]*//p' | head -n 1 | tr -d '\r')"
+  due_date="$(printf '%s\n' "$front_matter" | sed -n 's/^due:[[:space:]]*//p' | head -n 1 | tr -d '\r')"
+  publication_timestamp="$(printf '%s\n' "$front_matter" | sed -n 's/^date:[[:space:]]*//p' | head -n 1 | tr -d '\r')"
 
-  if [[ -z "$publication_date" ]]; then
+  if [[ -z "$due_date" ]]; then
     continue
   fi
 
-  if [[ ! "$publication_date" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
-    echo "Invalid date in $article: $publication_date" >&2
+  if [[ ! "$due_date" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
+    echo "Invalid due date in $article: $due_date" >&2
     exit 1
   fi
 
-  if [[ "$publication_date" > "$today" ]]; then
+  if [[ ! "$publication_timestamp" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}[[:space:]]16:00:00[[:space:]][+-][0-9]{4}$ ]]; then
+    echo "Invalid publication timestamp in $article: $publication_timestamp" >&2
+    exit 1
+  fi
+
+  if [[ "${publication_timestamp:0:10}" != "$due_date" ]]; then
+    echo "Due date and publication timestamp differ in $article" >&2
+    exit 1
+  fi
+
+  if [[ "$due_date" > "$today" ]]; then
     continue
   fi
 

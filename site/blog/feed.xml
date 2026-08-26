@@ -10,14 +10,13 @@ permalink: /blog/feed.xml
   <link href="{{ '/blog/' | absolute_url }}" rel="alternate" type="text/html" />
   <id>{{ '/blog/' | absolute_url }}</id>
   <updated>{{ site.time | date_to_xmlschema }}</updated>
-  {% assign articles = site.articles | sort: "date" | reverse %}
+  {% assign articles = site.articles | sort: "series_order" %}
   {% for article in articles %}
   <entry>
     <title>{{ article.title | xml_escape }}</title>
     <link href="{{ article.url | absolute_url }}" rel="alternate" type="text/html" />
     <id>{{ article.url | absolute_url }}</id>
-    <published>{{ article.date | date_to_xmlschema }}</published>
-    <updated>{{ article.date | date_to_xmlschema }}</updated>
+    <updated>{{ article.drafted | date_to_xmlschema }}</updated>
     <summary type="html">{{ article.description | xml_escape }}</summary>
   </entry>
   {% endfor %}

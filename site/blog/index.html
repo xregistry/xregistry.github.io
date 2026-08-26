@@ -10,21 +10,19 @@ permalink: /blog/
     <header class="blog-intro">
       <p class="series-kicker">xRegistry foundations</p>
       <h1>Metadata becomes useful when its relationships become explicit</h1>
-      <p>This twenty-part series follows one argument through the xRegistry core, schema, message, and endpoint specifications: a registry is most valuable when people and tools can traverse the same contract graph. The articles alternate foundational mechanics with domain consequences and stand alone for readers arriving mid-series.</p>
-      {% assign articles = site.articles | sort: "date" | reverse %}
+      <p>This 20-part series follows one argument through the xRegistry core, schema, message, and endpoint specifications: a registry is most valuable when people and tools can traverse the same contract graph. The articles alternate foundational mechanics with domain consequences and stand alone for readers arriving mid-series.</p>
       <div class="blog-actions">
-        {% if articles.first %}
-          <a class="primary-cta-button" href="{{ articles.first.url | relative_url }}">Read the latest article</a>
-        {% endif %}
+        <a class="primary-cta-button" href="{{ '/blog/one-registry-three-views/' | relative_url }}">Start with article one</a>
         <a class="feed-link" href="{{ '/blog/feed.xml' | relative_url }}"><i class="fas fa-rss" aria-hidden="true"></i> Subscribe via Atom</a>
       </div>
     </header>
 
     <div class="cadence-note">
-      <strong>Publication cadence:</strong> one article every two weeks.
+      <strong>Proposed cadence:</strong> one article every two weeks. Dates remain unset until the project approves publication.
     </div>
 
     <ol class="article-list">
+      {% assign articles = site.articles | sort: "series_order" %}
       {% for article in articles %}
         <li>
           <article class="article-card">
@@ -33,7 +31,7 @@ permalink: /blog/
               <p class="article-perspective">{{ article.perspective }} · {{ article.reading_time }}</p>
               <h2><a href="{{ article.url | relative_url }}">{{ article.title }}</a></h2>
               <p>{{ article.description }}</p>
-              <p class="article-status">Published <time datetime="{{ article.date | date_to_xmlschema }}">{{ article.date | date: "%B %-d, %Y" }}</time></p>
+              <p class="article-status">{{ article.status }} · drafted {{ article.drafted | date: "%B %-d, %Y" }}</p>
             </div>
           </article>
         </li>

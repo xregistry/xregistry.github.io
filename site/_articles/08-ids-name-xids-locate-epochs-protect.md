@@ -6,7 +6,8 @@ series_order: 8
 perspective: Identity and concurrency
 status: Publication draft
 drafted: 2026-08-24
-date: 2026-12-02
+due: 2026-09-11
+date: 2026-09-11 16:00:00 +0200
 published: false
 reading_time: 9 minutes
 previous_slug: how-much-of-the-graph-should-a-client-read

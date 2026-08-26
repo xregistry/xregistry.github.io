@@ -6,7 +6,8 @@ series_order: 17
 perspective: Registry change events
 status: Publication draft
 drafted: 2026-08-25
-date: 2027-04-07
+due: 2026-10-02
+date: 2026-10-02 16:00:00 +0200
 published: false
 reading_time: 8 minutes
 previous_slug: following-the-water-boiler-contract-graph

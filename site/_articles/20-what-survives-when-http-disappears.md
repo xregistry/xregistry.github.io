@@ -6,7 +6,8 @@ series_order: 20
 perspective: Protocol-independent model
 status: Working-draft analysis
 drafted: 2026-08-25
-date: 2027-05-19
+due: 2026-10-09
+date: 2026-10-09 16:00:00 +0200
 published: false
 reading_time: 9 minutes
 previous_slug: can-a-client-traverse-a-million-entry-registry

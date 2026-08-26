@@ -6,7 +6,8 @@ series_order: 6
 perspective: HTTP representations
 status: Publication draft
 drafted: 2026-08-25
-date: 2026-11-04
+due: 2026-09-07
+date: 2026-09-07 16:00:00 +0200
 published: false
 reading_time: 8 minutes
 previous_slug: how-does-a-client-find-a-registry

@@ -6,7 +6,8 @@ series_order: 7
 perspective: Selective graph reads
 status: Publication draft
 drafted: 2026-08-25
-date: 2026-11-18
+due: 2026-09-09
+date: 2026-09-09 16:00:00 +0200
 published: false
 reading_time: 8 minutes
 previous_slug: what-exactly-does-an-http-get-return

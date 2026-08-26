@@ -1,50 +1,48 @@
-<html>
+<!DOCTYPE html>
+
+<html lang="en-US">
 <head>
-<style>
-  .anchor {
-    font-size: 12px ;
-    vertical-align: middle ;
-    text-decoration: none ;
-  }
-  body {
-    font-family: sans-serif ;
-    font-size: 16px ;
-    line-height: 1.5 ;
-    padding: 5% 10% 5% 10% ;
-  }
-  pre {
-    font-size: 80% ;
-    background-color: #f2f2f2 ;
-    padding: 12px ;
-  }
-  code {
-    font-size: 85% ;
-    background-color: #f2f2f2 ;
-    padding: .2em .4em ;
-  }
-  pre code {
-    font-size: inherit ;
-    background-color: inherit ;
-    padding: 0px ;
-  }
-  table {
-    border: 1px solid lightgray ;
-    border-collapse: collapse ;
-    border-spacing: 0px ;
-    line-height: 24px ;
-  }
-  tr:nth-child(even) {
-    background-color: #f2f2f2 ;
-  }
-  td,th {
-    border: 1px solid lightgray ;
-    padding: 5px ;
-  }
-  td code, th code {
-    font-size: inherit ;
-  }
-</style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, maximum-scale=2" name="viewport"/>
+<title>Pagination - Version 0.1-wip | xRegistry</title>
+<link href="/assets/css/style.css" rel="stylesheet"/>
+<link href="/assets/css/xreg-reader.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<script defer="" src="/assets/js/xreg-reader.js"></script>
 </head>
+<body class="xreg-document xreg-spec-document">
+<header class="outer site-header" data-xregistry-shell="true" id="header_wrap">
+<div class="inner">
+<a href="https://github.com/xregistry/xregistry.github.io" id="forkme_banner">View on GitHub</a>
+<img alt="xRegistry logo" class="header-logo" src="https://github.com/cncf/artwork/raw/main/projects/xregistry/horizontal/color-whitetext/xregistry-horizontal-color-whitetext.svg"/>
+<h2 id="project_tagline">The Extensible Registry for Metadata Management</h2>
+<nav aria-label="Primary navigation" class="site-nav">
+<a href="/">Home</a>
+<a href="/blog/">Blog</a>
+<a href="/xreg/xregistryspecs/core-v1/docs/spec.html">Core Spec</a>
+<a href="/xreg/xregistryspecs/endpoint-v1/docs/spec.html">Endpoint Spec</a>
+<a href="/xreg/xregistryspecs/schema-v1/docs/spec.html">Schema Spec</a>
+<a href="/xreg/xregistryspecs/message-v1/docs/spec.html">Message Spec</a>
+<a href="https://github.com/xregistry/spec">GitHub</a>
+</nav>
+</div>
+</header>
+<div aria-label="xRegistry document path" class="registry-path">
+<div class="registry-path__inner"><i aria-hidden="true" class="fas fa-sitemap"></i><code>xreg/xregistryspecs/pagination-v1/docs/spec.html</code></div>
+</div>
+<main class="xreg-reader-layout">
+<aside aria-label="On this page" class="spec-toc">
+<div class="spec-toc__header">On this page</div>
+<nav class="spec-toc__body"></nav>
+</aside>
+<article class="xreg-reader-content" id="xregistry-content"><nav aria-label="Specification views" class="spec-view-switch">
+<a aria-current="page" class="is-active" href="spec.html?reader=1"><i aria-hidden="true" class="fas fa-book-open"></i> Read</a>
+<a href="spec.lines.html?reader=1"><i aria-hidden="true" class="fas fa-code"></i> Source lines</a>
+</nav>
+
 <h1 id="pagination---version-01-wip">Pagination - Version 0.1-wip <a class="anchor" href="#pagination---version-01-wip">🔗</a></h1>
 <p>This document describes a mechanism by which a server can return a set of
 records to a client in an incremental fashion. Often this will be used when
@@ -52,8 +50,8 @@ a client is doing a query for a set of records and the result set is too large
 to return in one response.</p>
 <h2 id="notations-and-terminology">Notations and Terminology <a class="anchor" href="#notations-and-terminology">🔗</a></h2>
 <h3 id="notational-conventions">Notational Conventions <a class="anchor" href="#notational-conventions">🔗</a></h3>
-<p>The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;, &quot;SHOULD&quot;,
-&quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;, &quot;MAY&quot;, and &quot;OPTIONAL&quot; in this document are to be
+<p>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
+"SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be
 interpreted as described in <a href="https://tools.ietf.org/html/rfc2119">RFC2119</a>.</p>
 <h2 id="client-request">Client Request <a class="anchor" href="#client-request">🔗</a></h2>
 <p>When a client sends a request to a server which is meant to result in a
@@ -221,7 +219,7 @@ Link MUST NOT be included in the response.</li>
 <code>next</code> Link MUST be included in the response.</li>
 <li>The response MAY include the <code>last</code> Link in any response.</li>
 <li>The response MAY include the <code>expires</code> attribute in any response as an
-HTTP &quot;Expires&quot; header. If present, it MUST adhere to the format specified in
+HTTP "Expires" header. If present, it MUST adhere to the format specified in
 <a href="https://tools.ietf.org/html/rfc7234#section-5.3">RFC3339</a>.</li>
 <li>It is STRONGLY RECOMMENDED that all responses include the <code>count</code> attribute.</li>
 </ul>
@@ -248,5 +246,8 @@ indicating that it has reached the end.</p>
 <p>However, if other Links are provided by the server, then the client MAY
 use those Links instead to follow a different traversal path through the
 records.</p>
-
+</article>
+</main>
+<button aria-label="Back to top" class="back-to-top" title="Back to top" type="button"><i aria-hidden="true" class="fas fa-arrow-up"></i></button>
+</body>
 </html>

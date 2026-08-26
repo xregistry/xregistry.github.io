@@ -6,7 +6,8 @@ series_order: 10
 perspective: Versioning policy
 status: Publication draft
 drafted: 2026-08-24
-date: 2026-12-30
+due: 2026-09-16
+date: 2026-09-16 16:00:00 +0200
 published: false
 reading_time: 9 minutes
 previous_slug: is-this-write-a-replacement-a-patch-or-an-import

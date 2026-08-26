@@ -1,50 +1,45 @@
-<html>
+<!DOCTYPE html>
+
+<html lang="en-US">
 <head>
-<style>
-  .anchor {
-    font-size: 12px ;
-    vertical-align: middle ;
-    text-decoration: none ;
-  }
-  body {
-    font-family: sans-serif ;
-    font-size: 16px ;
-    line-height: 1.5 ;
-    padding: 5% 10% 5% 10% ;
-  }
-  pre {
-    font-size: 80% ;
-    background-color: #f2f2f2 ;
-    padding: 12px ;
-  }
-  code {
-    font-size: 85% ;
-    background-color: #f2f2f2 ;
-    padding: .2em .4em ;
-  }
-  pre code {
-    font-size: inherit ;
-    background-color: inherit ;
-    padding: 0px ;
-  }
-  table {
-    border: 1px solid lightgray ;
-    border-collapse: collapse ;
-    border-spacing: 0px ;
-    line-height: 24px ;
-  }
-  tr:nth-child(even) {
-    background-color: #f2f2f2 ;
-  }
-  td,th {
-    border: 1px solid lightgray ;
-    padding: 5px ;
-  }
-  td code, th code {
-    font-size: inherit ;
-  }
-</style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, maximum-scale=2" name="viewport"/>
+<title>Resource Update Samples | xRegistry</title>
+<link href="/assets/css/style.css" rel="stylesheet"/>
+<link href="/assets/css/xreg-reader.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<script defer="" src="/assets/js/xreg-reader.js"></script>
 </head>
+<body class="xreg-document xreg-reference-document">
+<header class="outer site-header" data-xregistry-shell="true" id="header_wrap">
+<div class="inner">
+<a href="https://github.com/xregistry/xregistry.github.io" id="forkme_banner">View on GitHub</a>
+<img alt="xRegistry logo" class="header-logo" src="https://github.com/cncf/artwork/raw/main/projects/xregistry/horizontal/color-whitetext/xregistry-horizontal-color-whitetext.svg"/>
+<h2 id="project_tagline">The Extensible Registry for Metadata Management</h2>
+<nav aria-label="Primary navigation" class="site-nav">
+<a href="/">Home</a>
+<a href="/blog/">Blog</a>
+<a href="/xreg/xregistryspecs/core-v1/docs/spec.html">Core Spec</a>
+<a href="/xreg/xregistryspecs/endpoint-v1/docs/spec.html">Endpoint Spec</a>
+<a href="/xreg/xregistryspecs/schema-v1/docs/spec.html">Schema Spec</a>
+<a href="/xreg/xregistryspecs/message-v1/docs/spec.html">Message Spec</a>
+<a href="https://github.com/xregistry/spec">GitHub</a>
+</nav>
+</div>
+</header>
+<div aria-label="xRegistry document path" class="registry-path">
+<div class="registry-path__inner"><i aria-hidden="true" class="fas fa-sitemap"></i><code>xreg/xregistryspecs/core-v1/docs/resource.html</code></div>
+</div>
+<main class="xreg-reader-layout">
+<aside aria-label="On this page" class="spec-toc">
+<div class="spec-toc__header">On this page</div>
+<nav class="spec-toc__body"></nav>
+</aside>
+<article class="xreg-reader-content" id="xregistry-content">
+
 <h1 id="resource-update-samples">Resource Update Samples <a class="anchor" href="#resource-update-samples">🔗</a></h1>
 <!-- words: fileid valign cellborder cellpadding -->
 <p>This document shows a set of write operations that provide concrete examples of
@@ -56,7 +51,7 @@ example.</p>
 <ul>
 <li><a href="#the-setup">The Setup</a></li>
 <li><a href="#create-single-resource-with-empty-content">Create single Resource with empty content</a></li>
-<li><a href="#create-resource-via-the-files-collection">Create Resource via the &quot;files&quot; collection</a></li>
+<li><a href="#create-resource-via-the-files-collection">Create Resource via the "files" collection</a></li>
 <li><a href="#create-resource-with-versions-no-defaultversionid">Create Resource with Versions, no defaultversionid</a></li>
 <li><a href="#create-resource-with-versions-and-defaultversionid">Create Resource with Versions and defaultversionid</a></li>
 <li><a href="#create-resource-with-versions-and-unique-defaultversionid">Create Resource with Versions and unique defaultversionid</a></li>
@@ -89,23 +84,23 @@ example.</p>
 <h3 id="the-setup">The Setup <a class="anchor" href="#the-setup">🔗</a></h3>
 <p>Each example:</p>
 <ul>
-<li>Only includes the key attributes that are important from an &quot;understanding&quot;
+<li>Only includes the key attributes that are important from an "understanding"
 perspective.</li>
 <li>Includes explanatory text, highlighting the key aspects.</li>
-<li>Timestamps will only use a year or &quot;now&quot; (meaning it was updated to the
+<li>Timestamps will only use a year or "now" (meaning it was updated to the
 current time) rather than a full RFC3330 timestamp to make it easier to
 detect changes in values.</li>
 <li>Has a model defined as:</li>
 </ul>
 <pre><code>        {
-          &quot;groups&quot;: {
-            &quot;dirs&quot;: {
-              &quot;singular&quot;: &quot;dir&quot;,
-              &quot;resources&quot;: {
-                &quot;files&quot;: {
-                  &quot;singular&quot;: &quot;file&quot;,
-                  &quot;hasdocument&quot;: false,
-                  &quot;versionmode&quot;: &quot;createdat&quot;
+          "groups": {
+            "dirs": {
+              "singular": "dir",
+              "resources": {
+                "files": {
+                  "singular": "file",
+                  "hasdocument": false,
+                  "versionmode": "createdat"
                 }
               }
             }
@@ -113,7 +108,7 @@ detect changes in values.</li>
         }
 </code></pre>
 <h3 id="create-single-resource-with-empty-content">Create single Resource with empty content <a class="anchor" href="#create-single-resource-with-empty-content">🔗</a></h3>
-<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<table border="1" cellborder="1" cellpadding="5"><tr><td valign="top">
 <p><strong>Initial State:</strong></p>
 <pre><code>Empty
 </code></pre>
@@ -122,26 +117,26 @@ detect changes in values.</li>
 
 {}
 </code></pre>
-</td><td valign=top>
+</td><td valign="top">
 <p><strong>Final State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;1&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;now&quot;,
-  &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestorid&quot;: &quot;1&quot;,
+  "fileid": "f1",
+  "versionid": "1",
+  "epoch": 1,
+  "isdefault": true,
+  "createdat": "now",
+  "modifiedat": "now",
+  "ancestorid": "1",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;now&quot;,
-    &quot;modifiedat&quot;: &quot;now&quot;,
-    &quot;defaultversionid&quot;: &quot;1&quot;,
-    &quot;defaultversionsticky&quot;: false
+  "meta": {
+    "epoch": 1,
+    "createdat": "now",
+    "modifiedat": "now",
+    "defaultversionid": "1",
+    "defaultversionsticky": false
   },
-  &quot;versions&quot;: {
-    &quot;1&quot;: { see Resource.* attrs }
+  "versions": {
+    "1": { see Resource.* attrs }
   }
 }
 </code></pre>
@@ -150,18 +145,18 @@ detect changes in values.</li>
 <ul>
 <li>A new Resource <code>f1</code> is created.</li>
 <li>A Version with a <code>versionid</code> of <code>1</code> is created per the default <code>versionid</code>
-naming algorithm defined in the specification. </li></li>
+naming algorithm defined in the specification. </li>
 <li>Conceptually, this new Version is populated with the Resource's default
 Version attributes from the request. However, since there are none, all
 mandatory attributes are assigned their default values.</li>
 <li>The Version's <code>ancestorid</code> value is <code>1</code> (points to itself) because it is the
 root of a hierarchy tree.</li>
-<li>Being the only Version, it is the default Version, and it is not &quot;sticky&quot;.</li>
+<li>Being the only Version, it is the default Version, and it is not "sticky".</li>
 <li>Using <code>PATCH</code> instead of <code>PUT</code> will yield the exact same results.</li>
 </ul>
-<hr>
-<h3 id="create-resource-via-the-files-collection">Create Resource via the &quot;files&quot; collection <a class="anchor" href="#create-resource-via-the-files-collection">🔗</a></h3>
-<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<hr/>
+<h3 id="create-resource-via-the-files-collection">Create Resource via the "files" collection <a class="anchor" href="#create-resource-via-the-files-collection">🔗</a></h3>
+<table border="1" cellborder="1" cellpadding="5"><tr><td valign="top">
 <p><strong>Initial State:</strong></p>
 <pre><code>Empty
 </code></pre>
@@ -169,33 +164,33 @@ root of a hierarchy tree.</li>
 <pre><code>POST /dirs/d1/files
 
 {
-  &quot;f1&quot;: {
-    &quot;name&quot;: &quot;my file&quot;
+  "f1": {
+    "name": "my file"
   }
 }
 </code></pre>
-</td><td valign=top>
+</td><td valign="top">
 <p><strong>Final State:</strong></p>
 <pre><code>{
-  &quot;f1&quot;: {
-    &quot;fileid&quot;: &quot;f1&quot;,
-    &quot;versionid&quot;: &quot;1&quot;,
-    &quot;epoch&quot;: 1,
-    &quot;name&quot;: &quot;my file&quot;,
-    &quot;isdefault&quot;: true,
-    &quot;createdat&quot;: &quot;now&quot;,
-    &quot;modifiedat&quot;: &quot;now&quot;,
-    &quot;ancestorid&quot;: &quot;1&quot;,
+  "f1": {
+    "fileid": "f1",
+    "versionid": "1",
+    "epoch": 1,
+    "name": "my file",
+    "isdefault": true,
+    "createdat": "now",
+    "modifiedat": "now",
+    "ancestorid": "1",
 
-    &quot;meta&quot;: {
-      &quot;epoch&quot;: 1,
-      &quot;createdat&quot;: &quot;now&quot;,
-      &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;defaultversionid&quot;: &quot;1&quot;,
-      &quot;defaultversionsticky&quot;: false
+    "meta": {
+      "epoch": 1,
+      "createdat": "now",
+      "modifiedat": "now",
+      "defaultversionid": "1",
+      "defaultversionsticky": false
     },
-    &quot;versions&quot;: {
-      &quot;1&quot;: { see Resource.* attrs }
+    "versions": {
+      "1": { see Resource.* attrs }
     }
   }
 }
@@ -208,9 +203,9 @@ Group's <code>files</code> collection.</li>
 <li>The default Version properties include <code>name</code>, so that will appear both at
 the Resource level and within the Version in the <code>versions</code> collection.</li>
 </ul>
-<hr>
+<hr/>
 <h3 id="create-resource-with-versions-no-defaultversionid">Create Resource with Versions, no defaultversionid <a class="anchor" href="#create-resource-with-versions-no-defaultversionid">🔗</a></h3>
-<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<table border="1" cellborder="1" cellpadding="5"><tr><td valign="top">
 <p><strong>Initial State:</strong></p>
 <pre><code>Empty
 </code></pre>
@@ -218,39 +213,39 @@ the Resource level and within the Version in the <code>versions</code> collectio
 <pre><code>PUT /dirs/d1/files/f1
 
 {
-  &quot;name&quot;: &quot;foo&quot;,
-  &quot;versions&quot;: {
-    &quot;v1&quot;: {},
-    &quot;v2&quot;: {}
+  "name": "foo",
+  "versions": {
+    "v1": {},
+    "v2": {}
   }
 }
 </code></pre>
-</td><td valign=top>
+</td><td valign="top">
 <p><strong>Final State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v2&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;now&quot;,
-  &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestorid&quot;: &quot;v1&quot;,
+  "fileid": "f1",
+  "versionid": "v2",
+  "epoch": 1,
+  "isdefault": true,
+  "createdat": "now",
+  "modifiedat": "now",
+  "ancestorid": "v1",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;now&quot;,
-    &quot;modifiedat&quot;: &quot;now&quot;,
-    &quot;defaultversionid&quot;: &quot;v2&quot;,
-    &quot;defaultversionsticky&quot;: false
+  "meta": {
+    "epoch": 1,
+    "createdat": "now",
+    "modifiedat": "now",
+    "defaultversionid": "v2",
+    "defaultversionsticky": false
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: {
-      &quot;epoch&quot;: 1,
-      &quot;createdat&quot;: &quot;now&quot;,
-      &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestorid&quot;: &quot;v1&quot;
+  "versions": {
+    "v1": {
+      "epoch": 1,
+      "createdat": "now",
+      "modifiedat": "now",
+      "ancestorid": "v1"
     },
-    &quot;v2&quot;: { see Resource.* attrs }
+    "v2": { see Resource.* attrs }
   }
 }
 </code></pre>
@@ -268,9 +263,9 @@ attributes.</li>
 <li>Ancestor order: <code>1</code> &lt;- <code>v1</code> &lt;- <code>v2</code>.</li>
 <li>Using <code>PATCH</code> would yield the exact same results.</li>
 </ul>
-<hr>
+<hr/>
 <h3 id="create-resource-with-versions-and-defaultversionid">Create Resource with Versions and defaultversionid <a class="anchor" href="#create-resource-with-versions-and-defaultversionid">🔗</a></h3>
-<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<table border="1" cellborder="1" cellpadding="5"><tr><td valign="top">
 <p><strong>Initial State:</strong></p>
 <pre><code>Empty
 </code></pre>
@@ -278,52 +273,52 @@ attributes.</li>
 <pre><code>PUT /dirs/d1/files/f1
 
 {
-  &quot;name&quot;: &quot;foo&quot;,
-  &quot;meta&quot;: {
-    &quot;defaultversionid&quot;: &quot;v1&quot;
+  "name": "foo",
+  "meta": {
+    "defaultversionid": "v1"
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: {
-      &quot;createdat&quot;: &quot;2020&quot;
+  "versions": {
+    "v1": {
+      "createdat": "2020"
     },
-    &quot;v2&quot;: {
-      &quot;createdat&quot;: &quot;3030&quot;
+    "v2": {
+      "createdat": "3030"
     },
-    &quot;v3&quot;: {}
+    "v3": {}
   }
 }
 </code></pre>
-</td><td valign=top>
+</td><td valign="top">
 <p><strong>Final State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v2&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;3030&quot;,
-  &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestorid&quot;: &quot;v3&quot;,
+  "fileid": "f1",
+  "versionid": "v2",
+  "epoch": 1,
+  "isdefault": true,
+  "createdat": "3030",
+  "modifiedat": "now",
+  "ancestorid": "v3",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;now&quot;,
-    &quot;modifiedat&quot;: &quot;now&quot;,
-    &quot;defaultversionid&quot;: &quot;v2&quot;,
-    &quot;defaultversionsticky&quot;: false
+  "meta": {
+    "epoch": 1,
+    "createdat": "now",
+    "modifiedat": "now",
+    "defaultversionid": "v2",
+    "defaultversionsticky": false
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: {
-      &quot;epoch&quot;: 1,
-      &quot;createdat&quot;: &quot;2020&quot;,
-      &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestorid&quot;: &quot;v1&quot;
+  "versions": {
+    "v1": {
+      "epoch": 1,
+      "createdat": "2020",
+      "modifiedat": "now",
+      "ancestorid": "v1"
     },
-    &quot;v2&quot;: { see Resource.* attrs },
-    &quot;v3&quot;: {
-      &quot;epoch&quot;: 1,
-      &quot;createdat&quot;: &quot;now&quot;,
-      &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestorid&quot;: &quot;v1&quot;
+    "v2": { see Resource.* attrs },
+    "v3": {
+      "epoch": 1,
+      "createdat": "now",
+      "modifiedat": "now",
+      "ancestorid": "v1"
     }
   }
 }
@@ -338,9 +333,9 @@ request's <code>versions</code> collection.</li>
 <li>Ancestor order: <code>v1</code>(2020) &lt;- <code>v3</code> (now) &lt;- <code>v2</code> (3030).</li>
 <li>Version <code>v2</code> is default because it has the newest <code>createdat</code> timestamp.</li>
 </ul>
-<hr>
+<hr/>
 <h3 id="create-resource-with-versions-and-unique-defaultversionid">Create Resource with Versions and unique defaultversionid <a class="anchor" href="#create-resource-with-versions-and-unique-defaultversionid">🔗</a></h3>
-<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<table border="1" cellborder="1" cellpadding="5"><tr><td valign="top">
 <p><strong>Initial State:</strong></p>
 <pre><code>Empty
 </code></pre>
@@ -348,49 +343,49 @@ request's <code>versions</code> collection.</li>
 <pre><code>PUT /dirs/d1/files/f1
 
 {
-  &quot;name&quot;: &quot;foo&quot;,
-  &quot;meta&quot;: {
-    &quot;defaultversionid&quot;: &quot;v1&quot;
+  "name": "foo",
+  "meta": {
+    "defaultversionid": "v1"
   },
-  &quot;versions&quot;: {
-    &quot;v2&quot;: {},
-    &quot;v3&quot;: {}
+  "versions": {
+    "v2": {},
+    "v3": {}
   }
 }
 </code></pre>
-</td><td valign=top>
+</td><td valign="top">
 <p><strong>Final State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v3&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;now&quot;,
-  &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestorid&quot;: &quot;v2&quot;,
+  "fileid": "f1",
+  "versionid": "v3",
+  "epoch": 1,
+  "isdefault": true,
+  "createdat": "now",
+  "modifiedat": "now",
+  "ancestorid": "v2",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;now&quot;,
-    &quot;modifiedat&quot;: &quot;now&quot;,
-    &quot;defaultversionid&quot;: &quot;v3&quot;,
-    &quot;defaultversionsticky&quot;: false
+  "meta": {
+    "epoch": 1,
+    "createdat": "now",
+    "modifiedat": "now",
+    "defaultversionid": "v3",
+    "defaultversionsticky": false
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: {
-      &quot;epoch&quot;: 1,
-      &quot;name&quot;: &quot;foo&quot;,
-      &quot;createdat&quot;: &quot;now&quot;,
-      &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestorid&quot;: &quot;v1&quot;
+  "versions": {
+    "v1": {
+      "epoch": 1,
+      "name": "foo",
+      "createdat": "now",
+      "modifiedat": "now",
+      "ancestorid": "v1"
     },
-    &quot;v2&quot;: {
-      &quot;epoch&quot;: 1,
-      &quot;createdat&quot;: &quot;now&quot;,
-      &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestorid&quot;: &quot;v1&quot;
+    "v2": {
+      "epoch": 1,
+      "createdat": "now",
+      "modifiedat": "now",
+      "ancestorid": "v1"
     },
-    &quot;v3&quot;: { see Resource.* attrs },
+    "v3": { see Resource.* attrs },
   }
 }
 </code></pre>
@@ -403,9 +398,9 @@ that Resource.* attributes are for <code>v1</code>.</li>
 <li>Ancestor order: <code>v1</code>(now) &lt;- <code>v2</code> (now) &lt;- <code>v3</code> (now).</li>
 <li>Version <code>v3</code> is default because it is the highest alphabetically.</li>
 </ul>
-<hr>
+<hr/>
 <h3 id="create-resource-with-defaultversionid">Create Resource with defaultversionid <a class="anchor" href="#create-resource-with-defaultversionid">🔗</a></h3>
-<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<table border="1" cellborder="1" cellpadding="5"><tr><td valign="top">
 <p><strong>Initial State:</strong></p>
 <pre><code>Empty
 </code></pre>
@@ -413,33 +408,33 @@ that Resource.* attributes are for <code>v1</code>.</li>
 <pre><code>PUT /dirs/d1/files/f1
 
 {
-  &quot;name&quot;: &quot;foo&quot;,
-  &quot;meta&quot;: {
-    &quot;defaultversionid&quot;: &quot;v1&quot;
+  "name": "foo",
+  "meta": {
+    "defaultversionid": "v1"
   }
 }
 </code></pre>
-</td><td valign=top>
+</td><td valign="top">
 <p><strong>Final State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v1&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;name&quot;: &quot;foo&quot;,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;now&quot;,
-  &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestorid&quot;: &quot;v1&quot;,
+  "fileid": "f1",
+  "versionid": "v1",
+  "epoch": 1,
+  "name": "foo",
+  "isdefault": true,
+  "createdat": "now",
+  "modifiedat": "now",
+  "ancestorid": "v1",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;now&quot;,
-    &quot;modifiedat&quot;: &quot;now&quot;,
-    &quot;defaultversionid&quot;: &quot;v1&quot;,
-    &quot;defaultversionsticky&quot;: false
+  "meta": {
+    "epoch": 1,
+    "createdat": "now",
+    "modifiedat": "now",
+    "defaultversionid": "v1",
+    "defaultversionsticky": false
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: { see Resource.* attrs }
+  "versions": {
+    "v1": { see Resource.* attrs }
   }
 }
 </code></pre>
@@ -450,9 +445,9 @@ that Resource.* attributes are for <code>v1</code>.</li>
 <li>Since <code>v1</code> isn't part of the request's <code>versions</code> collection, the Resource.*
 attributes will be applied.</li>
 </ul>
-<hr>
+<hr/>
 <h3 id="create-resource-with-versionid-and-versions">Create Resource with versionid and Versions <a class="anchor" href="#create-resource-with-versionid-and-versions">🔗</a></h3>
-<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<table border="1" cellborder="1" cellpadding="5"><tr><td valign="top">
 <p><strong>Initial State:</strong></p>
 <pre><code>Empty
 </code></pre>
@@ -460,49 +455,49 @@ attributes will be applied.</li>
 <pre><code>PUT /dirs/d1/files/f1
 
 {
-  &quot;versionid&quot;: &quot;v0&quot;,
-  &quot;name&quot;: &quot;foo&quot;,
-  &quot;versions&quot;: {
-    &quot;v1&quot;: {
-      &quot;createdat&quot;: &quot;2020&quot;
+  "versionid": "v0",
+  "name": "foo",
+  "versions": {
+    "v1": {
+      "createdat": "2020"
     },
-    &quot;v2&quot;: {}
+    "v2": {}
   }
 }
 </code></pre>
-</td><td valign=top>
+</td><td valign="top">
 <p><strong>Final State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v2&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;now&quot;,
-  &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestorid&quot;: &quot;v0&quot;,
+  "fileid": "f1",
+  "versionid": "v2",
+  "epoch": 1,
+  "isdefault": true,
+  "createdat": "now",
+  "modifiedat": "now",
+  "ancestorid": "v0",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;now&quot;,
-    &quot;modifiedat&quot;: &quot;now&quot;,
-    &quot;defaultversionid&quot;: &quot;v2&quot;,
-    &quot;defaultversionsticky&quot;: false
+  "meta": {
+    "epoch": 1,
+    "createdat": "now",
+    "modifiedat": "now",
+    "defaultversionid": "v2",
+    "defaultversionsticky": false
   },
-  &quot;versions&quot;: {
-    &quot;v0&quot;: {
-      &quot;epoch&quot;: 1,
-      &quot;name&quot;: &quot;foo&quot;
-      &quot;createdat&quot;: &quot;now&quot;,
-      &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestorid&quot;: &quot;v1&quot;
+  "versions": {
+    "v0": {
+      "epoch": 1,
+      "name": "foo"
+      "createdat": "now",
+      "modifiedat": "now",
+      "ancestorid": "v1"
     },
-    &quot;v1&quot;: {
-      &quot;epoch&quot;: 1,
-      &quot;createdat&quot;: &quot;2020&quot;,
-      &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestorid&quot;: &quot;v1&quot;
+    "v1": {
+      "epoch": 1,
+      "createdat": "2020",
+      "modifiedat": "now",
+      "ancestorid": "v1"
     },
-    &quot;v2&quot;: { see Resource.* attrs }
+    "v2": { see Resource.* attrs }
   }
 }
 </code></pre>
@@ -512,29 +507,29 @@ attributes will be applied.</li>
 <li>Version <code>v0</code> is created because it is not present in <code>versions</code>.</li>
 <li>Ancestor order: <code>v1</code> (2020) &lt;- <code>v0</code> (now) &lt;- <code>v2</code> (now).</li>
 </ul>
-<hr>
+<hr/>
 <h3 id="update-resource-with-new-versions-and-sticky-default-version">Update Resource with new Versions and sticky default Version <a class="anchor" href="#update-resource-with-new-versions-and-sticky-default-version">🔗</a></h3>
-<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<table border="1" cellborder="1" cellpadding="5"><tr><td valign="top">
 <p><strong>Initial State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v0&quot;,
-  &quot;epoch&quot;: 1
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;2021&quot;,
-  &quot;modifiedat&quot;: &quot;2021&quot;,
-  &quot;ancestorid&quot;: &quot;v0&quot;,
+  "fileid": "f1",
+  "versionid": "v0",
+  "epoch": 1
+  "isdefault": true,
+  "createdat": "2021",
+  "modifiedat": "2021",
+  "ancestorid": "v0",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;2021&quot;,
-    &quot;modifiedat&quot;: &quot;2021&quot;,
-    &quot;defaultversionid&quot;: &quot;v0&quot;,
-    &quot;defaultversionsticky&quot;: false
+  "meta": {
+    "epoch": 1,
+    "createdat": "2021",
+    "modifiedat": "2021",
+    "defaultversionid": "v0",
+    "defaultversionsticky": false
   },
 
-  &quot;versions&quot;: {
-    &quot;v0&quot;: { see Resource.* attrs }
+  "versions": {
+    "v0": { see Resource.* attrs }
   }
 }
 </code></pre>
@@ -542,51 +537,51 @@ attributes will be applied.</li>
 <pre><code>PUT /dirs/d1/files/f1
 
 {
-  &quot;name&quot;: &quot;foo&quot;,
-  &quot;meta&quot;: {
-    &quot;defaultversionid&quot;: &quot;v1&quot;,
-    &quot;defaultversionsticky&quot;: true
+  "name": "foo",
+  "meta": {
+    "defaultversionid": "v1",
+    "defaultversionsticky": true
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: {
-      &quot;createdat&quot;: &quot;2020&quot;
+  "versions": {
+    "v1": {
+      "createdat": "2020"
     },
-    &quot;v2&quot;: {}
+    "v2": {}
   }
 }
 </code></pre>
-</td><td valign=top>
+</td><td valign="top">
 <p><strong>Final State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v1&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;2020&quot;,
-  &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestorid&quot;: &quot;v0&quot;,
+  "fileid": "f1",
+  "versionid": "v1",
+  "epoch": 1,
+  "isdefault": true,
+  "createdat": "2020",
+  "modifiedat": "now",
+  "ancestorid": "v0",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 2,
-    &quot;createdat&quot;: &quot;2021&quot;,
-    &quot;modifiedat&quot;: &quot;now&quot;,
-    &quot;defaultversionid&quot;: &quot;v1&quot;,
-    &quot;defaultversionsticky&quot;: true
+  "meta": {
+    "epoch": 2,
+    "createdat": "2021",
+    "modifiedat": "now",
+    "defaultversionid": "v1",
+    "defaultversionsticky": true
   },
-  &quot;versions&quot;: {
-    &quot;v0&quot;: {
-      &quot;epoch&quot;: 2,
-      &quot;name&quot;: &quot;foo&quot;,
-      &quot;createdat&quot;: &quot;2021&quot;,
-      &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestorid&quot;: &quot;v1&quot;
+  "versions": {
+    "v0": {
+      "epoch": 2,
+      "name": "foo",
+      "createdat": "2021",
+      "modifiedat": "now",
+      "ancestorid": "v1"
     },
-    &quot;v1&quot;: { see Resource.* attrs },
-    &quot;v2&quot;: { see Resource.* attrs }
-      &quot;epoch&quot;: 1,
-      &quot;createdat&quot;: &quot;now&quot;,
-      &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestorid&quot;: &quot;v0&quot;
+    "v1": { see Resource.* attrs },
+    "v2": { see Resource.* attrs }
+      "epoch": 1,
+      "createdat": "now",
+      "modifiedat": "now",
+      "ancestorid": "v0"
     }
   }
 }
@@ -596,16 +591,16 @@ attributes will be applied.</li>
 <ul>
 <li>Version <code>v0</code> (the current default Version) is updated with the
 Resource.* attributes. Notice that <code>versionid</code> is not present in the request
-and that it isn't needed as a &quot;clue&quot; because the Resource already exists
+and that it isn't needed as a "clue" because the Resource already exists
 so we know what the current default Version is.</li>
-<li>While <code>meta.defaultversionid</code> is not used as a clue as to the &quot;current&quot;
+<li>While <code>meta.defaultversionid</code> is not used as a clue as to the "current"
 default <code>versionid</code>, it will be used to calculate the resulting default
 Version due to <code>defaultversionsticky</code> being <code>true</code>.</li>
 <li>Ancestor order: <code>v1</code> (2020) &lt;- <code>v0</code> (2021) &lt;- <code>v2</code> (now).</li>
 </ul>
-<hr>
+<hr/>
 <h3 id="create-resource-with-versions-and-sticky-default-version">Create Resource with Versions and sticky default Version <a class="anchor" href="#create-resource-with-versions-and-sticky-default-version">🔗</a></h3>
-<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<table border="1" cellborder="1" cellpadding="5"><tr><td valign="top">
 <p><strong>Initial State:</strong></p>
 <pre><code>Empty
 </code></pre>
@@ -613,53 +608,53 @@ Version due to <code>defaultversionsticky</code> being <code>true</code>.</li>
 <pre><code>PUT /dirs/d1/files/f1
 
 {
-  &quot;versionid&quot;: &quot;v0&quot;,
-  &quot;name&quot;: &quot;foo&quot;,
-  &quot;createdat&quot;: &quot;2021&quot;,
-  &quot;meta&quot;: {
-    &quot;defaultversionid&quot;: &quot;v1&quot;,
-    &quot;defaultversionsticky&quot;: true
+  "versionid": "v0",
+  "name": "foo",
+  "createdat": "2021",
+  "meta": {
+    "defaultversionid": "v1",
+    "defaultversionsticky": true
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: {
-      &quot;createdat&quot;: &quot;2020&quot;
+  "versions": {
+    "v1": {
+      "createdat": "2020"
     },
-    &quot;v2&quot;: {}
+    "v2": {}
   }
 }
 </code></pre>
-</td><td valign=top>
+</td><td valign="top">
 <p><strong>Final State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v1&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;2020&quot;,
-  &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestorid&quot;: &quot;v1&quot;,
+  "fileid": "f1",
+  "versionid": "v1",
+  "epoch": 1,
+  "isdefault": true,
+  "createdat": "2020",
+  "modifiedat": "now",
+  "ancestorid": "v1",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;now&quot;,
-    &quot;modifiedat&quot;: &quot;now&quot;,
-    &quot;defaultversionid&quot;: &quot;v1&quot;,
-    &quot;defaultversionsticky&quot;: true
+  "meta": {
+    "epoch": 1,
+    "createdat": "now",
+    "modifiedat": "now",
+    "defaultversionid": "v1",
+    "defaultversionsticky": true
   },
-  &quot;versions&quot;: {
-    &quot;v0&quot;: {
-      &quot;epoch&quot;: 1,
-      &quot;name&quot;: &quot;foo&quot;,
-      &quot;createdat&quot;: &quot;2021&quot;,
-      &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestorid&quot;: &quot;v1&quot;
+  "versions": {
+    "v0": {
+      "epoch": 1,
+      "name": "foo",
+      "createdat": "2021",
+      "modifiedat": "now",
+      "ancestorid": "v1"
     },
-    &quot;v1&quot;: { see Resource.* attrs }
-    &quot;v2&quot;: {
-      &quot;epoch&quot;: 1,
-      &quot;createdat&quot;: &quot;now&quot;,
-      &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestorid&quot;: &quot;v0&quot;
+    "v1": { see Resource.* attrs }
+    "v2": {
+      "epoch": 1,
+      "createdat": "now",
+      "modifiedat": "now",
+      "ancestorid": "v0"
     }
   }
 }
@@ -669,7 +664,7 @@ Version due to <code>defaultversionsticky</code> being <code>true</code>.</li>
 <ul>
 <li>In this case <code>versionid</code> at the Resource level is needed to ensure that
 the current default Version is <code>v0</code> and that it is created.</li>
-<li>Notice that the 2 potential &quot;clues&quot; (<code>versionid</code> and <code>meta.defaultversionid</code>)
+<li>Notice that the 2 potential "clues" (<code>versionid</code> and <code>meta.defaultversionid</code>)
 have different values because we need to create <code>v0</code> as the current default
 Version when processing the Resource.* attributes, but then assign <code>v1</code> as
 the resulting default Version. This means that in the previous example
@@ -677,9 +672,9 @@ the resulting default Version. This means that in the previous example
 (same) net result.</li>
 <li>Ancestor order: <code>v1</code> (2020) &lt;- <code>v0</code> (now) &lt;- <code>v2</code> (now).</li>
 </ul>
-<hr>
+<hr/>
 <h3 id="create-resource-with-versionid-and-defaultversionid">Create Resource with versionid and defaultversionid <a class="anchor" href="#create-resource-with-versionid-and-defaultversionid">🔗</a></h3>
-<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<table border="1" cellborder="1" cellpadding="5"><tr><td valign="top">
 <p><strong>Initial State:</strong></p>
 <pre><code>Empty
 </code></pre>
@@ -687,52 +682,52 @@ the resulting default Version. This means that in the previous example
 <pre><code>PUT /dirs/d1/files/f1
 
 {
-  &quot;versionid&quot;: &quot;v0&quot;,
-  &quot;name&quot;: &quot;foo&quot;,
-  &quot;meta&quot;: {
-    &quot;defaultversionid&quot;: &quot;v1&quot;
+  "versionid": "v0",
+  "name": "foo",
+  "meta": {
+    "defaultversionid": "v1"
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: {
-      &quot;createdat&quot;: &quot;2020&quot;
+  "versions": {
+    "v1": {
+      "createdat": "2020"
     },
-    &quot;v2&quot;: {}
+    "v2": {}
   }
 }
 </code></pre>
-</td><td valign=top>
+</td><td valign="top">
 <p><strong>Final State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v2&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;now&quot;,
-  &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestorid&quot;: &quot;v0&quot;,
+  "fileid": "f1",
+  "versionid": "v2",
+  "epoch": 1,
+  "isdefault": true,
+  "createdat": "now",
+  "modifiedat": "now",
+  "ancestorid": "v0",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;now&quot;,
-    &quot;modifiedat&quot;: &quot;now&quot;,
-    &quot;defaultversionid&quot;: &quot;v2&quot;,
-    &quot;defaultversionsticky&quot;: false
+  "meta": {
+    "epoch": 1,
+    "createdat": "now",
+    "modifiedat": "now",
+    "defaultversionid": "v2",
+    "defaultversionsticky": false
   },
-  &quot;versions&quot;: {
-    &quot;v0&quot;: {
-      &quot;epoch&quot;: 1,
-      &quot;name&quot;: &quot;foo&quot;,
-      &quot;createdat&quot;: &quot;now&quot;,
-      &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestorid&quot;: &quot;v1&quot;
+  "versions": {
+    "v0": {
+      "epoch": 1,
+      "name": "foo",
+      "createdat": "now",
+      "modifiedat": "now",
+      "ancestorid": "v1"
     },
-    &quot;v1&quot;: {
-      &quot;epoch&quot;: 1,
-      &quot;createdat&quot;: &quot;2020&quot;,
-      &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestorid&quot;: &quot;v1&quot;
+    "v1": {
+      "epoch": 1,
+      "createdat": "2020",
+      "modifiedat": "now",
+      "ancestorid": "v1"
     },
-    &quot;v2&quot;: { see Resource.* attrs }
+    "v2": { see Resource.* attrs }
   }
 }
 </code></pre>
@@ -745,9 +740,9 @@ current default Version. However, it is also ignored when calculating the
 resulting default Version due to <code>defaultversionsticky</code> being <code>false</code>.</li>
 <li>Ancestor order: <code>v1</code> (2020) &lt;- <code>v0</code> (now) &lt;- <code>v2</code> (now).</li>
 </ul>
-<hr>
+<hr/>
 <h3 id="create-resource-with-sticky-defaultversionid">Create Resource with sticky defaultversionid <a class="anchor" href="#create-resource-with-sticky-defaultversionid">🔗</a></h3>
-<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<table border="1" cellborder="1" cellpadding="5"><tr><td valign="top">
 <p><strong>Initial State:</strong></p>
 <pre><code>Empty
 </code></pre>
@@ -755,43 +750,43 @@ resulting default Version due to <code>defaultversionsticky</code> being <code>f
 <pre><code>PUT /dirs/d1/files/f1
 
 {
-  &quot;meta&quot;: {
-    &quot;defaultversionid&quot;: &quot;v1&quot;,
-    &quot;defaultversionsticky&quot;: true
+  "meta": {
+    "defaultversionid": "v1",
+    "defaultversionsticky": true
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: {
-      &quot;createdat&quot;: &quot;2020&quot;
+  "versions": {
+    "v1": {
+      "createdat": "2020"
     },
-    &quot;v2&quot;: {}
+    "v2": {}
   }
 }
 </code></pre>
-</td><td valign=top>
+</td><td valign="top">
 <p><strong>Final State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v1&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;2020&quot;,
-  &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestorid&quot;: &quot;v1&quot;,
+  "fileid": "f1",
+  "versionid": "v1",
+  "epoch": 1,
+  "isdefault": true,
+  "createdat": "2020",
+  "modifiedat": "now",
+  "ancestorid": "v1",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;now&quot;,
-    &quot;modifiedat&quot;: &quot;now&quot;,
-    &quot;defaultversionid&quot;: &quot;v1&quot;,
-    &quot;defaultversionsticky&quot;: true
+  "meta": {
+    "epoch": 1,
+    "createdat": "now",
+    "modifiedat": "now",
+    "defaultversionid": "v1",
+    "defaultversionsticky": true
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: { see Resource.* attrs },
-    &quot;v2&quot;: {
-      &quot;epoch&quot;: 1,
-      &quot;createdat&quot;: &quot;now&quot;,
-      &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestorid&quot;: &quot;v1&quot;
+  "versions": {
+    "v1": { see Resource.* attrs },
+    "v2": {
+      "epoch": 1,
+      "createdat": "now",
+      "modifiedat": "now",
+      "ancestorid": "v1"
     }
   }
 }
@@ -800,34 +795,34 @@ resulting default Version due to <code>defaultversionsticky</code> being <code>f
 <p><strong>Notes:</strong></p>
 <ul>
 <li>In this case since <code>versionid</code> is not present, <code>meta.defaultversionid</code> will
-be used as the &quot;clue&quot; for the current default Version.</li>
+be used as the "clue" for the current default Version.</li>
 <li>And, Version v1 will be the default and it's sticky.</li>
 </ul>
-<hr>
+<hr/>
 <h3 id="update-resource-with-non-sticky-bad-defaultversionid">Update Resource with non-sticky bad defaultversionid <a class="anchor" href="#update-resource-with-non-sticky-bad-defaultversionid">🔗</a></h3>
-<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<table border="1" cellborder="1" cellpadding="5"><tr><td valign="top">
 <p><strong>Initial State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v1&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;2025&quot;,
-  &quot;modifiedat&quot;: &quot;2025&quot;,
-  &quot;ancestorid&quot;: &quot;v1&quot;,
+  "fileid": "f1",
+  "versionid": "v1",
+  "epoch": 1,
+  "isdefault": true,
+  "createdat": "2025",
+  "modifiedat": "2025",
+  "ancestorid": "v1",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;2025&quot;,
-    &quot;modifiedat&quot;: &quot;2025&quot;,
-    &quot;defaultversionid&quot;: &quot;v1&quot;,
-    &quot;defaultversionsticky&quot;: true
+  "meta": {
+    "epoch": 1,
+    "createdat": "2025",
+    "modifiedat": "2025",
+    "defaultversionid": "v1",
+    "defaultversionsticky": true
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: { see Resource.* attrs },
-    &quot;v2&quot;: {
-      &quot;createdat&quot;: &quot;2025&quot;,
-      &quot;ancestorid&quot;: &quot;v1&quot;
+  "versions": {
+    "v1": { see Resource.* attrs },
+    "v2": {
+      "createdat": "2025",
+      "ancestorid": "v1"
     }
   }
 }
@@ -836,43 +831,43 @@ be used as the &quot;clue&quot; for the current default Version.</li>
 <pre><code>PUT /dirs/d1/files/f1
 
 {
-  &quot;name&quot;: &quot;foo&quot;,
-  &quot;meta&quot;: {
-    &quot;defaultversionid&quot;: &quot;abc&quot;
+  "name": "foo",
+  "meta": {
+    "defaultversionid": "abc"
   },
-  &quot;versions&quot;: {
-    &quot;v2&quot;: {
-      &quot;createdat&quot;: &quot;2020&quot;
+  "versions": {
+    "v2": {
+      "createdat": "2020"
     }
   }
 }
 </code></pre>
-</td><td valign=top>
+</td><td valign="top">
 <p><strong>Final State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v1&quot;,
-  &quot;epoch&quot;: 2,
-  &quot;name&quot;: &quot;foo&quot;,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;2025&quot;,
-  &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestorid&quot;: &quot;v2&quot;,
+  "fileid": "f1",
+  "versionid": "v1",
+  "epoch": 2,
+  "name": "foo",
+  "isdefault": true,
+  "createdat": "2025",
+  "modifiedat": "now",
+  "ancestorid": "v2",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 2,
-    &quot;createdat&quot;: &quot;2025&quot;,
-    &quot;modifiedat&quot;: &quot;now&quot;,
-    &quot;defaultversionid&quot;: &quot;v1&quot;,
-    &quot;defaultversionsticky&quot;: false
+  "meta": {
+    "epoch": 2,
+    "createdat": "2025",
+    "modifiedat": "now",
+    "defaultversionid": "v1",
+    "defaultversionsticky": false
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: { see Resource.* attrs },
-    &quot;v2&quot;: {
-      &quot;epoch&quot;: 2,
-      &quot;createdat&quot;: &quot;2020&quot;,
-      &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestorid&quot;: &quot;v2&quot;
+  "versions": {
+    "v1": { see Resource.* attrs },
+    "v2": {
+      "epoch": 2,
+      "createdat": "2020",
+      "modifiedat": "now",
+      "ancestorid": "v2"
     }
   }
 }
@@ -881,41 +876,41 @@ be used as the &quot;clue&quot; for the current default Version.</li>
 <p><strong>Notes:</strong></p>
 <ul>
 <li>Current default Version is <code>v1</code>, and <code>v1</code> is not in the request's <code>versions</code>
-collection, so it's &quot;name&quot; attribute is updated.</li>
+collection, so it's "name" attribute is updated.</li>
 <li>Version <code>v2</code> is updated.</li>
 <li>While <code>meta.defaultversionid</code> references a non-existing Version, no error is
 generated because its value is ignored due to <code>meta.defaultversionsticky</code>
 being <code>false</code>.</li>
 <li>Ancestor order: <code>v2</code> (2020) &lt;- <code>v1</code> (2025).</li>
 </ul>
-<hr>
+<hr/>
 <h3 id="update-resource-with-sticky-non-specified-defaultversionid">Update Resource with sticky non-specified defaultversionid <a class="anchor" href="#update-resource-with-sticky-non-specified-defaultversionid">🔗</a></h3>
-<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<table border="1" cellborder="1" cellpadding="5"><tr><td valign="top">
 <p><strong>Initial State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v2&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;2025&quot;,
-  &quot;modifiedat&quot;: &quot;2025&quot;,
-  &quot;ancestorid&quot;: &quot;v1&quot;,
+  "fileid": "f1",
+  "versionid": "v2",
+  "epoch": 1,
+  "isdefault": true,
+  "createdat": "2025",
+  "modifiedat": "2025",
+  "ancestorid": "v1",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;2025&quot;,
-    &quot;modifiedat&quot;: &quot;2025&quot;,
-    &quot;defaultversionid&quot;: &quot;v2&quot;,
-    &quot;defaultversionsticky&quot;: false
+  "meta": {
+    "epoch": 1,
+    "createdat": "2025",
+    "modifiedat": "2025",
+    "defaultversionid": "v2",
+    "defaultversionsticky": false
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: {
-      &quot;epoch&quot;: 1,
-      &quot;createdat&quot;: &quot;2025&quot;,
-      &quot;modifiedat&quot;: &quot;2025&quot;,
-      &quot;ancestorid&quot;: &quot;v1&quot;
+  "versions": {
+    "v1": {
+      "epoch": 1,
+      "createdat": "2025",
+      "modifiedat": "2025",
+      "ancestorid": "v1"
     },
-    &quot;v2&quot;: { see Resource.* attrs }
+    "v2": { see Resource.* attrs }
     }
   }
 }
@@ -924,42 +919,42 @@ being <code>false</code>.</li>
 <pre><code>PUT /dirs/d1/files/f1
 
 {
-  &quot;name&quot;: &quot;foo&quot;,
-  &quot;meta&quot;: {
-    &quot;defaultversionsticky&quot;: true
+  "name": "foo",
+  "meta": {
+    "defaultversionsticky": true
   },
-  &quot;versions&quot;: {
-    &quot;v2&quot;: {
-      &quot;createdat&quot;: &quot;2020&quot;
+  "versions": {
+    "v2": {
+      "createdat": "2020"
     }
   }
 }
 </code></pre>
-</td><td valign=top>
+</td><td valign="top">
 <p><strong>Final State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v1&quot;,
-  &quot;epoch&quot;: 2,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;2025&quot;,
-  &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestorid&quot;: &quot;v2&quot;,
+  "fileid": "f1",
+  "versionid": "v1",
+  "epoch": 2,
+  "isdefault": true,
+  "createdat": "2025",
+  "modifiedat": "now",
+  "ancestorid": "v2",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 2,
-    &quot;createdat&quot;: &quot;2025&quot;,
-    &quot;modifiedat&quot;: &quot;now&quot;,
-    &quot;defaultversionid&quot;: &quot;v1&quot;,
-    &quot;defaultversionsticky&quot;: true
+  "meta": {
+    "epoch": 2,
+    "createdat": "2025",
+    "modifiedat": "now",
+    "defaultversionid": "v1",
+    "defaultversionsticky": true
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: { see Resource.* attrs },
-    &quot;v2&quot;: {
-      &quot;epoch&quot;: 2,
-      &quot;createdat&quot;: &quot;2020&quot;,
-      &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestorid&quot;: &quot;v2&quot;
+  "versions": {
+    "v1": { see Resource.* attrs },
+    "v2": {
+      "epoch": 2,
+      "createdat": "2020",
+      "modifiedat": "now",
+      "ancestorid": "v2"
     }
   }
 }
@@ -967,7 +962,7 @@ being <code>false</code>.</li>
 </td></tr></table>
 <p><strong>Notes:</strong></p>
 <ul>
-<li>Notice that &quot;Resource.name&quot; is ignored because <code>v2</code> (the current default
+<li>Notice that "Resource.name" is ignored because <code>v2</code> (the current default
 Version) appears in the request's <code>versions</code> collection.</li>
 <li>While the current default is <code>v2</code>, setting <code>defaultversionsticky</code> to <code>true</code>
 only takes effect after the default Version is recalculated. This is due to
@@ -976,34 +971,34 @@ not being in the request is akin to setting it to <code>null</code> in the reque
 the next example we'll see how <code>PATCH</code> changes this semantics.</li>
 <li>Ancestor order: <code>v2</code> (2020) &lt;- <code>v1</code> (2025).</li>
 </ul>
-<hr>
+<hr/>
 <h3 id="patch-resource-with-versions-and-defaultversionsticky">Patch Resource with Versions and defaultversionsticky <a class="anchor" href="#patch-resource-with-versions-and-defaultversionsticky">🔗</a></h3>
-<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<table border="1" cellborder="1" cellpadding="5"><tr><td valign="top">
 <p><strong>Initial State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v2&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;2025&quot;,
-  &quot;modifiedat&quot;: &quot;2025&quot;,
-  &quot;ancestorid&quot;: &quot;v1&quot;,
+  "fileid": "f1",
+  "versionid": "v2",
+  "epoch": 1,
+  "isdefault": true,
+  "createdat": "2025",
+  "modifiedat": "2025",
+  "ancestorid": "v1",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;2025&quot;,
-    &quot;modifiedat&quot;: &quot;2025&quot;,
-    &quot;defaultversionid&quot;: &quot;v2&quot;,
-    &quot;defaultversionsticky&quot;: false
+  "meta": {
+    "epoch": 1,
+    "createdat": "2025",
+    "modifiedat": "2025",
+    "defaultversionid": "v2",
+    "defaultversionsticky": false
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: {
-      &quot;epoch&quot;: 1,
-      &quot;createdat&quot;: &quot;2025&quot;,
-      &quot;modifiedat&quot;: &quot;2025&quot;,
-      &quot;ancestorid&quot;: &quot;v1&quot;
+  "versions": {
+    "v1": {
+      "epoch": 1,
+      "createdat": "2025",
+      "modifiedat": "2025",
+      "ancestorid": "v1"
     },
-    &quot;v2&quot;: { see Resource.* attrs }
+    "v2": { see Resource.* attrs }
     }
   }
 }
@@ -1012,43 +1007,43 @@ the next example we'll see how <code>PATCH</code> changes this semantics.</li>
 <pre><code>PATCH /dirs/d1/files/f1
 
 {
-  &quot;name&quot;: &quot;foo&quot;,
-  &quot;meta&quot;: {
-    &quot;defaultversionsticky&quot;: true
+  "name": "foo",
+  "meta": {
+    "defaultversionsticky": true
   },
-  &quot;versions&quot;: {
-    &quot;v2&quot;: {
-      &quot;createdat&quot;: &quot;2020&quot;
+  "versions": {
+    "v2": {
+      "createdat": "2020"
     }
   }
 }
 </code></pre>
-</td><td valign=top>
+</td><td valign="top">
 <p><strong>Final State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v2&quot;,
-  &quot;epoch&quot;: 2,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;2020&quot;,
-  &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestorid&quot;: &quot;v2&quot;,
+  "fileid": "f1",
+  "versionid": "v2",
+  "epoch": 2,
+  "isdefault": true,
+  "createdat": "2020",
+  "modifiedat": "now",
+  "ancestorid": "v2",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 2,
-    &quot;createdat&quot;: &quot;2025&quot;,
-    &quot;modifiedat&quot;: &quot;now&quot;,
-    &quot;defaultversionid&quot;: &quot;v2&quot;,
-    &quot;defaultversionsticky&quot;: true
+  "meta": {
+    "epoch": 2,
+    "createdat": "2025",
+    "modifiedat": "now",
+    "defaultversionid": "v2",
+    "defaultversionsticky": true
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: {
-      &quot;epoch&quot;: 2,
-      &quot;createdat&quot;: &quot;2025&quot;,
-      &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestorid&quot;: &quot;v2&quot;
+  "versions": {
+    "v1": {
+      "epoch": 2,
+      "createdat": "2025",
+      "modifiedat": "now",
+      "ancestorid": "v2"
     },
-    &quot;v2&quot;: { see Resource.* attrs }
+    "v2": { see Resource.* attrs }
   }
 }
 </code></pre>
@@ -1060,32 +1055,32 @@ the request's <code>versions</code> collection.</li>
 <li>Since this is a <code>PATCH</code>, unlike the previous example where
 <code>meta.defaultversionid</code> was implicitly set to <code>null</code>, in this case its value
 remains unchanged. So, when <code>meta.defaultversionsticky</code> is set to <code>true</code> the
-current default Version becomes &quot;sticky&quot;.</li>
+current default Version becomes "sticky".</li>
 <li>Ancestor order: <code>v2</code> (2020) &lt;- <code>v1</code> (2025).</li>
 </ul>
-<hr>
+<hr/>
 <h3 id="update-resource-with-empty-content">Update Resource with empty content <a class="anchor" href="#update-resource-with-empty-content">🔗</a></h3>
-<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<table border="1" cellborder="1" cellpadding="5"><tr><td valign="top">
 <p><strong>Initial State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v1&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;name&quot;: &quot;my file&quot;,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;2025&quot;,
-  &quot;modifiedat&quot;: &quot;2025&quot;,
-  &quot;ancestorid&quot;: &quot;v1&quot;,
+  "fileid": "f1",
+  "versionid": "v1",
+  "epoch": 1,
+  "name": "my file",
+  "isdefault": true,
+  "createdat": "2025",
+  "modifiedat": "2025",
+  "ancestorid": "v1",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;2025&quot;,
-    &quot;modifiedat&quot;: &quot;2025&quot;,
-    &quot;defaultversionid&quot;: &quot;v1&quot;,
-    &quot;defaultversionsticky&quot;: false
+  "meta": {
+    "epoch": 1,
+    "createdat": "2025",
+    "modifiedat": "2025",
+    "defaultversionid": "v1",
+    "defaultversionsticky": false
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: { see Resource.* attrs }
+  "versions": {
+    "v1": { see Resource.* attrs }
   }
 }
 </code></pre>
@@ -1094,26 +1089,26 @@ current default Version becomes &quot;sticky&quot;.</li>
 
 {}
 </code></pre>
-</td><td valign=top>
+</td><td valign="top">
 <p><strong>Final State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v1&quot;,
-  &quot;epoch&quot;: 2,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;2025&quot;,
-  &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestorid&quot;: &quot;v1&quot;,
+  "fileid": "f1",
+  "versionid": "v1",
+  "epoch": 2,
+  "isdefault": true,
+  "createdat": "2025",
+  "modifiedat": "now",
+  "ancestorid": "v1",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;2025&quot;,
-    &quot;modifiedat&quot;: &quot;2025&quot;,
-    &quot;defaultversionid&quot;: &quot;v1&quot;,
-    &quot;defaultversionsticky&quot;: false
+  "meta": {
+    "epoch": 1,
+    "createdat": "2025",
+    "modifiedat": "2025",
+    "defaultversionid": "v1",
+    "defaultversionsticky": false
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: { see Resource.* attrs }
+  "versions": {
+    "v1": { see Resource.* attrs }
   }
 }
 </code></pre>
@@ -1124,30 +1119,30 @@ current default Version becomes &quot;sticky&quot;.</li>
 of all attributes.</li>
 <li>No attributes in <code>meta</code> are updated.</li>
 </ul>
-<hr>
+<hr/>
 <h3 id="patch-resource-with-empty-content">Patch Resource with empty content <a class="anchor" href="#patch-resource-with-empty-content">🔗</a></h3>
-<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<table border="1" cellborder="1" cellpadding="5"><tr><td valign="top">
 <p><strong>Initial State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v1&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;name&quot;: &quot;my file&quot;,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;2025&quot;,
-  &quot;modifiedat&quot;: &quot;2025&quot;,
-  &quot;ancestorid&quot;: &quot;v1&quot;,
+  "fileid": "f1",
+  "versionid": "v1",
+  "epoch": 1,
+  "name": "my file",
+  "isdefault": true,
+  "createdat": "2025",
+  "modifiedat": "2025",
+  "ancestorid": "v1",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;2025&quot;,
-    &quot;modifiedat&quot;: &quot;2025&quot;,
-    &quot;defaultversionid&quot;: &quot;v1&quot;,
-    &quot;defaultversionsticky&quot;: false
+  "meta": {
+    "epoch": 1,
+    "createdat": "2025",
+    "modifiedat": "2025",
+    "defaultversionid": "v1",
+    "defaultversionsticky": false
   },
 
-  &quot;versions&quot;: {
-    &quot;v1&quot;: { see Resource.* attrs }
+  "versions": {
+    "v1": { see Resource.* attrs }
   }
 }
 </code></pre>
@@ -1156,27 +1151,27 @@ of all attributes.</li>
 
 {}
 </code></pre>
-</td><td valign=top>
+</td><td valign="top">
 <p><strong>Final State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v1&quot;,
-  &quot;epoch&quot;: 2,
-  &quot;name&quot;: &quot;my file&quot;,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;2025&quot;,
-  &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestorid&quot;: &quot;v1&quot;,
+  "fileid": "f1",
+  "versionid": "v1",
+  "epoch": 2,
+  "name": "my file",
+  "isdefault": true,
+  "createdat": "2025",
+  "modifiedat": "now",
+  "ancestorid": "v1",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;2025&quot;,
-    &quot;modifiedat&quot;: &quot;2025&quot;,
-    &quot;defaultversionid&quot;: &quot;v1&quot;,
-    &quot;defaultversionsticky&quot;: false
+  "meta": {
+    "epoch": 1,
+    "createdat": "2025",
+    "modifiedat": "2025",
+    "defaultversionid": "v1",
+    "defaultversionsticky": false
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: { see Resource.* attrs }
+  "versions": {
+    "v1": { see Resource.* attrs }
   }
 }
 </code></pre>
@@ -1189,29 +1184,29 @@ of all attributes.</li>
 current default Version.</li>
 <li>The <code>meta</code> sub-object is unchanged.</li>
 </ul>
-<hr>
+<hr/>
 <h3 id="update-resource-with-new-description">Update Resource with new description <a class="anchor" href="#update-resource-with-new-description">🔗</a></h3>
-<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<table border="1" cellborder="1" cellpadding="5"><tr><td valign="top">
 <p><strong>Initial State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v1&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;name&quot;: &quot;my file&quot;,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;2025&quot;,
-  &quot;modifiedat&quot;: &quot;2025&quot;,
-  &quot;ancestorid&quot;: &quot;v1&quot;,
+  "fileid": "f1",
+  "versionid": "v1",
+  "epoch": 1,
+  "name": "my file",
+  "isdefault": true,
+  "createdat": "2025",
+  "modifiedat": "2025",
+  "ancestorid": "v1",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;2025&quot;,
-    &quot;modifiedat&quot;: &quot;2025&quot;,
-    &quot;defaultversionid&quot;: &quot;v1&quot;,
-    &quot;defaultversionsticky&quot;: false
+  "meta": {
+    "epoch": 1,
+    "createdat": "2025",
+    "modifiedat": "2025",
+    "defaultversionid": "v1",
+    "defaultversionsticky": false
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: { see Resource.* attrs }
+  "versions": {
+    "v1": { see Resource.* attrs }
   }
 }
 </code></pre>
@@ -1219,30 +1214,30 @@ current default Version.</li>
 <pre><code>PUT /dirs/d1/files/f1
 
 {
-  &quot;description&quot;: &quot;very cool&quot;
+  "description": "very cool"
 }
 </code></pre>
-</td><td valign=top>
+</td><td valign="top">
 <p><strong>Final State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v1&quot;,
-  &quot;epoch&quot;: 2,
-  &quot;isdefault&quot;: true,
-  &quot;description&quot;: &quot;very cool&quot;,
-  &quot;createdat&quot;: &quot;2025&quot;,
-  &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestorid&quot;: &quot;v1&quot;,
+  "fileid": "f1",
+  "versionid": "v1",
+  "epoch": 2,
+  "isdefault": true,
+  "description": "very cool",
+  "createdat": "2025",
+  "modifiedat": "now",
+  "ancestorid": "v1",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;2025&quot;,
-    &quot;modifiedat&quot;: &quot;2025&quot;,
-    &quot;defaultversionid&quot;: &quot;v1&quot;,
-    &quot;defaultversionsticky&quot;: false
+  "meta": {
+    "epoch": 1,
+    "createdat": "2025",
+    "modifiedat": "2025",
+    "defaultversionid": "v1",
+    "defaultversionsticky": false
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: { see Resource.* attrs }
+  "versions": {
+    "v1": { see Resource.* attrs }
   }
 }
 </code></pre>
@@ -1254,29 +1249,29 @@ current default Version.</li>
 <li>Its <code>epoch</code> and <code>modifiedat</code> are automatically updated.</li>
 <li>The <code>meta</code> sub-object is unchanged.</li>
 </ul>
-<hr>
+<hr/>
 <h3 id="patch-resources-description-field">Patch Resource's description field <a class="anchor" href="#patch-resources-description-field">🔗</a></h3>
-<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<table border="1" cellborder="1" cellpadding="5"><tr><td valign="top">
 <p><strong>Initial State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v1&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;name&quot;: &quot;my file&quot;,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;2025&quot;,
-  &quot;modifiedat&quot;: &quot;2025&quot;,
-  &quot;ancestorid&quot;: &quot;v1&quot;,
+  "fileid": "f1",
+  "versionid": "v1",
+  "epoch": 1,
+  "name": "my file",
+  "isdefault": true,
+  "createdat": "2025",
+  "modifiedat": "2025",
+  "ancestorid": "v1",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;2025&quot;,
-    &quot;modifiedat&quot;: &quot;2025&quot;,
-    &quot;defaultversionid&quot;: &quot;v1&quot;,
-    &quot;defaultversionsticky&quot;: false
+  "meta": {
+    "epoch": 1,
+    "createdat": "2025",
+    "modifiedat": "2025",
+    "defaultversionid": "v1",
+    "defaultversionsticky": false
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: { see Resource.* attrs }
+  "versions": {
+    "v1": { see Resource.* attrs }
   }
 }
 </code></pre>
@@ -1284,31 +1279,31 @@ current default Version.</li>
 <pre><code>PATCH /dirs/d1/files/f1
 
 {
-  &quot;description&quot;: &quot;very cool&quot;
+  "description": "very cool"
 }
 </code></pre>
-</td><td valign=top>
+</td><td valign="top">
 <p><strong>Final State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v1&quot;,
-  &quot;epoch&quot;: 2,
-  &quot;name&quot;: &quot;my file&quot;,
-  &quot;isdefault&quot;: true,
-  &quot;description&quot;: &quot;very cool&quot;,
-  &quot;createdat&quot;: &quot;2025&quot;,
-  &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestorid&quot;: &quot;v1&quot;,
+  "fileid": "f1",
+  "versionid": "v1",
+  "epoch": 2,
+  "name": "my file",
+  "isdefault": true,
+  "description": "very cool",
+  "createdat": "2025",
+  "modifiedat": "now",
+  "ancestorid": "v1",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;2025&quot;,
-    &quot;modifiedat&quot;: &quot;2025&quot;,
-    &quot;defaultversionid&quot;: &quot;v1&quot;,
-    &quot;defaultversionsticky&quot;: false
+  "meta": {
+    "epoch": 1,
+    "createdat": "2025",
+    "modifiedat": "2025",
+    "defaultversionid": "v1",
+    "defaultversionsticky": false
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: { see Resource.* attrs }
+  "versions": {
+    "v1": { see Resource.* attrs }
   }
 }
 </code></pre>
@@ -1320,29 +1315,29 @@ current default Version.</li>
 <li>Its <code>epoch</code> and <code>modifiedat</code> are automatically updated.</li>
 <li>The <code>meta</code> sub-object is unchanged.</li>
 </ul>
-<hr>
+<hr/>
 <h3 id="update-resource-with-non-specified-defaultversionsticky">Update Resource with non-specified defaultversionsticky <a class="anchor" href="#update-resource-with-non-specified-defaultversionsticky">🔗</a></h3>
-<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<table border="1" cellborder="1" cellpadding="5"><tr><td valign="top">
 <p><strong>Initial State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v1&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;name&quot;: &quot;my file&quot;,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;2025&quot;,
-  &quot;modifiedat&quot;: &quot;2025&quot;,
-  &quot;ancestorid&quot;: &quot;v1&quot;,
+  "fileid": "f1",
+  "versionid": "v1",
+  "epoch": 1,
+  "name": "my file",
+  "isdefault": true,
+  "createdat": "2025",
+  "modifiedat": "2025",
+  "ancestorid": "v1",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;2025&quot;,
-    &quot;modifiedat&quot;: &quot;2025&quot;,
-    &quot;defaultversionid&quot;: &quot;v1&quot;,
-    &quot;defaultversionsticky&quot;: false
+  "meta": {
+    "epoch": 1,
+    "createdat": "2025",
+    "modifiedat": "2025",
+    "defaultversionid": "v1",
+    "defaultversionsticky": false
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: { see Resource.* attrs }
+  "versions": {
+    "v1": { see Resource.* attrs }
   }
 }
 </code></pre>
@@ -1350,31 +1345,31 @@ current default Version.</li>
 <pre><code>PUT /dirs/d1/files/f1
 
 {
-  &quot;meta: {
-    &quot;defaultversionsticky&quot;: true
+  "meta: {
+    "defaultversionsticky": true
   }
 }
 </code></pre>
-</td><td valign=top>
+</td><td valign="top">
 <p><strong>Final State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v1&quot;,
-  &quot;epoch&quot;: 2,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;2025&quot;,
-  &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestorid&quot;: &quot;v1&quot;,
+  "fileid": "f1",
+  "versionid": "v1",
+  "epoch": 2,
+  "isdefault": true,
+  "createdat": "2025",
+  "modifiedat": "now",
+  "ancestorid": "v1",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 2,
-    &quot;createdat&quot;: &quot;2025&quot;,
-    &quot;modifiedat&quot;: &quot;now&quot;,
-    &quot;defaultversionid&quot;: &quot;v1&quot;,
-    &quot;defaultversionsticky&quot;: true
+  "meta": {
+    "epoch": 2,
+    "createdat": "2025",
+    "modifiedat": "now",
+    "defaultversionid": "v1",
+    "defaultversionsticky": true
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: { see Resource.* attrs }
+  "versions": {
+    "v1": { see Resource.* attrs }
   }
 }
 </code></pre>
@@ -1386,29 +1381,29 @@ being a <code>PUT</code>. Its <code>epoch</code> and <code>modifiedat</code> are
 <li><code>meta.defaultversionsticky</code> is set to <code>true</code>, and since there is only one
 Version the calculated default Version remains <code>1</code>.</li>
 </ul>
-<hr>
+<hr/>
 <h3 id="patch-resource-with-defaultversionsticky">Patch Resource with defaultversionsticky <a class="anchor" href="#patch-resource-with-defaultversionsticky">🔗</a></h3>
-<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<table border="1" cellborder="1" cellpadding="5"><tr><td valign="top">
 <p><strong>Initial State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v1&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;name&quot;: &quot;my file&quot;,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;2025&quot;,
-  &quot;modifiedat&quot;: &quot;2025&quot;,
-  &quot;ancestorid&quot;: &quot;v1&quot;,
+  "fileid": "f1",
+  "versionid": "v1",
+  "epoch": 1,
+  "name": "my file",
+  "isdefault": true,
+  "createdat": "2025",
+  "modifiedat": "2025",
+  "ancestorid": "v1",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;2025&quot;,
-    &quot;modifiedat&quot;: &quot;2025&quot;,
-    &quot;defaultversionid&quot;: &quot;v1&quot;,
-    &quot;defaultversionsticky&quot;: false
+  "meta": {
+    "epoch": 1,
+    "createdat": "2025",
+    "modifiedat": "2025",
+    "defaultversionid": "v1",
+    "defaultversionsticky": false
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: { see Resource.* attrs }
+  "versions": {
+    "v1": { see Resource.* attrs }
   }
 }
 </code></pre>
@@ -1416,32 +1411,32 @@ Version the calculated default Version remains <code>1</code>.</li>
 <pre><code>PATCH /dirs/d1/files/f1
 
 {
-  &quot;meta: {
-    &quot;defaultversionsticky&quot;: true
+  "meta: {
+    "defaultversionsticky": true
   }
 }
 </code></pre>
-</td><td valign=top>
+</td><td valign="top">
 <p><strong>Final State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v1&quot;,
-  &quot;epoch&quot;: 2,
-  &quot;name&quot;: &quot;my file&quot;,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;2025&quot;,
-  &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestorid&quot;: &quot;v1&quot;,
+  "fileid": "f1",
+  "versionid": "v1",
+  "epoch": 2,
+  "name": "my file",
+  "isdefault": true,
+  "createdat": "2025",
+  "modifiedat": "now",
+  "ancestorid": "v1",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 2,
-    &quot;createdat&quot;: &quot;2025&quot;,
-    &quot;modifiedat&quot;: &quot;now&quot;,
-    &quot;defaultversionid&quot;: &quot;v1&quot;,
-    &quot;defaultversionsticky&quot;: true
+  "meta": {
+    "epoch": 2,
+    "createdat": "2025",
+    "modifiedat": "now",
+    "defaultversionid": "v1",
+    "defaultversionsticky": true
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: { see Resource.* attrs }
+  "versions": {
+    "v1": { see Resource.* attrs }
   }
 }
 </code></pre>
@@ -1455,34 +1450,34 @@ Version the calculated default Version remains <code>1</code>.</li>
 <li><code>meta.defaultversionsticky</code> is set to <code>true</code>, and since there is only one
 Version the calculated default Version remains <code>1</code>.</li>
 </ul>
-<hr>
+<hr/>
 <h3 id="patch-resource-with-sticky-defaultversionid">Patch Resource with sticky defaultversionid <a class="anchor" href="#patch-resource-with-sticky-defaultversionid">🔗</a></h3>
-<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<table border="1" cellborder="1" cellpadding="5"><tr><td valign="top">
 <p><strong>Initial State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v2&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;2025&quot;,
-  &quot;modifiedat&quot;: &quot;2025&quot;,
-  &quot;ancestorid&quot;: &quot;v1&quot;,
+  "fileid": "f1",
+  "versionid": "v2",
+  "epoch": 1,
+  "isdefault": true,
+  "createdat": "2025",
+  "modifiedat": "2025",
+  "ancestorid": "v1",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;2025&quot;,
-    &quot;modifiedat&quot;: &quot;2025&quot;,
-    &quot;defaultversionid&quot;: &quot;v2&quot;,
-    &quot;defaultversionsticky&quot;: false
+  "meta": {
+    "epoch": 1,
+    "createdat": "2025",
+    "modifiedat": "2025",
+    "defaultversionid": "v2",
+    "defaultversionsticky": false
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: {
-      &quot;epoch&quot;: 1,
-      &quot;createdat&quot;: &quot;2025&quot;,
-      &quot;modifiedat&quot;: &quot;2025&quot;,
-      &quot;ancestorid&quot;: &quot;v1&quot;
+  "versions": {
+    "v1": {
+      "epoch": 1,
+      "createdat": "2025",
+      "modifiedat": "2025",
+      "ancestorid": "v1"
     },
-    &quot;v2&quot;: { see Resource.* attrs }
+    "v2": { see Resource.* attrs }
   }
 }
 </code></pre>
@@ -1490,35 +1485,35 @@ Version the calculated default Version remains <code>1</code>.</li>
 <pre><code>PATCH /dirs/d1/files/f1/meta
 
 {
-  &quot;defaultversionid&quot;: &quot;v1&quot;,
-  &quot;defaultversionsticky&quot;: true
+  "defaultversionid": "v1",
+  "defaultversionsticky": true
 }
 </code></pre>
-</td><td valign=top>
+</td><td valign="top">
 <p><strong>Final State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v1&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;2025&quot;,
-  &quot;modifiedat&quot;: &quot;2025&quot;,
-  &quot;ancestorid&quot;: &quot;v1&quot;,
+  "fileid": "f1",
+  "versionid": "v1",
+  "epoch": 1,
+  "isdefault": true,
+  "createdat": "2025",
+  "modifiedat": "2025",
+  "ancestorid": "v1",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 2,
-    &quot;createdat&quot;: &quot;2025&quot;,
-    &quot;modifiedat&quot;: &quot;now&quot;,
-    &quot;defaultversionid&quot;: &quot;v1&quot;,
-    &quot;defaultversionsticky&quot;: true
+  "meta": {
+    "epoch": 2,
+    "createdat": "2025",
+    "modifiedat": "now",
+    "defaultversionid": "v1",
+    "defaultversionsticky": true
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: { see Resource.* attrs },
-    &quot;v2&quot;: {
-      &quot;epoch&quot;: 1,
-      &quot;createdat&quot;: &quot;2025&quot;,
-      &quot;modifiedat&quot;: &quot;2025&quot;,
-      &quot;ancestorid&quot;: &quot;v1&quot;
+  "versions": {
+    "v1": { see Resource.* attrs },
+    "v2": {
+      "epoch": 1,
+      "createdat": "2025",
+      "modifiedat": "2025",
+      "ancestorid": "v1"
     }
   }
 }
@@ -1533,29 +1528,29 @@ sticky.</li>
 <li>The <code>meta</code>'s <code>epoch</code> and <code>modifiedat</code> values are updated.</li>
 <li>Ancestor order: <code>v1</code> (2025) &lt;- <code>v2</code> (2025).</li>
 </ul>
-<hr>
+<hr/>
 <h3 id="patch-resource-with-bad-defaultversionid">Patch Resource with bad defaultversionid <a class="anchor" href="#patch-resource-with-bad-defaultversionid">🔗</a></h3>
-<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<table border="1" cellborder="1" cellpadding="5"><tr><td valign="top">
 <p><strong>Initial State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v1&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;name&quot;: &quot;my file&quot;,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;2025&quot;,
-  &quot;modifiedat&quot;: &quot;2025&quot;,
-  &quot;ancestorid&quot;: &quot;v1&quot;,
+  "fileid": "f1",
+  "versionid": "v1",
+  "epoch": 1,
+  "name": "my file",
+  "isdefault": true,
+  "createdat": "2025",
+  "modifiedat": "2025",
+  "ancestorid": "v1",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;2025&quot;,
-    &quot;modifiedat&quot;: &quot;2025&quot;,
-    &quot;defaultversionid&quot;: &quot;v1&quot;,
-    &quot;defaultversionsticky&quot;: false
+  "meta": {
+    "epoch": 1,
+    "createdat": "2025",
+    "modifiedat": "2025",
+    "defaultversionid": "v1",
+    "defaultversionsticky": false
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: { see Resource.* attrs }
+  "versions": {
+    "v1": { see Resource.* attrs }
   }
 }
 </code></pre>
@@ -1563,12 +1558,12 @@ sticky.</li>
 <pre><code>PATCH /dirs/d1/files/f1
 
 {
-  &quot;meta: {
-    &quot;defaultversionid&quot;: &quot;foo&quot;
+  "meta: {
+    "defaultversionid": "foo"
   }
 }
 </code></pre>
-</td><td valign=top>
+</td><td valign="top">
 <p><strong>Final State:</strong></p>
 <pre><code>Error due to `foo` being an unknown Version.
 </code></pre>
@@ -1581,29 +1576,29 @@ sets <code>meta.defaultversionsticky</code> to <code>true</code>. If this operat
 instead, the error would not have been generated and <code>meta.defaultversionid</code>
 would have been ignored.</li>
 </ul>
-<hr>
+<hr/>
 <h3 id="update-resource-with-bad-sticky-defaultversionid">Update Resource with bad sticky defaultversionid <a class="anchor" href="#update-resource-with-bad-sticky-defaultversionid">🔗</a></h3>
-<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<table border="1" cellborder="1" cellpadding="5"><tr><td valign="top">
 <p><strong>Initial State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v1&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;name&quot;: &quot;my file&quot;,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;2025&quot;,
-  &quot;modifiedat&quot;: &quot;2025&quot;,
-  &quot;ancestorid&quot;: &quot;v1&quot;,
+  "fileid": "f1",
+  "versionid": "v1",
+  "epoch": 1,
+  "name": "my file",
+  "isdefault": true,
+  "createdat": "2025",
+  "modifiedat": "2025",
+  "ancestorid": "v1",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;2025&quot;,
-    &quot;modifiedat&quot;: &quot;2025&quot;,
-    &quot;defaultversionid&quot;: &quot;v1&quot;,
-    &quot;defaultversionsticky&quot;: false
+  "meta": {
+    "epoch": 1,
+    "createdat": "2025",
+    "modifiedat": "2025",
+    "defaultversionid": "v1",
+    "defaultversionsticky": false
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: { see Resource.* attrs }
+  "versions": {
+    "v1": { see Resource.* attrs }
   }
 }
 </code></pre>
@@ -1611,13 +1606,13 @@ would have been ignored.</li>
 <pre><code>PUT /dirs/d1/files/f1
 
 {
-  &quot;meta: {
-    &quot;defaultversionid&quot;: &quot;foo&quot;,
-    &quot;defaultversionsticky&quot;: true
+  "meta: {
+    "defaultversionid": "foo",
+    "defaultversionsticky": true
   }
 }
 </code></pre>
-</td><td valign=top>
+</td><td valign="top">
 <p><strong>Final State:</strong></p>
 <pre><code>Error due to `foo` being an unknown Version.
 </code></pre>
@@ -1628,28 +1623,28 @@ would have been ignored.</li>
 <code>meta.defaultversionsticky</code> had not been included in the request with a
 value of <code>true</code> then <code>defaultversionid</code> would have been ignored.</li>
 </ul>
-<hr>
+<hr/>
 <h3 id="update-resource-with-non-specified-sticky-default-version">Update Resource with non-specified sticky default Version <a class="anchor" href="#update-resource-with-non-specified-sticky-default-version">🔗</a></h3>
-<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<table border="1" cellborder="1" cellpadding="5"><tr><td valign="top">
 <p><strong>Initial State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v1&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;2025&quot;,
-  &quot;modifiedat&quot;: &quot;2025&quot;,
-  &quot;ancestorid&quot;: &quot;v1&quot;,
+  "fileid": "f1",
+  "versionid": "v1",
+  "epoch": 1,
+  "isdefault": true,
+  "createdat": "2025",
+  "modifiedat": "2025",
+  "ancestorid": "v1",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;2025&quot;,
-    &quot;modifiedat&quot;: &quot;2025&quot;,
-    &quot;defaultversionid&quot;: &quot;v1&quot;,
-    &quot;defaultversionsticky&quot;: false
+  "meta": {
+    "epoch": 1,
+    "createdat": "2025",
+    "modifiedat": "2025",
+    "defaultversionid": "v1",
+    "defaultversionsticky": false
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: { ... }
+  "versions": {
+    "v1": { ... }
   }
 }
 </code></pre>
@@ -1657,42 +1652,42 @@ value of <code>true</code> then <code>defaultversionid</code> would have been ig
 <pre><code>PUT /dirs/d1/files/f1
 
 {
-  &quot;name&quot;: &quot;foo&quot;,
-  &quot;createdat&quot;: &quot;1999&quot;
-  &quot;meta&quot;: {
-    &quot;defaultversionsticky&quot;: true
+  "name": "foo",
+  "createdat": "1999"
+  "meta": {
+    "defaultversionsticky": true
   },
-  &quot;versions&quot;: {
-     &quot;v2&quot;: { &quot;createdat&quot;: &quot;1998&quot; }
+  "versions": {
+     "v2": { "createdat": "1998" }
   }
 }
 </code></pre>
-</td><td valign=top>
+</td><td valign="top">
 <p><strong>Final State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v1&quot;,
-  &quot;epoch&quot;: 2,
-  &quot;name&quot;: &quot;foo&quot;,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;1999&quot;,
-  &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestorid&quot;: &quot;v2&quot;,
+  "fileid": "f1",
+  "versionid": "v1",
+  "epoch": 2,
+  "name": "foo",
+  "isdefault": true,
+  "createdat": "1999",
+  "modifiedat": "now",
+  "ancestorid": "v2",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 2,
-    &quot;createdat&quot;: &quot;2025&quot;,
-    &quot;modifiedat&quot;: &quot;now&quot;,
-    &quot;defaultversionid&quot;: &quot;v1&quot;,
-    &quot;defaultversionsticky&quot;: true
+  "meta": {
+    "epoch": 2,
+    "createdat": "2025",
+    "modifiedat": "now",
+    "defaultversionid": "v1",
+    "defaultversionsticky": true
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: { see Resource.* attrs },
-    &quot;v2&quot;: {
-       &quot;epoch&quot;: 1,
-       &quot;createdat&quot;: &quot;1998&quot;,
-       &quot;modifiedat&quot;: &quot;now&quot;,
-       &quot;ancestorid&quot;: &quot;v2&quot;
+  "versions": {
+    "v1": { see Resource.* attrs },
+    "v2": {
+       "epoch": 1,
+       "createdat": "1998",
+       "modifiedat": "now",
+       "ancestorid": "v2"
      }
   }
 }
@@ -1706,9 +1701,9 @@ value of <code>true</code> then <code>defaultversionid</code> would have been ig
 a newer <code>createdat</code> value. And it is now sticky per the request.</li>
 <li>Ancestor order: <code>v2</code> (1998) &lt;- <code>v1</code> (1999).</li>
 </ul>
-<hr>
+<hr/>
 <h3 id="create-resource-with-conflicting-default-version-attributes---variant-1">Create Resource with conflicting default Version attributes - variant 1 <a class="anchor" href="#create-resource-with-conflicting-default-version-attributes---variant-1">🔗</a></h3>
-<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<table border="1" cellborder="1" cellpadding="5"><tr><td valign="top">
 <p><strong>Initial State:</strong></p>
 <pre><code>Empty
 </code></pre>
@@ -1716,44 +1711,44 @@ a newer <code>createdat</code> value. And it is now sticky per the request.</li>
 <pre><code>PUT /dirs/d1/files/f1
 
 {
-  &quot;versionid&quot;: &quot;v1&quot;,
-  &quot;name&quot;: &quot;foo&quot;,
-  &quot;meta&quot;: {
-    &quot;defaultversionsticky&quot;: true
+  "versionid": "v1",
+  "name": "foo",
+  "meta": {
+    "defaultversionsticky": true
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: {&quot;name&quot;:&quot;abc&quot;},
-    &quot;v2&quot;: {}
+  "versions": {
+    "v1": {"name":"abc"},
+    "v2": {}
   }
 }
 </code></pre>
-</td><td valign=top>
+</td><td valign="top">
 <p><strong>Final State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v2&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;now&quot;,
-  &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestorid&quot;: &quot;v1&quot;,
+  "fileid": "f1",
+  "versionid": "v2",
+  "epoch": 1,
+  "isdefault": true,
+  "createdat": "now",
+  "modifiedat": "now",
+  "ancestorid": "v1",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;now&quot;,
-    &quot;modifiedat&quot;: &quot;now&quot;,
-    &quot;defaultversionid&quot;: &quot;v2&quot;,
-    &quot;defaultversionsticky&quot;: true
+  "meta": {
+    "epoch": 1,
+    "createdat": "now",
+    "modifiedat": "now",
+    "defaultversionid": "v2",
+    "defaultversionsticky": true
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: {
-      &quot;epoch&quot;: 1,
-      &quot;name&quot;: &quot;abc&quot;,
-      &quot;createdat&quot;: &quot;now&quot;,
-      &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestorid&quot;: &quot;v1&quot;
+  "versions": {
+    "v1": {
+      "epoch": 1,
+      "name": "abc",
+      "createdat": "now",
+      "modifiedat": "now",
+      "ancestorid": "v1"
     },
-    &quot;v2&quot;: { see Resource.* attrs }
+    "v2": { see Resource.* attrs }
   }
 }
 </code></pre>
@@ -1763,9 +1758,9 @@ a newer <code>createdat</code> value. And it is now sticky per the request.</li>
 <li>Resource.name is ignored because <code>v1</code> is in request's <code>versions</code> collection.</li>
 <li>Version <code>v2</code> is default because it's the highest alphabetically.</li>
 </ul>
-<hr>
+<hr/>
 <h3 id="create-resource-with-conflicting-default-version-attributes---variant-2">Create Resource with conflicting default Version attributes - variant 2 <a class="anchor" href="#create-resource-with-conflicting-default-version-attributes---variant-2">🔗</a></h3>
-<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<table border="1" cellborder="1" cellpadding="5"><tr><td valign="top">
 <p><strong>Initial State:</strong></p>
 <pre><code>Empty
 </code></pre>
@@ -1773,58 +1768,58 @@ a newer <code>createdat</code> value. And it is now sticky per the request.</li>
 <pre><code>PUT /dirs/d1/files/f1
 
 {
-  &quot;meta&quot;: {
-    &quot;defaultversionid&quot;: &quot;v1&quot;
+  "meta": {
+    "defaultversionid": "v1"
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: {&quot;name&quot;:&quot;abc&quot;},
-    &quot;v2&quot;: {}
+  "versions": {
+    "v1": {"name":"abc"},
+    "v2": {}
   }
 }
 </code></pre>
-</td><td valign=top>
+</td><td valign="top">
 <p><strong>Final State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v2&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;now&quot;,
-  &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestorid&quot;: &quot;v1&quot;,
+  "fileid": "f1",
+  "versionid": "v2",
+  "epoch": 1,
+  "isdefault": true,
+  "createdat": "now",
+  "modifiedat": "now",
+  "ancestorid": "v1",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;now&quot;,
-    &quot;modifiedat&quot;: &quot;now&quot;,
-    &quot;defaultversionid&quot;: &quot;v2&quot;,
-    &quot;defaultversionsticky&quot;: false
+  "meta": {
+    "epoch": 1,
+    "createdat": "now",
+    "modifiedat": "now",
+    "defaultversionid": "v2",
+    "defaultversionsticky": false
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: {
-      &quot;epoch&quot;: 1,
-      &quot;name&quot;: &quot;abc&quot;,
-      &quot;createdat&quot;: &quot;now&quot;,
-      &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestorid&quot;: &quot;v1&quot;
+  "versions": {
+    "v1": {
+      "epoch": 1,
+      "name": "abc",
+      "createdat": "now",
+      "modifiedat": "now",
+      "ancestorid": "v1"
     },
-    &quot;v2&quot;: { see Resource.* attrs }
+    "v2": { see Resource.* attrs }
   }
 }
 </code></pre>
 </td></tr></table>
 <p><strong>Notes:</strong></p>
 <ul>
-<li>Resource.* attributes (implied &quot;null&quot; values because they're missing) are
+<li>Resource.* attributes (implied "null" values because they're missing) are
 ignored because <code>v1</code> is in the request's <code>versions</code> collection.</li>
 <li>Version <code>v2</code> is default because it's the highest alphabetically,</li>
 <li>Despite <code>meta.defaultversionid</code> being specified, it is ignored when
 calculating the default Version because <code>meta.defaultversionsticky</code> is not
 <code>true</code>.</li>
 </ul>
-<hr>
+<hr/>
 <h3 id="create-resource-with-conflicting-default-version-attributes---variant-3">Create Resource with conflicting default Version attributes - variant 3 <a class="anchor" href="#create-resource-with-conflicting-default-version-attributes---variant-3">🔗</a></h3>
-<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<table border="1" cellborder="1" cellpadding="5"><tr><td valign="top">
 <p><strong>Initial State:</strong></p>
 <pre><code>Empty
 </code></pre>
@@ -1832,40 +1827,40 @@ calculating the default Version because <code>meta.defaultversionsticky</code> i
 <pre><code>PUT /dirs/d1/files/f1
 
 {
-  &quot;versionid&quot;: &quot;v1&quot;,
-  &quot;versions&quot;: {
-    &quot;v1&quot;: {&quot;name&quot;:&quot;abc&quot;},
-    &quot;v2&quot;: {}
+  "versionid": "v1",
+  "versions": {
+    "v1": {"name":"abc"},
+    "v2": {}
   }
 }
 </code></pre>
-</td><td valign=top>
+</td><td valign="top">
 <p><strong>Final State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v2&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;now&quot;,
-  &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestorid&quot;: &quot;v1&quot;,
+  "fileid": "f1",
+  "versionid": "v2",
+  "epoch": 1,
+  "isdefault": true,
+  "createdat": "now",
+  "modifiedat": "now",
+  "ancestorid": "v1",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;now&quot;,
-    &quot;modifiedat&quot;: &quot;now&quot;,
-    &quot;defaultversionid&quot;: &quot;v2&quot;,
-    &quot;defaultversionsticky&quot;: false
+  "meta": {
+    "epoch": 1,
+    "createdat": "now",
+    "modifiedat": "now",
+    "defaultversionid": "v2",
+    "defaultversionsticky": false
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: {
-      &quot;epoch&quot;: 1,
-      &quot;name&quot;: &quot;abc&quot;,
-      &quot;createdat&quot;: &quot;now&quot;,
-      &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestorid&quot;: &quot;v1&quot;
+  "versions": {
+    "v1": {
+      "epoch": 1,
+      "name": "abc",
+      "createdat": "now",
+      "modifiedat": "now",
+      "ancestorid": "v1"
     },
-    &quot;v2&quot;: { see Resource.* attrs }
+    "v2": { see Resource.* attrs }
   }
 }
 </code></pre>
@@ -1875,7 +1870,7 @@ calculating the default Version because <code>meta.defaultversionsticky</code> i
 <li>Same net results as previous example.</li>
 </ul>
 <h3 id="create-resource-with-setdefaultversionid-flag">Create Resource with SetDefaultVersionID flag <a class="anchor" href="#create-resource-with-setdefaultversionid-flag">🔗</a></h3>
-<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<table border="1" cellborder="1" cellpadding="5"><tr><td valign="top">
 <p><strong>Initial State:</strong></p>
 <pre><code>Empty
 </code></pre>
@@ -1883,38 +1878,38 @@ calculating the default Version because <code>meta.defaultversionsticky</code> i
 <pre><code>PUT /dirs/d1/files/f1?setdefaultversionid=v1
 
 {
-  &quot;versions&quot;: {
-    &quot;v1&quot;: {&quot;name&quot;:&quot;abc&quot;},
-    &quot;v2&quot;: {}
+  "versions": {
+    "v1": {"name":"abc"},
+    "v2": {}
   }
 }
 </code></pre>
-</td><td valign=top>
+</td><td valign="top">
 <p><strong>Final State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v1&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;name&quot;: &quot;abc&quot;,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;now&quot;,
-  &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestorid&quot;: &quot;v1&quot;,
+  "fileid": "f1",
+  "versionid": "v1",
+  "epoch": 1,
+  "name": "abc",
+  "isdefault": true,
+  "createdat": "now",
+  "modifiedat": "now",
+  "ancestorid": "v1",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;now&quot;,
-    &quot;modifiedat&quot;: &quot;now&quot;,
-    &quot;defaultversionid&quot;: &quot;v1&quot;,
-    &quot;defaultversionsticky&quot;: true
+  "meta": {
+    "epoch": 1,
+    "createdat": "now",
+    "modifiedat": "now",
+    "defaultversionid": "v1",
+    "defaultversionsticky": true
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: { see Resource.* attrs },
-    &quot;v2&quot;: {
-      &quot;epoch&quot;: 1,
-      &quot;createdat&quot;: &quot;now&quot;,
-      &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestorid&quot;: &quot;v1&quot;
+  "versions": {
+    "v1": { see Resource.* attrs },
+    "v2": {
+      "epoch": 1,
+      "createdat": "now",
+      "modifiedat": "now",
+      "ancestorid": "v1"
     },
   }
 }
@@ -1926,7 +1921,7 @@ calculating the default Version because <code>meta.defaultversionsticky</code> i
 <code>meta.defaultversionid=v1</code> and <code>meta.defaultversionsticky=true</code>.</li>
 </ul>
 <h3 id="create-resource-with-setdefaultversionid-flag-via-versions">Create Resource with SetDefaultVersionID flag via /versions <a class="anchor" href="#create-resource-with-setdefaultversionid-flag-via-versions">🔗</a></h3>
-<table border=1 cellpadding=5 cellborder=1><tr><td valign=top>
+<table border="1" cellborder="1" cellpadding="5"><tr><td valign="top">
 <p><strong>Initial State:</strong></p>
 <pre><code>Empty
 </code></pre>
@@ -1934,36 +1929,36 @@ calculating the default Version because <code>meta.defaultversionsticky</code> i
 <pre><code>POST /dirs/d1/files/f1/versions?setdefaultversionid=v1
 
 {
-  &quot;v1&quot;: {&quot;name&quot;:&quot;abc&quot;},
-  &quot;v2&quot;: {}
+  "v1": {"name":"abc"},
+  "v2": {}
 }
 </code></pre>
-</td><td valign=top>
+</td><td valign="top">
 <p><strong>Final State:</strong></p>
 <pre><code>{
-  &quot;fileid&quot;: &quot;f1&quot;,
-  &quot;versionid&quot;: &quot;v1&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;name&quot;: &quot;abc&quot;,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;now&quot;,
-  &quot;modifiedat&quot;: &quot;now&quot;,
-  &quot;ancestorid&quot;: &quot;v1&quot;,
+  "fileid": "f1",
+  "versionid": "v1",
+  "epoch": 1,
+  "name": "abc",
+  "isdefault": true,
+  "createdat": "now",
+  "modifiedat": "now",
+  "ancestorid": "v1",
 
-  &quot;meta&quot;: {
-    &quot;epoch&quot;: 1,
-    &quot;createdat&quot;: &quot;now&quot;,
-    &quot;modifiedat&quot;: &quot;now&quot;,
-    &quot;defaultversionid&quot;: &quot;v1&quot;,
-    &quot;defaultversionsticky&quot;: true
+  "meta": {
+    "epoch": 1,
+    "createdat": "now",
+    "modifiedat": "now",
+    "defaultversionid": "v1",
+    "defaultversionsticky": true
   },
-  &quot;versions&quot;: {
-    &quot;v1&quot;: { see Resource.* attrs },
-    &quot;v2&quot;: {
-      &quot;epoch&quot;: 1,
-      &quot;createdat&quot;: &quot;now&quot;,
-      &quot;modifiedat&quot;: &quot;now&quot;,
-      &quot;ancestorid&quot;: &quot;v1&quot;
+  "versions": {
+    "v1": { see Resource.* attrs },
+    "v2": {
+      "epoch": 1,
+      "createdat": "now",
+      "modifiedat": "now",
+      "ancestorid": "v1"
     },
   }
 }
@@ -1973,5 +1968,8 @@ calculating the default Version because <code>meta.defaultversionsticky</code> i
 <ul>
 <li>Same net results as previous example.</li>
 </ul>
-
+</article>
+</main>
+<button aria-label="Back to top" class="back-to-top" title="Back to top" type="button"><i aria-hidden="true" class="fas fa-arrow-up"></i></button>
+</body>
 </html>

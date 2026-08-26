@@ -2,7 +2,7 @@ name: Publish scheduled articles
 
 on:
   schedule:
-    - cron: "0 15 * * *"
+    - cron: "0 16 * * 1,3,5"
       timezone: "Europe/Berlin"
   workflow_dispatch:
 
@@ -27,7 +27,7 @@ jobs:
       - name: Commit published articles
         id: commit
         run: |
-          if git diff --quiet -- _articles; then
+          if git diff --quiet -- site/_articles; then
             echo "No articles are due."
             echo "published=false" >> "$GITHUB_OUTPUT"
             exit 0
@@ -35,13 +35,13 @@ jobs:
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add _articles
+          git add site/_articles
           git commit -m "Publish scheduled blog articles"
           git push
           echo "published=true" >> "$GITHUB_OUTPUT"
 
-      - name: Deploy published articles
+      - name: Rebuild published site
         if: steps.commit.outputs.published == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh workflow run jekyll-gh-pages.yml --ref main
+        run: gh workflow run rebuild-site.yml --ref main

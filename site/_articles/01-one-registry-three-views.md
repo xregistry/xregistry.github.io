@@ -6,7 +6,8 @@ series_order: 1
 perspective: Core model
 status: Publication draft
 drafted: 2026-08-24
-date: 2026-08-26
+due: 2026-08-26
+date: 2026-08-26 16:00:00 +0200
 published: true
 reading_time: 7 minutes
 next_slug: where-a-schema-version-stops-being-the-same-schema

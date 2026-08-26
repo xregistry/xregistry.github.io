@@ -5,6 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
     <link rel="stylesheet" type="text/css" media="screen" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    {% if page.collection == "articles" or page.reading_helpers %}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ '/assets/css/xreg-reader.css?v=' | append: site.github.build_revision | relative_url }}">
+    {% endif %}
     <link rel="alternate" type="application/atom+xml" title="xRegistry blog" href="{{ '/blog/feed.xml' | absolute_url }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="https://github.com/cncf/artwork/raw/main/projects/xregistry/icon/color/xregistry-icon-color.svg">
@@ -73,6 +76,9 @@
         ga('create', '{{ site.google_analytics }}', 'auto');
         ga('send', 'pageview');
       </script>
+    {% endif %}
+    {% if page.collection == "articles" or page.reading_helpers %}
+    <script src="{{ '/assets/js/xreg-reader.js?v=' | append: site.github.build_revision | relative_url }}" defer></script>
     {% endif %}
   </body>
 </html>

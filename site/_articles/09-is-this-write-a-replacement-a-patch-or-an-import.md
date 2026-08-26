@@ -6,7 +6,8 @@ series_order: 9
 perspective: Write semantics
 status: Publication draft
 drafted: 2026-08-25
-date: 2026-12-16
+due: 2026-09-14
+date: 2026-09-14 16:00:00 +0200
 published: false
 reading_time: 9 minutes
 previous_slug: ids-name-xids-locate-epochs-protect

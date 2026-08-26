@@ -3,13 +3,13 @@ layout: default
 ---
 
 <main id="main_content_wrap" class="outer">
-  <article class="inner blog-article">
+  <article id="xregistry-content" class="inner blog-article" data-reader-label="xRegistry Blog">
     <header class="article-header">
       <p class="series-kicker">xRegistry foundations · Article {{ page.series_order }} of {{ site.article_series_size }}</p>
       <h1>{{ page.title }}</h1>
       <p class="article-deck">{{ page.description }}</p>
       <dl class="article-meta">
-        <div><dt>Published</dt><dd><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time></dd></div>
+        <div><dt>Published</dt><dd><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.due | date: "%B %-d, %Y" }}</time></dd></div>
         <div><dt>Reading time</dt><dd>{{ page.reading_time }}</dd></div>
       </dl>
     </header>

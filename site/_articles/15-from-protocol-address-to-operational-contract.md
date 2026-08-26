@@ -6,7 +6,8 @@ series_order: 15
 perspective: Endpoint model
 status: Publication draft
 drafted: 2026-08-24
-date: 2027-03-10
+due: 2026-09-28
+date: 2026-09-28 16:00:00 +0200
 published: false
 reading_time: 8 minutes
 previous_slug: what-does-cloudevents-leave-unsaid
