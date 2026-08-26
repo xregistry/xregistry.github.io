@@ -6,6 +6,8 @@ series_order: 2
 perspective: Resources and documents
 status: Publication draft
 drafted: 2026-08-25
+date: 2026-09-09
+published: false
 reading_time: 8 minutes
 previous_slug: one-registry-three-views
 previous_title: One Registry, Three Views

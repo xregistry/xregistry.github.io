@@ -1,29 +1,29 @@
 # xRegistry foundations editorial calendar
 
-The proposed cadence is one article every two weeks. Publication dates remain unset until maintainers approve the series and select a start date.
+The series publishes one article every two weeks. Article 1 is the initial release; each later article remains excluded from the generated site until the scheduled workflow marks it published.
 
-| Relative slot | Article | Perspective | Dependency | Publication gate |
-| --- | --- | --- | --- | --- |
-| Week 0 | One Registry, Three Views | Core model | Series introduction | Build, source, narrative, and browser checks pass. |
-| Week 2 | Where Does the Metadata End and the Document Begin? | Resources and documents | Registry views | Resource, Meta, Version, and document distinctions checked against Core. |
-| Week 4 | The Model Is Part of the Program | Model-driven contracts | Entity hierarchy | Model examples checked against the current model schema. |
-| Week 6 | Can This Registry Do What Its Model Describes? | Deployment capabilities | Model semantics | Model and capability claims remain separate. |
-| Week 8 | How Does a Client Find a Registry? | Registry discovery | Registry roots | Discovery remains bounded to known hosts, pages, and registries. |
-| Week 10 | What Exactly Does an HTTP GET Return? | HTTP representations | Resource documents | `$details`, redirects, headers, and Version selection checked against HTTP. |
-| Week 12 | How Much of the Graph Should a Client Read? | Selective graph reads | Collections and links | Inlining is not described as arbitrary reference closure. |
-| Week 14 | IDs Name, XIDs Locate, Epochs Protect | Identity and concurrency | Graph traversal | Resource and Version epochs remain distinct. |
-| Week 16 | Is This Write a Replacement, a Patch, or an Import? | Write semantics | Identity and epochs | Omission, nested update, and atomicity claims checked against HTTP. |
-| Week 18 | Versioning Is Five Separate Questions | Versioning policy | Writes and identity | Five-part framing remains editorial rather than normative terminology. |
-| Week 20 | Which Schema Did This Message Mean? | Schema references | Version selection | Resource, Version, URI, XID, and fragment behavior checked together. |
-| Week 22 | Where a Schema Version Stops Being the Same Schema | Schema evolution | Versioning and references | Compatibility claims checked against the current Schema spec. |
-| Week 24 | A Message Definition Is Both a Template and a Filter | Message contracts | Schema references | Registry filtering and wire-message matching remain distinct. |
-| Week 26 | What Does CloudEvents Leave Unsaid? | Layered event contracts | Message definitions | CloudEvents omissions are presented as intentional layering. |
-| Week 28 | From Protocol Address to Operational Contract | Endpoint model | Messages and protocols | Runtime caveats remain explicit. |
-| Week 30 | Following the Water Boiler Contract Graph | Contract graph | Schema, Message, and Endpoint articles | Pinned sample paths and values rechecked mechanically. |
-| Week 32 | Who Tells Tools That the Registry Changed? | Registry change events | Graph mutations | Corrected event text and delivery boundaries rechecked. |
-| Week 34 | Export Is a Tooling Boundary | Tooling and provenance | Complete contract graph | Tooling recommendations remain distinct from normative export behavior. |
-| Week 36 | Can a Client Traverse a Million-Entry Registry? | Scale and pagination | Selective reads | Pagination remains labeled `0.1-wip`; no scale guarantee is implied. |
-| Week 38 | What Survives When HTTP Disappears? | Protocol-independent model | Views and bindings | OPC UA and OpenUSD remain labeled as working drafts. |
+| Date | Article | Perspective |
+| --- | --- | --- |
+| 2026-08-26 | One Registry, Three Views | Core model |
+| 2026-09-09 | Where Does the Metadata End and the Document Begin? | Resources and documents |
+| 2026-09-23 | The Model Is Part of the Program | Model-driven contracts |
+| 2026-10-07 | Can This Registry Do What Its Model Describes? | Deployment capabilities |
+| 2026-10-21 | How Does a Client Find a Registry? | Registry discovery |
+| 2026-11-04 | What Exactly Does an HTTP GET Return? | HTTP representations |
+| 2026-11-18 | How Much of the Graph Should a Client Read? | Selective graph reads |
+| 2026-12-02 | IDs Name, XIDs Locate, Epochs Protect | Identity and concurrency |
+| 2026-12-16 | Is This Write a Replacement, a Patch, or an Import? | Write semantics |
+| 2026-12-30 | Versioning Is Five Separate Questions | Versioning policy |
+| 2027-01-13 | Which Schema Did This Message Mean? | Schema references |
+| 2027-01-27 | Where a Schema Version Stops Being the Same Schema | Schema evolution |
+| 2027-02-10 | A Message Definition Is Both a Template and a Filter | Message contracts |
+| 2027-02-24 | What Does CloudEvents Leave Unsaid? | Layered event contracts |
+| 2027-03-10 | From Protocol Address to Operational Contract | Endpoint model |
+| 2027-03-24 | Following the Water Boiler Contract Graph | Contract graph |
+| 2027-04-07 | Who Tells Tools That the Registry Changed? | Registry change events |
+| 2027-04-21 | Export Is a Tooling Boundary | Tooling and provenance |
+| 2027-05-05 | Can a Client Traverse a Million-Entry Registry? | Scale and pagination |
+| 2027-05-19 | What Survives When HTTP Disappears? | Protocol-independent model |
 
 ## Release workflow
 
@@ -31,7 +31,7 @@ The proposed cadence is one article every two weeks. Publication dates remain un
 2. Run the six editorial passes recorded in the scorecard.
 3. Build the locked Jekyll site and run the repository verification suite.
 4. Check the article, index, feed, and adjacent navigation at desktop and mobile widths.
-5. Replace `Publication draft` only when publication is approved.
-6. Add a publication date only when that date is scheduled.
+5. Keep unreleased articles at `published: false`; the scheduled workflow changes due articles to `published: true`.
+6. Let the workflow commit trigger the Pages deployment workflow. Do not edit publication state manually unless correcting the schedule.
 
-Drafting dates are provenance for this worktree. They are not publication commitments.
+Drafting dates remain provenance. The `date` field is the publication schedule and controls the public date shown on the site and in the Atom feed.

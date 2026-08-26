@@ -6,6 +6,8 @@ series_order: 9
 perspective: Write semantics
 status: Publication draft
 drafted: 2026-08-25
+date: 2026-12-16
+published: false
 reading_time: 9 minutes
 previous_slug: ids-name-xids-locate-epochs-protect
 previous_title: IDs Name, XIDs Locate, Epochs Protect

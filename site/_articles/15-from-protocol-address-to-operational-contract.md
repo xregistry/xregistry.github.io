@@ -6,6 +6,8 @@ series_order: 15
 perspective: Endpoint model
 status: Publication draft
 drafted: 2026-08-24
+date: 2027-03-10
+published: false
 reading_time: 8 minutes
 previous_slug: what-does-cloudevents-leave-unsaid
 previous_title: What Does CloudEvents Leave Unsaid?
@@ -99,14 +101,10 @@ An Endpoint may inline messages and may use [`messagegroups`](https://github.com
 
 A link does not guarantee that its target exists, remains available, or is accessible to a particular caller. When a client can follow it, the discovery path becomes useful:
 
-```text
-Endpoint
-  -> usage and protocol
-  -> preferred network address
-  -> message group
-  -> message definition
-  -> payload schema
-```
+<figure class="article-diagram">
+  <img src="/assets/images/blog/endpoint-contract-path.svg" alt="Discovery path from an Endpoint through usage and protocol, preferred network address, message group, message definition, and payload schema.">
+  <figcaption>Following references turns a protocol address into a navigable path through the operational contract.</figcaption>
+</figure>
 
 The [message lookup guidance](https://github.com/xregistry/spec/blob/d2433a8c726ab096303bd943a4fc6691925f7910/endpoint/spec.md#messages) strongly recommends aligning `messageid` with a runtime semantic identifier such as CloudEvents `type`. It also acknowledges cases where direct lookup is impossible, such as parallel JSON and XML serializations with the same semantic type. Resolving those cases is left to implementations.
 

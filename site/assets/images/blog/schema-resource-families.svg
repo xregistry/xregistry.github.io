@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 390" role="img" aria-labelledby="title desc">
+  <title id="title">Schema Resource families and Versions</title>
+  <desc id="desc">The com.example.orders Schema Group contains a v1 Resource with three Versions and a separate v2 Resource with one Version.</desc>
+  <defs><style>.node{fill:#fff;stroke:#9cb1c3;stroke-width:2}.group{fill:#18283a;stroke:#18283a}.resource{fill:#e9f4fc;stroke:#2879d0}.label{font:600 15px Inter,sans-serif;fill:#26394d}.inverse{fill:#fff}.detail{font:500 11px 'JetBrains Mono',monospace;fill:#52677a}.line{fill:none;stroke:#6f879c;stroke-width:2}</style></defs>
+  <path class="line" d="M490 98v42H260v38M490 140h230v38M260 266v36H125v28M260 302h135v28M720 266v64"/>
+  <g><rect class="node group" x="310" y="24" width="360" height="74"/><text class="detail inverse" x="330" y="50">SCHEMA GROUP</text><text class="label inverse" x="330" y="77">com.example.orders</text></g>
+  <g><rect class="node resource" x="70" y="178" width="380" height="88"/><text class="detail" x="90" y="207">SCHEMA RESOURCE · COMPATIBLE REVISIONS</text><text class="label" x="90" y="237">com.example.order-created.v1</text></g>
+  <g><rect class="node resource" x="530" y="178" width="380" height="88"/><text class="detail" x="550" y="207">SCHEMA RESOURCE · BREAKING SUCCESSOR</text><text class="label" x="550" y="237">com.example.order-created.v2</text></g>
+  <g><rect class="node" x="48" y="330" width="154" height="48"/><text class="label" x="82" y="360">Version 1</text></g><g><rect class="node" x="318" y="330" width="154" height="48"/><text class="label" x="352" y="360">Version 2</text></g><g><rect class="node" x="510" y="330" width="154" height="48"/><text class="label" x="544" y="360">Version 3</text></g><g><rect class="node" x="643" y="330" width="154" height="48"/><text class="label" x="677" y="360">Version 1</text></g>
+</svg>

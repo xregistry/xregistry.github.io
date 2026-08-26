@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 520" role="img" aria-labelledby="title desc">
+  <title id="title">Water Boiler contract reference graph</title>
+  <desc id="desc">Producer and Consumer Endpoints both reference the WaterBoiler Events message group. It contains TemperatureUpdate and StatusChange messages, each linked by dataschemauri to its Schema Resource.</desc>
+  <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0l8 4-8 4z" fill="#6f879c"/></marker><style>.node{fill:#fff;stroke:#9cb1c3;stroke-width:2}.endpoint{fill:#18283a;stroke:#18283a}.group{fill:#e9f4fc;stroke:#2879d0}.label{font:600 14px Inter,sans-serif;fill:#26394d}.inverse{fill:#fff}.detail{font:500 10px 'JetBrains Mono',monospace;fill:#52677a}.line{fill:none;stroke:#6f879c;stroke-width:2;marker-end:url(#arrow)}</style></defs>
+  <path class="line" d="M290 104h90c35 0 35 100 70 100h34M290 304h90c35 0 35-100 70-100h34M776 204h54c30 0 30-102 60-102h26M776 204h54c30 0 30 102 60 102h26M1016 144v54M1016 348v54"/>
+  <g><rect class="node endpoint" x="24" y="58" width="266" height="92"/><text class="detail inverse" x="44" y="86">ENDPOINT · PRODUCER</text><text class="label inverse" x="44" y="116">WaterBoiler.Producer</text><text class="detail inverse" x="44" y="136">usage: producer</text></g>
+  <g><rect class="node endpoint" x="24" y="258" width="266" height="92"/><text class="detail inverse" x="44" y="286">ENDPOINT · CONSUMER</text><text class="label inverse" x="44" y="316">WaterBoiler.Consumer</text><text class="detail inverse" x="44" y="336">usage: consumer</text></g>
+  <g><rect class="node group" x="484" y="152" width="292" height="104"/><text class="detail" x="504" y="181">MESSAGE GROUP</text><text class="label" x="504" y="211">WaterBoiler.Events</text><text class="detail" x="504" y="234">shared reference target</text></g>
+  <g><rect class="node" x="916" y="58" width="188" height="86"/><text class="detail" x="936" y="84">MESSAGE</text><text class="label" x="936" y="112">TemperatureUpdate</text></g>
+  <g><rect class="node" x="916" y="262" width="188" height="86"/><text class="detail" x="936" y="288">MESSAGE</text><text class="label" x="936" y="316">StatusChange</text></g>
+  <g><rect class="node group" x="874" y="198" width="230" height="58"/><text class="detail" x="892" y="221">DATASCHEMAURI</text><text class="label" x="892" y="243">TemperatureUpdateEventData</text></g>
+  <g><rect class="node group" x="874" y="402" width="230" height="58"/><text class="detail" x="892" y="425">DATASCHEMAURI</text><text class="label" x="892" y="447">StatusChangeEventData</text></g>
+</svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 330" role="img" aria-labelledby="title desc">
+  <title id="title">Branched Version lineage</title>
+  <desc id="desc">Version 1 has descendants Version 2 and Version 3. Version 4 descends from Version 2.</desc>
+  <defs><style>.node{fill:#fff;stroke:#9cb1c3;stroke-width:2}.root{fill:#18283a;stroke:#18283a}.current{fill:#e9f4fc;stroke:#2879d0}.label{font:600 15px Inter,sans-serif;fill:#26394d}.inverse{fill:#fff}.line{fill:none;stroke:#6f879c;stroke-width:2}</style></defs>
+  <path class="line" d="M380 94v54H205v34M380 148h175v34M205 238v38"/>
+  <g><rect class="node root" x="300" y="28" width="160" height="66"/><text class="label inverse" x="344" y="68">Version 1</text></g>
+  <g><rect class="node current" x="125" y="182" width="160" height="56"/><text class="label" x="169" y="216">Version 2</text></g>
+  <g><rect class="node" x="475" y="182" width="160" height="56"/><text class="label" x="519" y="216">Version 3</text></g>
+  <g><rect class="node" x="125" y="276" width="160" height="46"/><text class="label" x="169" y="305">Version 4</text></g>
+</svg>

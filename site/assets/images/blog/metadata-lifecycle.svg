@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 210" role="img" aria-labelledby="title desc">
+  <title id="title">Metadata lifecycle from authoring to portable export</title>
+  <desc id="desc">Five connected stages: author metadata, review with code, load into a registry, discover through an API, and export a portable document.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0l8 4-8 4z" fill="#6f879c"/></marker>
+    <style>.node{fill:#fff;stroke:#9cb1c3;stroke-width:2}.first{fill:#e9f4fc;stroke:#2879d0}.last{fill:#18283a;stroke:#18283a}.label{font:600 15px Inter,sans-serif;fill:#26394d}.inverse{fill:#fff}.step{font:600 11px 'JetBrains Mono',monospace;fill:#52677a}.line{fill:none;stroke:#6f879c;stroke-width:2;marker-end:url(#arrow)}</style>
+  </defs>
+  <path class="line" d="M196 105h38"/><path class="line" d="M398 105h38"/><path class="line" d="M600 105h38"/><path class="line" d="M802 105h38"/>
+  <g><rect class="node first" x="16" y="58" width="180" height="94"/><text class="step" x="32" y="83">01 · AUTHOR</text><text class="label" x="32" y="113">Metadata in files</text><text class="step" x="32" y="134">schemas · messages</text></g>
+  <g><rect class="node" x="218" y="58" width="180" height="94"/><text class="step" x="234" y="83">02 · REVIEW</text><text class="label" x="234" y="113">Version with code</text><text class="step" x="234" y="134">diff · test · approve</text></g>
+  <g><rect class="node" x="420" y="58" width="180" height="94"/><text class="step" x="436" y="83">03 · LOAD</text><text class="label" x="436" y="113">Registry service</text><text class="step" x="436" y="134">publish metadata</text></g>
+  <g><rect class="node" x="622" y="58" width="180" height="94"/><text class="step" x="638" y="83">04 · USE</text><text class="label" x="638" y="113">Discover or update</text><text class="step" x="638" y="134">through an API</text></g>
+  <g><rect class="node last" x="824" y="58" width="200" height="94"/><text class="step inverse" x="840" y="83">05 · EXPORT</text><text class="label inverse" x="840" y="113">Portable document</text><text class="step inverse" x="840" y="134">tooling boundary</text></g>
+</svg>

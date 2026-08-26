@@ -6,6 +6,8 @@ series_order: 5
 perspective: Registry discovery
 status: Publication draft
 drafted: 2026-08-25
+date: 2026-10-21
+published: false
 reading_time: 7 minutes
 previous_slug: can-this-registry-do-what-its-model-describes
 previous_title: Can This Registry Do What Its Model Describes?

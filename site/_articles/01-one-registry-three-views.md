@@ -6,9 +6,11 @@ series_order: 1
 perspective: Core model
 status: Publication draft
 drafted: 2026-08-24
+date: 2026-08-26
+published: true
 reading_time: 7 minutes
-next_slug: where-does-the-metadata-end-and-the-document-begin
-next_title: Where Does the Metadata End and the Document Begin?
+next_slug: where-a-schema-version-stops-being-the-same-schema
+next_title: Where a Schema Version Stops Being the Same Schema
 ---
 
 A registry does not need to live only behind a running service to be useful.
@@ -31,10 +33,10 @@ publish a complete metadata model alongside any service.
 The registry is the entity graph. An HTTP API, one JSON document, and a
 directory of JSON files are three views of that graph.
 
-Protocol bindings are separate from the core specification. The repository
-defines an HTTP binding, but the model is not tied to HTTP. It also contains a
-working-draft binding for OPC Unified Architecture
-(OPC UA), a protocol for exchanging industrial-system data.
+Protocol bindings are separate from the core specification. HTTP is the initial
+default binding, but the model is not tied to HTTP. The same registry can be
+projected through another protocol. A proposal already exists for a native
+binding for the industrial OPC UA protocol.
 
 ## Three projections, one hierarchy
 
@@ -58,9 +60,9 @@ The form of the reference tells a tool where to find the target. A relative refe
 
 ## Projection is separate from capability
 
-A server does not need to support every create, read, update, and delete operation to implement xRegistry.
+A server does not need to support every CRUD operation to implement xRegistry.
 
-The [no-code server design](https://github.com/xregistry/spec/blob/d2433a8c726ab096303bd943a4fc6691925f7910/core/spec.md#design-no-code-servers) makes filtering, inlining, writes, and other operations optional. A read-only static host can expose useful registry content without supporting them. Clients can read the registry's capabilities instead of guessing from its URLs.
+The [no-code server design](https://github.com/xregistry/spec/blob/d2433a8c726ab096303bd943a4fc6691925f7910/core/spec.md#design-no-code-servers) makes many operations and advanced flags optional. A read-only static host can expose useful registry content without supporting filtering, inlining, or writes. Clients can read the registry's capabilities instead of guessing from its URLs.
 
 These are separate questions:
 
@@ -83,21 +85,18 @@ The build script is an implementation example, not a specification requirement. 
 
 The [HTTP binding's `GET /export` operation](https://github.com/xregistry/spec/blob/d2433a8c726ab096303bd943a4fc6691925f7910/core/http.md#get-export) provides a document projection of the registry. The core specification also designs document-view responses so they can be used in requests. Together, those rules support a practical loop:
 
-```text
-author metadata in files
-        ↓
-review and version it with code
-        ↓
-load it into a registry service
-        ↓
-discover or update it through an API
-        ↓
-export a portable document
-```
+<figure class="article-diagram">
+  <img src="/assets/images/blog/metadata-lifecycle.svg" alt="Five-stage metadata lifecycle: author metadata in files, review it with code, load it into a registry, discover or update it through an API, and export a portable document.">
+  <figcaption>The same metadata moves through authoring, review, service publication, API use, and portable export.</figcaption>
+</figure>
 
 Each stage can use the view that fits its work. A project can keep reviewable metadata beside its source code, publish it for runtime discovery, and export it for another tool without translating between unrelated formats.
 
 Tools must preserve identifiers, hierarchy, default-Version meaning, and references as they move between views. A file with similar fields is not automatically an xRegistry document.
+
+## What to carry forward
+
+xRegistry can publish the same contract through different deployment forms. The next question is when a contract needs a new identity. Compatible schema revisions can remain Versions of one Resource. A breaking change starts a new Resource.
 
 ## Primary sources
 

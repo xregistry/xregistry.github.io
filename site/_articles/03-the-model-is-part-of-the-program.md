@@ -6,11 +6,13 @@ series_order: 3
 perspective: Model-driven contracts
 status: Publication draft
 drafted: 2026-08-24
+date: 2026-09-23
+published: false
 reading_time: 9 minutes
-previous_slug: where-does-the-metadata-end-and-the-document-begin
-previous_title: Where Does the Metadata End and the Document Begin?
-next_slug: can-this-registry-do-what-its-model-describes
-next_title: Can This Registry Do What Its Model Describes?
+previous_slug: where-a-schema-version-stops-being-the-same-schema
+previous_title: Where a Schema Version Stops Being the Same Schema
+next_slug: a-message-definition-is-both-a-template-and-a-filter
+next_title: A Message Definition Is Both a Template and a Filter
 ---
 
 A registry model may look like documentation for readers. In xRegistry, it is also data for software. It defines which Groups and Resources exist, which attributes they have, and which rules apply to their values.
@@ -41,9 +43,9 @@ xRegistry distinguishes `modelsource` from `model`. The names are close, but the
 
 The [`modelsource` attribute](https://github.com/xregistry/spec/blob/d2433a8c726ab096303bd943a4fc6691925f7910/core/spec.md#modelsource-attribute) represents customizations or extensions supplied on top of the base xRegistry model. The [`model` attribute](https://github.com/xregistry/spec/blob/d2433a8c726ab096303bd943a4fc6691925f7910/core/spec.md#model-attribute) is the complete, read-only description of specification-defined and extension-defined Groups, Resources, and attributes.
 
-Under the [retrieval rules](https://github.com/xregistry/spec/blob/d2433a8c726ab096303bd943a4fc6691925f7910/core/model.md#retrieving-the-registry-model), the semantic content declared by `modelsource` appears in `model`. This includes the results of `$include`, `$includes`, and `ximportresources` processing. The processing directives remain in `modelsource` and do not appear in the resolved `model`, which also contains the applicable core and extension definitions. In the HTTP binding, `GET /model` is mandatory, while `GET /modelsource` and `PUT /modelsource` are optional. Clients must check whether the server allows model changes.
+The [retrieval rules](https://github.com/xregistry/spec/blob/d2433a8c726ab096303bd943a4fc6691925f7910/core/model.md#retrieving-the-registry-model) call `modelsource` a semantic subset of `model`. In the HTTP binding, `GET /model` is mandatory, while `GET /modelsource` and `PUT /modelsource` are optional. Clients must check whether the server allows model changes.
 
-Here is an illustrative `modelsource`:
+An illustrative `modelsource` might look like this:
 
 ```json
 {
@@ -93,7 +95,7 @@ An attribute definition can specify a `type`, scalar `enum`, whether the enum is
 | Declaration | Consequence |
 | --- | --- |
 | `required: true` | A non-null value MUST exist after processing. The client need not supply it if the server supplies a default. |
-| `readonly: true` | The server controls the value. It ignores a supplied value except in defined cases such as IDs and epochs. |
+| `readonly: true` | The server controls the value. Supplied values are generally ignored, with defined exceptions such as IDs and epochs. |
 | `enum` plus `strict: true` | Values outside the set MUST produce an error. |
 | `ifvalues` | A scalar value activates additional sibling attribute definitions. |
 | `*` attribute | Undefined extension names are accepted at that level according to its type. Without `*`, unknown runtime attributes produce an error. |
@@ -110,15 +112,32 @@ A Group type's [`constraints` map](https://github.com/xregistry/spec/blob/d2433a
 
 The Resource definition adds more rules. `maxversions`, `setversionid`, `hasdocument`, and `versionmode` control the Version lifecycle and document form. `validateformat`, `validatecompatibility`, and `strictvalidation` control whether and how the server validates documents and declared compatibility. Validation switches default to `false`. A client must read the model. Storing a format does not mean the registry validates it.
 
+## Capabilities answer a different question
+
+The model says what data means. Capabilities say what this server currently offers.
+
+The HTTP binding defines `GET /capabilities` for enabled features and `GET /capabilitiesoffered` for the values a mutable server can offer. The latter endpoint is conditional. The [capability operations](https://github.com/xregistry/spec/blob/d2433a8c726ab096303bd943a4fc6691925f7910/core/http.md#registry-capabilities) distinguish whether model updates are enabled, which flags are available, and which specification versions are supported.
+
+| Question | Read this |
+| --- | --- |
+| What entity and attribute types exist? | `GET /model` |
+| What domain customizations produced that model? | `GET /modelsource`, if available |
+| Which operations and flags are enabled? | `GET /capabilities`, if exposed |
+| Which settings could this server enable? | `GET /capabilitiesoffered`, if exposed |
+
+Clients need both sets of information. “Schemas exist” does not mean “schema writes are enabled.” “A format attribute exists” does not mean “the server validates that format.” The model describes the data and its rules. Capabilities describe the operations that the server supports.
+
 ## What tools can infer
 
 With the resolved model, tools can use declared rules instead of guessing from names. A generic explorer can list Group and Resource types. A form generator can choose controls from types and strict enums. A validator can find missing required values. A client can follow typed XID targets. A migration tool can compare model definitions and find a new required field.
 
-The specification defines the model rules, but it does not provide these tools. Each tool must implement the rules and keep descriptions separate from enforced rules.
+The specification defines the model rules, but it does not provide these tools. Each tool must implement the rules, inspect capabilities before using operations, and keep descriptions separate from enforced rules.
 
-A tool can discover the registry's structure from `model` instead of compiling every domain type into its own code.
+The model stores domain metadata with the rules for reading it. Conforming software uses the model as input and can inspect it to discover the registry's structure.
 
-That still leaves a separate question: which optional operations does this particular deployment support? The next article separates the registry's data model from its advertised capabilities.
+## What to carry forward
+
+Model data gives tools types, boundaries, and constraints. Typed XID attributes and cross-references then link one part of the registry to another. The next article explains how messages use those links to connect metadata with payload schemas.
 
 ## Primary sources
 

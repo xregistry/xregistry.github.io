@@ -6,6 +6,8 @@ series_order: 13
 perspective: Message contracts
 status: Publication draft
 drafted: 2026-08-24
+date: 2027-02-10
+published: false
 reading_time: 9 minutes
 previous_slug: where-a-schema-version-stops-being-the-same-schema
 previous_title: Where a Schema Version Stops Being the Same Schema

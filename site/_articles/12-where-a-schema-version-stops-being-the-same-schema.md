@@ -6,6 +6,8 @@ series_order: 12
 perspective: Schema evolution
 status: Publication draft
 drafted: 2026-08-24
+date: 2027-01-27
+published: false
 reading_time: 8 minutes
 previous_slug: which-schema-did-this-message-mean
 previous_title: Which Schema Did This Message Mean?
@@ -25,15 +27,10 @@ The [core specification defines a Resource as an entity holding one or more Vers
 
 The [Schema Registry specification adds a rule](https://github.com/xregistry/spec/blob/d2433a8c726ab096303bd943a4fc6691925f7910/schema/spec.md#221-schema): a Schema Resource groups revisions of the same logical schema. Its Versions must follow its compatibility rules. A breaking change must create a new Schema Resource.
 
-```text
-schemagroup: com.example.orders
-├── schema Resource: com.example.order-created.v1
-│   ├── Version 1
-│   ├── Version 2
-│   └── Version 3
-└── schema Resource: com.example.order-created.v2
-    └── Version 1
-```
+<figure class="article-diagram">
+  <img src="/assets/images/blog/schema-resource-families.svg" alt="The com.example.orders Schema Group contains a v1 Resource with Versions 1, 2, and 3, plus a separate v2 Resource with Version 1.">
+  <figcaption>Compatible revisions remain Versions of one Resource; a breaking successor starts another Resource.</figcaption>
+</figure>
 
 The first three documents revise one contract. The second Resource is its successor because the new schema is not compatible with that contract.
 
@@ -92,12 +89,10 @@ The Schema Registry specification requires a new Resource and [recommends a majo
 
 Versions also carry `ancestorid`. The [lineage rules](https://github.com/xregistry/spec/blob/d2433a8c726ab096303bd943a4fc6691925f7910/core/spec.md#ancestorid-attribute) require a root Version to name itself and later Versions to identify an existing ancestor without forming a cycle.
 
-```text
-Version 1
-├── Version 2
-│   └── Version 4
-└── Version 3
-```
+<figure class="article-diagram">
+  <img src="/assets/images/blog/version-lineage.svg" alt="Version 1 branches to Versions 2 and 3, while Version 4 descends from Version 2.">
+  <figcaption>Lineage records ancestry and can branch; it does not itself claim compatibility.</figcaption>
+</figure>
 
 Lineage says where a Version came from. Compatibility says which operations can work across Versions. A descendant can break a proposed compatibility policy. Validation that depends on history must follow `ancestorid` instead of guessing from lexical or numeric order.
 

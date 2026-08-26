@@ -6,6 +6,8 @@ series_order: 7
 perspective: Selective graph reads
 status: Publication draft
 drafted: 2026-08-25
+date: 2026-11-18
+published: false
 reading_time: 8 minutes
 previous_slug: what-exactly-does-an-http-get-return
 previous_title: What Exactly Does an HTTP GET Return?

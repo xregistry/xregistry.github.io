@@ -6,6 +6,8 @@ series_order: 14
 perspective: Layered event contracts
 status: Publication draft
 drafted: 2026-08-25
+date: 2027-02-24
+published: false
 reading_time: 8 minutes
 previous_slug: a-message-definition-is-both-a-template-and-a-filter
 previous_title: A Message Definition Is Both a Template and a Filter

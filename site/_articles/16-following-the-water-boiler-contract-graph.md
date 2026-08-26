@@ -6,6 +6,8 @@ series_order: 16
 perspective: Contract graph
 status: Publication draft
 drafted: 2026-08-24
+date: 2027-03-24
+published: false
 reading_time: 8 minutes
 previous_slug: from-protocol-address-to-operational-contract
 previous_title: From Protocol Address to Operational Contract
@@ -21,20 +23,10 @@ It does not show a running water boiler. It contains contract metadata, not runt
 
 The pinned [Water Boiler sample](https://github.com/xregistry/spec/blob/d2433a8c726ab096303bd943a4fc6691925f7910/cloudevents/samples/scenarios/waterboiler-mqtt5-jsons07.xreg.json) contains three top-level collections: `endpoints`, `messagegroups`, and `schemagroups`. Its reference graph can be summarized without adding an application architecture:
 
-```text
-/endpoints/WaterBoiler.Producer ----+
-                                     +--> /messagegroups/WaterBoiler.Events
-/endpoints/WaterBoiler.Consumer ----+
-                                      |-- messages/WaterBoiler.TemperatureUpdate
-                                      |     `-- dataschemauri
-                                      |         /schemagroups/WaterBoiler/schemas/
-                                      |         WaterBoiler.TemperatureUpdateEventData
-                                      |
-                                      `-- messages/WaterBoiler.StatusChange
-                                            `-- dataschemauri
-                                                /schemagroups/WaterBoiler/schemas/
-                                                WaterBoiler.StatusChangeEventData
-```
+<figure class="article-diagram">
+  <img src="/assets/images/blog/water-boiler-contract-graph.svg" alt="Water Boiler Producer and Consumer Endpoints reference one message group containing TemperatureUpdate and StatusChange messages, each linked to its payload Schema Resource.">
+  <figcaption>The connectors represent references in the registry document, not runtime delivery, subscriptions, or successful exchanges.</figcaption>
+</figure>
 
 The lines in this diagram represent references in the file. They do not represent sent data, subscriptions, or successful exchanges.
 

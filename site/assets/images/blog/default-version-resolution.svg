@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 220" role="img" aria-labelledby="title desc">
+  <title id="title">Default version resolution</title>
+  <desc id="desc">The order-created Schema Resource points through defaultversionid 2 to Version 2.</desc>
+  <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0l8 4-8 4z" fill="#6f879c"/></marker><style>.node{fill:#fff;stroke:#9cb1c3;stroke-width:2}.key{fill:#e9f4fc;stroke:#2879d0}.target{fill:#18283a;stroke:#18283a}.label{font:600 15px Inter,sans-serif;fill:#26394d}.inverse{fill:#fff}.detail{font:500 11px 'JetBrains Mono',monospace;fill:#52677a}.line{stroke:#6f879c;stroke-width:2;marker-end:url(#arrow)}</style></defs>
+  <line class="line" x1="340" y1="110" x2="424" y2="110"/><line class="line" x1="648" y1="110" x2="732" y2="110"/>
+  <g><rect class="node" x="20" y="56" width="320" height="108"/><text class="detail" x="40" y="87">SCHEMA RESOURCE</text><text class="label" x="40" y="117">order-created</text><text class="detail" x="40" y="140">/schemagroups/orders/schemas/…</text></g>
+  <g><rect class="node key" x="424" y="56" width="224" height="108"/><text class="detail" x="444" y="87">DEFAULT POINTER</text><text class="label" x="444" y="117">defaultversionid</text><text class="detail" x="444" y="140">"2"</text></g>
+  <g><rect class="node target" x="732" y="56" width="168" height="108"/><text class="detail inverse" x="752" y="87">RESOLVES TO</text><text class="label inverse" x="752" y="121">Version 2</text></g>
+</svg>

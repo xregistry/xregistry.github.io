@@ -6,6 +6,8 @@ series_order: 10
 perspective: Versioning policy
 status: Publication draft
 drafted: 2026-08-24
+date: 2026-12-30
+published: false
 reading_time: 9 minutes
 previous_slug: is-this-write-a-replacement-a-patch-or-an-import
 previous_title: Is This Write a Replacement, a Patch, or an Import?
@@ -73,12 +75,10 @@ A Resource has a [`defaultversionid`](https://github.com/xregistry/spec/blob/d24
 
 Default selection is an indirection:
 
-```text
-/schemagroups/orders/schemas/order-created
-                         │
-                         └── defaultversionid: "2"
-                             -> versions/2
-```
+<figure class="article-diagram">
+  <img src="/assets/images/blog/default-version-resolution.svg" alt="The order-created Schema Resource resolves through defaultversionid 2 to Version 2.">
+  <figcaption>A Resource's default pointer selects a Version without changing the identity or lineage of any Version.</figcaption>
+</figure>
 
 Moving the pointer changes what an indirect read returns. It does not rename Version `1`, alter its lineage, or create Version `3`.
 

@@ -36,6 +36,7 @@
 }
 
 #header_wrap .inner {
+  max-width: 900px;
   padding: 20px 10px;
   padding-top: 60px; /* Add space at the top to clear the GitHub button */
   display: flex;
@@ -880,6 +881,89 @@ a:focus-visible {
 
 .article-body code {
   overflow-wrap: anywhere;
+}
+
+.article-body :not(pre) > code {
+  background: #edf2f5;
+  border-radius: 2px;
+  box-decoration-break: clone;
+  font-size: 0.86em;
+  line-height: 1;
+  padding: 0.08em 0.28em;
+  -webkit-box-decoration-break: clone;
+}
+
+.article-diagram {
+  background: #f7f9fb;
+  border: 1px solid #d7e0e8;
+  margin: 28px 0;
+  overflow-x: auto;
+  padding: 20px;
+}
+
+.article-diagram svg {
+  display: block;
+  height: auto;
+  min-width: 620px;
+  width: 100%;
+}
+
+.article-diagram img {
+  border: 0;
+  box-shadow: none;
+  display: block;
+  height: auto;
+  min-width: 620px;
+  padding: 0;
+  width: 100%;
+}
+
+.article-diagram figcaption {
+  color: #52677a;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  margin-top: 14px;
+}
+
+.diagram-node {
+  fill: #ffffff;
+  stroke: #9cb1c3;
+  stroke-width: 1.5;
+}
+
+.diagram-node--primary {
+  fill: #e9f4fc;
+  stroke: #2879d0;
+}
+
+.diagram-node--accent {
+  fill: #18283a;
+  stroke: #18283a;
+}
+
+.diagram-label {
+  fill: #26394d;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.diagram-label--inverse {
+  fill: #ffffff;
+}
+
+.diagram-detail {
+  fill: #52677a;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0;
+}
+
+.diagram-connector {
+  fill: none;
+  stroke: #6f879c;
+  stroke-width: 1.5;
 }
 
 .article-body a {

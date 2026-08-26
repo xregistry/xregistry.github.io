@@ -6,6 +6,8 @@ series_order: 18
 perspective: Tooling and provenance
 status: Publication draft
 drafted: 2026-08-24
+date: 2027-04-21
+published: false
 reading_time: 9 minutes
 previous_slug: who-tells-tools-that-the-registry-changed
 previous_title: Who Tells Tools That the Registry Changed?

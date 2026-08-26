@@ -6,6 +6,8 @@ series_order: 19
 perspective: Scale and pagination
 status: Working-draft analysis
 drafted: 2026-08-25
+date: 2027-05-05
+published: false
 reading_time: 8 minutes
 previous_slug: export-is-a-tooling-boundary
 previous_title: Export Is a Tooling Boundary

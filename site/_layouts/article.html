@@ -5,12 +5,11 @@ layout: default
 <main id="main_content_wrap" class="outer">
   <article class="inner blog-article">
     <header class="article-header">
-      <p class="series-kicker">xRegistry foundations · Article {{ page.series_order }} of 20</p>
+      <p class="series-kicker">xRegistry foundations · Article {{ page.series_order }} of {{ site.article_series_size }}</p>
       <h1>{{ page.title }}</h1>
       <p class="article-deck">{{ page.description }}</p>
       <dl class="article-meta">
-        <div><dt>Status</dt><dd>{{ page.status }}</dd></div>
-        <div><dt>Drafted</dt><dd><time datetime="{{ page.drafted | date_to_xmlschema }}">{{ page.drafted | date: "%B %-d, %Y" }}</time></dd></div>
+        <div><dt>Published</dt><dd><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time></dd></div>
         <div><dt>Reading time</dt><dd>{{ page.reading_time }}</dd></div>
       </dl>
     </header>
@@ -24,16 +23,30 @@ layout: default
       {{ content }}
     </div>
 
-    <nav class="series-navigation" aria-label="Article series">
-      {% if page.previous_slug %}
-        <a class="series-link series-previous" href="{{ '/blog/' | append: page.previous_slug | append: '/' | relative_url }}"><span>Previous</span>{{ page.previous_title }}</a>
+    {% assign published_articles = site.articles | sort: "series_order" %}
+    {% assign previous_article = nil %}
+    {% assign next_article = nil %}
+    {% assign found_current = false %}
+    {% for article in published_articles %}
+      {% if found_current and next_article == nil %}
+        {% assign next_article = article %}
+      {% elsif article.url == page.url %}
+        {% assign found_current = true %}
       {% else %}
-        <a class="series-link series-previous" href="{{ '/blog/' | relative_url }}"><span>Series index</span>Explore the complete series</a>
+        {% assign previous_article = article %}
       {% endif %}
-      {% if page.next_slug %}
-        <a class="series-link series-next" href="{{ '/blog/' | append: page.next_slug | append: '/' | relative_url }}"><span>Next</span>{{ page.next_title }}</a>
+    {% endfor %}
+
+    <nav class="series-navigation" aria-label="Article series">
+      {% if previous_article %}
+        <a class="series-link series-previous" href="{{ previous_article.url | relative_url }}"><span>Previous</span>{{ previous_article.title }}</a>
       {% else %}
-        <a class="series-link series-next" href="{{ '/blog/' | relative_url }}"><span>Series index</span>Return to the complete series</a>
+        <a class="series-link series-previous" href="{{ '/blog/' | relative_url }}"><span>Blog index</span>Browse published articles</a>
+      {% endif %}
+      {% if next_article %}
+        <a class="series-link series-next" href="{{ next_article.url | relative_url }}"><span>Next</span>{{ next_article.title }}</a>
+      {% else %}
+        <a class="series-link series-next" href="{{ '/blog/' | relative_url }}"><span>Blog index</span>Return to published articles</a>
       {% endif %}
     </nav>
   </article>

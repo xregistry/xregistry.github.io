@@ -6,6 +6,8 @@ series_order: 20
 perspective: Protocol-independent model
 status: Working-draft analysis
 drafted: 2026-08-25
+date: 2027-05-19
+published: false
 reading_time: 9 minutes
 previous_slug: can-a-client-traverse-a-million-entry-registry
 previous_title: Can a Client Traverse a Million-Entry Registry?

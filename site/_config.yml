@@ -16,6 +16,8 @@ collections:
     output: true
     permalink: /blog/:name/
 
+article_series_size: 20
+
 defaults:
   - scope:
       path: ""
