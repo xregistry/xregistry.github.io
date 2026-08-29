@@ -3,7 +3,6 @@
 set -e
 set -o pipefail
 
-# export IMAGE=ghcr.io/xregistry/xrserver-all
 export IMAGE=ghcr.io/xregistry/xrserver-all
 export XR_SERVER=localhost:8383
 export VERBOSE="-v"
@@ -127,7 +126,7 @@ fi
 docker ps | grep sitexreg > /dev/null 2>&1 || (
     echo "# Starting xreg server, and waiting for it to be ready"
     docker rm -f sitexreg > /dev/null 2>&1 || true
-    docker run -dti --name sitexreg -p 8383:8080 $IMAGE > /dev/null
+    docker run -dti --name sitexreg -p 8383:8080 $IMAGE -r "xRegistry.io" > /dev/null
     while ! curl --silent --fail http://$XR_SERVER > /dev/null;do sleep 1;done
 )
 
