@@ -7,7 +7,7 @@ export IMAGE=ghcr.io/xregistry/xrserver-all
 export XR_SERVER=localhost:8383
 export VERBOSE="-v"
 export VER=v1.0-rc1
-export DIR=xreg
+export DIR=site/xreg
 
 # Usage (in your main script after declaring the mapping):
 #   declare -A mapping=(
@@ -227,7 +227,7 @@ echo "# Verify all hrefs in html files have been modified correctly"
 # Remove "fragment" part of url (#.*)
 # Split file name from url (: -> space)
 # Find href (tgt) relative to source (src)
-grep -roPH 'href="\K[^"]+' xreg | \
+grep -roPH 'href="\K[^"]+' $DIR | \
     grep -v ":http" | \
     grep -v 'URL$' | \
     grep -v ":#" | \

@@ -1,0 +1,368 @@
+{
+  "endpoints": {
+    "Eclipse.SparkplugBv10EdgeNodeProducer": {
+      "description": "Endpoint to which a Sparkplug B v1.0 Edge Node publishes its NBIRTH, NDATA and NDEATH messages. Each message definition carries its own topic, so no endpoint-level publish topic is declared",
+      "usage": [
+        "producer"
+      ],
+      "protocol": "MQTT/3.1.1",
+      "deployed": false,
+      "endpoints": [],
+      "protocoloptions": {
+        "cleansession": true,
+        "willtopic": "spBv1.0/{group_id}/NDEATH/{edge_node_id}",
+        "willmessage": "/messagegroups/Eclipse.SparkplugB.EdgeNode/messages/NDEATH"
+      },
+      "messagegroups": [
+        "/messagegroups/Eclipse.SparkplugB.EdgeNode"
+      ]
+    },
+    "Eclipse.SparkplugBv10EdgeNodeCommandConsumer": {
+      "description": "Endpoint on which a Sparkplug B v1.0 Edge Node subscribes for NCMD messages. Sparkplug requires this subscription at QoS 1 so that rebirth requests are always honored",
+      "usage": [
+        "subscriber",
+        "consumer"
+      ],
+      "protocol": "MQTT/3.1.1",
+      "deployed": false,
+      "endpoints": [],
+      "protocoloptions": {
+        "cleansession": true,
+        "topicfilter": "spBv1.0/{group_id}/NCMD/{edge_node_id}",
+        "qos": 1
+      },
+      "messagegroups": [
+        "/messagegroups/Eclipse.SparkplugB.EdgeNodeCommands"
+      ]
+    },
+    "Eclipse.SparkplugBv10EdgeNodePrimaryHostStateConsumer": {
+      "description": "Endpoint on which a Sparkplug B v1.0 Edge Node that is configured with a Primary Host Application subscribes for that host's STATE messages",
+      "usage": [
+        "subscriber",
+        "consumer"
+      ],
+      "protocol": "MQTT/3.1.1",
+      "deployed": false,
+      "endpoints": [],
+      "protocoloptions": {
+        "cleansession": true,
+        "topicfilter": "spBv1.0/STATE/{sparkplug_host_id}",
+        "qos": 1
+      },
+      "messagegroups": [
+        "/messagegroups/Eclipse.SparkplugB.HostApplicationState"
+      ]
+    },
+    "Eclipse.SparkplugBv10DeviceProducer": {
+      "description": "Endpoint to which an Edge Node publishes the DBIRTH, DDATA and DDEATH messages of an attached Sparkplug B v1.0 Device",
+      "usage": [
+        "producer"
+      ],
+      "protocol": "MQTT/3.1.1",
+      "deployed": false,
+      "endpoints": [],
+      "protocoloptions": {},
+      "messagegroups": [
+        "/messagegroups/Eclipse.SparkplugB.Device"
+      ]
+    },
+    "Eclipse.SparkplugBv10DeviceConsumer": {
+      "description": "Endpoint on which an Edge Node subscribes for DCMD messages targeting an attached Sparkplug B v1.0 Device that supports writing to outputs. Sparkplug requires this subscription at QoS 1",
+      "usage": [
+        "subscriber",
+        "consumer"
+      ],
+      "protocol": "MQTT/3.1.1",
+      "deployed": false,
+      "endpoints": [],
+      "protocoloptions": {
+        "cleansession": true,
+        "topicfilter": "spBv1.0/{group_id}/DCMD/{edge_node_id}/{device_id}",
+        "qos": 1
+      },
+      "messagegroups": [
+        "/messagegroups/Eclipse.SparkplugB.DeviceCommands"
+      ]
+    },
+    "Eclipse.SparkplugBv10HostApplicationProducer": {
+      "description": "Endpoint to which a Sparkplug B v1.0 Host Application publishes its STATE messages and the NCMD and DCMD commands it issues",
+      "usage": [
+        "producer"
+      ],
+      "protocol": "MQTT/3.1.1",
+      "deployed": false,
+      "endpoints": [],
+      "protocoloptions": {
+        "cleansession": true,
+        "willtopic": "spBv1.0/STATE/{sparkplug_host_id}",
+        "willmessage": "/messagegroups/Eclipse.SparkplugB.HostApplicationState/messages/STATE.Death"
+      },
+      "messagegroups": [
+        "/messagegroups/Eclipse.SparkplugB.HostApplicationState",
+        "/messagegroups/Eclipse.SparkplugB.DeviceCommands",
+        "/messagegroups/Eclipse.SparkplugB.EdgeNodeCommands"
+      ]
+    },
+    "Eclipse.SparkplugBv10HostApplicationConsumer": {
+      "description": "Endpoint on which a Sparkplug B v1.0 Host Application subscribes to the Sparkplug topic namespace to receive Edge Node and Device messages",
+      "usage": [
+        "subscriber",
+        "consumer"
+      ],
+      "protocol": "MQTT/3.1.1",
+      "deployed": false,
+      "endpoints": [],
+      "protocoloptions": {
+        "cleansession": true,
+        "topicfilter": "spBv1.0/#",
+        "qos": 1
+      },
+      "messagegroups": [
+        "/messagegroups/Eclipse.SparkplugB.EdgeNode",
+        "/messagegroups/Eclipse.SparkplugB.Device"
+      ]
+    },
+    "Eclipse.SparkplugBv10HostApplicationStateConsumer": {
+      "description": "Endpoint on which a Sparkplug B v1.0 Host Application subscribes to its own STATE topic, so that it detects an 'offline' STATE published on its behalf while it is in fact online",
+      "usage": [
+        "subscriber",
+        "consumer"
+      ],
+      "protocol": "MQTT/3.1.1",
+      "deployed": false,
+      "endpoints": [],
+      "protocoloptions": {
+        "cleansession": true,
+        "topicfilter": "spBv1.0/STATE/{sparkplug_host_id}",
+        "qos": 1
+      },
+      "messagegroups": [
+        "/messagegroups/Eclipse.SparkplugB.HostApplicationState"
+      ]
+    }
+  },
+  "messagegroups": {
+    "Eclipse.SparkplugB.EdgeNode": {
+      "protocol": "MQTT/3.1.1",
+      "description": "Eclipse Sparkplug B is a lightweight messaging protocol for industrial IoT. This definition is for Sparkplug B v1.0 packets originating from an Edge Node.",
+      "messages": {
+        "NBIRTH": {
+          "description": "Birth certificate for Sparkplug Edge Nodes",
+          "protocol": "MQTT/3.1.1",
+          "protocoloptions": {
+            "topic_name": "spBv1.0/{group_id}/NBIRTH/{edge_node_id}",
+            "qos": 0,
+            "retain": false
+          },
+          "dataschemaformat": "Protobuf/2.0",
+          "dataschemauri": "/schemagroups/Eclipse.Sparkplug/schemas/SparkplugB_Protobuf/versions/v1.0:Payload"
+        },
+        "NDATA": {
+          "description": "Data payload for Sparkplug Edge Nodes",
+          "protocol": "MQTT/3.1.1",
+          "protocoloptions": {
+            "topic_name": "spBv1.0/{group_id}/NDATA/{edge_node_id}",
+            "qos": 0,
+            "retain": false
+          },
+          "dataschemaformat": "Protobuf/2.0",
+          "dataschemauri": "/schemagroups/Eclipse.Sparkplug/schemas/SparkplugB_Protobuf/versions/v1.0:Payload"
+        },
+        "NDEATH": {
+          "description": "Death certificate for Sparkplug Edge Nodes, registered as the MQTT Will Message. Sparkplug requires Will QoS 1 and Will Retain false",
+          "protocol": "MQTT/3.1.1",
+          "protocoloptions": {
+            "topic_name": "spBv1.0/{group_id}/NDEATH/{edge_node_id}",
+            "qos": 1,
+            "retain": false
+          },
+          "dataschemaformat": "Protobuf/2.0",
+          "dataschemauri": "/schemagroups/Eclipse.Sparkplug/schemas/SparkplugB_Protobuf/versions/v1.0:Payload"
+        }
+      }
+    },
+    "Eclipse.SparkplugB.Device": {
+      "protocol": "MQTT/3.1.1",
+      "description": "Eclipse Sparkplug B is a lightweight messaging protocol for industrial IoT. This definition is for Sparkplug B v1.0 packets originating from a Device.",
+      "messages": {
+        "DBIRTH": {
+          "description": "Birth certificate for Sparkplug Devices",
+          "protocol": "MQTT/3.1.1",
+          "protocoloptions": {
+            "topic_name": "spBv1.0/{group_id}/DBIRTH/{edge_node_id}/{device_id}",
+            "qos": 0,
+            "retain": false
+          },
+          "dataschemaformat": "Protobuf/2.0",
+          "dataschemauri": "/schemagroups/Eclipse.Sparkplug/schemas/SparkplugB_Protobuf/versions/v1.0:Payload"
+        },
+        "DDEATH": {
+          "description": "Death certificate for Sparkplug Devices",
+          "protocol": "MQTT/3.1.1",
+          "protocoloptions": {
+            "topic_name": "spBv1.0/{group_id}/DDEATH/{edge_node_id}/{device_id}",
+            "qos": 0,
+            "retain": false
+          },
+          "dataschemaformat": "Protobuf/2.0",
+          "dataschemauri": "/schemagroups/Eclipse.Sparkplug/schemas/SparkplugB_Protobuf/versions/v1.0:Payload"
+        },
+        "DDATA": {
+          "description": "Device data telemetry message",
+          "protocol": "MQTT/3.1.1",
+          "protocoloptions": {
+            "topic_name": "spBv1.0/{group_id}/DDATA/{edge_node_id}/{device_id}",
+            "qos": 0,
+            "retain": false
+          },
+          "dataschemaformat": "Protobuf/2.0",
+          "dataschemauri": "/schemagroups/Eclipse.Sparkplug/schemas/SparkplugB_Protobuf/versions/v1.0:Payload"
+        }
+      }
+    },
+    "Eclipse.SparkplugB.HostApplicationState": {
+      "protocol": "MQTT/3.1.1",
+      "description": "Eclipse Sparkplug B is a lightweight messaging protocol for industrial IoT. This definition is for Sparkplug B v1.0 packets originating from a Host Application.",
+      "messages": {
+        "STATE.Death": {
+          "description": "Host Application Death Certificate, registered as the MQTT Will Message with 'online' set to false",
+          "protocol": "MQTT/3.1.1",
+          "protocoloptions": {
+            "topic_name": "spBv1.0/STATE/{sparkplug_host_id}",
+            "qos": 1,
+            "retain": true
+          },
+          "dataschemaformat": "JsonSchema/draft-07",
+          "dataschemauri": "/schemagroups/Eclipse.Sparkplug/schemas/SparkplugB_JSON/versions/v1.0:messages/STATEDeath"
+        },
+        "STATE.Birth": {
+          "description": "Host Application Birth Certificate, published with 'online' set to true immediately after the MQTT session is established",
+          "protocol": "MQTT/3.1.1",
+          "protocoloptions": {
+            "topic_name": "spBv1.0/STATE/{sparkplug_host_id}",
+            "qos": 1,
+            "retain": true
+          },
+          "dataschemaformat": "JsonSchema/draft-07",
+          "dataschemauri": "/schemagroups/Eclipse.Sparkplug/schemas/SparkplugB_JSON/versions/v1.0:messages/STATEBirth"
+        }
+      }
+    },
+    "Eclipse.SparkplugB.EdgeNodeCommands": {
+      "protocol": "MQTT/3.1.1",
+      "description": "Eclipse Sparkplug B is a lightweight messaging protocol for industrial IoT. This definition is for Sparkplug B v1.0 packets originating from a Host Application.",
+      "messages": {
+        "NCMD": {
+          "description": "Command issued by a Host Application to an Edge Node, for example a 'Node Control/Rebirth' request",
+          "protocol": "MQTT/3.1.1",
+          "protocoloptions": {
+            "topic_name": "spBv1.0/{group_id}/NCMD/{edge_node_id}",
+            "qos": 0,
+            "retain": false
+          },
+          "dataschemaformat": "Protobuf/2.0",
+          "dataschemauri": "/schemagroups/Eclipse.Sparkplug/schemas/SparkplugB_Protobuf/versions/v1.0:Payload"
+        }
+      }
+    },
+    "Eclipse.SparkplugB.DeviceCommands": {
+      "protocol": "MQTT/3.1.1",
+      "description": "Eclipse Sparkplug B is a lightweight messaging protocol for industrial IoT. This definition is for Sparkplug B v1.0 packets originating from a Host Application.",
+      "messages": {
+        "DCMD": {
+          "description": "Command issued by a Host Application to write to the outputs of an attached Device",
+          "protocol": "MQTT/3.1.1",
+          "protocoloptions": {
+            "topic_name": "spBv1.0/{group_id}/DCMD/{edge_node_id}/{device_id}",
+            "qos": 0,
+            "retain": false
+          },
+          "dataschemaformat": "Protobuf/2.0",
+          "dataschemauri": "/schemagroups/Eclipse.Sparkplug/schemas/SparkplugB_Protobuf/versions/v1.0:Payload"
+        }
+      }
+    }
+  },
+  "schemagroups": {
+    "Eclipse.Sparkplug": {
+      "description": "Eclipse Sparkplug Schema Group",
+      "schemas": {
+        "SparkplugB_JSON": {
+          "description": "Eclipse Sparkplug B JSON Messages",
+          "format": "JsonSchema/draft-07",
+          "versions": {
+            "v1.0": {
+              "description": "Eclipse Sparkplug B JSON Messages Version 1.0",
+              "format": "JsonSchema/draft-07",
+              "schema": {
+                "$schema": "http://json-schema.org/draft-07/schema#",
+                "title": "Sparkplug B JSON Messages",
+                "description": "Sparkplug B STATE messages. Unlike all other Sparkplug messages, STATE messages are JSON UTF-8 documents rather than Sparkplug B Protobuf payloads",
+                "messages": {
+                  "STATE": {
+                    "type": "object",
+                    "description": "Sparkplug Host Application STATE payload, which carries exactly the two keys 'online' and 'timestamp'",
+                    "properties": {
+                      "online": {
+                        "type": "boolean",
+                        "description": "Whether the Sparkplug Host Application is online"
+                      },
+                      "timestamp": {
+                        "type": "integer",
+                        "description": "UTC time in milliseconds since the Epoch"
+                      }
+                    },
+                    "required": [
+                      "online",
+                      "timestamp"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "STATEDeath": {
+                    "allOf": [
+                      {
+                        "$ref": "#/messages/STATE"
+                      },
+                      {
+                        "properties": {
+                          "online": {
+                            "const": false
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "STATEBirth": {
+                    "allOf": [
+                      {
+                        "$ref": "#/messages/STATE"
+                      },
+                      {
+                        "properties": {
+                          "online": {
+                            "const": true
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "SparkplugB_Protobuf": {
+          "description": "Eclipse Sparkplug B Schema",
+          "format": "Protobuf/2.0",
+          "versions": {
+            "v1.0": {
+              "description": "Eclipse Sparkplug B Schema Version 1.0",
+              "format": "Protobuf/2.0",
+              "schemaurl": "https://raw.githubusercontent.com/Cirrus-Link/Sparkplug/master/sparkplug_b/sparkplug_b.proto"
+            }
+          }
+        }
+      }
+    }
+  }
+}
