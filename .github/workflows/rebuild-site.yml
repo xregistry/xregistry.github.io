@@ -30,12 +30,12 @@ jobs:
 
       - name: Get xr exe and regenerate the xreg files
         run: |
-          container_id=$(docker create ghcr.io/xregistry/xr)
+          container_id=$(docker create -q ghcr.io/xregistry/xr)
           mkdir -p ${{ github.workspace }}/bin
           docker cp $container_id:/xr "${{ github.workspace }}/bin/xr"
           docker rm $container_id
           chmod +x "${{ github.workspace }}/bin/xr"
-          echo "${{ github.workspace }}/bin" >> $GITHUB_PATH
+          export PATH="${{ github.workspace }}/bin:$PATH"
           ./tools/buildsite && rm -rf bin
 
       - name: Commit and push changes
