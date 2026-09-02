@@ -1,0 +1,10 @@
+[build]
+  # Tell Netlify where your project code lives
+  base = "site"
+
+  # The command Netlify runs to build your Jekyll site
+  command = "bundle exec jekyll build"
+
+  # The folder Jekyll generates, relative to the base directory
+  publish = "_site"
+

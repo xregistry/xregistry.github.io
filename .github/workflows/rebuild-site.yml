@@ -1,0 +1,83 @@
+name: Regen xregsitry.io website (html and xreg files)
+
+on:
+  repository_dispatch:
+    types: [spec_updated, server_updated]
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: regen-site
+  cancel-in-progress: false   # Force serialization of regen requests
+
+jobs:
+  update-repo:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      id-token: write # Required for OIDC authentication
+      contents: write # Required to push changes back
+      pages: write    # Required to update github pages
+      statuses: write # Required to report status for the commit on repo page
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get xr exe and regenerate the xreg files
+        run: |
+          container_id=$(docker create ghcr.io/xregistry/xr)
+          mkdir -p ${{ github.workspace }}/bin
+          docker cp $container_id:/xr "${{ github.workspace }}/bin/xr"
+          docker rm $container_id
+          chmod +x "${{ github.workspace }}/bin/xr"
+          echo "${{ github.workspace }}/bin" >> $GITHUB_PATH
+          ./tools/buildsite && rm -rf bin
+
+      - name: Commit and push changes
+        id: git_check
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@://github.com"
+
+          git add .
+
+          # Only commit if there are actual changes to prevent workflow failure
+          if [ -n "$(git status --porcelain)" ]; then
+            git commit -m "Automated rebuild of site"
+            git push
+          else
+            echo "No changes detected. Skipping push."
+            echo "skip=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Setup Pages
+        # Only run if something changed
+        if: steps.git_check.outputs.skip != 'true'
+        uses: actions/configure-pages@v5
+
+      - name: Build with Jekyll
+        # Only run if something changed
+        if: steps.git_check.outputs.skip != 'true'
+        uses: actions/jekyll-build-pages@v1
+        with:
+          # Tell Jekyll to look inside the "site" directory for source files
+          source: ./site
+          destination: ./site/_site
+
+      - name: Upload artifact
+        # Only run if something changed
+        if: steps.git_check.outputs.skip != 'true'
+        uses: actions/upload-pages-artifact@v4
+        with:
+          # Upload the compiled site from the subdirectory
+          path: ./site/_site/
+
+      - name: Deploy site
+        # Only run if something changed
+        if: steps.git_check.outputs.skip != 'true'
+        uses: actions/deploy-pages@v4

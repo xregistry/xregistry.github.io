@@ -3,7 +3,7 @@ all: verify
 verify: links
 
 links: test_tools
-	@python tools/verify.py index.html
+	@python tools/verify.py site/index.html
 	@echo
 
 test_tools: deps
