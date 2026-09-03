@@ -10,8 +10,8 @@ due: 2026-08-26
 date: 2026-08-26 16:00:00 +0200
 published: true
 reading_time: 7 minutes
-next_slug: where-a-schema-version-stops-being-the-same-schema
-next_title: Where a Schema Version Stops Being the Same Schema
+next_slug: what-is-the-xregistry-server
+next_title: What Is the xRegistry Server?
 ---
 
 Teams often keep schemas and event contracts in source control, then need the same information at runtime and in generated documentation. Rewriting that metadata for every tool creates drift. xRegistry treats an API, an exportable document, and a static file tree as different ways to work with one contract graph.

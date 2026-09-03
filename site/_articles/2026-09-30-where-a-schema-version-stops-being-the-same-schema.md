@@ -2,12 +2,12 @@
 title: "Where a Schema Version Stops Being the Same Schema"
 description: "xRegistry treats compatible revisions as Versions of one Schema Resource and requires a new Resource when a change breaks the selected compatibility contract."
 permalink: /blog/where-a-schema-version-stops-being-the-same-schema/
-series_order: 12
+series_order: 16
 perspective: Schema evolution
 status: Publication draft
 drafted: 2026-08-24
-due: 2026-09-21
-date: 2026-09-21 16:00:00 +0200
+due: 2026-09-30
+date: 2026-09-30 16:00:00 +0200
 published: false
 reading_time: 8 minutes
 previous_slug: which-schema-did-this-message-mean

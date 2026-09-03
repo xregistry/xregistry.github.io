@@ -2,18 +2,18 @@
 title: "Is This Write a Replacement, a Patch, or an Import?"
 description: "PUT, PATCH, and POST express different omission and collection semantics in xRegistry, while import is a workflow built from those operations."
 permalink: /blog/is-this-write-a-replacement-a-patch-or-an-import/
-series_order: 9
+series_order: 12
 perspective: Write semantics
 status: Publication draft
 drafted: 2026-08-25
-due: 2026-09-14
-date: 2026-09-14 16:00:00 +0200
+due: 2026-09-21
+date: 2026-09-21 16:00:00 +0200
 published: false
 reading_time: 9 minutes
 previous_slug: ids-name-xids-locate-epochs-protect
 previous_title: IDs Name, XIDs Locate, Epochs Protect
-next_slug: versioning-is-five-separate-questions
-next_title: Versioning Is Five Separate Questions
+next_slug: what-does-the-xregistry-cli-add-to-the-api
+next_title: What Does the xRegistry CLI Add to the API?
 ---
 
 An update that omits `description` may preserve it, remove it, or be invalid. The JSON alone does not answer that question; the HTTP method and target do. xRegistry distinguishes replacement, patching, Version creation, and collection import so clients can make changes without silently discarding metadata.

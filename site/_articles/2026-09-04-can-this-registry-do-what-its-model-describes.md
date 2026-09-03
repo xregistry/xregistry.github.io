@@ -2,12 +2,12 @@
 title: "Can This Registry Do What Its Model Describes?"
 description: "The model describes valid registry data, while capabilities describe which optional behavior a particular xRegistry deployment makes available."
 permalink: /blog/can-this-registry-do-what-its-model-describes/
-series_order: 4
+series_order: 5
 perspective: Deployment capabilities
 status: Publication draft
 drafted: 2026-08-25
-due: 2026-09-02
-date: 2026-09-02 16:00:00 +0200
+due: 2026-09-04
+date: 2026-09-04 16:00:00 +0200
 published: false
 reading_time: 7 minutes
 previous_slug: the-model-is-part-of-the-program

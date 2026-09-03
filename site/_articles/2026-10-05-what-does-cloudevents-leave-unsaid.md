@@ -2,12 +2,12 @@
 title: "What Does CloudEvents Leave Unsaid?"
 description: "CloudEvents defines a portable event envelope; xRegistry Message and Endpoint metadata add payload, routing, and deployment contracts around it."
 permalink: /blog/what-does-cloudevents-leave-unsaid/
-series_order: 14
+series_order: 18
 perspective: Layered event contracts
 status: Publication draft
 drafted: 2026-08-25
-due: 2026-09-25
-date: 2026-09-25 16:00:00 +0200
+due: 2026-10-05
+date: 2026-10-05 16:00:00 +0200
 published: false
 reading_time: 8 minutes
 previous_slug: a-message-definition-is-both-a-template-and-a-filter

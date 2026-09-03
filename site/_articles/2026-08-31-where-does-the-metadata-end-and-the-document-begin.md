@@ -2,16 +2,16 @@
 title: "Where Does the Metadata End and the Document Begin?"
 description: "An xRegistry Resource can identify a logical object, describe its lifecycle, retain concrete Versions, and carry content without mixing those jobs together."
 permalink: /blog/where-does-the-metadata-end-and-the-document-begin/
-series_order: 2
+series_order: 3
 perspective: Resources and documents
 status: Publication draft
 drafted: 2026-08-25
-due: 2026-08-28
-date: 2026-08-28 16:00:00 +0200
+due: 2026-08-31
+date: 2026-08-31 16:00:00 +0200
 published: false
 reading_time: 8 minutes
-previous_slug: one-registry-three-views
-previous_title: One Registry, Three Views
+previous_slug: what-is-the-xregistry-server
+previous_title: What Is the xRegistry Server?
 next_slug: the-model-is-part-of-the-program
 next_title: The Model Is Part of the Program
 ---

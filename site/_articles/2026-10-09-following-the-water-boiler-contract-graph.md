@@ -2,18 +2,18 @@
 title: "Following the Water Boiler Contract Graph"
 description: "One xRegistry sample shows how references connect endpoints, message definitions, and schemas without claiming that any boiler or broker ran."
 permalink: /blog/following-the-water-boiler-contract-graph/
-series_order: 16
+series_order: 20
 perspective: Contract graph
 status: Publication draft
 drafted: 2026-08-24
-due: 2026-09-30
-date: 2026-09-30 16:00:00 +0200
+due: 2026-10-09
+date: 2026-10-09 16:00:00 +0200
 published: false
 reading_time: 8 minutes
 previous_slug: from-protocol-address-to-operational-contract
 previous_title: From Protocol Address to Operational Contract
-next_slug: who-tells-tools-that-the-registry-changed
-next_title: Who Tells Tools That the Registry Changed?
+next_slug: what-does-a-containerized-registry-need-to-keep
+next_title: What Does a Containerized Registry Need to Keep?
 ---
 
 When a team inherits an event integration, the useful first question is often not “which broker is running?” but “which contract does this endpoint use?” The Water Boiler sample shows how xRegistry references lead from MQTT endpoints through messages to versioned JSON Schemas. It is a map of declared contracts, not evidence that a boiler or broker ran.

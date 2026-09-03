@@ -2,16 +2,18 @@
 title: "What Survives When HTTP Disappears?"
 description: "The xRegistry entity model can be projected through another protocol, while HTTP paths, headers, redirects, and status codes are replaced by binding-specific mechanisms."
 permalink: /blog/what-survives-when-http-disappears/
-series_order: 20
+series_order: 26
 perspective: Protocol-independent model
 status: Working-draft analysis
 drafted: 2026-08-25
-due: 2026-10-09
-date: 2026-10-09 16:00:00 +0200
+due: 2026-10-23
+date: 2026-10-23 16:00:00 +0200
 published: false
 reading_time: 9 minutes
 previous_slug: can-a-client-traverse-a-million-entry-registry
 previous_title: Can a Client Traverse a Million-Entry Registry?
+next_slug: what-is-xregistry-codegen
+next_title: What Is xRegistry Codegen?
 ---
 
 HTTP is a useful starting point, but contracts often need to travel through systems that use other protocols. Which parts of an xRegistry contract still mean the same thing when URLs, headers, and status codes disappear? Core xRegistry keeps identity, hierarchy, Versions, models, and document semantics independent of HTTP; a binding maps them to another protocol. The OPC UA and OpenUSD materials discussed here are working drafts, not released specifications.

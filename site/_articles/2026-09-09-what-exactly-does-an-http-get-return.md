@@ -2,18 +2,18 @@
 title: "What Exactly Does an HTTP GET Return?"
 description: "An xRegistry GET can return registry metadata, a domain document, a collection, a redirect, or a requested projection depending on the target and Resource model."
 permalink: /blog/what-exactly-does-an-http-get-return/
-series_order: 6
+series_order: 7
 perspective: HTTP representations
 status: Publication draft
 drafted: 2026-08-25
-due: 2026-09-07
-date: 2026-09-07 16:00:00 +0200
+due: 2026-09-09
+date: 2026-09-09 16:00:00 +0200
 published: false
 reading_time: 8 minutes
 previous_slug: how-does-a-client-find-a-registry
 previous_title: How Does a Client Find a Registry?
-next_slug: how-much-of-the-graph-should-a-client-read
-next_title: How Much of the Graph Should a Client Read?
+next_slug: running-an-xregistry-server-behind-a-reverse-proxy
+next_title: Running an xRegistry Server Behind a Reverse Proxy
 ---
 
 When a client requests a schema URL, it may need the schema document for validation or the registry record that describes its Versions and lifecycle. Returning one when the caller expects the other is an integration bug waiting to happen. xRegistry's HTTP binding makes that choice explicit for document-bearing Resources.

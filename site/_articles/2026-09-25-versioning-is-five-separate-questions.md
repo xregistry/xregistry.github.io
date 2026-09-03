@@ -2,16 +2,16 @@
 title: "Versioning Is Five Separate Questions"
 description: "xRegistry separates specification version, Resource identity, Version identity, default selection, and compatibility policy instead of hiding them behind one version string."
 permalink: /blog/versioning-is-five-separate-questions/
-series_order: 10
+series_order: 14
 perspective: Versioning policy
 status: Publication draft
 drafted: 2026-08-24
-due: 2026-09-16
-date: 2026-09-16 16:00:00 +0200
+due: 2026-09-25
+date: 2026-09-25 16:00:00 +0200
 published: false
 reading_time: 9 minutes
-previous_slug: is-this-write-a-replacement-a-patch-or-an-import
-previous_title: Is This Write a Replacement, a Patch, or an Import?
+previous_slug: what-does-the-xregistry-cli-add-to-the-api
+previous_title: What Does the xRegistry CLI Add to the API?
 next_slug: which-schema-did-this-message-mean
 next_title: Which Schema Did This Message Mean?
 ---

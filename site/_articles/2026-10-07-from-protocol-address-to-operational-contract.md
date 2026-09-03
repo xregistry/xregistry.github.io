@@ -2,12 +2,12 @@
 title: "From Protocol Address to Operational Contract"
 description: "xRegistry endpoint roles connect network addresses to message contracts and discovery metadata without claiming runtime availability or delivery."
 permalink: /blog/from-protocol-address-to-operational-contract/
-series_order: 15
+series_order: 19
 perspective: Endpoint model
 status: Publication draft
 drafted: 2026-08-24
-due: 2026-09-28
-date: 2026-09-28 16:00:00 +0200
+due: 2026-10-07
+date: 2026-10-07 16:00:00 +0200
 published: false
 reading_time: 8 minutes
 previous_slug: what-does-cloudevents-leave-unsaid

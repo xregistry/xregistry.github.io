@@ -2,16 +2,16 @@
 title: "How Much of the Graph Should a Client Read?"
 description: "Filtering, collection traversal, and selective inlining let xRegistry clients retrieve useful context without treating every operation as a full export."
 permalink: /blog/how-much-of-the-graph-should-a-client-read/
-series_order: 7
+series_order: 10
 perspective: Selective graph reads
 status: Publication draft
 drafted: 2026-08-25
-due: 2026-09-09
-date: 2026-09-09 16:00:00 +0200
+due: 2026-09-16
+date: 2026-09-16 16:00:00 +0200
 published: false
 reading_time: 8 minutes
-previous_slug: what-exactly-does-an-http-get-return
-previous_title: What Exactly Does an HTTP GET Return?
+previous_slug: how-does-a-live-registry-become-static-files
+previous_title: How Does a Live Registry Become Static Files?
 next_slug: ids-name-xids-locate-epochs-protect
 next_title: IDs Name, XIDs Locate, Epochs Protect
 ---

@@ -2,18 +2,18 @@
 title: "The Model Is Part of the Program"
 description: "An xRegistry model defines entity shapes, extension attributes, constraints, and validation rules so tools can understand a registry."
 permalink: /blog/the-model-is-part-of-the-program/
-series_order: 3
+series_order: 4
 perspective: Model-driven contracts
 status: Publication draft
 drafted: 2026-08-24
-due: 2026-08-31
-date: 2026-08-31 16:00:00 +0200
+due: 2026-09-02
+date: 2026-09-02 16:00:00 +0200
 published: false
 reading_time: 9 minutes
-previous_slug: where-a-schema-version-stops-being-the-same-schema
-previous_title: Where a Schema Version Stops Being the Same Schema
-next_slug: a-message-definition-is-both-a-template-and-a-filter
-next_title: A Message Definition Is Both a Template and a Filter
+previous_slug: where-does-the-metadata-end-and-the-document-begin
+previous_title: Where Does the Metadata End and the Document Begin?
+next_slug: can-this-registry-do-what-its-model-describes
+next_title: Can This Registry Do What Its Model Describes?
 ---
 
 A tool that only knows how to read JSON still needs to know which JSON it is looking at. Is this a schema, a message, an endpoint, or an allowed extension? xRegistry publishes that information as a machine-readable model, so browsers, validators, and generators can discover the registry's shape instead of carrying every domain type in their code.

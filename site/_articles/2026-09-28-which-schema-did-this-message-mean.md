@@ -2,12 +2,12 @@
 title: "Which Schema Did This Message Mean?"
 description: "Inline schemas, external schema URIs, xRegistry Schema references, Versions, and fragments make different promises about resolution and change."
 permalink: /blog/which-schema-did-this-message-mean/
-series_order: 11
+series_order: 15
 perspective: Schema references
 status: Publication draft
 drafted: 2026-08-25
-due: 2026-09-18
-date: 2026-09-18 16:00:00 +0200
+due: 2026-09-28
+date: 2026-09-28 16:00:00 +0200
 published: false
 reading_time: 8 minutes
 previous_slug: versioning-is-five-separate-questions

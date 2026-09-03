@@ -2,12 +2,12 @@
 title: "A Message Definition Is Both a Template and a Filter"
 description: "xRegistry message definitions connect message metadata to payload schemas so producers can build messages and consumers can recognize them."
 permalink: /blog/a-message-definition-is-both-a-template-and-a-filter/
-series_order: 13
+series_order: 17
 perspective: Message contracts
 status: Publication draft
 drafted: 2026-08-24
-due: 2026-09-23
-date: 2026-09-23 16:00:00 +0200
+due: 2026-10-02
+date: 2026-10-02 16:00:00 +0200
 published: false
 reading_time: 9 minutes
 previous_slug: where-a-schema-version-stops-being-the-same-schema

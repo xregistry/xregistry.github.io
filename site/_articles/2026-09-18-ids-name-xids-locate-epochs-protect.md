@@ -2,12 +2,12 @@
 title: "IDs Name, XIDs Locate, Epochs Protect"
 description: "xRegistry IDs, XIDs, and epochs solve different problems: local naming, registry-wide addressing, and detection of conflicting writes."
 permalink: /blog/ids-name-xids-locate-epochs-protect/
-series_order: 8
+series_order: 11
 perspective: Identity and concurrency
 status: Publication draft
 drafted: 2026-08-24
-due: 2026-09-11
-date: 2026-09-11 16:00:00 +0200
+due: 2026-09-18
+date: 2026-09-18 16:00:00 +0200
 published: false
 reading_time: 9 minutes
 previous_slug: how-much-of-the-graph-should-a-client-read

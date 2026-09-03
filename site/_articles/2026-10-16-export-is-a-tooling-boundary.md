@@ -2,18 +2,18 @@
 title: "Export Is a Tooling Boundary"
 description: "xRegistry export turns a live metadata graph into portable input for generators, documentation, configuration, review, and reproducible builds."
 permalink: /blog/export-is-a-tooling-boundary/
-series_order: 18
+series_order: 23
 perspective: Tooling and provenance
 status: Publication draft
 drafted: 2026-08-24
-due: 2026-10-05
-date: 2026-10-05 16:00:00 +0200
+due: 2026-10-16
+date: 2026-10-16 16:00:00 +0200
 published: false
 reading_time: 9 minutes
 previous_slug: who-tells-tools-that-the-registry-changed
 previous_title: Who Tells Tools That the Registry Changed?
-next_slug: can-a-client-traverse-a-million-entry-registry
-next_title: Can a Client Traverse a Million-Entry Registry?
+next_slug: how-does-schemastore-publish-a-registry-without-running-one
+next_title: How Does SchemaStore Publish a Registry Without Running One?
 ---
 
 A generator needs a stable input it can store with a build, review in a pull request, or hand to another tool. It does not need an API response shaped for interactive browsing. xRegistry's `GET /export` produces a document view of the registry; it is portable input for generators, not an SDK, web page, or broker configuration by itself.

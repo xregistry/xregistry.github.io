@@ -2,12 +2,12 @@
 title: "How Does a Client Find a Registry?"
 description: "xRegistry discovery starts from a known host, registry URL, or webpage and returns candidate registry roots that a client still needs to inspect."
 permalink: /blog/how-does-a-client-find-a-registry/
-series_order: 5
+series_order: 6
 perspective: Registry discovery
 status: Publication draft
 drafted: 2026-08-25
-due: 2026-09-04
-date: 2026-09-04 16:00:00 +0200
+due: 2026-09-07
+date: 2026-09-07 16:00:00 +0200
 published: false
 reading_time: 7 minutes
 previous_slug: can-this-registry-do-what-its-model-describes

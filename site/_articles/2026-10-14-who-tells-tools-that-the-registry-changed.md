@@ -2,16 +2,16 @@
 title: "Who Tells Tools That the Registry Changed?"
 description: "xRegistry change events describe graph mutations, while deployments remain responsible for delivery, subscription, replay, and recovery."
 permalink: /blog/who-tells-tools-that-the-registry-changed/
-series_order: 17
+series_order: 22
 perspective: Registry change events
 status: Publication draft
 drafted: 2026-08-25
-due: 2026-10-02
-date: 2026-10-02 16:00:00 +0200
+due: 2026-10-14
+date: 2026-10-14 16:00:00 +0200
 published: false
 reading_time: 8 minutes
-previous_slug: following-the-water-boiler-contract-graph
-previous_title: Following the Water Boiler Contract Graph
+previous_slug: what-does-a-containerized-registry-need-to-keep
+previous_title: What Does a Containerized Registry Need to Keep?
 next_slug: export-is-a-tooling-boundary
 next_title: Export Is a Tooling Boundary
 ---
