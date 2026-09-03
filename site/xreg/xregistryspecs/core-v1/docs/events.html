@@ -71,7 +71,7 @@ RECOMMENDED.</p>
 to consumers, nor does it mandate how consumers register interest in receiving
 events.</p>
 <p>Below is a sample event serialized as a &quot;structured&quot; JSON CloudEvent due to a
-Group's <code>name</code> being changed:</p>
+Group's <code>name</code> being modified:</p>
 <pre><code class="language-yaml">{
   &quot;specversion&quot;: &quot;1.0&quot;,
   &quot;type&quot;: &quot;io.xregistry.group.updated&quot;,
@@ -81,6 +81,7 @@ Group's <code>name</code> being changed:</p>
   &quot;time&quot;: &quot;2025-09-01T12:01:02Z&quot;,
   &quot;xregcorrelationid&quot;: &quot;B9282-129301&quot;,
   &quot;data&quot;: {
+    &quot;epoch&quot;: 5,
     &quot;changed&quot;: [ &quot;epoch&quot;, &quot;modifiedat&quot;, &quot;name&quot; ]
   }
 }
@@ -121,8 +122,8 @@ generated.</li>
 Implementations MAY define additional metadata.</p>
 <h3 id="cloudevent-type-core-context-attribute">CloudEvent <a href="https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md#type"><code>type</code></a> Core Context Attribute <a class="anchor" href="#cloudevent-type-core-context-attribute">🔗</a></h3>
 <p>The type of action taken on the entity. The value MUST be of the form:
-<code>io.xregistry.&lt;ENTITY&gt;.&lt;ACTION&gt;</code>
-where:</p>
+<code>io.xregistry.&lt;ENTITY&gt;.&lt;ACTION&gt;</code></p>
+<p>where:</p>
 <ul>
 <li>
 <p><code>&lt;ENTITY&gt;</code> is the type of xRegistry entity
@@ -143,7 +144,8 @@ upon. It MUST be one of:</p>
 <ul>
 <li><code>created</code></li>
 <li><code>updated</code></li>
-<li><code>deprecation</code></li>
+<li><code>deprecated</code></li>
+<li><code>undeprecated</code></li>
 <li><code>deleted</code></li>
 </ul>
 <p>Not all <code>&lt;ACTION&gt;</code> values are applicable to all entities. See the
@@ -196,44 +198,80 @@ RECOMMENDED.</p>
 <h3 id="cloudevent-data">CloudEvent <a href="https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md#event-data"><code>data</code></a> <a class="anchor" href="#cloudevent-data">🔗</a></h3>
 <p>When present, and serialized in JSON, the <code>data</code> MUST be of the form:</p>
 <pre><code class="language-yaml">{
+  &quot;epoch&quot;: UINTEGER, ?
+  &quot;meta.epoch&quot;: UINTEGER, ?
   &quot;changed&quot;: [ &quot;&lt;STRING&gt;&quot;, * ] ?
 }
 </code></pre>
-<p>The <code>changed</code> attribute, when present, has the following constraints:</p>
+<p>where:</p>
+<ul>
+<li>
+<p>The <code>epoch</code> attribute MUST be included in <code>created</code> and <code>updated</code> events
+for Registries, Groups, Resources and Versions; and it MUST be the <code>subject</code>
+entity's <code>epoch</code> value as seen at the end of the interaction.</p>
+<ul>
+<li>MUST NOT be included in <code>deleted</code> events.</li>
+</ul>
+</li>
+<li>
+<p>The <code>meta.epoch</code> attribute MUST be included in Resource <code>created</code> and
+<code>updated</code> events and it MUST be the <code>subject</code> Resource's <code>meta.epoch</code> value
+as seen at the end of the interaction.</p>
+<ul>
+<li>
+<p>MUST only be included for Resource related events.</p>
+</li>
+<li>
+<p>MUST NOT be included in Resource <code>deleted</code> events.</p>
+</li>
+<li>
+<p>Note that Resource <code>created</code> and <code>updated</code> events will include both
+<code>epoch</code> and <code>meta.epoch</code> attributes even if one of them didn't change for
+the interaction.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>The <code>changed</code> attribute MAY be included to indicate which attributes of the
+<code>subject</code> entity were modified. When present, has the following
+constraints:</p>
 <ul>
 <li>
 <p>MUST be a list of the top-level attribute names (not values) that were
 added, modified, or deleted for the <code>subject</code> entity.</p>
 </li>
 <li>
-<p>In the case of changing a Resource's default Version pointer, the list MUST
-include all attributes from the previous default Version that have non-<code>null</code>
-values, and all attributes from the new default Version that have non-<code>null</code>
-values. Any duplicate attribute names MUST be removed.</p>
-</li>
-<li>
-<p>This attribute MUST NOT appear on the <code>created</code> or <code>deleted</code> events.</p>
+<p>This attribute MUST NOT appear on the <code>created</code>, <code>deleted</code>, <code>deprecated</code>,
+or <code>undeprecated</code> events.</p>
 </li>
 <li>
 <p>This specification does not mandate any particular order for the attribute
 names in the array.</p>
 </li>
-</ul>
+<li>
 <p>There are certain events where non-top-level attributes are included, and
 those will be noted in the <a href="#entity-events">Entity Events</a> sections below.
-When they do appear they MUST use the JSONPath dot (<code>.</code>) notation to express
+When they do appear they MUST use the
+<a href="./spec.html#xregistry-dot--notation">xRegistry Dot (<code>.</code>) Notation</a> to express
 the traversal to the attribute of interest.</p>
+</li>
+<li>
+<p>While <code>changed</code> is OPTIONAL, it is RECOMMENDED to be present on an event
+where it is permitted due to its usefulness for consumers. However, if
+exposure of this information would be inappropriate for some scenarios
+then it MAY be excluded. For example, for privacy/security reasons.</p>
+</li>
+<li>
 <p>If an entity is updated for multiple reasons during the processing of an
-interaction, per the rules previously stated, only one <code>updated</code> event
-will be generated. This means the attribute names of all impacted attributes
-MUST be merged into one <code>changed</code> list.</p>
-<p>While <code>changed</code> is OPTIONAL, it is RECOMMENDED to be present on an event where
-it is permitted due to its usefulness for consumers. However, if exposure of
-this information would be inappropriate for some scenarios then it MAY be
-excluded. For example, for privacy/security reasons.</p>
-<p>While this specification only shows <code>data</code> being present when <code>changed</code> is
-permitted, implementations MAY define their own metadata to be included
-in the <code>data</code> of a CloudEvent.</p>
+interaction, per the rules previously stated, there MUST only be one
+<code>updated</code> event be generated. This means the attribute names of all
+impacted attributes MUST be merged into one <code>changed</code> list.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>Implementations MAY define their own metadata to be included in the <code>data</code> of
+a CloudEvent.</p>
 <p>This metadata (<code>data</code>) is NOT REQUIRED to be present in the event, but is
 RECOMMENDED.</p>
 <h2 id="entity-events">Entity Events <a class="anchor" href="#entity-events">🔗</a></h2>
@@ -241,7 +279,25 @@ RECOMMENDED.</p>
 value.</p>
 <h3 id="registry-events"><code>registry</code> Events <a class="anchor" href="#registry-events">🔗</a></h3>
 <ul>
-<li>Action: <code>updated</code>
+<li>
+<p>Action: <code>created</code></p>
+<ul>
+<li>
+<p>STRONGLY RECOMMENDED to be generated when a new Registry is created.
+This event isn't mandated since the action of creating a new Registry
+is not defined in the xRegistry specification, and therefore (technically)
+out of scope. However, for interoperability, the suggested event is defined
+here.</p>
+</li>
+<li>
+<p>If, during the process of creating a new Registry, the model, modelsource
+or entities are modified/created, then events for those actions MUST be
+generated as well.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Action: <code>updated</code></p>
 <ul>
 <li>
 <p>MUST be generated when a Registry's attribute is updated, where each
@@ -249,8 +305,8 @@ modified attribute MUST be included in <code>changed</code>, if present.</p>
 </li>
 <li>
 <p>MUST be generated when a Group is created or deleted, where <code>changed</code>, if
-present, includes (at least) <code>epoch</code>, <code>modifiedat</code>, <code>&lt;GROUPS&gt;</code> and
-<code>&lt;GROUPS&gt;count</code> attribute names.</p>
+present, MUST include <code>epoch</code>, <code>modifiedat</code>, <code>&lt;GROUPS&gt;</code> and <code>&lt;GROUPS&gt;count</code>
+attribute names.</p>
 <p>While the <code>&lt;GROUPS&gt;</code> attribute is present in <code>changed</code> due to the child
 collection changing, in order to see which specific Groups were impacted,
 the <code>io.xregistry.group.created</code> and <code>io.xregistry.group.deleted</code> events
@@ -262,11 +318,25 @@ updated and the appropriate attribute MUST appear in <code>changed</code>, if pr
 </li>
 </ul>
 </li>
+<li>
+<p>Action: <code>deleted</code></p>
+<ul>
+<li>
+<p>STRONGLY RECOMMENDED to be generated when a Registry is deleted.
+This event isn't mandated since the action of deleting a new Registry
+is not defined in the xRegistry specification, and therefore (technically)
+out of scope. However, for interoperability, the suggested event is defined
+here.</p>
+</li>
+<li>
+<p>It is STRONGLY RECOMMENDED that a <code>deleted</code> event be generated for each
+entity within the deleted Registry. The optionality of this requirement
+is to allow for situations where implementations (or users) might view
+such a large volume of events to be problematic in their use cases.</p>
+</li>
 </ul>
-<p>The <code>io.xregistry.registry.created</code> and <code>io.xregistry.registry.deleted</code> events
-are not defined as part of this specification as those operations are not
-defined in the xRegistry specification. It is expected that the tooling that
-performs those operations will define those events, if needed.</p>
+</li>
+</ul>
 <h3 id="model-events"><code>model</code> Events <a class="anchor" href="#model-events">🔗</a></h3>
 <ul>
 <li>Action: <code>updated</code>
@@ -280,8 +350,8 @@ action.</p>
 <p>MUST NOT include a <code>changed</code> list.</p>
 </li>
 <li>
-<p>An <code>io.xregistry.registry.updated</code> event will also be generated where the
-<code>model</code> attribute will be included in <code>changed</code>, if present.</p>
+<p>An <code>io.xregistry.registry.updated</code> event MUST also be generated where the
+<code>model</code> attribute MUST be included in <code>changed</code>, if present.</p>
 </li>
 </ul>
 </li>
@@ -303,8 +373,8 @@ to watch for <code>io.xregistry.model.updated</code> events, not
 <p>MUST NOT include a <code>changed</code> list.</p>
 </li>
 <li>
-<p>An <code>io.xregistry.registry.updated</code> event will also be generated where the
-<code>modelsource</code> attribute will be included in <code>changed</code>, if present.</p>
+<p>An <code>io.xregistry.registry.updated</code> event MUST also be generated where the
+<code>modelsource</code> attribute MUST be included in <code>changed</code>, if present.</p>
 </li>
 </ul>
 </li>
@@ -325,8 +395,8 @@ events.</p>
 the top-level capability names are included in <code>changed</code>, if present.</p>
 </li>
 <li>
-<p>An <code>io.xregistry.registry.updated</code> event will also be generated where the
-<code>capabilities</code> attribute will be included in <code>changed</code>, if present.</p>
+<p>An <code>io.xregistry.registry.updated</code> event MUST also be generated where the
+<code>capabilities</code> attribute MUST be included in <code>changed</code>, if present.</p>
 </li>
 </ul>
 </li>
@@ -340,9 +410,9 @@ the top-level capability names are included in <code>changed</code>, if present.
 <p>MUST be generated when a new Group is created.</p>
 </li>
 <li>
-<p>An <code>io.xregistry.registry.updated</code> event will also be generated where the
-<code>&lt;GROUPS&gt;</code> and <code>&lt;GROUPS&gt;count</code> attributes will be included in <code>changed</code>,
-if present.</p>
+<p>An <code>io.xregistry.registry.updated</code> event MUST also be generated where
+<code>changed</code>, if present, MUST include <code>epoch</code>, <code>modifiedat</code>, <code>&lt;GROUPS&gt;</code> and
+<code>&lt;GROUPS&gt;count</code> attribute names.</p>
 </li>
 </ul>
 </li>
@@ -355,33 +425,44 @@ attribute MUST be included in <code>changed</code>, if present.</p>
 </li>
 <li>
 <p>MUST be generated when a Resource is created or deleted, where <code>changed</code>,
-if present, includes (at least) <code>epoch</code>, <code>modifiedat</code>, <code>&lt;RESOURCES&gt;</code> and
+if present, MUST include <code>epoch</code>, <code>modifiedat</code>, <code>&lt;RESOURCES&gt;</code> and
 <code>&lt;RESOURCES&gt;count</code> attribute names.</p>
 <p>While the <code>&lt;RESOURCES&gt;</code> attribute is present due to the child
 collection changing, in order to see which specific Resources were impacted,
 the <code>io.xregistry.resource.created</code> and <code>io.xregistry.resource.deleted</code>
 events would need to be examined.</p>
-<p>This includes any updates to the <code>deprecated</code> sub-object, even
-though a <code>io.xregistry.group.deprecation</code> event is also generated. And
-in that situation just <code>deprecated</code> would be included in <code>changed</code>,
-if present. To see which specific top-level <code>deprecated</code> attributes were
-changed, the <code>io.xregistry.group.deprecation</code> event would need to be
-examined.</p>
+<p>This MUST include any updates to the <code>deprecated</code> sub-object, even
+though a <code>io.xregistry.group.(un)deprecated</code> event is also generated. And
+in that situation <code>deprecated</code> MUST be included in the
+<code>io.xregistry.group.updated</code> event's <code>changed</code> list, if present.</p>
 </li>
 </ul>
 </li>
 <li>
-<p>Action: <code>deprecation</code></p>
+<p>Action: <code>deprecated</code></p>
 <ul>
 <li>
 <p>MUST be generated when a Group's <code>deprecated</code> sub-object is set or
-deleted, or when any of its attributes are updated, where &quot;changed&quot;,
-if present, includes the list of top-level attribute names from the
-<code>deprecated</code> sub-object that were modified.</p>
+any of its attributes are updated. Note, a <code>changed</code> list MUST NOT be
+included.</p>
 </li>
 <li>
-<p>An <code>io.xregistry.group.updated</code> event will also be generated where the
-<code>deprecated</code> sub-object will be included in <code>changed</code>, if present.</p>
+<p>An <code>io.xregistry.group.updated</code> event MUST also be generated where
+<code>changed</code>, if present, MUST include <code>epoch</code>, <code>modifiedat</code> and
+<code>deprecated</code> attribute names.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Action: <code>undeprecated</code></p>
+<ul>
+<li>
+<p>MUST be generated when a Group's <code>deprecated</code> sub-object is deleted.</p>
+</li>
+<li>
+<p>An <code>io.xregistry.group.updated</code> event MUST also be generated where
+<code>changed</code>, if present, MUST include <code>epoch</code>, <code>modifiedat</code> and
+<code>deprecated</code> attribute names.</p>
 </li>
 </ul>
 </li>
@@ -392,9 +473,9 @@ if present, includes the list of top-level attribute names from the
 <p>MUST be generated when a Group is deleted.</p>
 </li>
 <li>
-<p>An <code>io.xregistry.registry.updated</code> event will also be generated where the
-<code>&lt;GROUPS&gt;</code> and <code>&lt;GROUPS&gt;count</code> attributes will be included in <code>changed</code>, if
-present.</p>
+<p>An <code>io.xregistry.registry.updated</code> event MUST also be generated where
+<code>changed</code>, if present, MUST include <code>epoch</code>, <code>modifiedat</code>, <code>&lt;GROUPS&gt;</code> and
+<code>&lt;GROUPS&gt;count</code> attribute names.</p>
 </li>
 </ul>
 </li>
@@ -408,13 +489,13 @@ present.</p>
 <p>MUST be generated when a new Resource is created.</p>
 </li>
 <li>
-<p>At least one <code>io.xregistry.version.created</code> event will also be
-generated since at least one Version will also be created.</p>
+<p>At least one <code>io.xregistry.version.created</code> event MUST also be
+generated since at least one Version MUST also be created.</p>
 </li>
 <li>
-<p>An <code>io.xregistry.group.updated</code> event will also be generated where the
-<code>&lt;RESOURCES&gt;</code> and <code>&lt;RESOURCES&gt;count</code> attributes will be included in
-<code>changed</code>, if present.</p>
+<p>An <code>io.xregistry.group.updated</code> event MUST also be generated where the
+<code>changed</code>, if present, MUST include <code>epoch</code>, <code>modifiedat</code>, <code>&lt;RESOURCES&gt;</code>
+and <code>&lt;RESOURCES&gt;count</code> attributes names.</p>
 </li>
 </ul>
 </li>
@@ -422,50 +503,75 @@ generated since at least one Version will also be created.</p>
 <p>Action: <code>updated</code></p>
 <ul>
 <li>
-<p>MUST be generated when a Resource's (default Version) attribute is updated,
-where each modified attribute MUST be included in <code>changed</code>, if present.</p>
+<p>MUST be generated when:</p>
+<ul>
+<li>
+<p>A Resource's attribute (from the default Version entity) is updated,
+where <code>changed</code>, if present, MUST include each modified attribute. Note
+that a <code>io.xregistry.version.update</code> event MUST also be generated.</p>
 </li>
 <li>
-<p>MUST be generated when a Resource's <code>meta</code> sub-object is updated, where
-<code>changed</code>, if present, includes (at least) the changed top-level <code>meta</code>
-attribute names prefixed with <code>meta.</code>. For example,
-<code>meta.defaultversionid</code>.</p>
-<p>This includes any updates to the <code>deprecated</code> sub-object, even
-though a <code>io.xregistry.resource.deprecation</code> event is also generated. And
-in that situation just <code>meta.deprecated</code> would be included in <code>changed</code>,
-if present. To see which specific top-level <code>deprecated</code> attributes were
-changed, the <code>io.xregistry.resource.deprecation</code> event would need to be
-examined.</p>
+<p>A Version is created or deleted, where <code>changed</code>, if present, MUST
+include <code>meta.epoch</code>, <code>meta.modifiedat</code>, <code>versions</code> and <code>versionscount</code>
+attribute names.</p>
+<p>While the <code>versions</code> attribute is present due to the child collection
+changing, in order to see which specific Versions were impacted, the
+<code>io.xregistry.version.created</code> and <code>io.xregistry.version.deleted</code> events
+would need to be examined.</p>
 </li>
 <li>
-<p>MUST be generated when a Version is created or deleted, where <code>changed</code>,
-if present, includes (at least) <code>meta.epoch</code>, <code>meta.modifiedat</code>,
-<code>versions</code> and <code>versionscount</code> attribute names.</p>
-<p>While the <code>versions</code> attribute is present due to the child
-collection changing, in order to see which specific Versions were impacted,
-the <code>io.xregistry.version.created</code> and <code>io.xregistry.version.deleted</code>
-events would need to be examined.</p>
-</li>
-<li>
-<p>Updating a Resource's <code>meta.defaultversionid</code> attribute will
-generate an <code>io.xregistry.resource.updated</code> event but it MUST NOT generate
-an <code>io.xregistry.version.updated</code> event for either the prior or new default
-Version.</p>
+<p>A Resource's <code>meta</code> sub-object is update, where <code>changed</code>, if present,
+MUST include the changed top-level <code>meta</code> attribute names prefixes with
+<code>meta.</code>. For example, <code>meta.defaultversionid</code>.</p>
+<p>This MUST include any updates to the <code>deprecated</code> sub-object, even though
+a <code>io.xregistry.(un)deprecated</code> event is also generated. And in that
+situation <code>meta.deprecated</code> MUST be included in the
+<code>io.xregistry.resource.updated</code> event's <code>changed</code> list, if present.</p>
+<p>In the case of changing a Resource's <code>meta.defaultversionid</code> attribute,
+the <code>changed</code> list MUST include all attributes from the previous default
+Version that have non-<code>null</code> values, and all attributes from the new
+default Version that have non-<code>null</code> values. This MUST include the
+<code>versionid</code> attribute as well. Any duplicate attribute names MUST be
+removed. Note that a <code>io.xregistry.version.updated</code> event MUST NOT be
+generated for either the prior or new default Version due to the default
+Version changing.</p>
 </li>
 </ul>
 </li>
 <li>
-<p>Action: <code>deprecation</code></p>
+<p>When a Resource's domain-specific document that is stored within the
+Registry is modified, then the Resource's <code>SINGULAR</code> attribute MUST be
+included in <code>changed</code>, not <code>SINGULARbase64</code> - even if the <code>base64</code> variant
+is used during serialization of the Resource.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Action: <code>deprecated</code></p>
 <ul>
 <li>
 <p>MUST be generated when a Resource's <code>meta.deprecated</code> sub-object is set
-or deleted, or when any of its attributes are updated, where &quot;changed&quot;,
-if present, includes the list of top-level attribute names from the
-<code>deprecated</code> sub-object that were modified.</p>
+or deleted, or when any of its attributes are updated. Note that a
+<code>changed</code> attribute MUST be be included.</p>
 </li>
 <li>
-<p>An <code>io.xregistry.resource.updated</code> event will also be generated where the
-<code>meta.deprecated</code> sub-object will be included in <code>changed</code>, if present.</p>
+<p>An <code>io.xregistry.resource.updated</code> event MUST also be generated where
+<code>changed</code>, if present, MUST include <code>meta.epoch</code>, <code>meta.modifiedat</code> and
+<code>meta.deprecated</code> attribute names.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Action: <code>undeprecated</code></p>
+<ul>
+<li>
+<p>MUST be generated when a Resource's <code>meta.deprecated</code> sub-object is
+deleted.</p>
+</li>
+<li>
+<p>An <code>io.xregistry.resource.updated</code> event MUST also be generated where
+<code>changed</code>, if present, MUST include <code>meta.epoch</code>, <code>meta.modifiedat</code> and
+<code>meta.deprecated</code> attribute names.</p>
 </li>
 </ul>
 </li>
@@ -476,13 +582,13 @@ if present, includes the list of top-level attribute names from the
 <p>MUST be generated when a Resource is deleted.</p>
 </li>
 <li>
-<p>A <code>io.xregistry.version.deleted</code> event will also be generated for
-each Version.</p>
+<p>A <code>io.xregistry.version.deleted</code> event MUST also be generated for each
+Version.</p>
 </li>
 <li>
-<p>An <code>io.xregistry.group.updated</code> event will also be generated where the
-<code>&lt;RESOURCES&gt;</code> and <code>&lt;RESOURCES&gt;count</code> attributes will be included in
-<code>changed</code>, if present.</p>
+<p>An <code>io.xregistry.group.updated</code> event MUST also be generated where
+<code>changed</code>, if present, MUST include <code>epoch</code>, <code>modifiedat</code> and <code>&lt;RESOURCES&gt;</code>
+and <code>&lt;RESOURCES&gt;count</code> attribute names.</p>
 </li>
 </ul>
 </li>
@@ -496,17 +602,27 @@ each Version.</p>
 <p>MUST be generated when a new Version is created.</p>
 </li>
 <li>
-<p>An <code>io.xregistry.resource.updated</code> event will also be generated where the
-<code>versions</code> and <code>versionscount</code> attributes will be included in <code>changed</code>, if
-present.</p>
+<p>An <code>io.xregistry.resource.updated</code> event MUST also be generated where
+<code>changed</code>, if present, MUST include <code>meta.epoch</code>, <code>meta.modifiedat</code>,
+<code>versions</code> and <code>versionscount</code> attribute names.</p>
 </li>
 </ul>
 </li>
 <li>
 <p>Action: <code>updated</code></p>
 <ul>
-<li>MUST be generated when a Version attribute is updated, where each modified
-attribute MUST be included in <code>changed</code>, if present.</li>
+<li>
+<p>MUST be generated when a Version attribute is updated, where each modified
+attribute MUST be included in <code>changed</code>, if present. Note that a
+<code>io.xregistry.resource.updated</code> event MUST also be generated if this
+Version is also the Resource's default Version.</p>
+</li>
+<li>
+<p>When a Versions's domain-specific document that is stored within the
+Registry is modified, then the Resource's <code>SINGULAR</code> attribute MUST be
+included in <code>changed</code>, not <code>SINGULARbase64</code> - even if the <code>base64</code> variant
+is used during serialization of the Resource.</p>
+</li>
 </ul>
 </li>
 <li>
@@ -516,9 +632,9 @@ attribute MUST be included in <code>changed</code>, if present.</li>
 <p>MUST be generated when a Version is deleted.</p>
 </li>
 <li>
-<p>An <code>io.xregistry.resource.updated</code> event will also be generated where the
-<code>versions</code> and <code>versionscount</code> attributes will be included in <code>changed</code>, if
-present.</p>
+<p>An <code>io.xregistry.resource.updated</code> event MUST also be generated where
+<code>changed</code>, if present, MUST include <code>meta.epoch</code>, <code>meta.modifiedat</code>,
+<code>versions</code> and <code>versionscount</code> attribute names.</p>
 </li>
 </ul>
 </li>
@@ -551,8 +667,9 @@ the following model definition:</p>
 <ul>
 <li><code>io.xregistry.registry.updated</code>
 <ul>
-<li>Subject: <code>/</code></li>
-<li>Changed: <code>epoch</code>, <code>modifiedat</code>, <code>name</code></li>
+<li><code>subject</code>: <code>/</code></li>
+<li><code>epoch</code>: Registry's <code>epoch</code> value</li>
+<li><code>changed</code>: <code>epoch</code>, <code>modifiedat</code>, <code>name</code></li>
 </ul>
 </li>
 </ul>
@@ -571,23 +688,28 @@ the following model definition:</p>
 <ul>
 <li><code>io.xregistry.registry.updated</code>
 <ul>
-<li>Subject: <code>/</code></li>
-<li>Changed: <code>epoch</code>, <code>modifiedat</code>, <code>dirs</code>, <code>dirscount</code></li>
+<li><code>subject</code>: <code>/</code></li>
+<li><code>epoch</code>: Registry's <code>epoch</code> value</li>
+<li><code>changed</code>: <code>epoch</code>, <code>modifiedat</code>, <code>dirs</code>, <code>dirscount</code></li>
 </ul>
 </li>
 <li><code>io.xregistry.group.created</code>
 <ul>
-<li>Subject: <code>/dirs/d1</code></li>
+<li><code>subject</code>: <code>/dirs/d1</code></li>
+<li><code>epoch</code>: Group's <code>epoch</code> value</li>
 </ul>
 </li>
 <li><code>io.xregistry.resource.created</code>
 <ul>
-<li>Subject: <code>/dirs/d1/files/f1</code></li>
+<li><code>subject</code>: <code>/dirs/d1/files/f1</code></li>
+<li><code>epoch</code>: Resource's <code>epoch</code> value</li>
+<li><code>meta.epoch</code>: Resource's <code>meta.epoch</code> value</li>
 </ul>
 </li>
 <li><code>io.xregistry.version.created</code>
 <ul>
-<li>Subject: <code>/dirs/d1/files/f1/versions/v1</code></li>
+<li><code>subject</code>: <code>/dirs/d1/files/f1/versions/v1</code></li>
+<li><code>epoch</code>: Version's <code>epoch</code> value</li>
 </ul>
 </li>
 </ul>
@@ -606,14 +728,17 @@ the following model definition:</p>
 <ul>
 <li><code>io.xregistry.resource.updated</code>
 <ul>
-<li>Subject: <code>/dirs/d1/files/f1</code></li>
-<li>Changed: <code>epoch</code>, <code>modifiedat</code>, <code>name</code></li>
+<li><code>subject</code>: <code>/dirs/d1/files/f1</code></li>
+<li><code>epoch</code>: Resource's <code>epoch</code> value (technically, default <code>v1</code>'s <code>epoch</code>)</li>
+<li><code>meta.epoch</code>: Resource's <code>meta.epoch</code> value</li>
+<li><code>changed</code>: <code>epoch</code>, <code>modifiedat</code>, <code>name</code></li>
 </ul>
 </li>
 <li><code>io.xregistry.version.updated</code>
 <ul>
-<li>Subject: <code>/dirs/d1/files/f1/versions/v1</code></li>
-<li>Changed: <code>epoch</code>, <code>modifiedat</code>, <code>name</code></li>
+<li><code>subject</code>: <code>/dirs/d1/files/f1/versions/v1</code></li>
+<li><code>epoch</code>: Version's <code>epoch</code> value</li>
+<li><code>changed</code>: <code>epoch</code>, <code>modifiedat</code>, <code>name</code></li>
 </ul>
 </li>
 </ul>
@@ -624,15 +749,17 @@ the following model definition:</p>
 <li>Interaction:
 <ul>
 <li><code>PATCH /dirs/d1/files/f1/meta</code></li>
-<li>Body: <code>{ &quot;compatibilityauthority&quot;: &quot;server&quot; }</code></li>
+<li>Body: <code>{ &quot;compatibility&quot;: &quot;backward&quot; }</code></li>
 </ul>
 </li>
 <li>Events:
 <ul>
 <li><code>io.xregistry.resource.updated</code>
 <ul>
-<li>Subject: <code>/dirs/d1/files/f1</code></li>
-<li>Changed: <code>meta.epoch</code>, <code>meta.modifiedat</code>, <code>meta.compatibilityauthority</code></li>
+<li><code>subject</code>: <code>/dirs/d1/files/f1</code></li>
+<li><code>epoch</code>: Resource's <code>epoch</code> value (technically, the default Version's)</li>
+<li><code>meta.epoch</code>: Resource's <code>meta.epoch</code> value</li>
+<li><code>changed</code>: <code>meta.epoch</code>, <code>meta.modifiedat</code>, <code>meta.compatibility</code></li>
 </ul>
 </li>
 </ul>
@@ -643,22 +770,23 @@ the following model definition:</p>
 <li>Interaction:
 <ul>
 <li><code>PATCH /dirs/d1/files/f1/meta</code></li>
-<li>Body: <code>{ &quot;compatibilityauthority&quot;: &quot;server&quot;, &quot;deprecated&quot;: {...} }</code></li>
+<li>Body: <code>{ &quot;compatibility&quot;: &quot;backward&quot;, &quot;deprecated&quot;: {...} }</code></li>
 </ul>
 </li>
 <li>Events:
 <ul>
 <li><code>io.xregistry.resource.updated</code>
 <ul>
-<li>Subject: <code>/dirs/d1/files/f1</code></li>
-<li>Changed: <code>meta.epoch</code>, <code>meta.modifiedat</code>, <code>meta.compatibilityauthority</code>,
+<li><code>subject</code>: <code>/dirs/d1/files/f1</code></li>
+<li><code>epoch</code>: Resource's <code>epoch</code> value (technically, the default Version's)</li>
+<li><code>meta.epoch</code>: Resource's <code>meta.epoch</code> value</li>
+<li><code>changed</code>: <code>meta.epoch</code>, <code>meta.modifiedat</code>, <code>meta.compatibility</code>,
 <code>meta.deprecated</code></li>
 </ul>
 </li>
-<li><code>io.xregistry.resource.deprecation</code>
+<li><code>io.xregistry.resource.deprecated</code>
 <ul>
-<li>Subject: <code>/dirs/d1/files/f1</code></li>
-<li>Changed: <code>&lt;DEPRECATED-ATTRIBUTES-CHANGED-IF-ANY&gt;</code></li>
+<li><code>subject</code>: <code>/dirs/d1/files/f1</code></li>
 </ul>
 </li>
 </ul>
@@ -678,39 +806,44 @@ Resources, Versions</li>
 <ul>
 <li><code>io.xregistry.registry.updated</code>
 <ul>
-<li>Subject: <code>/</code></li>
-<li>Changed: <code>epoch</code>, <code>modifiedat</code>, <code>model</code>, <code>modelsource</code>, <code>capabilities</code>,
-<code>&lt;GROUPS&gt;</code>, <code>&lt;GROUPS&gt;count</code>, <code>&lt;OTHER-REGISTRY-ATTRIBUTES&gt;</code></li>
+<li><code>subject</code>: <code>/</code></li>
+<li><code>epoch</code>: Registry's <code>epoch</code> value</li>
+<li><code>changed</code>: <code>epoch</code>, <code>modifiedat</code>, <code>model</code>, <code>modelsource</code>, <code>capabilities</code>,
+<code>&lt;GROUPS&gt;</code>, <code>&lt;GROUPS&gt;count</code>, <code>&lt;OTHER-REGISTRY-ENTITY-ATTRIBUTES&gt;</code></li>
 </ul>
 </li>
 <li><code>io.xregistry.model.updated</code>
 <ul>
-<li>Subject: <code>/model</code></li>
+<li><code>subject</code>: <code>/model</code></li>
 </ul>
 </li>
 <li><code>io.xregistry.modelsource.updated</code>
 <ul>
-<li>Subject: <code>/modelsource</code></li>
+<li><code>subject</code>: <code>/modelsource</code></li>
 </ul>
 </li>
 <li><code>io.xregistry.capabilities.updated</code>
 <ul>
-<li>Subject: <code>/capabilities</code></li>
+<li><code>subject</code>: <code>/capabilities</code></li>
 </ul>
 </li>
 <li><code>io.xregistry.group.created</code> for each new Group
 <ul>
-<li>Subject: <code>/dirs/d1</code></li>
+<li><code>subject</code>: <code>/dirs/d1</code></li>
+<li><code>epoch</code>: Group's <code>epoch</code> value</li>
 </ul>
 </li>
 <li><code>io.xregistry.resource.created</code> for each new Resource
 <ul>
-<li>Subject: <code>/dirs/d1/files/f1</code></li>
+<li><code>subject</code>: <code>/dirs/d1/files/f1</code></li>
+<li><code>epoch</code>: Resource's <code>epoch</code> value (technically, the default Version's)</li>
+<li><code>meta.epoch</code>: Resource's <code>meta.epoch</code> value</li>
 </ul>
 </li>
 <li><code>io.xregistry.version.created</code> for each new Version
 <ul>
-<li>Subject: <code>/dirs/d1/files/f1/versions/v1</code></li>
+<li><code>epoch</code>: Version's <code>epoch</code> value</li>
+<li><code>subject</code>: <code>/dirs/d1/files/f1/versions/v1</code></li>
 </ul>
 </li>
 </ul>
@@ -729,15 +862,18 @@ Resources, Versions</li>
 <ul>
 <li><code>io.xregistry.resource.updated</code>
 <ul>
-<li>Subject: <code>/dirs/d1/files/f1</code></li>
-<li>Changed: <code>meta.defaultversionid</code>, <code>meta.epoch</code>, <code>meta.modifiedat</code>,
+<li><code>subject</code>: <code>/dirs/d1/files/f1</code></li>
+<li><code>epoch</code>: Resource's <code>epoch</code> value (technically, the default Version's)</li>
+<li><code>meta.epoch</code>: Resource's <code>meta.epoch</code> value</li>
+<li><code>changed</code>: <code>meta.defaultversionid</code>, <code>meta.epoch</code>, <code>meta.modifiedat</code>,
 <code>versions</code>, <code>versionscount</code>,
 <code>&lt;ALL-OLD-AND-NEW-DEFAULT-VERSION-ATTRIBUTES&gt;</code>,</li>
 </ul>
 </li>
 <li><code>io.xregistry.version.created</code>
 <ul>
-<li>Subject: <code>/dirs/d1/files/f1/versions/v2</code></li>
+<li><code>epoch</code>: Version's <code>epoch</code> value</li>
+<li><code>subject</code>: <code>/dirs/d1/files/f1/versions/v2</code></li>
 </ul>
 </li>
 </ul>
@@ -756,13 +892,16 @@ Resources, Versions</li>
 <ul>
 <li><code>io.xregistry.resource.updated</code>
 <ul>
-<li>Subject: <code>/dirs/d1/files/f1</code></li>
-<li>Changed: <code>meta.epoch</code>, <code>meta.modifiedat</code>, <code>versions</code>, <code>versionscount</code></li>
+<li><code>subject</code>: <code>/dirs/d1/files/f1</code></li>
+<li><code>epoch</code>: Resource's <code>epoch</code> value (technically, the default Version's)</li>
+<li><code>meta.epoch</code>: Resource's <code>meta.epoch</code> value</li>
+<li><code>changed</code>: <code>meta.epoch</code>, <code>meta.modifiedat</code>, <code>versions</code>, <code>versionscount</code></li>
 </ul>
 </li>
 <li><code>io.xregistry.version.created</code>
 <ul>
-<li>Subject: <code>/dirs/d1/files/f1/versions/v2</code></li>
+<li><code>epoch</code>: Version's <code>epoch</code> value</li>
+<li><code>subject</code>: <code>/dirs/d1/files/f1/versions/v2</code></li>
 </ul>
 </li>
 </ul>
@@ -785,8 +924,10 @@ Resources, Versions</li>
 <ul>
 <li><code>io.xregistry.resource.updated</code>
 <ul>
-<li>Subject: <code>/dirs/d1/files/f1</code></li>
-<li>Changed: <code>meta.defaultversionid</code>, <code>meta.epoch</code>, <code>meta.modifiedat</code>,
+<li><code>subject</code>: <code>/dirs/d1/files/f1</code></li>
+<li><code>epoch</code>: Resource's <code>epoch</code> value (technically, the default Version's)</li>
+<li><code>meta.epoch</code>: Resource's <code>meta.epoch</code> value</li>
+<li><code>changed</code>: <code>meta.defaultversionid</code>, <code>meta.epoch</code>, <code>meta.modifiedat</code>,
 <code>&lt;ALL-OLD-AND-NEW-DEFAULT-VERSION-ATTRIBUTES&gt;</code></li>
 </ul>
 </li>
@@ -807,14 +948,17 @@ Resources, Versions</li>
 <ul>
 <li><code>io.xregistry.resource.updated</code>
 <ul>
-<li>Subject: <code>/dirs/d1/files/f1</code></li>
-<li>Changed: <code>epoch</code>, <code>modifiedat</code>, <code>name</code></li>
+<li><code>subject</code>: <code>/dirs/d1/files/f1</code></li>
+<li><code>epoch</code>: Resource's <code>epoch</code> value (technically, the default Version's)</li>
+<li><code>meta.epoch</code>: Resource's <code>meta.epoch</code> value</li>
+<li><code>changed</code>: <code>epoch</code>, <code>modifiedat</code>, <code>name</code></li>
 </ul>
 </li>
 <li><code>io.xregistry.version.updated</code>
 <ul>
-<li>Subject: <code>/dirs/d1/files/f1/versions/v1</code></li>
-<li>Changed: <code>epoch</code>, <code>modifiedat</code>, <code>name</code></li>
+<li><code>subject</code>: <code>/dirs/d1/files/f1/versions/v1</code></li>
+<li><code>epoch</code>: Version's <code>epoch</code> value</li>
+<li><code>changed</code>: <code>epoch</code>, <code>modifiedat</code>, <code>name</code></li>
 </ul>
 </li>
 </ul>
@@ -833,8 +977,9 @@ Resources, Versions</li>
 <ul>
 <li><code>io.xregistry.version.updated</code>
 <ul>
-<li>Subject: <code>/dirs/d1/files/f1/versions/v2</code></li>
-<li>Changed: <code>epoch</code>, <code>modifiedat</code>, <code>name</code></li>
+<li><code>subject</code>: <code>/dirs/d1/files/f1/versions/v2</code></li>
+<li><code>epoch</code>: Version's <code>epoch</code> value</li>
+<li><code>changed</code>: <code>epoch</code>, <code>modifiedat</code>, <code>name</code></li>
 </ul>
 </li>
 </ul>
@@ -853,15 +998,18 @@ Resources, Versions</li>
 <ul>
 <li><code>io.xregistry.resource.updated</code>
 <ul>
-<li>Subject: <code>/dirs/d1/files/f1</code></li>
-<li>Changed: <code>meta.defaultversionid</code>, <code>meta.epoch</code>, <code>meta.modifiedat</code>,
+<li><code>subject</code>: <code>/dirs/d1/files/f1</code></li>
+<li><code>epoch</code>: Resource's <code>epoch</code> value (technically, the default Version's)</li>
+<li><code>meta.epoch</code>: Resource's <code>meta.epoch</code> value</li>
+<li><code>changed</code>: <code>meta.defaultversionid</code>, <code>meta.epoch</code>, <code>meta.modifiedat</code>,
 <code>versions</code>, <code>versionscount</code>,
 <code>&lt;ALL-OLD-AND-NEW-DEFAULT-VERSION-ATTRIBUTES&gt;</code>,</li>
 </ul>
 </li>
 <li><code>io.xregistry.version.created</code>
 <ul>
-<li>Subject: <code>/dirs/d1/files/f1/versions/v2</code></li>
+<li><code>subject</code>: <code>/dirs/d1/files/f1/versions/v2</code></li>
+<li><code>epoch</code>: Version's <code>epoch</code> value</li>
 </ul>
 </li>
 </ul>
@@ -880,13 +1028,16 @@ Resources, Versions</li>
 <ul>
 <li><code>io.xregistry.resource.updated</code>
 <ul>
-<li>Subject: <code>/dirs/d1/files/f1</code></li>
-<li>Changed: <code>meta.epoch</code>, <code>meta.modifiedat</code>, <code>versions</code>, <code>versionscount</code></li>
+<li><code>subject</code>: <code>/dirs/d1/files/f1</code></li>
+<li><code>epoch</code>: Resource's <code>epoch</code> value (technically, the default Version's)</li>
+<li><code>meta.epoch</code>: Resource's <code>meta.epoch</code> value</li>
+<li><code>changed</code>: <code>meta.epoch</code>, <code>meta.modifiedat</code>, <code>versions</code>, <code>versionscount</code></li>
 </ul>
 </li>
 <li><code>io.xregistry.version.created</code>
 <ul>
-<li>Subject: <code>/dirs/d1/files/f1/versions/v2</code></li>
+<li><code>subject</code>: <code>/dirs/d1/files/f1/versions/v2</code></li>
+<li><code>epoch</code>: Version's <code>epoch</code> value</li>
 </ul>
 </li>
 </ul>
@@ -903,23 +1054,24 @@ Resources, Versions</li>
 <ul>
 <li><code>io.xregistry.registry.updated</code>
 <ul>
-<li>Subject: <code>/</code></li>
-<li>Changed: <code>dirs</code>, <code>dirscount</code>, <code>epoch</code>, <code>modifiedat</code></li>
+<li><code>subject</code>: <code>/</code></li>
+<li><code>epoch</code>: Registry's <code>epoch</code> value</li>
+<li><code>changed</code>: <code>dirs</code>, <code>dirscount</code>, <code>epoch</code>, <code>modifiedat</code></li>
 </ul>
 </li>
 <li><code>io.xregistry.group.deleted</code>
 <ul>
-<li>Subject: <code>/dirs/d1</code></li>
+<li><code>subject</code>: <code>/dirs/d1</code></li>
 </ul>
 </li>
 <li><code>io.xregistry.resource.deleted</code> for each deleted Resource
 <ul>
-<li>Subject: <code>/dirs/d1/files/f1</code></li>
+<li><code>subject</code>: <code>/dirs/d1/files/f1</code></li>
 </ul>
 </li>
 <li><code>io.xregistry.version.deleted</code> for each deleted Version
 <ul>
-<li>Subject: <code>/dirs/d1/files/f1/versions/v1</code></li>
+<li><code>subject</code>: <code>/dirs/d1/files/f1/versions/v1</code></li>
 </ul>
 </li>
 </ul>
@@ -961,6 +1113,7 @@ xRegistry-xregcorrelationid: B9282-129301
   &quot;time&quot;: &quot;2025-07-02T12:00:01Z&quot;,
   &quot;xregcorrelationid&quot;: &quot;B9282-129301&quot;,
   &quot;data&quot;: {
+    &quot;epoch&quot;: 2,
     &quot;changed&quot;: [ &quot;dirs&quot;, &quot;dirscount&quot;, &quot;epoch&quot;, &quot;modifiedat&quot; ]
   }
 }
@@ -973,6 +1126,9 @@ xRegistry-xregcorrelationid: B9282-129301
   &quot;id&quot;: &quot;A432-4321-4321&quot;,
   &quot;time&quot;: &quot;2025-07-02T12:00:01Z&quot;,
   &quot;xregcorrelationid&quot;: &quot;B9282-129301&quot;
+  &quot;data&quot;: {
+    &quot;epoch&quot;: 1
+  }
 }
 </code></pre>
 
