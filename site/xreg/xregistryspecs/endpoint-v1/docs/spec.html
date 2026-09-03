@@ -1,50 +1,48 @@
-<html>
+<!DOCTYPE html>
+
+<html lang="en-US">
 <head>
-<style>
-  .anchor {
-    font-size: 12px ;
-    vertical-align: middle ;
-    text-decoration: none ;
-  }
-  body {
-    font-family: sans-serif ;
-    font-size: 16px ;
-    line-height: 1.5 ;
-    padding: 5% 10% 5% 10% ;
-  }
-  pre {
-    font-size: 80% ;
-    background-color: #f2f2f2 ;
-    padding: 12px ;
-  }
-  code {
-    font-size: 85% ;
-    background-color: #f2f2f2 ;
-    padding: .2em .4em ;
-  }
-  pre code {
-    font-size: inherit ;
-    background-color: inherit ;
-    padding: 0px ;
-  }
-  table {
-    border: 1px solid lightgray ;
-    border-collapse: collapse ;
-    border-spacing: 0px ;
-    line-height: 24px ;
-  }
-  tr:nth-child(even) {
-    background-color: #f2f2f2 ;
-  }
-  td,th {
-    border: 1px solid lightgray ;
-    padding: 5px ;
-  }
-  td code, th code {
-    font-size: inherit ;
-  }
-</style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, maximum-scale=2" name="viewport"/>
+<title>Endpoint Registry Service - Version 1.0-rc4 | xRegistry</title>
+<link href="/assets/css/style.css" rel="stylesheet"/>
+<link href="/assets/css/xreg-reader.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<script defer="" src="/assets/js/xreg-reader.js"></script>
 </head>
+<body class="xreg-document xreg-spec-document">
+<header class="outer site-header" data-xregistry-shell="true" id="header_wrap">
+<div class="inner">
+<a href="https://github.com/xregistry/xregistry.github.io" id="forkme_banner">View on GitHub</a>
+<img alt="xRegistry logo" class="header-logo" src="https://github.com/cncf/artwork/raw/main/projects/xregistry/horizontal/color-whitetext/xregistry-horizontal-color-whitetext.svg"/>
+<h2 id="project_tagline">The Extensible Registry for Metadata Management</h2>
+<nav aria-label="Primary navigation" class="site-nav">
+<a href="/">Home</a>
+<a href="/blog/">Blog</a>
+<a href="/xreg/xregistryspecs/core-v1/docs/spec.html">Core Spec</a>
+<a href="/xreg/xregistryspecs/endpoint-v1/docs/spec.html">Endpoint Spec</a>
+<a href="/xreg/xregistryspecs/schema-v1/docs/spec.html">Schema Spec</a>
+<a href="/xreg/xregistryspecs/message-v1/docs/spec.html">Message Spec</a>
+<a href="https://github.com/xregistry/spec">GitHub</a>
+</nav>
+</div>
+</header>
+<div aria-label="xRegistry document path" class="registry-path">
+<div class="registry-path__inner"><i aria-hidden="true" class="fas fa-sitemap"></i><code>xreg/xregistryspecs/endpoint-v1/docs/spec.html</code></div>
+</div>
+<main class="xreg-reader-layout">
+<aside aria-label="On this page" class="spec-toc">
+<div class="spec-toc__header">On this page</div>
+<nav class="spec-toc__body"></nav>
+</aside>
+<article class="xreg-reader-content" id="xregistry-content"><nav aria-label="Specification views" class="spec-view-switch">
+<a aria-current="page" class="is-active" href="spec.html?reader=1"><i aria-hidden="true" class="fas fa-book-open"></i> Read</a>
+<a href="spec.lines.html?reader=1"><i aria-hidden="true" class="fas fa-code"></i> Source lines</a>
+</nav>
+
 <h1 id="endpoint-registry-service---version-10-rc4">Endpoint Registry Service - Version 1.0-rc4 <a class="anchor" href="#endpoint-registry-service---version-10-rc4">🔗</a></h1>
 <!-- words: apikeyname apikeyin plainscheme plainusernamefield plainpasswordfield sasl oauthbearer -->
 <!-- words: cleanstart sessionexpiryinterval topicfilter retainhandling retainaspublished nolocal -->
@@ -184,8 +182,8 @@ example illustrates how Registry Endpoints can model the convention in
 formal terms.</p>
 <h2 id="notations-and-terminology">Notations and Terminology <a class="anchor" href="#notations-and-terminology">🔗</a></h2>
 <h3 id="notational-conventions">Notational Conventions <a class="anchor" href="#notational-conventions">🔗</a></h3>
-<p>The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;, &quot;SHOULD&quot;,
-&quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;, &quot;MAY&quot;, and &quot;OPTIONAL&quot; in this document are to be
+<p>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
+"SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be
 interpreted as described in <a href="https://tools.ietf.org/html/rfc2119">RFC 2119</a>.</p>
 <p>For clarity, OPTIONAL attributes (specification-defined and extensions) are
 OPTIONAL for clients to use, but the servers' responsibility will vary.
@@ -204,7 +202,7 @@ not normative.</p>
 <h3 id="terminology">Terminology <a class="anchor" href="#terminology">🔗</a></h3>
 <p>This specification defines the following terms:</p>
 <h3 id="endpoint">Endpoint <a class="anchor" href="#endpoint">🔗</a></h3>
-<p>An &quot;endpoint&quot; is a logical or physical network location to which messages can
+<p>An "endpoint" is a logical or physical network location to which messages can
 be produced, from which messages can be consumed, or which makes messages
 available via subscription for delivery to a consumer-designated endpoint.</p>
 <h2 id="endpoint-registry-model">Endpoint Registry Model <a class="anchor" href="#endpoint-registry-model">🔗</a></h2>
@@ -223,148 +221,148 @@ resides in the <a href="./model.json">model.json</a> file.</p>
 <p>For easy reference, the JSON serialization of an Endpoint Registry adheres to
 this form:</p>
 <pre><code class="language-yaml">{
-  &quot;specversion&quot;: &quot;&lt;STRING&gt;&quot;,
-  &quot;registryid&quot;: &quot;&lt;STRING&gt;&quot;,
-  &quot;self&quot;: &quot;&lt;URL&gt;&quot;,
-  &quot;xid&quot;: &quot;&lt;XID&gt;&quot;,
-  &quot;epoch&quot;: &lt;UINTEGER&gt;,
-  &quot;name&quot;: &quot;&lt;STRING&gt;&quot;, ?
-  &quot;description&quot;: &quot;&lt;STRING&gt;&quot;, ?
-  &quot;documentation&quot;: &quot;&lt;URL&gt;&quot;, ?
-  &quot;labels&quot;: {
-    &quot;&lt;STRING&gt;&quot;: &quot;&lt;STRING&gt;&quot; *
+  "specversion": "&lt;STRING&gt;",
+  "registryid": "&lt;STRING&gt;",
+  "self": "&lt;URL&gt;",
+  "xid": "&lt;XID&gt;",
+  "epoch": &lt;UINTEGER&gt;,
+  "name": "&lt;STRING&gt;", ?
+  "description": "&lt;STRING&gt;", ?
+  "documentation": "&lt;URL&gt;", ?
+  "labels": {
+    "&lt;STRING&gt;": "&lt;STRING&gt;" *
   }, ?
-  &quot;createdat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
-  &quot;modifiedat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
+  "createdat": "&lt;TIMESTAMP&gt;",
+  "modifiedat": "&lt;TIMESTAMP&gt;",
 
-  &quot;model&quot;: { ... }, ?
+  "model": { ... }, ?
 
-  &quot;endpointsurl&quot;: &quot;&lt;URL&gt;&quot;,
-  &quot;endpointscount&quot;: &lt;UINTEGER&gt;,
-  &quot;endpoints&quot;: {
-    &quot;&lt;KEY&gt;&quot;: {
-      &quot;endpointid&quot;: &quot;&lt;STRING&gt;&quot;,                   # xRegistry core attributes
-      &quot;self&quot;: &quot;&lt;URL&gt;&quot;,
-      &quot;xid&quot;: &quot;&lt;XID&gt;&quot;,
-      &quot;epoch&quot;: &lt;UINTEGER&gt;,
-      &quot;name&quot;: &quot;&lt;STRING&gt;&quot;, ?
-      &quot;description&quot;: &quot;&lt;STRING&gt;&quot;, ?
-      &quot;documentation&quot;: &quot;&lt;URL&gt;&quot;, ?
-      &quot;labels&quot;: { &quot;&lt;STRING&gt;&quot;: &quot;&lt;STRING&gt;&quot; * }, ?
-      &quot;createdat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
-      &quot;modifiedat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
-      &quot;deprecated&quot;: { ... }, ?
+  "endpointsurl": "&lt;URL&gt;",
+  "endpointscount": &lt;UINTEGER&gt;,
+  "endpoints": {
+    "&lt;KEY&gt;": {
+      "endpointid": "&lt;STRING&gt;",                   # xRegistry core attributes
+      "self": "&lt;URL&gt;",
+      "xid": "&lt;XID&gt;",
+      "epoch": &lt;UINTEGER&gt;,
+      "name": "&lt;STRING&gt;", ?
+      "description": "&lt;STRING&gt;", ?
+      "documentation": "&lt;URL&gt;", ?
+      "labels": { "&lt;STRING&gt;": "&lt;STRING&gt;" * }, ?
+      "createdat": "&lt;TIMESTAMP&gt;",
+      "modifiedat": "&lt;TIMESTAMP&gt;",
+      "deprecated": { ... }, ?
 
-      &quot;usage&quot;: [ &quot;&lt;STRING&gt;&quot; + ] ,                 # subscriber, consumer, producer
-      &quot;channel&quot;: &quot;&lt;STRING&gt;&quot;, ?
+      "usage": [ "&lt;STRING&gt;" + ] ,                 # subscriber, consumer, producer
+      "channel": "&lt;STRING&gt;", ?
 
       # Start of Endpoint extension attributes
-      &quot;envelope&quot;: &quot;&lt;STRING&gt;&quot;, ?                   # e.g. CloudEvents/1.0
-      &quot;envelopeoptions&quot;: {
-        &quot;&lt;STRING&gt;&quot;: &lt;JSON-VALUE&gt; *
+      "envelope": "&lt;STRING&gt;", ?                   # e.g. CloudEvents/1.0
+      "envelopeoptions": {
+        "&lt;STRING&gt;": &lt;JSON-VALUE&gt; *
 
         # CloudEvents/1.0 options
-        &quot;mode&quot;: &quot;&lt;STRING&gt;&quot;, ?                     # binary, structured
-        &quot;format&quot;: &quot;&lt;STRING&gt;&quot; ?                    # e.g. application/json
+        "mode": "&lt;STRING&gt;", ?                     # binary, structured
+        "format": "&lt;STRING&gt;" ?                    # e.g. application/json
       },
 
-      &quot;protocol&quot;: &quot;&lt;STRING&gt;&quot;, ?                   # e.g. HTTP/1.1
-      &quot;protocoloptions&quot;: {
-        &quot;&lt;STRING&gt;&quot;: &lt;JSON-VALUE&gt; *
+      "protocol": "&lt;STRING&gt;", ?                   # e.g. HTTP/1.1
+      "protocoloptions": {
+        "&lt;STRING&gt;": &lt;JSON-VALUE&gt; *
 
         # Common protocol options
-        &quot;endpoints&quot;: [
+        "endpoints": [
           {                                     # entry shape is protocol
-            &quot;uri&quot;: &quot;&lt;URI&gt;&quot;, ?                   #   specific: &quot;uri&quot; for all
-            &quot;bootstrap.servers&quot;:                #   protocols except &quot;KAFKA&quot;,
-              [ &quot;&lt;STRING&gt;&quot; * ], ?               #   which has no &quot;uri&quot; and
-            &quot;&lt;STRING&gt;&quot;: &lt;JSON-VALUE&gt; *          #   uses &quot;bootstrap.servers&quot;
+            "uri": "&lt;URI&gt;", ?                   #   specific: "uri" for all
+            "bootstrap.servers":                #   protocols except "KAFKA",
+              [ "&lt;STRING&gt;" * ], ?               #   which has no "uri" and
+            "&lt;STRING&gt;": &lt;JSON-VALUE&gt; *          #   uses "bootstrap.servers"
           } *
         ], ?
-        &quot;authorization&quot;: [
+        "authorization": [
           {
-            &quot;type&quot;: &quot;&lt;STRING&gt;&quot;, ?
-            &quot;mechanism&quot;: &quot;&lt;STRING&gt;&quot;, ?
-            &quot;resourceuri&quot;: &quot;&lt;URI&gt;&quot;, ?
-            &quot;authorityuri&quot;: &quot;&lt;URI&gt;&quot; ?
+            "type": "&lt;STRING&gt;", ?
+            "mechanism": "&lt;STRING&gt;", ?
+            "resourceuri": "&lt;URI&gt;", ?
+            "authorityuri": "&lt;URI&gt;" ?
           } *
         ], ?
-        &quot;deployed&quot;: &lt;BOOLEAN&gt;, ?
+        "deployed": &lt;BOOLEAN&gt;, ?
 
-        # &quot;HTTP&quot; protocol options
-        &quot;method&quot;: &quot;&lt;STRING&gt;&quot;, ?                          # Default: POST
-        &quot;headers&quot;: [ { &quot;name&quot;: &quot;&lt;STRING&gt;&quot;, &quot;value&quot;: &quot;&lt;STRING&gt;&quot; } * ], ?
-        &quot;query&quot;: { &quot;&lt;STRING&gt;&quot;: &quot;&lt;STRING&gt;&quot; * }, ?
-        &quot;apikeyname&quot;: &quot;&lt;STRING&gt;&quot;, ?
-        &quot;apikeyin&quot;: &quot;header&quot; | &quot;query&quot; ?,              # Default: header
-        &quot;plainscheme&quot;: &quot;basic&quot; | &quot;form&quot; | &quot;query&quot; ?, # Default: basic
-        &quot;plainusernamefield&quot;: &quot;&lt;STRING&gt;&quot;, ?
-        &quot;plainpasswordfield&quot;: &quot;&lt;STRING&gt;&quot; ?
+        # "HTTP" protocol options
+        "method": "&lt;STRING&gt;", ?                          # Default: POST
+        "headers": [ { "name": "&lt;STRING&gt;", "value": "&lt;STRING&gt;" } * ], ?
+        "query": { "&lt;STRING&gt;": "&lt;STRING&gt;" * }, ?
+        "apikeyname": "&lt;STRING&gt;", ?
+        "apikeyin": "header" | "query" ?,              # Default: header
+        "plainscheme": "basic" | "form" | "query" ?, # Default: basic
+        "plainusernamefield": "&lt;STRING&gt;", ?
+        "plainpasswordfield": "&lt;STRING&gt;" ?
 
-        # &quot;AMQP/1.0&quot; protocol options
-        &quot;node&quot;: &quot;&lt;STRING&gt;&quot;, ?
-        &quot;durable&quot;: &lt;BOOLEAN&gt;, ?                          # Default: false
-        &quot;link-properties&quot;: { &quot;&lt;STRING&gt;&quot;: &quot;&lt;STRING&gt;&quot; * }, ?
-        &quot;connection-properties&quot;: { &quot;&lt;STRING&gt;&quot;: &quot;&lt;STRING&gt;&quot; * }, ?
-        &quot;distribution-mode&quot;: &quot;move&quot; | &quot;copy&quot; ?,         # Default: move
-        &quot;connection-capabilities&quot;: [ &quot;&lt;STRING&gt;&quot; * ], ?
-        &quot;node-capabilities&quot;: [ &quot;&lt;STRING&gt;&quot; * ], ?
-        &quot;source-filters&quot;: { &quot;&lt;STRING&gt;&quot;: &lt;JSON-VALUE&gt; * }, ?
-        &quot;dynamic&quot;: &lt;BOOLEAN&gt;, ?
-        &quot;terminus-durability&quot;: &quot;none&quot; | &quot;configuration&quot; | &quot;unsettled-state&quot; ?,
-        &quot;expiry-policy&quot;: &quot;link-detach&quot; | &quot;session-end&quot; | &quot;connection-close&quot; | &quot;never&quot; ?,
-        &quot;timeout&quot;: &lt;UINTEGER&gt;, ?
-        &quot;sender-settle-mode&quot;: &quot;unsettled&quot; | &quot;settled&quot; | &quot;mixed&quot; ?,
-        &quot;receiver-settle-mode&quot;: &quot;first&quot; | &quot;second&quot; ?
+        # "AMQP/1.0" protocol options
+        "node": "&lt;STRING&gt;", ?
+        "durable": &lt;BOOLEAN&gt;, ?                          # Default: false
+        "link-properties": { "&lt;STRING&gt;": "&lt;STRING&gt;" * }, ?
+        "connection-properties": { "&lt;STRING&gt;": "&lt;STRING&gt;" * }, ?
+        "distribution-mode": "move" | "copy" ?,         # Default: move
+        "connection-capabilities": [ "&lt;STRING&gt;" * ], ?
+        "node-capabilities": [ "&lt;STRING&gt;" * ], ?
+        "source-filters": { "&lt;STRING&gt;": &lt;JSON-VALUE&gt; * }, ?
+        "dynamic": &lt;BOOLEAN&gt;, ?
+        "terminus-durability": "none" | "configuration" | "unsettled-state" ?,
+        "expiry-policy": "link-detach" | "session-end" | "connection-close" | "never" ?,
+        "timeout": &lt;UINTEGER&gt;, ?
+        "sender-settle-mode": "unsettled" | "settled" | "mixed" ?,
+        "receiver-settle-mode": "first" | "second" ?
 
-        # &quot;MQTT/3.1.1&quot; protocol options
-        &quot;topic&quot;: &quot;&lt;STRING&gt;&quot;, ?
-        &quot;qos&quot;: &lt;UINTEGER&gt;, ?                             # Default: 0
-        &quot;retain&quot;: &lt;BOOLEAN&gt;, ?                           # Default: false
-        &quot;cleansession&quot;: &lt;BOOLEAN&gt;, ?                     # Default: true
-        &quot;topicfilter&quot;: &quot;&lt;STRING&gt;&quot;, ?
-        &quot;willtopic&quot;: &quot;&lt;STRING&gt;&quot;, ?
-        &quot;willmessage&quot;: &quot;&lt;XID&gt;&quot; ?
+        # "MQTT/3.1.1" protocol options
+        "topic": "&lt;STRING&gt;", ?
+        "qos": &lt;UINTEGER&gt;, ?                             # Default: 0
+        "retain": &lt;BOOLEAN&gt;, ?                           # Default: false
+        "cleansession": &lt;BOOLEAN&gt;, ?                     # Default: true
+        "topicfilter": "&lt;STRING&gt;", ?
+        "willtopic": "&lt;STRING&gt;", ?
+        "willmessage": "&lt;XID&gt;" ?
 
-        # &quot;MQTT/5.0&quot; protocol options
-        &quot;topic&quot;: &quot;&lt;STRING&gt;&quot;, ?
-        &quot;qos&quot;: &lt;UINTEGER&gt;, ?                             # Default: 0
-        &quot;retain&quot;: &lt;BOOLEAN&gt;, ?                           # Default: false
-        &quot;topicfilter&quot;: &quot;&lt;STRING&gt;&quot;, ?
-        &quot;cleanstart&quot;: &lt;BOOLEAN&gt;, ?
-        &quot;sessionexpiryinterval&quot;: &lt;UINTEGER&gt;, ?
-        &quot;sharedsubscriptiongroup&quot;: &quot;&lt;STRING&gt;&quot;, ?
-        &quot;nolocal&quot;: &lt;BOOLEAN&gt;, ?
-        &quot;retainaspublished&quot;: &lt;BOOLEAN&gt;, ?
-        &quot;retainhandling&quot;: 0 | 1 | 2 ?,
-        &quot;willtopic&quot;: &quot;&lt;STRING&gt;&quot;, ?
-        &quot;willmessage&quot;: &quot;&lt;XID&gt;&quot; ?
+        # "MQTT/5.0" protocol options
+        "topic": "&lt;STRING&gt;", ?
+        "qos": &lt;UINTEGER&gt;, ?                             # Default: 0
+        "retain": &lt;BOOLEAN&gt;, ?                           # Default: false
+        "topicfilter": "&lt;STRING&gt;", ?
+        "cleanstart": &lt;BOOLEAN&gt;, ?
+        "sessionexpiryinterval": &lt;UINTEGER&gt;, ?
+        "sharedsubscriptiongroup": "&lt;STRING&gt;", ?
+        "nolocal": &lt;BOOLEAN&gt;, ?
+        "retainaspublished": &lt;BOOLEAN&gt;, ?
+        "retainhandling": 0 | 1 | 2 ?,
+        "willtopic": "&lt;STRING&gt;", ?
+        "willmessage": "&lt;XID&gt;" ?
 
-        # &quot;KAFKA&quot; protocol options
-        &quot;topic&quot;: &quot;&lt;STRING&gt;&quot;, ?
-        &quot;acks&quot;: &lt;INTEGER&gt;, ?                             # Default: 1
-        &quot;key&quot;: &quot;&lt;STRING&gt;&quot;, ?
-        &quot;partition&quot;: &lt;INTEGER&gt;, ?
-        &quot;consumergroup&quot;: &quot;&lt;STRING&gt;&quot;, ?
-        &quot;headers&quot;: { &quot;&lt;STRING&gt;&quot;: &quot;&lt;STRING&gt;&quot; * }, ?
-        &quot;keyserializer&quot;: &quot;&lt;STRING&gt;&quot;, ?
-        &quot;valueserializer&quot;: &quot;&lt;STRING&gt;&quot;, ?
-        &quot;autooffsetreset&quot;: &quot;earliest&quot; | &quot;latest&quot; | &quot;none&quot; ?,
-        &quot;enableautocommit&quot;: &lt;BOOLEAN&gt; ?
+        # "KAFKA" protocol options
+        "topic": "&lt;STRING&gt;", ?
+        "acks": &lt;INTEGER&gt;, ?                             # Default: 1
+        "key": "&lt;STRING&gt;", ?
+        "partition": &lt;INTEGER&gt;, ?
+        "consumergroup": "&lt;STRING&gt;", ?
+        "headers": { "&lt;STRING&gt;": "&lt;STRING&gt;" * }, ?
+        "keyserializer": "&lt;STRING&gt;", ?
+        "valueserializer": "&lt;STRING&gt;", ?
+        "autooffsetreset": "earliest" | "latest" | "none" ?,
+        "enableautocommit": &lt;BOOLEAN&gt; ?
 
-        # &quot;NATS&quot; protocol options
-        &quot;subject&quot;: &quot;&lt;STRING&gt;&quot;, ?
-        &quot;subjectfilter&quot;: &quot;&lt;STRING&gt;&quot;, ?
-        &quot;queuegroup&quot;: &quot;&lt;STRING&gt;&quot; ?
+        # "NATS" protocol options
+        "subject": "&lt;STRING&gt;", ?
+        "subjectfilter": "&lt;STRING&gt;", ?
+        "queuegroup": "&lt;STRING&gt;" ?
       }, ?
 
-      &quot;messagegroups&quot;: [ &quot;&lt;URI&gt;&quot; * ], ?
+      "messagegroups": [ "&lt;URI&gt;" * ], ?
       # End of Endpoint extensions
 
-      &quot;messagesurl&quot;: &quot;&lt;URL&gt;&quot;, ?
-      &quot;messagescount&quot;: &lt;UINTEGER&gt;, ?
-      &quot;messages&quot;: {
-        &quot;&lt;KEY&gt;&quot;: {                                # messageid
+      "messagesurl": "&lt;URL&gt;", ?
+      "messagescount": &lt;UINTEGER&gt;, ?
+      "messages": {
+        "&lt;KEY&gt;": {                                # messageid
           # See Message Definition spec for details
         } *
       } ?
@@ -388,14 +386,14 @@ to the xRegistry-defined core
 intended usage of the endpoint by communicating parties. In other words, the
 roles a client can act in when talking with the endpoint.</p>
 <p>Each of these parties will have a different perspective on an endpoint. For
-instance, a <code>producer</code> endpoint is seen as a &quot;target&quot; by the originator of
-messages, and as a &quot;source&quot; by the party that accepts the messages. The
+instance, a <code>producer</code> endpoint is seen as a "target" by the originator of
+messages, and as a "source" by the party that accepts the messages. The
 nomenclature used for the <code>usage</code> field is primarily oriented around the
 common scenario of network endpoints being provided by some sort of
 intermediary like a message broker. The term <code>producer</code> primarily describes
 the relationship of a client with that intermediary.</p>
 <p>In a direct-delivery scenario where the originator of messages connects
-directly to the target (e.g. a &quot;WebHook&quot; call), the target endpoint
+directly to the target (e.g. a "WebHook" call), the target endpoint
 implements the accepting end of the <code>producer</code> relationship.</p>
 <p>Some of these perspectives are mentioned below for illustration, but not
 formally defined or reflected in the metadata model. Perspectives depend on
@@ -454,9 +452,9 @@ pre-/post-processing, etc.</p>
 <li>REQUIRED.</li>
 <li>MUST contain only the following possible values:
 <ul>
-<li>&quot;subscriber&quot;</li>
-<li>&quot;consumer&quot;</li>
-<li>&quot;producer&quot;</li>
+<li>"subscriber"</li>
+<li>"consumer"</li>
+<li>"producer"</li>
 </ul>
 </li>
 <li>MUST be an array of at least one value.</li>
@@ -464,12 +462,12 @@ pre-/post-processing, etc.</p>
 permitted below.</li>
 <li>MUST NOT combine <code>producer</code> with any other value.</li>
 <li>MUST NOT declare all three values.</li>
-<li>MAY declare <code>[&quot;subscriber&quot;, &quot;consumer&quot;]</code> only when the protocol is
+<li>MAY declare <code>["subscriber", "consumer"]</code> only when the protocol is
 <code>MQTT/3.1.1</code>, <code>MQTT/5.0</code>, <code>AMQP/1.0</code>, or <code>NATS</code>. In these protocols a
 single client connection both establishes subscription interest and
 receives the resulting messages, so the two roles are served by one
 protocol interface and one endpoint contract.</li>
-<li>MUST NOT declare <code>[&quot;subscriber&quot;, &quot;consumer&quot;]</code> for <code>HTTP</code> or <code>KAFKA</code>
+<li>MUST NOT declare <code>["subscriber", "consumer"]</code> for <code>HTTP</code> or <code>KAFKA</code>
 endpoints. In those protocols the two roles are distinct interfaces and
 MUST be modeled as separate Endpoint resources.</li>
 <li>Endpoints that jointly describe more than one role SHOULD be declared
@@ -490,22 +488,22 @@ define that relationship or the specific values used in this property.
 However, it is expected that the <code>usage</code> value in combination with this
 <code>channel</code> property will provide some information to help determine the
 relationship.</p>
-<p>For instance, a message broker queue &quot;queue1&quot; might be represented with a
+<p>For instance, a message broker queue "queue1" might be represented with a
 <code>producer</code> endpoint and a <code>consumer</code> endpoint, both with the same <code>channel</code>
-attribute value of &quot;queue1&quot;.</p>
+attribute value of "queue1".</p>
 <p>An event processing pipeline might have a sequence of stages, each with a
 <code>producer</code> endpoint and a <code>consumer</code> endpoint, all with the same <code>channel</code>
-attribute value of &quot;pipeline1&quot;, or some further qualification like
-&quot;pipeline1-stage1&quot;, etc.</p>
+attribute value of "pipeline1", or some further qualification like
+"pipeline1-stage1", etc.</p>
 <p>This specification does not make any statement about whether two endpoints
 that do not share the same non-empty value have any relationship or not.
 They might, but how this is determined is out of scope of this specification.
 Additionally, while it is expected that this attribute's value will be a
 single value, given this specification does not place any constraints on
-its syntax or semantic meaning, implementations might choose to &quot;encode&quot;
+its syntax or semantic meaning, implementations might choose to "encode"
 multiple values within this single string. That would then imply that the
 comparison algorithm of two <code>channel</code> values might need to be more
-complicated than a &quot;string compare&quot; in those cases.</p>
+complicated than a "string compare" in those cases.</p>
 </li>
 <li>
 <p>Constraints:</p>
@@ -574,7 +572,7 @@ envelope format used to transmit the messages.</p>
 <p>Examples:</p>
 <ul>
 <li>For an endpoint using an <code>envelope</code> value of <code>CloudEvents/1.0</code>:
-<code>{ &quot;mode&quot;: &quot;binary&quot;, &quot;format&quot;: &quot;application/json&quot; }</code></li>
+<code>{ "mode": "binary", "format": "application/json" }</code></li>
 </ul>
 </li>
 </ul>
@@ -602,7 +600,7 @@ used MUST match the expected content type of the message (e.g. for HTTP the
 specification defines a set of common protocol names that MUST be used for
 respective protocol endpoints, but implementations MAY define and use
 additional protocol names.</p>
-<p>An example for an extension protocol identifier might be &quot;BunnyMQ/0.9.1&quot;.</p>
+<p>An example for an extension protocol identifier might be "BunnyMQ/0.9.1".</p>
 <p>Predefined protocols SHOULD be referred to by name and version as
 <code>&lt;NAME&gt;/&lt;VERSION&gt;</code>. The version number format is determined by the protocol
 specification's usage of versions. If the version is not specified, the
@@ -610,12 +608,12 @@ default version of the protocol is assumed. For AMQP and MQTT, see the list
 below. For others, refer to the protocol specifications.</p>
 <p>The predefined protocol names are:</p>
 <ul>
-<li>&quot;HTTP&quot; - Used for HTTP/1.1, HTTP/2, HTTP/3.</li>
-<li>&quot;AMQP/1.0&quot; - Use the <a href="https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-overview-v1.0-os.html">AMQP 1.0</a> protocol. MAY be shortened to
-&quot;AMQP&quot;. AMQP draft versions before 1.0 (e.g. 0.9) are <em>not</em> AMQP.</li>
-<li>&quot;MQTT/3.1.1&quot;, &quot;MQTT/5.0&quot; - Use the MQTT <a href="https://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html">3.1.1</a> or <a href="https://docs.oasis-open.org/mqtt/mqtt/v5.0/mqtt-v5.0.html">5.0</a> protocol. The shorthand &quot;MQTT&quot; maps to &quot;MQTT/5.0&quot;.</li>
-<li>&quot;NATS&quot; - Use the <a href="https://docs.nats.io/reference/protocols/client/">NATS</a> protocol.</li>
-<li>&quot;KAFKA&quot; - Use the <a href="https://kafka.apache.org/protocol">Apache Kafka</a> protocol.</li>
+<li>"HTTP" - Used for HTTP/1.1, HTTP/2, HTTP/3.</li>
+<li>"AMQP/1.0" - Use the <a href="https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-overview-v1.0-os.html">AMQP 1.0</a> protocol. MAY be shortened to
+"AMQP". AMQP draft versions before 1.0 (e.g. 0.9) are <em>not</em> AMQP.</li>
+<li>"MQTT/3.1.1", "MQTT/5.0" - Use the MQTT <a href="https://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html">3.1.1</a> or <a href="https://docs.oasis-open.org/mqtt/mqtt/v5.0/mqtt-v5.0.html">5.0</a> protocol. The shorthand "MQTT" maps to "MQTT/5.0".</li>
+<li>"NATS" - Use the <a href="https://docs.nats.io/reference/protocols/client/">NATS</a> protocol.</li>
+<li>"KAFKA" - Use the <a href="https://kafka.apache.org/protocol">Apache Kafka</a> protocol.</li>
 </ul>
 <p>All messages inside an Endpoint MUST use this same protocol.</p>
 </li>
@@ -645,7 +643,7 @@ version of the protocol.</li>
 <li>
 <p>Description: Configuration details of the endpoint related to the protocol
 used to transmit the messages. An endpoint MAY be defined without detailed
-configuration. In this case, the endpoint is considered to be &quot;abstract&quot;.
+configuration. In this case, the endpoint is considered to be "abstract".
 For per-protocol option definitions, see <a href="#protocol-options">Protocol Options</a>.</p>
 </li>
 <li>
@@ -692,31 +690,31 @@ attribute.</li>
 <li>
 <p>Examples:</p>
 <ul>
-<li><code>[ {&quot;uri&quot;: &quot;https://example.com&quot; } ]</code></li>
+<li><code>[ {"uri": "https://example.com" } ]</code></li>
 <li>
 <pre><code>[
-  { &quot;uri&quot;: &quot;tcp://example.com&quot; },
-  { &quot;uri&quot;: &quot;wss://example.com&quot; }
+  { "uri": "tcp://example.com" },
+  { "uri": "wss://example.com" }
 ]
 </code></pre>
 </li>
 <li>
 <pre><code>[
-  { &quot;bootstrap.servers&quot;: [ &quot;broker1:9092&quot;, &quot;broker2:9092&quot; ] }
+  { "bootstrap.servers": [ "broker1:9092", "broker2:9092" ] }
 ]
 </code></pre>
 </li>
 <li>
 <pre><code>[
   {
-    &quot;uri&quot;: &quot;tcp://example.com&quot;,
-    &quot;priority&quot;: 1,
-    &quot;status&quot;: &quot;down&quot;
+    "uri": "tcp://example.com",
+    "priority": 1,
+    "status": "down"
   },
   {
-    &quot;uri&quot;: &quot;wss://example.com&quot;,
-    &quot;priority&quot;: 2,
-    &quot;status&quot;: &quot;up&quot;
+    "uri": "wss://example.com",
+    "priority": 2,
+    "status": "up"
   }
 ]
 </code></pre>
@@ -787,15 +785,15 @@ carrier-specific options MAY be defined as protocol extensions.</li>
 <li>
 <p>Examples:</p>
 <ul>
-<li><code>OAuth2</code>: <code>{ &quot;type&quot;: &quot;OAuth2&quot;, &quot;authorityuri&quot;: &quot;https://login.example.com/tenant/v2.0&quot; }</code>.
+<li><code>OAuth2</code>: <code>{ "type": "OAuth2", "authorityuri": "https://login.example.com/tenant/v2.0" }</code>.
 This points clients to the OAuth 2.0 authorization server/issuer metadata.</li>
-<li><code>Plain</code>: <code>{ &quot;type&quot;: &quot;Plain&quot;, &quot;authorityuri&quot;: &quot;https://docs.example.com/auth/plain&quot; }</code>.
+<li><code>Plain</code>: <code>{ "type": "Plain", "authorityuri": "https://docs.example.com/auth/plain" }</code>.
 This points clients to product documentation for username/password-based authorization setup.</li>
-<li><code>SASL</code>: <code>{ &quot;type&quot;: &quot;SASL&quot;, &quot;mechanism&quot;: &quot;SCRAM-SHA-256&quot;, &quot;authorityuri&quot;: &quot;https://docs.example.com/auth/sasl&quot; }</code>.
+<li><code>SASL</code>: <code>{ "type": "SASL", "mechanism": "SCRAM-SHA-256", "authorityuri": "https://docs.example.com/auth/sasl" }</code>.
 This points clients to mechanism-specific setup guidance (for example SASL profile and parameter requirements).</li>
-<li><code>X509Cert</code>: <code>{ &quot;type&quot;: &quot;X509Cert&quot;, &quot;authorityuri&quot;: &quot;https://docs.example.com/auth/x509&quot; }</code>.
+<li><code>X509Cert</code>: <code>{ "type": "X509Cert", "authorityuri": "https://docs.example.com/auth/x509" }</code>.
 This points clients to certificate enrollment and trust-chain requirements.</li>
-<li><code>APIKey</code>: <code>{ &quot;type&quot;: &quot;APIKey&quot;, &quot;authorityuri&quot;: &quot;https://docs.example.com/auth/apikey&quot; }</code>.
+<li><code>APIKey</code>: <code>{ "type": "APIKey", "authorityuri": "https://docs.example.com/auth/apikey" }</code>.
 This points clients to key provisioning and placement guidance (for example header/query usage).</li>
 </ul>
 </li>
@@ -806,7 +804,7 @@ This points clients to key provisioning and placement guidance (for example head
 <p>Type: String</p>
 </li>
 <li>
-<p>Description: The SASL mechanism name for <code>authorization.type = &quot;SASL&quot;</code>, for
+<p>Description: The SASL mechanism name for <code>authorization.type = "SASL"</code>, for
 example <code>PLAIN</code> (<a href="https://www.rfc-editor.org/rfc/rfc4616">RFC4616</a>), <code>SCRAM-SHA-256</code> or <code>SCRAM-SHA-512</code>
 (<a href="https://www.rfc-editor.org/rfc/rfc7677">RFC7677</a>), <code>OAUTHBEARER</code> (<a href="https://www.rfc-editor.org/rfc/rfc7628">RFC7628</a>), or <code>EXTERNAL</code>
 (<a href="https://www.rfc-editor.org/rfc/rfc4422">RFC4422</a>). Mechanism names are those registered in the
@@ -878,13 +876,13 @@ server stores absolute URIs as-is without resolving them.</p>
 that are not inlined in the endpoint definition.</p>
 <p>Example:</p>
 <pre><code class="language-yaml">{
-  &quot;protocol&quot;: &quot;HTTP/1.1&quot;,
-  &quot;protocoloptions&quot;: {
-    &quot;method&quot;: &quot;POST&quot;
+  "protocol": "HTTP/1.1",
+  "protocoloptions": {
+    "method": "POST"
   },
-  &quot;messagegroups&quot;: [
-    &quot;/messagegroups/mygroup&quot;,
-    &quot;https://other-catalog.example.com/messagegroups/external-group&quot;
+  "messagegroups": [
+    "/messagegroups/mygroup",
+    "https://other-catalog.example.com/messagegroups/external-group"
   ]
 }
 </code></pre>
@@ -895,20 +893,20 @@ MAY contain inlined messages. See
 <a href="./../../message-v1/docs/spec.html#message-definitions">Message Definitions</a>.</p>
 <p>Example:</p>
 <pre><code class="language-yaml">{
-  &quot;protocol&quot;: &quot;HTTP/1.1&quot;,
-  &quot;protocoloptions&quot;: {
-    &quot;method&quot;: &quot;POST&quot;
+  "protocol": "HTTP/1.1",
+  "protocoloptions": {
+    "method": "POST"
   },
 
-  &quot;messagesurl&quot;: &quot;...&quot;,
-  &quot;messagescount&quot;: 1,
-  &quot;messages&quot;: {
-    &quot;myevent&quot;: {
-      &quot;envelope&quot;: &quot;CloudEvents/1.0&quot;,
-      &quot;envelopemetadata&quot;: {
-        &quot;attributes&quot;: {
-          &quot;type&quot;: {
-            &quot;value&quot;: &quot;myevent&quot;
+  "messagesurl": "...",
+  "messagescount": 1,
+  "messages": {
+    "myevent": {
+      "envelope": "CloudEvents/1.0",
+      "envelopemetadata": {
+        "attributes": {
+          "type": {
+            "value": "myevent"
           }
         }
       }
@@ -923,7 +921,7 @@ CloudEvent's <code>type</code> attribute), it is STRONGLY RECOMMENDED that the
 <code>messageid</code> values of the message definitions for an Endpoint match that
 unique identifier and therefore be unique across all messages within the
 <code>messages</code> collection and the messages referenced by the <code>messagegroups</code>
-attribute. This will allow for an easy &quot;lookup&quot; from an incoming runtime
+attribute. This will allow for an easy "lookup" from an incoming runtime
 message to its related message definition.</p>
 <p>However, there are times when this is not possible. For example, take the case
 where an Endpoint might have the same semantic message defined twice, once for
@@ -968,23 +966,23 @@ the values are supplied. When the same placeholder name occurs in more than
 one value of the same endpoint, all of its occurrences MUST resolve to the
 same value.</p>
 <h5 id="http-options">HTTP options <a class="anchor" href="#http-options">🔗</a></h5>
-<p>The <a href="#protocoloptionsendpoints">endpoint URIs</a> for &quot;HTTP&quot; endpoints MUST be
-valid HTTP URIs using the &quot;http&quot; or &quot;https&quot; scheme as defined in
+<p>The <a href="#protocoloptionsendpoints">endpoint URIs</a> for "HTTP" endpoints MUST be
+valid HTTP URIs using the "http" or "https" scheme as defined in
 <a href="https://www.rfc-editor.org/rfc/rfc9110#section-6">HTTP Message Format</a>.</p>
 <p>HTTP has no single connection that serves several roles, so each HTTP role is
 a distinct interface with its own request contract. This specification
 distinguishes three HTTP roles:</p>
 <ul>
-<li>Subscription manager (<code>usage</code> = <code>[&quot;subscriber&quot;]</code>): an endpoint that accepts
+<li>Subscription manager (<code>usage</code> = <code>["subscriber"]</code>): an endpoint that accepts
 requests to create, modify, and delete subscriptions, for example an
 implementation of the <a href="https://github.com/cloudevents/spec/blob/main/subscriptions/spec.md">CloudEvents Subscriptions API</a>. It does not transfer messages.</li>
-<li>Delivery target, also called webhook target (<code>usage</code> = <code>[&quot;producer&quot;]</code>): an
+<li>Delivery target, also called webhook target (<code>usage</code> = <code>["producer"]</code>): an
 endpoint that accepts messages pushed to it by an originator or by a
 delivery agent.</li>
-<li>Pull consumer (<code>usage</code> = <code>[&quot;consumer&quot;]</code>): an endpoint from which a client
+<li>Pull consumer (<code>usage</code> = <code>["consumer"]</code>): an endpoint from which a client
 retrieves messages with its own requests.</li>
 </ul>
-<p>An &quot;HTTP&quot; Endpoint describes a profile for message and event transfer over
+<p>An "HTTP" Endpoint describes a profile for message and event transfer over
 HTTP, not a general-purpose HTTP API surface. Declaring exactly one role per
 Endpoint keeps the request contract of each interface unambiguous, so that a
 client knows what it can send and what it can expect without inspecting
@@ -994,7 +992,7 @@ specification and is served by an API description language such as OpenAPI.</p>
 <ul>
 <li>An HTTP Endpoint MUST declare exactly one <code>usage</code> value and therefore MUST
 represent exactly one of the three roles above.</li>
-<li>An HTTP Endpoint MUST NOT declare <code>[&quot;subscriber&quot;, &quot;consumer&quot;]</code>.</li>
+<li>An HTTP Endpoint MUST NOT declare <code>["subscriber", "consumer"]</code>.</li>
 <li>A subscription manager, a delivery target, and a pull consumer that belong
 to the same logical channel MUST be declared as separate Endpoint resources
 and SHOULD be correlated with a shared <code>channel</code> value.</li>
@@ -1081,8 +1079,8 @@ and SHOULD be correlated with a shared <code>channel</code> value.</li>
 Credential values (API keys, usernames, passwords) MUST NOT be stored in
 endpoint metadata and MUST be supplied out-of-band.</p>
 <h5 id="amqp-options">AMQP options <a class="anchor" href="#amqp-options">🔗</a></h5>
-<p>The <a href="#protocoloptionsendpoints">endpoint URIs</a> for &quot;AMQP&quot; endpoints MUST be
-valid AMQP URIs using the &quot;amqp&quot; or &quot;amqps&quot; scheme. If the path portion of the
+<p>The <a href="#protocoloptionsendpoints">endpoint URIs</a> for "AMQP" endpoints MUST be
+valid AMQP URIs using the "amqp" or "amqps" scheme. If the path portion of the
 URI is present, it MUST be a valid AMQP node name according to
 <a href="https://docs.oasis-open.org/amqp/addressing/v1.0/csd01/addressing-v1.0-csd01.html">AMQP Addressing Version 1.0</a>.</p>
 <p>The following options are defined for AMQP endpoints.</p>
@@ -1212,17 +1210,17 @@ URI is present, it MUST be a valid AMQP node name according to
 </tr>
 </tbody>
 </table>
-<p>An AMQP Endpoint MAY declare <code>[&quot;subscriber&quot;, &quot;consumer&quot;]</code>, because a single
+<p>An AMQP Endpoint MAY declare <code>["subscriber", "consumer"]</code>, because a single
 AMQP receiving link both establishes interest in the source node and carries
 the resulting transfers. When it does, the <code>subscriber</code> role refers to the
 establishment of the link with the node as source and the <code>consumer</code> role
 refers to the transfers over that link.</p>
 <h5 id="mqtt-options">MQTT options <a class="anchor" href="#mqtt-options">🔗</a></h5>
-<p>The <a href="#protocoloptionsendpoints">endpoint URIs</a> for &quot;MQTT&quot; endpoints MUST be
-valid MQTT URIs using the (informal) &quot;mqtt&quot; or &quot;mqtts&quot; scheme. If the path
+<p>The <a href="#protocoloptionsendpoints">endpoint URIs</a> for "MQTT" endpoints MUST be
+valid MQTT URIs using the (informal) "mqtt" or "mqtts" scheme. If the path
 portion of the URI is present, it MUST be a valid MQTT topic name as described
 by <a href="https://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html">MQTT 3.1.1</a> and <a href="https://docs.oasis-open.org/mqtt/mqtt/v5.0/mqtt-v5.0.html">MQTT 5.0</a>. The informal
-schemes &quot;tcp&quot; (plain TCP/1883), &quot;ssl&quot; (TLS TCP/8883), and &quot;wss&quot;
+schemes "tcp" (plain TCP/1883), "ssl" (TLS TCP/8883), and "wss"
 (Websockets/443) MAY also be used, but MUST NOT have a path.</p>
 <p>The following options are defined for MQTT 3.1.1 and MQTT 5.0 endpoints.</p>
 <table>
@@ -1295,7 +1293,7 @@ destination.</li>
 <li><code>topicfilter</code> MAY contain the <code>+</code> and <code>#</code> wildcard characters as defined by
 <a href="https://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html">MQTT 3.1.1</a> and <a href="https://docs.oasis-open.org/mqtt/mqtt/v5.0/mqtt-v5.0.html">MQTT 5.0</a>.</li>
 <li>An MQTT Endpoint MUST NOT declare both <code>topic</code> and <code>topicfilter</code>.</li>
-<li>An MQTT Endpoint MAY declare <code>[&quot;subscriber&quot;, &quot;consumer&quot;]</code>, because a single
+<li>An MQTT Endpoint MAY declare <code>["subscriber", "consumer"]</code>, because a single
 MQTT connection both sends the <code>SUBSCRIBE</code> packet and receives the resulting
 <code>PUBLISH</code> packets.</li>
 </ul>
@@ -1400,7 +1398,7 @@ of those two options.</li>
 the subscribing client. They are not endpoint metadata and are therefore not
 defined as protocol options by this specification.</p>
 <h5 id="kafka-options">KAFKA options <a class="anchor" href="#kafka-options">🔗</a></h5>
-<p>The <a href="#protocoloptionsendpoints">endpoint URIs</a> for &quot;Kafka&quot; endpoints MUST be
+<p>The <a href="#protocoloptionsendpoints">endpoint URIs</a> for "Kafka" endpoints MUST be
 valid Kafka bootstrap server addresses. The scheme follows Kafka configuration
 usage as described in <a href="https://kafka.apache.org/protocol">Apache Kafka</a>, e.g. <code>SSL://&lt;HOST&gt;:&lt;PORT&gt;</code> or
 <code>PLAINTEXT://&lt;HOST&gt;:&lt;PORT&gt;</code>.</p>
@@ -1509,7 +1507,7 @@ consumer group as an act of registering interest. It MUST NOT declare
 than a group to be joined.</li>
 <li>A <code>consumer</code> Kafka Endpoint describes joining an existing consumer group.
 It MUST declare <code>consumergroup</code> with a non-empty value.</li>
-<li>A Kafka Endpoint MUST NOT declare <code>[&quot;subscriber&quot;, &quot;consumer&quot;]</code>. The two
+<li>A Kafka Endpoint MUST NOT declare <code>["subscriber", "consumer"]</code>. The two
 roles MUST be declared as separate Endpoint resources and SHOULD be
 correlated with a shared <code>channel</code> value.</li>
 <li><code>autooffsetreset</code> and <code>enableautocommit</code> describe group-based consumption.
@@ -1520,9 +1518,9 @@ consumer state, not endpoint metadata, and MUST NOT be expressed through
 this option.</li>
 </ul>
 <h5 id="nats-options">NATS options <a class="anchor" href="#nats-options">🔗</a></h5>
-<p>The <a href="#protocoloptionsendpoints">endpoint URIs</a> for &quot;NATS&quot; endpoints MUST be
-valid NATS URIs as described by <a href="https://docs.nats.io/reference/protocols/client/">NATS</a>. The scheme MUST be &quot;nats&quot; or &quot;tls&quot; or
-&quot;ws&quot; and the URI MUST include a port number, e.g. <code>nats://&lt;HOST&gt;:&lt;PORT&gt;</code> or
+<p>The <a href="#protocoloptionsendpoints">endpoint URIs</a> for "NATS" endpoints MUST be
+valid NATS URIs as described by <a href="https://docs.nats.io/reference/protocols/client/">NATS</a>. The scheme MUST be "nats" or "tls" or
+"ws" and the URI MUST include a port number, e.g. <code>nats://&lt;HOST&gt;:&lt;PORT&gt;</code> or
 <code>tls://&lt;HOST&gt;:&lt;PORT&gt;</code>.</p>
 <p>The options below describe Core NATS publish and subscribe.</p>
 <p>The following options are defined for NATS endpoints.</p>
@@ -1572,9 +1570,12 @@ valid NATS URIs as described by <a href="https://docs.nats.io/reference/protocol
 <a href="https://docs.nats.io/reference/protocols/client/">NATS</a>.</li>
 <li><code>queuegroup</code> MUST only be present when <code>subjectfilter</code> is also present.</li>
 <li>A NATS Endpoint MUST NOT declare both <code>subject</code> and <code>subjectfilter</code>.</li>
-<li>A NATS Endpoint MAY declare <code>[&quot;subscriber&quot;, &quot;consumer&quot;]</code>, because a single
+<li>A NATS Endpoint MAY declare <code>["subscriber", "consumer"]</code>, because a single
 Core NATS connection both registers the subscription interest and receives
 the resulting messages.</li>
 </ul>
-
+</article>
+</main>
+<button aria-label="Back to top" class="back-to-top" title="Back to top" type="button"><i aria-hidden="true" class="fas fa-arrow-up"></i></button>
+</body>
 </html>

@@ -1,0 +1,77 @@
+---
+layout: default
+---
+
+<main id="main_content_wrap" class="outer">
+  <article id="xregistry-content" class="inner blog-article" data-reader-label="xRegistry Blog">
+    <header class="article-header">
+      <p class="series-kicker">xRegistry foundations · Article {{ page.series_order }} of {{ site.article_series_size }}</p>
+      <h1>{{ page.title }}</h1>
+      <p class="article-deck">{{ page.description }}</p>
+      <dl class="article-meta">
+        <div><dt>Published</dt><dd><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.due | date: "%B %-d, %Y" }}</time></dd></div>
+        <div><dt>Reading time</dt><dd>{{ page.reading_time }}</dd></div>
+      </dl>
+
+      {% assign share_url = page.url | absolute_url | cgi_escape %}
+      {% assign share_title = page.title | cgi_escape %}
+      {% assign share_description = page.description | strip_html | truncate: 180 %}
+      {% assign share_text = page.title | append: ": " | append: share_description | cgi_escape %}
+      {% assign mail_url = share_url | replace: '+', '%20' %}
+      {% assign mail_title = share_title | replace: '+', '%20' %}
+      {% assign mail_text = share_text | replace: '+', '%20' %}
+      <nav class="share-links" aria-label="Share this article">
+        <span>Share</span>
+        <a href="https://bsky.app/intent/compose?text={{ share_text }}%20{{ share_url }}" aria-label="Share on Bluesky" title="Bluesky" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-bluesky" aria-hidden="true"></i></a>
+        <a href="mailto:?subject={{ mail_title }}&amp;body={{ mail_text }}%0D%0A%0D%0A{{ mail_url }}" aria-label="Share by email" title="Email"><i class="fa-solid fa-envelope" aria-hidden="true"></i></a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ share_url }}" aria-label="Share on Facebook" title="Facebook" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+        <a href="https://news.ycombinator.com/submitlink?u={{ share_url }}&amp;t={{ share_title }}" aria-label="Share on Hacker News" title="Hacker News" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-hacker-news" aria-hidden="true"></i></a>
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url }}" aria-label="Share on LinkedIn" title="LinkedIn" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
+        <a href="https://mastodonshare.com/?text={{ share_text }}&amp;url={{ share_url }}" aria-label="Share on Mastodon" title="Mastodon" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-mastodon" aria-hidden="true"></i></a>
+        <a href="https://teams.microsoft.com/share?href={{ share_url }}&amp;msgText={{ share_text }}" aria-label="Share on Microsoft Teams" title="Microsoft Teams" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-microsoft" aria-hidden="true"></i></a>
+        <a href="https://www.reddit.com/submit?url={{ share_url }}&amp;title={{ share_title }}" aria-label="Share on Reddit" title="Reddit" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-reddit-alien" aria-hidden="true"></i></a>
+        <a href="https://t.me/share/url?url={{ share_url }}&amp;text={{ share_text }}" aria-label="Share on Telegram" title="Telegram" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-telegram" aria-hidden="true"></i></a>
+        <a href="https://www.threads.com/intent/post?text={{ share_text }}%20{{ share_url }}" aria-label="Share on Threads" title="Threads" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-threads" aria-hidden="true"></i></a>
+        <a href="https://service.weibo.com/share/share.php?url={{ share_url }}&amp;title={{ share_text }}" aria-label="Share on Weibo" title="Weibo" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-weibo" aria-hidden="true"></i></a>
+        <a href="https://wa.me/?text={{ share_text }}%20{{ share_url }}" aria-label="Share on WhatsApp" title="WhatsApp" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
+        <a href="https://x.com/intent/post?text={{ share_text }}&amp;url={{ share_url }}" aria-label="Share on X" title="X" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
+      </nav>
+    </header>
+
+    <aside class="evidence-note" aria-labelledby="evidence-note-title">
+      <h2 id="evidence-note-title">How to read the evidence</h2>
+      <p><strong>Normative fact</strong> reports what the cited specification requires. <strong>Observed behavior</strong> reports what a named sample or implementation does. <strong>Editorial judgment</strong> is our interpretation and is labeled as such.</p>
+    </aside>
+
+    <div class="article-body">
+      {{ content }}
+    </div>
+
+    {% assign published_articles = site.articles | sort: "series_order" %}
+    {% assign previous_article = nil %}
+    {% assign next_article = nil %}
+    {% assign found_current = false %}
+    {% for article in published_articles %}
+      {% if found_current and next_article == nil %}
+        {% assign next_article = article %}
+      {% elsif article.url == page.url %}
+        {% assign found_current = true %}
+      {% else %}
+        {% assign previous_article = article %}
+      {% endif %}
+    {% endfor %}
+
+    <nav class="series-navigation" aria-label="Article series">
+      {% if previous_article %}
+        <a class="series-link series-previous" href="{{ previous_article.url | relative_url }}"><span>Previous</span>{{ previous_article.title }}</a>
+      {% else %}
+        <a class="series-link series-previous" href="{{ '/blog/' | relative_url }}"><span>Blog index</span>Browse published articles</a>
+      {% endif %}
+      {% if next_article %}
+        <a class="series-link series-next" href="{{ next_article.url | relative_url }}"><span>Next</span>{{ next_article.title }}</a>
+      {% else %}
+        <a class="series-link series-next" href="{{ '/blog/' | relative_url }}"><span>Blog index</span>Return to published articles</a>
+      {% endif %}
+    </nav>
+  </article>
+</main>

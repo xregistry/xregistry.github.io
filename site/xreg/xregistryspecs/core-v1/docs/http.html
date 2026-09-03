@@ -1,50 +1,45 @@
-<html>
+<!DOCTYPE html>
+
+<html lang="en-US">
 <head>
-<style>
-  .anchor {
-    font-size: 12px ;
-    vertical-align: middle ;
-    text-decoration: none ;
-  }
-  body {
-    font-family: sans-serif ;
-    font-size: 16px ;
-    line-height: 1.5 ;
-    padding: 5% 10% 5% 10% ;
-  }
-  pre {
-    font-size: 80% ;
-    background-color: #f2f2f2 ;
-    padding: 12px ;
-  }
-  code {
-    font-size: 85% ;
-    background-color: #f2f2f2 ;
-    padding: .2em .4em ;
-  }
-  pre code {
-    font-size: inherit ;
-    background-color: inherit ;
-    padding: 0px ;
-  }
-  table {
-    border: 1px solid lightgray ;
-    border-collapse: collapse ;
-    border-spacing: 0px ;
-    line-height: 24px ;
-  }
-  tr:nth-child(even) {
-    background-color: #f2f2f2 ;
-  }
-  td,th {
-    border: 1px solid lightgray ;
-    padding: 5px ;
-  }
-  td code, th code {
-    font-size: inherit ;
-  }
-</style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, maximum-scale=2" name="viewport"/>
+<title>xRegistry HTTP Binding | xRegistry</title>
+<link href="/assets/css/style.css" rel="stylesheet"/>
+<link href="/assets/css/xreg-reader.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<script defer="" src="/assets/js/xreg-reader.js"></script>
 </head>
+<body class="xreg-document xreg-reference-document">
+<header class="outer site-header" data-xregistry-shell="true" id="header_wrap">
+<div class="inner">
+<a href="https://github.com/xregistry/xregistry.github.io" id="forkme_banner">View on GitHub</a>
+<img alt="xRegistry logo" class="header-logo" src="https://github.com/cncf/artwork/raw/main/projects/xregistry/horizontal/color-whitetext/xregistry-horizontal-color-whitetext.svg"/>
+<h2 id="project_tagline">The Extensible Registry for Metadata Management</h2>
+<nav aria-label="Primary navigation" class="site-nav">
+<a href="/">Home</a>
+<a href="/blog/">Blog</a>
+<a href="/xreg/xregistryspecs/core-v1/docs/spec.html">Core Spec</a>
+<a href="/xreg/xregistryspecs/endpoint-v1/docs/spec.html">Endpoint Spec</a>
+<a href="/xreg/xregistryspecs/schema-v1/docs/spec.html">Schema Spec</a>
+<a href="/xreg/xregistryspecs/message-v1/docs/spec.html">Message Spec</a>
+<a href="https://github.com/xregistry/spec">GitHub</a>
+</nav>
+</div>
+</header>
+<div aria-label="xRegistry document path" class="registry-path">
+<div class="registry-path__inner"><i aria-hidden="true" class="fas fa-sitemap"></i><code>xreg/xregistryspecs/core-v1/docs/http.html</code></div>
+</div>
+<main class="xreg-reader-layout">
+<aside aria-label="On this page" class="spec-toc">
+<div class="spec-toc__header">On this page</div>
+<nav class="spec-toc__body"></nav>
+</aside>
+<article class="xreg-reader-content" id="xregistry-content">
+
 <h1 id="xregistry-http-binding">xRegistry HTTP Binding <a class="anchor" href="#xregistry-http-binding">🔗</a></h1>
 <!-- words: validatecompatibility validateformat -->
 <!-- words: compat formatvalidated compatibilityvalidated -->
@@ -143,8 +138,8 @@ model and semantics that apply to all protocols.</p>
 </ul>
 <h2 id="notations-and-terminology">Notations and Terminology <a class="anchor" href="#notations-and-terminology">🔗</a></h2>
 <h3 id="notational-conventions">Notational Conventions <a class="anchor" href="#notational-conventions">🔗</a></h3>
-<p>The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;, &quot;SHOULD&quot;,
-&quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;, &quot;MAY&quot;, and &quot;OPTIONAL&quot; in this document are to be
+<p>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
+"SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be
 interpreted as described in <a href="https://tools.ietf.org/html/rfc2119">RFC 2119</a>.</p>
 <p>For clarity, OPTIONAL attributes (specification-defined and extensions) are
 OPTIONAL for clients to use, but the servers' responsibility will vary.
@@ -235,16 +230,16 @@ entity.</li>
 </ul>
 <h3 id="no-code-servers">No-Code Servers <a class="anchor" href="#no-code-servers">🔗</a></h3>
 <p>In the <a href="./spec.html">core specification</a> there is a
-discussion about <a href="./spec.html#design-no-code-servers">&quot;no-code servers&quot;</a>. In the
+discussion about <a href="./spec.html#design-no-code-servers">"no-code servers"</a>. In the
 case of HTTP, simple file servers SHOULD support exposing Resources where the
-HTTP body response contains the Resource's domain-specific &quot;document&quot; as well
+HTTP body response contains the Resource's domain-specific "document" as well
 as exposing the serialization of the Resource's xRegistry metadata via the
 <a href="#resource-metadata-vs-resource-document"><code>$details</code></a> suffix on the URL path.
 This can be achieved by creating a secondary, sibling, file on disk with
 <code>$details</code> at the end of its filename.</p>
 <h2 id="registry-http-apis">Registry HTTP APIs <a class="anchor" href="#registry-http-apis">🔗</a></h2>
 <p>This section mainly focuses on the successful interaction patterns of the APIs.
-For example, most examples will show an HTTP &quot;200 OK&quot; as the response. Each
+For example, most examples will show an HTTP "200 OK" as the response. Each
 implementation MAY choose to return a more appropriate response based on the
 specific situation. For example, in the case of an authentication error the
 server could return <code>401 Unauthorized</code>.</p>
@@ -296,10 +291,10 @@ aspect set to <code>true</code>, the URL accessing the entity MUST include the
 <code>$details</code> suffix, and MUST generate an error
 (<a href="#details_required">details_required</a>) in the absence of the
 <code>$details</code> suffix. This is because when it is absent, the processing of
-the HTTP <code>xRegistry-</code> headers are already defined with &quot;PATCH&quot; semantics
+the HTTP <code>xRegistry-</code> headers are already defined with "PATCH" semantics
 so a normal <code>PUT</code> or <code>POST</code> can be used instead. Using <code>PATCH</code> in this
-case would mean that the request is trying to &quot;patch&quot; the Resource's
-&quot;document&quot;, which this specification does not support at this time.</li>
+case would mean that the request is trying to "patch" the Resource's
+"document", which this specification does not support at this time.</li>
 <li><code>PATCH</code> MAY be used to create new entities, but as with any of the create
 operations, any missing REQUIRED attributes MUST generate an error
 (<a href="./spec.html#required_attribute_missing">required_attribute_missing</a>).</li>
@@ -566,19 +561,19 @@ Content-Type: application/json; charset=utf-8
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;specversion&quot;: &quot;1.0-rc4&quot;,
-  &quot;registryid&quot;: &quot;myRegistry&quot;,
-  &quot;self&quot;: &quot;https://example.com/&quot;,
-  &quot;xid&quot;: &quot;/&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;createdat&quot;: &quot;2024-04-30T12:00:00Z&quot;,
-  &quot;modifiedat&quot;: &quot;2024-04-30T12:00:01Z&quot;,
+  "specversion": "1.0-rc4",
+  "registryid": "myRegistry",
+  "self": "https://example.com/",
+  "xid": "/",
+  "epoch": 1,
+  "createdat": "2024-04-30T12:00:00Z",
+  "modifiedat": "2024-04-30T12:00:01Z",
 
-  &quot;endpointsurl&quot;: &quot;https://example.com/endpoints&quot;,
-  &quot;endpointscount&quot;: 42,
+  "endpointsurl": "https://example.com/endpoints",
+  "endpointscount": 42,
 
-  &quot;schemagroupsurl&quot;: &quot;https://example.com/schemagroups&quot;,
-  &quot;schemagroupscount&quot;: 1
+  "schemagroupsurl": "https://example.com/schemagroups",
+  "schemagroupscount": 1
 }
 </code></pre>
 <h4 id="patch-and-put-"><code>PATCH</code> and <code>PUT /</code> <a class="anchor" href="#patch-and-put-">🔗</a></h4>
@@ -634,30 +629,30 @@ Content-Type: application/json; charset=utf-8
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;registryid&quot;: &quot;myRegistry&quot;,
-  &quot;name&quot;: &quot;My Registry&quot;,
-  &quot;description&quot;: &quot;An even cooler registry!&quot;
+  "registryid": "myRegistry",
+  "name": "My Registry",
+  "description": "An even cooler registry!"
 }
 </code></pre>
 <pre><code class="language-yaml">HTTP/1.1 200 OK
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;specversion&quot;: &quot;1.0-rc4&quot;,
-  &quot;registryid&quot;: &quot;myRegistry&quot;,
-  &quot;self&quot;: &quot;https://example.com/&quot;,
-  &quot;xid&quot;: &quot;/&quot;,
-  &quot;epoch&quot;: 2,
-  &quot;name&quot;: &quot;My Registry&quot;,
-  &quot;description&quot;: &quot;An even cooler registry!&quot;,
-  &quot;createdat&quot;: &quot;2024-04-30T12:00:00Z&quot;,
-  &quot;modifiedat&quot;: &quot;2024-04-30T12:00:01Z&quot;,
+  "specversion": "1.0-rc4",
+  "registryid": "myRegistry",
+  "self": "https://example.com/",
+  "xid": "/",
+  "epoch": 2,
+  "name": "My Registry",
+  "description": "An even cooler registry!",
+  "createdat": "2024-04-30T12:00:00Z",
+  "modifiedat": "2024-04-30T12:00:01Z",
 
-  &quot;endpointsurl&quot;: &quot;https://example.com/endpoints&quot;,
-  &quot;endpointscount&quot;: 42,
+  "endpointsurl": "https://example.com/endpoints",
+  "endpointscount": 42,
 
-  &quot;schemagroupsurl&quot;: &quot;https://example.com/schemagroups&quot;,
-  &quot;schemagroupscount&quot;: 1
+  "schemagroupsurl": "https://example.com/schemagroups",
+  "schemagroupscount": 1
 }
 </code></pre>
 <h4 id="post-"><code>POST /</code> <a class="anchor" href="#post-">🔗</a></h4>
@@ -672,8 +667,8 @@ Content-Type: application/json; charset=utf-8
 
 {
   # Repeat for each Group type that has a Group to be created or updated
-  &quot;&lt;GROUPS&gt;&quot;: {
-    &quot;&lt;GROUP&gt;id&quot;: {
+  "&lt;GROUPS&gt;": {
+    "&lt;GROUP&gt;id": {
       ... Group entity excluded for brevity ...
     } *
   } *
@@ -690,8 +685,8 @@ level attributes) MUST generate an error (<a href="./spec.html#groups_only">grou
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;&lt;GROUPS&gt;&quot;: {
-    &quot;&lt;GROUP&gt;id&quot;: {
+  "&lt;GROUPS&gt;": {
+    "&lt;GROUP&gt;id": {
       ... Group entity excluded for brevity ...
     } *
   } *
@@ -708,13 +703,13 @@ Registry-level attributes.</li>
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;endpoints&quot;: {
-    &quot;endpoint1&quot;: { ... Group endpoint1 excluded for brevity ... },
-    &quot;endpoint2&quot;: { ... Group endpoint2 excluded for brevity ... }
+  "endpoints": {
+    "endpoint1": { ... Group endpoint1 excluded for brevity ... },
+    "endpoint2": { ... Group endpoint2 excluded for brevity ... }
   },
-  &quot;schemagroups&quot;: {
-    &quot;schemagroup1&quot;: { ... Group schemagroup1 excluded for brevity ... },
-    &quot;schemagroup2&quot;: { ... Group schemagroup2 excluded for brevity ... }
+  "schemagroups": {
+    "schemagroup1": { ... Group schemagroup1 excluded for brevity ... },
+    "schemagroup2": { ... Group schemagroup2 excluded for brevity ... }
   }
 }
 </code></pre>
@@ -722,13 +717,13 @@ Content-Type: application/json; charset=utf-8
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;endpoints&quot;: {
-    &quot;endpoint1&quot;: { ... Group endpoint1 excluded for brevity ... },
-    &quot;endpoint2&quot;: { ... Group endpoint2 excluded for brevity ... }
+  "endpoints": {
+    "endpoint1": { ... Group endpoint1 excluded for brevity ... },
+    "endpoint2": { ... Group endpoint2 excluded for brevity ... }
   },
-  &quot;schemagroups&quot;: {
-    &quot;schemagroup1&quot;: { ... Group schemagroup1 excluded for brevity ... },
-    &quot;schemagroup2&quot;: { ... Group schemagroup2 excluded for brevity ... }
+  "schemagroups": {
+    "schemagroup1": { ... Group schemagroup1 excluded for brevity ... },
+    "schemagroup2": { ... Group schemagroup2 excluded for brevity ... }
   }
 }
 </code></pre>
@@ -739,7 +734,7 @@ it MUST NOT support any HTTP update methods. This API was created:</p>
 <ul>
 <li>As a shorthand convenience syntax for clients that need to download the
 entire <a href="./spec.html#registry-entity">Registry</a> as a single document. For
-example, to then be used in an &quot;import&quot; type of operation for another
+example, to then be used in an "import" type of operation for another
 Registry, or for tooling that does not need the duplication of information
 that <a href="./spec.html#doc-flag">Doc Flag</a> removes.</li>
 <li>Note, the semantics of the <code>doc</code> and <code>inline</code> flags MUST still be adhered to
@@ -783,20 +778,20 @@ Content-Type: application/json; charset=utf-8
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;available&quot;: [
-    &quot;/capabilities&quot;, &quot;/export&quot;, &quot;/model&quot;, &quot;/modelsource&quot;
+  "available": [
+    "/capabilities", "/export", "/model", "/modelsource"
   ],
-  &quot;flags&quot;: [
-    &quot;binary&quot;, &quot;collections&quot;, &quot;doc&quot;, &quot;epoch&quot;, &quot;filter&quot;, &quot;ignore&quot;, &quot;inline&quot;,
-    &quot;setdefaultversionid&quot;, &quot;sort&quot;, &quot;specversion&quot;
+  "flags": [
+    "binary", "collections", "doc", "epoch", "filter", "ignore", "inline",
+    "setdefaultversionid", "sort", "specversion"
   ],
-  &quot;ignores&quot;: [ &quot;capabilities&quot;, &quot;defaultversionid&quot;, &quot;defaultversionsticky&quot;,
-    &quot;epoch&quot;, &quot;id&quot;, &quot;modelsource&quot;, &quot;readonly&quot;
+  "ignores": [ "capabilities", "defaultversionid", "defaultversionsticky",
+    "epoch", "id", "modelsource", "readonly"
   ],
-  &quot;mutable&quot;: [ &quot;capabilities&quot;, &quot;entities&quot;, &quot;model&quot; ],
-  &quot;pagination&quot;: false,
-  &quot;shortself&quot;: false,
-  &quot;specversions&quot;: [ &quot;1.0-rc4&quot; ]
+  "mutable": [ "capabilities", "entities", "model" ],
+  "pagination": false,
+  "shortself": false,
+  "specversions": [ "1.0-rc4" ]
 }
 </code></pre>
 <h4 id="get-capabilitiesoffered"><code>GET /capabilitiesoffered</code> <a class="anchor" href="#get-capabilitiesoffered">🔗</a></h4>
@@ -821,51 +816,51 @@ Content-Type: application/json; charset=utf-8
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;available&quot;: {
-    &quot;type&quot;: &quot;array&quot;,
-    &quot;item&quot;: {
-      &quot;type&quot;: &quot;string&quot;
+  "available": {
+    "type": "array",
+    "item": {
+      "type": "string"
     },
-    &quot;enum&quot;: [ &quot;/capabilities&quot;, &quot;/capabilitiesoffered&quot;, &quot;/export&quot;, &quot;/model&quot;,
-       &quot;/modelsource&quot; ]
+    "enum": [ "/capabilities", "/capabilitiesoffered", "/export", "/model",
+       "/modelsource" ]
   },
-  &quot;flags&quot;: {
-    &quot;type&quot;: &quot;array&quot;,
-    &quot;item&quot;: {
-      &quot;type&quot;: &quot;string&quot;
+  "flags": {
+    "type": "array",
+    "item": {
+      "type": "string"
     },
-    &quot;enum&quot;: [ &quot;collections&quot;, &quot;doc&quot;, &quot;epoch&quot;, &quot;filter&quot;, &quot;ignore&quot;, &quot;inline&quot;,
-       &quot;setdefaultversionid&quot;, &quot;sort&quot;, &quot;specversion&quot; ]
+    "enum": [ "collections", "doc", "epoch", "filter", "ignore", "inline",
+       "setdefaultversionid", "sort", "specversion" ]
   },
-  &quot;ignores&quot;: {
-    &quot;type&quot;: &quot;array&quot;,
-    &quot;item&quot;: {
-      &quot;type&quot;: &quot;string&quot;
+  "ignores": {
+    "type": "array",
+    "item": {
+      "type": "string"
     },
-    &quot;enum&quot;: [ &quot;capabilities&quot;, &quot;defaultversionid&quot;, &quot;defaultversionsticky&quot;,
-      &quot;epoch&quot;, &quot;id&quot;, &quot;modelsource&quot;, &quot;readonly&quot; ]
+    "enum": [ "capabilities", "defaultversionid", "defaultversionsticky",
+      "epoch", "id", "modelsource", "readonly" ]
   },
-  &quot;pagination&quot;: {
-    &quot;type&quot;: &quot;boolean&quot;,
-    &quot;enum&quot;: [ false, true ]
+  "pagination": {
+    "type": "boolean",
+    "enum": [ false, true ]
   },
-  &quot;shortself&quot;: {
-    &quot;type&quot;: &quot;boolean&quot;,
-    &quot;enum&quot;: [ false, true ]
+  "shortself": {
+    "type": "boolean",
+    "enum": [ false, true ]
   },
-  &quot;specversions&quot;: {
-    &quot;type&quot;: &quot;array&quot;,
-    &quot;item&quot;: {
-      &quot;type&quot;: &quot;string&quot;
+  "specversions": {
+    "type": "array",
+    "item": {
+      "type": "string"
     },
-    &quot;enum&quot;: [ &quot;1.0-rc4&quot; ]
+    "enum": [ "1.0-rc4" ]
   },
-  &quot;versionmodes&quot;: {
-    &quot;type&quot;: &quot;array&quot;,
-    &quot;item&quot;: {
-      &quot;type&quot;: &quot;string&quot;
+  "versionmodes": {
+    "type": "array",
+    "item": {
+      "type": "string"
     },
-    &quot;enum&quot;: [ &quot;manual&quot; ]
+    "enum": [ "manual" ]
   }
 }
 </code></pre>
@@ -914,25 +909,25 @@ requested changes.</p>
 <pre><code class="language-yaml">PATCH /capabilities
 
 {
-  &quot;shortself&quot;: true
+  "shortself": true
 }
 </code></pre>
 <pre><code class="language-yaml">{
-  &quot;available&quot;: [
-    &quot;/capabilities&quot;, &quot;/export&quot;, &quot;/model&quot;, &quot;/modelsource&quot;
+  "available": [
+    "/capabilities", "/export", "/model", "/modelsource"
   ],
-  &quot;flags&quot;: [
-    &quot;binary&quot;, &quot;collections&quot;, &quot;doc&quot;, &quot;epoch&quot;, &quot;filter&quot;, &quot;ignore&quot;, &quot;inline&quot;,
-    &quot;setdefaultversionid&quot;, &quot;sort&quot;, &quot;specversion&quot;
+  "flags": [
+    "binary", "collections", "doc", "epoch", "filter", "ignore", "inline",
+    "setdefaultversionid", "sort", "specversion"
   ],
-  &quot;ignores&quot;: [
-    &quot;capabilities&quot;, &quot;defaultversionid&quot;, &quot;defaultversionsticky&quot;, &quot;epoch&quot;,
-    &quot;id&quot;, &quot;modelsource&quot;, &quot;readonly&quot;
+  "ignores": [
+    "capabilities", "defaultversionid", "defaultversionsticky", "epoch",
+    "id", "modelsource", "readonly"
   ],
-  &quot;mutable&quot;: [ &quot;capabilities&quot;, &quot;entities&quot;, &quot;model&quot; ],
-  &quot;pagination&quot;: false,
-  &quot;shortself&quot;: true,
-  &quot;specversions&quot;: [ &quot;1.0-rc4&quot; ]
+  "mutable": [ "capabilities", "entities", "model" ],
+  "pagination": false,
+  "shortself": true,
+  "specversions": [ "1.0-rc4" ]
 }
 </code></pre>
 <h3 id="registry-model">Registry Model <a class="anchor" href="#registry-model">🔗</a></h3>
@@ -1003,7 +998,7 @@ Content-Type: application/json; charset=utf-8
 Link: &lt;URL&gt;;rel=next;count=&lt;UINTEGER&gt; ?
 
 {
-  &quot;&lt;KEY&gt;&quot;: {                                       # &lt;GROUP&gt;id
+  "&lt;KEY&gt;": {                                       # &lt;GROUP&gt;id
     ... Group entity excluded for brevity ...
   } *
 }
@@ -1017,29 +1012,29 @@ Content-Type: application/json; charset=utf-8
 Link: &lt;https://example.com/endpoints&amp;page=2&gt;;rel=next;count=100
 
 {
-  &quot;ep1&quot;: {
-    &quot;endpointid&quot;: &quot;ep1&quot;,
-    &quot;self&quot;: &quot;https://example.com/endpoints/ep1&quot;,
-    &quot;xid&quot;: &quot;/endpoints/ep1&quot;,
-    &quot;epoch&quot;: 1,
-    &quot;name&quot;: &quot;A cool endpoint&quot;,
-    &quot;createdat&quot;: &quot;2024-04-30T12:00:00Z&quot;,
-    &quot;modifiedat&quot;: &quot;2024-04-30T12:00:01Z&quot;,
+  "ep1": {
+    "endpointid": "ep1",
+    "self": "https://example.com/endpoints/ep1",
+    "xid": "/endpoints/ep1",
+    "epoch": 1,
+    "name": "A cool endpoint",
+    "createdat": "2024-04-30T12:00:00Z",
+    "modifiedat": "2024-04-30T12:00:01Z",
 
-    &quot;messagesurl&quot;: &quot;https://example.com/endpoints/ep1/messages&quot;,
-    &quot;messagescount&quot;: 5
+    "messagesurl": "https://example.com/endpoints/ep1/messages",
+    "messagescount": 5
   },
-  &quot;ep2&quot;: {
-    &quot;endpointid&quot;: &quot;ep2&quot;,
-    &quot;self&quot;: &quot;https://example.com/endpoints/ep2&quot;,
-    &quot;xid&quot;: &quot;/endpoints/ep2&quot;,
-    &quot;epoch&quot;: 3,
-    &quot;name&quot;: &quot;Redis Queue&quot;,
-    &quot;createdat&quot;: &quot;2024-04-30T12:00:00Z&quot;,
-    &quot;modifiedat&quot;: &quot;2024-04-30T12:00:01Z&quot;,
+  "ep2": {
+    "endpointid": "ep2",
+    "self": "https://example.com/endpoints/ep2",
+    "xid": "/endpoints/ep2",
+    "epoch": 3,
+    "name": "Redis Queue",
+    "createdat": "2024-04-30T12:00:00Z",
+    "modifiedat": "2024-04-30T12:00:01Z",
 
-    &quot;messagesurl&quot;: &quot;https://example.com/endpoints/ep2/messages&quot;,
-    &quot;messagescount&quot;: 1
+    "messagesurl": "https://example.com/endpoints/ep2/messages",
+    "messagescount": 1
   }
 }
 </code></pre>
@@ -1060,7 +1055,7 @@ POST /&lt;GROUPS&gt;
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;&lt;KEY&gt;&quot;: {                                      # &lt;GROUP&gt;id
+  "&lt;KEY&gt;": {                                      # &lt;GROUP&gt;id
      ... Group entity excluded for brevity ...
   } *
 }
@@ -1070,7 +1065,7 @@ Content-Type: application/json; charset=utf-8
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;&lt;KEY&gt;&quot;: {                                      # &lt;GROUP&gt;id
+  "&lt;KEY&gt;": {                                      # &lt;GROUP&gt;id
      ... Group entity excluded for brevity ...
   } *
 }
@@ -1080,12 +1075,12 @@ Content-Type: application/json; charset=utf-8
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;ep1&quot;: {
-    &quot;endpointid&quot;: &quot;ep1&quot;,
+  "ep1": {
+    "endpointid": "ep1",
     ... remainder of ep1 definition excluded for brevity ...
   },
-  &quot;ep2&quot;: {
-    &quot;endpointid&quot;: &quot;ep2&quot;,
+  "ep2": {
+    "endpointid": "ep2",
     ... remainder of ep2 definition excluded for brevity ...
   }
 }
@@ -1094,12 +1089,12 @@ Content-Type: application/json; charset=utf-8
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;ep1&quot;: {
-    &quot;endpointid&quot;: &quot;ep1&quot;,
+  "ep1": {
+    "endpointid": "ep1",
     ... remainder of ep1 definition excluded for brevity ...
   },
-  &quot;ep2&quot;: {
-    &quot;endpointid&quot;: &quot;ep2&quot;,
+  "ep2": {
+    "endpointid": "ep2",
     ... remainder of ep2 definition excluded for brevity ...
   }
 }
@@ -1115,8 +1110,8 @@ directed to the Registry's <code>&lt;GROUPS&gt;</code> collection URL.</p>
 <pre><code class="language-yaml">DELETE /&lt;GROUPS&gt;
 
 {
-  &quot;&lt;KEY&gt;&quot;: {                            # &lt;GROUP&gt;id
-    &quot;epoch&quot;: &lt;UINTEGER&gt; ?
+  "&lt;KEY&gt;": {                            # &lt;GROUP&gt;id
+    "epoch": &lt;UINTEGER&gt; ?
   } *
 } ?
 </code></pre>
@@ -1130,10 +1125,10 @@ HTTP/1.1 204 No Content
 <pre><code class="language-yaml">DELETE /endpoints
 
 {
-  &quot;ep1&quot;: {
-    &quot;epoch&quot;: 5
+  "ep1": {
+    "epoch": 5
   },
-  &quot;ep2&quot;: {}
+  "ep2": {}
 }
 </code></pre>
 <pre><code>HTTP/1.1 204 No Content
@@ -1162,16 +1157,16 @@ Content-Type: application/json; charset=utf-8
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;endpointid&quot;: &quot;ep1&quot;,
-  &quot;self&quot;: &quot;https://example.com/endpoints/ep1&quot;,
-  &quot;xid&quot;: &quot;/endpoints/ep1&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;name&quot;: &quot;myEndpoint&quot;,
-  &quot;createdat&quot;: &quot;2024-04-30T12:00:00Z&quot;,
-  &quot;modifiedat&quot;: &quot;2024-04-30T12:00:01Z&quot;,
+  "endpointid": "ep1",
+  "self": "https://example.com/endpoints/ep1",
+  "xid": "/endpoints/ep1",
+  "epoch": 1,
+  "name": "myEndpoint",
+  "createdat": "2024-04-30T12:00:00Z",
+  "modifiedat": "2024-04-30T12:00:01Z",
 
-  &quot;messagesurl&quot;: &quot;https://example.com/endpoints/ep1/messages&quot;,
-  &quot;messagescount&quot;: 5
+  "messagesurl": "https://example.com/endpoints/ep1/messages",
+  "messagescount": 5
 }
 </code></pre>
 <h4 id="patch-and-put-groupsgid"><code>PATCH</code> and <code>PUT /&lt;GROUPS&gt;/&lt;GID&gt;</code> <a class="anchor" href="#patch-and-put-groupsgid">🔗</a></h4>
@@ -1201,7 +1196,7 @@ Content-Type: application/json; charset=utf-8
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;endpointid&quot;: &quot;ep1&quot;,
+  "endpointid": "ep1",
   ... remainder of Endpoint 'ep1' definition excluded for brevity ...
 }
 </code></pre>
@@ -1210,7 +1205,7 @@ Content-Type: application/json; charset=utf-8
 Location: https://example.com/endpoints/ep1
 
 {
-  &quot;endpointid&quot;: &quot;ep1&quot;,
+  "endpointid": "ep1",
   ... remainder of Endpoint 'ep1' definition excluded for brevity ...
 }
 </code></pre>
@@ -1230,8 +1225,8 @@ level attributes) MUST generate an error
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;&lt;RESOURCES&gt;&quot;: {
-    &quot;&lt;KEY&gt;&quot;: {                            # &lt;RESOURCE&gt;id
+  "&lt;RESOURCES&gt;": {
+    "&lt;KEY&gt;": {                            # &lt;RESOURCE&gt;id
       ... Resource entity excluded for brevity ...
     } *
   } *
@@ -1242,8 +1237,8 @@ Content-Type: application/json; charset=utf-8
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;&lt;RESOURCES&gt;&quot;: {
-    &quot;&lt;KEY&gt;&quot;: {                            # &lt;RESOURCE&gt;id
+  "&lt;RESOURCES&gt;": {
+    "&lt;KEY&gt;": {                            # &lt;RESOURCE&gt;id
       ... Resource entity excluded for brevity ...
     } *
   } *
@@ -1255,12 +1250,12 @@ Content-Type: application/json; charset=utf-8
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;messages&quot;: {
-    &quot;messageid&quot;: &quot;msg1&quot;,
+  "messages": {
+    "messageid": "msg1",
     ... remainder of msg1 definition excluded for brevity ...
   },
-  &quot;schemas&quot;: {
-    &quot;schemaid&quot;: &quot;schema1&quot;,
+  "schemas": {
+    "schemaid": "schema1",
     ... remainder of schema1 definition excluded for brevity ...
   }
 }
@@ -1269,12 +1264,12 @@ Content-Type: application/json; charset=utf-8
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;messages&quot;: {
-    &quot;messageid&quot;: &quot;msg1&quot;,
+  "messages": {
+    "messageid": "msg1",
     ... remainder of msg1 definition excluded for brevity ...
   },
-  &quot;schemas&quot;: {
-    &quot;schemaid&quot;: &quot;schema1&quot;,
+  "schemas": {
+    "schemaid": "schema1",
     ... remainder of schema1 definition excluded for brevity ...
   }
 }
@@ -1353,7 +1348,7 @@ is not to allow for servers to decide whether or not to do so, rather it is to
 allow for <a href="#no-code-servers">No-Code Servers</a> that might not be
 able to control the HTTP response headers.</p>
 <p>The <code>&lt;RESOURCE&gt;</code> and <code>&lt;RESOURCEbase64&gt;</code> attributes MUST NOT be serialized as
-HTTP headers, even if their values can be considered &quot;scalar&quot;, because their
+HTTP headers, even if their values can be considered "scalar", because their
 values will appear in the HTTP body.</p>
 <p>Top-level map attributes whose values are of scalar types SHOULD also appear as
 HTTP headers (each key having its own HTTP header) and in those cases the
@@ -1424,7 +1419,7 @@ but not the <code>versions</code> collection itself.</li>
 <li>The <code>Location</code> header only appears in response to a create operation and
 MUST be the same as the <code>self</code> URL.</li>
 <li>The <code>Content-Location</code> header MAY appear, and if present, MUST reference
-the &quot;default&quot; Version.</li>
+the "default" Version.</li>
 <li><code>Content-Disposition</code> SHOULD be present and if so, MUST be the <code>&lt;RESOURCE&gt;id</code>
 value. This allows for HTTP tooling that is not aware of xRegistry to know
 the desired filename to use if the HTTP body were to be written to a file.</li>
@@ -1487,7 +1482,7 @@ Content-Type: application/json; charset=utf-8
 Link: &lt;URL&gt;;rel=next;count=&lt;UINTEGER&gt; ?
 
 {
-  &quot;&lt;KEY&gt;&quot;: {                                    # &lt;RESOURCE&gt;id
+  "&lt;KEY&gt;": {                                    # &lt;RESOURCE&gt;id
     ... Resource entity excluded for brevity ...
   } *
 }
@@ -1501,21 +1496,21 @@ Content-Type: application/json; charset=utf-8
 Link: &lt;https://example.com/endpoints/ep1/messages&amp;page=2&gt;;rel=next;count=100
 
 {
-  &quot;msg1&quot;: {
-    &quot;messageid&quot;: &quot;msg1&quot;,
-    &quot;versionid&quot;: &quot;1.0&quot;,
-    &quot;self&quot;: &quot;https://example.com/endpoints/ep1/messages/msg1&quot;,
-    &quot;xid&quot;: &quot;/endpoints/ep1/messages/msg1&quot;,
-    &quot;epoch&quot;: 1,
-    &quot;name&quot;: &quot;Blob Created&quot;,
-    &quot;isdefault&quot;: true,
-    &quot;createdat&quot;: &quot;2024-04-30T12:00:00Z&quot;,
-    &quot;modifiedat&quot;: &quot;2024-04-30T12:00:01Z&quot;,
-    &quot;ancestorid&quot;: &quot;1.0&quot;,
+  "msg1": {
+    "messageid": "msg1",
+    "versionid": "1.0",
+    "self": "https://example.com/endpoints/ep1/messages/msg1",
+    "xid": "/endpoints/ep1/messages/msg1",
+    "epoch": 1,
+    "name": "Blob Created",
+    "isdefault": true,
+    "createdat": "2024-04-30T12:00:00Z",
+    "modifiedat": "2024-04-30T12:00:01Z",
+    "ancestorid": "1.0",
 
-    &quot;metaurl&quot;: &quot;https://example.com/endpoints/ep1/messages/msg1/meta&quot;,
-    &quot;versionsurl&quot;: &quot;https://example.com/endpoints/ep1/messages/msg1/versions&quot;,
-    &quot;versionscount&quot;: 1
+    "metaurl": "https://example.com/endpoints/ep1/messages/msg1/meta",
+    "versionsurl": "https://example.com/endpoints/ep1/messages/msg1/versions",
+    "versionscount": 1
   }
 }
 </code></pre>
@@ -1535,7 +1530,7 @@ POST /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;&lt;KEY&gt;&quot;: {                                      # &lt;RESOURCE&gt;id
+  "&lt;KEY&gt;": {                                      # &lt;RESOURCE&gt;id
      ... Resource entity excluded for brevity ...
   } *
 }
@@ -1543,7 +1538,7 @@ Content-Type: application/json; charset=utf-8
 <p>A successful response MUST be of the form:</p>
 <pre><code class="language-yaml">HTTP/1.1 200 OK
 {
-  &quot;&lt;KEY&gt;&quot;: {                                      # &lt;RESOURCE&gt;id
+  "&lt;KEY&gt;": {                                      # &lt;RESOURCE&gt;id
      ... Resource entity excluded for brevity ...
   } *
 }
@@ -1553,12 +1548,12 @@ Content-Type: application/json; charset=utf-8
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;msg1&quot;: {
-    &quot;endpointid&quot;: &quot;msg1&quot;,
+  "msg1": {
+    "endpointid": "msg1",
     ... remainder of msg1 definition excluded for brevity ...
   },
-  &quot;msg2&quot;: {
-    &quot;endpointid&quot;: &quot;msg2&quot;,
+  "msg2": {
+    "endpointid": "msg2",
     ... remainder of msg2 definition excluded for brevity ...
   }
 }
@@ -1567,12 +1562,12 @@ Content-Type: application/json; charset=utf-8
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;msg1&quot;: {
-    &quot;endpointid&quot;: &quot;msg1&quot;,
+  "msg1": {
+    "endpointid": "msg1",
     ... remainder of msg1 definition excluded for brevity ...
   },
-  &quot;msg2&quot;: {
-    &quot;endpointid&quot;: &quot;msg2&quot;,
+  "msg2": {
+    "endpointid": "msg2",
     ... remainder of msg2 definition excluded for brevity ...
   }
 }
@@ -1589,8 +1584,8 @@ Group's <code>&lt;RESOURCE&gt;</code> collection URL.</p>
 <pre><code class="language-yaml">DELETE /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;
 
 {
-  &quot;&lt;KEY&gt;&quot;: {                            # &lt;RESOURCE&gt;id
-    &quot;epoch&quot;: &lt;UINTEGER&gt; ?
+  "&lt;KEY&gt;": {                            # &lt;RESOURCE&gt;id
+    "epoch": &lt;UINTEGER&gt; ?
   } *
 } ?
 </code></pre>
@@ -1604,10 +1599,10 @@ HTTP/1.1 204 No Content
 <pre><code class="language-yaml">DELETE /endpoints/ep1/messages
 
 {
-  &quot;msg1&quot;: {
-    &quot;epoch&quot;: 5
+  "msg1": {
+    "epoch": 5
   },
-  &quot;msg2&quot;: {}
+  "msg2": {}
 }
 </code></pre>
 <pre><code>HTTP/1.1 204 No Content
@@ -1704,20 +1699,20 @@ Content-Type: application/json; charset=utf-8
 Content-Location: https://example.com/endpoints/ep1/messages/msg1/versions/1
 
 {
-  &quot;messageid&quot;: &quot;msg1&quot;,
-  &quot;versionid&quot;: &quot;1&quot;,
-  &quot;self&quot;: &quot;https://example.com/endpoints/ep1/messages/msg1&quot;,&quot;
-  &quot;xid&quot;: &quot;/endpoints/ep1/messages/msg1&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;name&quot;: &quot;Blob Created&quot;,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;2024-04-30T12:00:00Z&quot;,
-  &quot;modifiedat&quot;: &quot;2024-04-30T12:00:01Z&quot;,
-  &quot;ancestorid&quot;: &quot;1&quot;,
+  "messageid": "msg1",
+  "versionid": "1",
+  "self": "https://example.com/endpoints/ep1/messages/msg1","
+  "xid": "/endpoints/ep1/messages/msg1",
+  "epoch": 1,
+  "name": "Blob Created",
+  "isdefault": true,
+  "createdat": "2024-04-30T12:00:00Z",
+  "modifiedat": "2024-04-30T12:00:01Z",
+  "ancestorid": "1",
 
-  &quot;metaurl&quot;: &quot;https://example.com/endpoints/ep1/messages/msg1/meta&quot;,
-  &quot;versionsurl&quot;: &quot;https://example.com/endpoints/ep1/messages/msg1/versions&quot;,
-  &quot;versionscount&quot;: 1
+  "metaurl": "https://example.com/endpoints/ep1/messages/msg1/meta",
+  "versionsurl": "https://example.com/endpoints/ep1/messages/msg1/versions",
+  "versionscount": 1
 }
 </code></pre>
 <h4 id="patch-and-put-groupsgidresourcesrid"><code>PATCH</code> and <code>PUT /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;</code> <a class="anchor" href="#patch-and-put-groupsgidresourcesrid">🔗</a></h4>
@@ -1821,7 +1816,7 @@ the desired filename to use if the HTTP body were to be written to a file.</li>
 Content-Type: application/json; charset=utf-8
 xRegistry-name: Blob Created
 
-{ ... Definition of &quot;Blob Created&quot; event (document) excluded for brevity ... }
+{ ... Definition of "Blob Created" event (document) excluded for brevity ... }
 </code></pre>
 <pre><code class="language-yaml">HTTP/1.1 201 Created
 Content-Type: application/json; charset=utf-8
@@ -1840,19 +1835,19 @@ Location: https://example.com/endpoints/ep1/messages/msg1
 Content-Location: https://example.com/endpoints/ep1/messages/msg1/versions/1
 Content-Disposition: msg1
 
-{ ... Definition of &quot;Blob Created&quot; event (document) excluded for brevity ... }
+{ ... Definition of "Blob Created" event (document) excluded for brevity ... }
 </code></pre>
 <p>Update the default Version of a Resource as xRegistry metadata:</p>
 <pre><code class="language-yaml">PUT /endpoints/ep1/messages/msg1$details
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;epoch&quot;: 1,
-  &quot;name&quot;: &quot;Blob Created&quot;,
-  &quot;description&quot;: &quot;a cool event&quot;,
+  "epoch": 1,
+  "name": "Blob Created",
+  "description": "a cool event",
 
-  &quot;message&quot;: {
-    # Updated definition of a &quot;Blob Created&quot; event excluded for brevity
+  "message": {
+    # Updated definition of a "Blob Created" event excluded for brevity
   }
 }
 </code></pre>
@@ -1861,25 +1856,25 @@ Content-Type: application/json; charset=utf-8
 Content-Location: https://example.com/endpoints/ep1/messages/msg1/versions/1
 
 {
-  &quot;messageid&quot;: &quot;msg1&quot;,
-  &quot;versionid&quot;: &quot;1&quot;,
-  &quot;self&quot;: &quot;https://example.com/endpoints/ep1/messages/msg1&quot;,
-  &quot;xid&quot;: &quot;/endpoints/ep1/messages/msg1&quot;,
-  &quot;epoch&quot;: 2,
-  &quot;name&quot;: &quot;Blob Created&quot;,
-  &quot;isdefault&quot;: true,
-  &quot;description&quot;: &quot;a cool event&quot;,
-  &quot;createdat&quot;: &quot;2024-04-30T12:00:00Z&quot;,
-  &quot;modifiedat&quot;: &quot;2024-04-30T12:00:01Z&quot;,
-  &quot;ancestorid&quot;: &quot;1&quot;,
+  "messageid": "msg1",
+  "versionid": "1",
+  "self": "https://example.com/endpoints/ep1/messages/msg1",
+  "xid": "/endpoints/ep1/messages/msg1",
+  "epoch": 2,
+  "name": "Blob Created",
+  "isdefault": true,
+  "description": "a cool event",
+  "createdat": "2024-04-30T12:00:00Z",
+  "modifiedat": "2024-04-30T12:00:01Z",
+  "ancestorid": "1",
 
-  &quot;message&quot;: {
-    # Updated definition of a &quot;Blob Created&quot; event excluded for brevity
+  "message": {
+    # Updated definition of a "Blob Created" event excluded for brevity
   },
 
-  &quot;metaurl&quot;: &quot;https://example.com/endpoints/ep1/messages/msg1/meta&quot;,
-  &quot;versionsurl&quot;: &quot;https://example.com/endpoints/ep1/messages/msg1/versions&quot;,
-  &quot;versionscount&quot;: 1
+  "metaurl": "https://example.com/endpoints/ep1/messages/msg1/meta",
+  "versionsurl": "https://example.com/endpoints/ep1/messages/msg1/versions",
+  "versionscount": 1
 }
 </code></pre>
 <h4 id="post-groupsgidresourcesrid"><code>POST /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;</code> <a class="anchor" href="#post-groupsgidresourcesrid">🔗</a></h4>
@@ -1979,7 +1974,7 @@ the desired filename to use if the HTTP body were to be written to a file.</li>
 Content-Type: application/json; charset=utf-8
 xRegistry-name: Blob Created
 
-{ ... Definition of &quot;Blob Created&quot; event (document) excluded for brevity ... }
+{ ... Definition of "Blob Created" event (document) excluded for brevity ... }
 </code></pre>
 <pre><code class="language-yaml">HTTP/1.1 201 Created
 Content-Type: application/json; charset=utf-8
@@ -1995,20 +1990,20 @@ Location: https://example.com/endpoints/ep1/messages/msg1/versions/2
 Content-Location: https://example.com/endpoints/ep1/messages/msg1/versions/2
 Content-Disposition: msg1
 
-{ ... Definition of &quot;Blob Created&quot; event (document) excluded for brevity ... }
+{ ... Definition of "Blob Created" event (document) excluded for brevity ... }
 </code></pre>
 <p>Update a Version of a Resource as xRegistry metadata:</p>
 <pre><code class="language-yaml">POST /endpoints/ep1/messages/msg1$details
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;versionid&quot;: &quot;1&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;name&quot;: &quot;Blob Created&quot;,
-  &quot;description&quot;: &quot;a cool event&quot;,
+  "versionid": "1",
+  "epoch": 1,
+  "name": "Blob Created",
+  "description": "a cool event",
 
-  &quot;message&quot;: {
-    # Updated definition of a &quot;Blob Created&quot; event excluded for brevity
+  "message": {
+    # Updated definition of a "Blob Created" event excluded for brevity
   }
 }
 </code></pre>
@@ -2017,20 +2012,20 @@ Content-Type: application/json; charset=utf-8
 Content-Location: https://example.com/endpoints/ep1/messages/msg1/versions/1
 
 {
-  &quot;messageid&quot;: &quot;msg1&quot;,
-  &quot;versionid&quot;: &quot;1&quot;,
-  &quot;self&quot;: &quot;https://example.com/endpoints/ep1/messages/msg1/versions/1&quot;,
-  &quot;xid&quot;: &quot;/endpoints/ep1/messages/msg1&quot;,
-  &quot;epoch&quot;: 2,
-  &quot;name&quot;: &quot;Blob Created&quot;,
-  &quot;isdefault&quot;: true,
-  &quot;description&quot;: &quot;a cool event&quot;,
-  &quot;createdat&quot;: &quot;2024-04-30T12:00:00Z&quot;,
-  &quot;modifiedat&quot;: &quot;2024-04-30T12:00:01Z&quot;,
-  &quot;ancestorid&quot;: &quot;1&quot;,
+  "messageid": "msg1",
+  "versionid": "1",
+  "self": "https://example.com/endpoints/ep1/messages/msg1/versions/1",
+  "xid": "/endpoints/ep1/messages/msg1",
+  "epoch": 2,
+  "name": "Blob Created",
+  "isdefault": true,
+  "description": "a cool event",
+  "createdat": "2024-04-30T12:00:00Z",
+  "modifiedat": "2024-04-30T12:00:01Z",
+  "ancestorid": "1",
 
-  &quot;message&quot;: {
-    # Updated definition of a &quot;Blob Created&quot; event excluded for brevity
+  "message": {
+    # Updated definition of a "Blob Created" event excluded for brevity
   },
 }
 </code></pre>
@@ -2082,16 +2077,16 @@ Content-Type: application/json; charset=utf-8
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;messageid&quot;: &quot;msg1&quot;,
-  &quot;self&quot;: &quot;https://example.com/endpoints/ep1/messages/msg1/meta&quot;,
-  &quot;xid&quot;: &quot;/endpoints/ep1/messages/msg1/meta&quot;,
-  &quot;epoch&quot;: 2,
-  &quot;createdat&quot;: &quot;2024-04-30T12:00:00Z&quot;,
-  &quot;modifiedat&quot;: &quot;2024-04-30T12:00:01Z&quot;,
-  &quot;compatibility&quot;: &quot;none&quot;,
-  &quot;defaultversionid&quot;: &quot;v2.0&quot;,
-  &quot;defaultversionurl&quot;: &quot;https://example.com/endpoints/ep1/messages/msg1/versions/v2.0&quot;,
-  &quot;defaultversionsticky&quot;: false
+  "messageid": "msg1",
+  "self": "https://example.com/endpoints/ep1/messages/msg1/meta",
+  "xid": "/endpoints/ep1/messages/msg1/meta",
+  "epoch": 2,
+  "createdat": "2024-04-30T12:00:00Z",
+  "modifiedat": "2024-04-30T12:00:01Z",
+  "compatibility": "none",
+  "defaultversionid": "v2.0",
+  "defaultversionurl": "https://example.com/endpoints/ep1/messages/msg1/versions/v2.0",
+  "defaultversionsticky": false
 }
 </code></pre>
 <h4 id="patch-and-put-groupsgidresourcesridmeta"><code>PATCH</code> and <code>PUT /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;/meta</code> <a class="anchor" href="#patch-and-put-groupsgidresourcesridmeta">🔗</a></h4>
@@ -2121,23 +2116,23 @@ Content-Type: application/json; charset=utf-8
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;defaultversionid&quot;: &quot;v1.0&quot;
+  "defaultversionid": "v1.0"
 }
 </code></pre>
 <pre><code class="language-yaml">HTTP/1.1 200 OK
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;messageid&quot;: &quot;msg1&quot;,
-  &quot;self&quot;: &quot;https://example.com/endpoints/ep1/messages/msg1/meta&quot;,
-  &quot;xid&quot;: &quot;/endpoints/ep1/messages/msg1/meta&quot;,
-  &quot;epoch&quot;: 2,
-  &quot;createdat&quot;: &quot;2024-04-30T12:00:00Z&quot;,
-  &quot;modifiedat&quot;: &quot;2024-04-30T12:00:01Z&quot;,
-  &quot;compatibility&quot;: &quot;none&quot;,
-  &quot;defaultversionid&quot;: &quot;v1.0&quot;,
-  &quot;defaultversionurl&quot;: &quot;https://example.com/endpoints/ep1/messages/msg1/versions/v1.0&quot;,
-  &quot;defaultversionsticky&quot;: true
+  "messageid": "msg1",
+  "self": "https://example.com/endpoints/ep1/messages/msg1/meta",
+  "xid": "/endpoints/ep1/messages/msg1/meta",
+  "epoch": 2,
+  "createdat": "2024-04-30T12:00:00Z",
+  "modifiedat": "2024-04-30T12:00:01Z",
+  "compatibility": "none",
+  "defaultversionid": "v1.0",
+  "defaultversionurl": "https://example.com/endpoints/ep1/messages/msg1/versions/v1.0",
+  "defaultversionsticky": true
 }
 </code></pre>
 <h4 id="delete-groupsgidresourcesridmeta"><code>DELETE /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;/meta</code> <a class="anchor" href="#delete-groupsgidresourcesridmeta">🔗</a></h4>
@@ -2158,7 +2153,7 @@ Content-Type: application/json; charset=utf-8
 Link: &lt;URL&gt;;rel=next;count=&lt;UINTEGER&gt; ?
 
 {
-  &quot;&lt;KEY&gt;&quot;: {                                    # The versionid
+  "&lt;KEY&gt;": {                                    # The versionid
     ... Version entity excluded for brevity ...
   } *
 }
@@ -2172,17 +2167,17 @@ Content-Type: application/json; charset=utf-8
 Link: &lt;https://example.com/endpoints/ep1/messages/msg1/versions&amp;page=2&gt;;rel=next;count=100
 
 {
-  &quot;1.0&quot;: {
-    &quot;messageid&quot;: &quot;msg1&quot;,
-    &quot;versionid&quot;: &quot;1.0&quot;,
-    &quot;self&quot;: &quot;https://example.com/endpoints/ep1/messages/msg1&quot;,
-    &quot;xid&quot;: &quot;/endpoints/ep1/messages/msg1&quot;,
-    &quot;epoch&quot;: 1,
-    &quot;name&quot;: &quot;Blob Created&quot;,
-    &quot;isdefault&quot;: true,
-    &quot;createdat&quot;: &quot;2024-04-30T12:00:00Z&quot;,
-    &quot;modifiedat&quot;: &quot;2024-04-30T12:00:01Z&quot;,
-    &quot;ancestorid&quot;: &quot;1.0&quot;
+  "1.0": {
+    "messageid": "msg1",
+    "versionid": "1.0",
+    "self": "https://example.com/endpoints/ep1/messages/msg1",
+    "xid": "/endpoints/ep1/messages/msg1",
+    "epoch": 1,
+    "name": "Blob Created",
+    "isdefault": true,
+    "createdat": "2024-04-30T12:00:00Z",
+    "modifiedat": "2024-04-30T12:00:01Z",
+    "ancestorid": "1.0"
   }
 }
 </code></pre>
@@ -2203,7 +2198,7 @@ POST /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;/versions
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;&lt;KEY&gt;&quot;: {                                      # &lt;GROUP&gt;id
+  "&lt;KEY&gt;": {                                      # &lt;GROUP&gt;id
      ... Version entity excluded for brevity ...
   } *
 }
@@ -2213,7 +2208,7 @@ Content-Type: application/json; charset=utf-8
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;&lt;KEY&gt;&quot;: {                                      # &lt;GROUP&gt;id
+  "&lt;KEY&gt;": {                                      # &lt;GROUP&gt;id
      ... Version entity excluded for brevity ...
   } *
 }
@@ -2224,14 +2219,14 @@ Content-Type: application/json; charset=utf-8
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;1&quot;: {
-    &quot;labels&quot;: { &quot;customer&quot;: &quot;abc&quot; },
+  "1": {
+    "labels": { "customer": "abc" },
   },
-  &quot;2&quot;: {
-    &quot;labels&quot;: { &quot;customer&quot;: &quot;abc&quot; },
+  "2": {
+    "labels": { "customer": "abc" },
   },
-  &quot;3&quot;: {
-    &quot;labels&quot;: { &quot;customer&quot;: &quot;abc&quot; },
+  "3": {
+    "labels": { "customer": "abc" },
   }
 }
 </code></pre>
@@ -2239,28 +2234,28 @@ Content-Type: application/json; charset=utf-8
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;1&quot;: {
-    &quot;messageid&quot;: &quot;msg1&quot;,
-    &quot;versionid&quot;: &quot;1&quot;,
-    &quot;labels&quot;: { &quot;customer&quot;: &quot;abc&quot; },
+  "1": {
+    "messageid": "msg1",
+    "versionid": "1",
+    "labels": { "customer": "abc" },
     # Remainder of Version entity excluded for brevity
   },
-  &quot;2&quot;: {
-    &quot;messageid&quot;: &quot;msg1&quot;,
-    &quot;versionid&quot;: &quot;2&quot;,
-    &quot;labels&quot;: { &quot;customer&quot;: &quot;abc&quot; },
+  "2": {
+    "messageid": "msg1",
+    "versionid": "2",
+    "labels": { "customer": "abc" },
     # Remainder of Version entity excluded for brevity
   },
-  &quot;3&quot;: {
-    &quot;messageid&quot;: &quot;msg1&quot;,
-    &quot;versionid&quot;: &quot;3&quot;,
-    &quot;labels&quot;: { &quot;customer&quot;: &quot;abc&quot; },
+  "3": {
+    "messageid": "msg1",
+    "versionid": "3",
+    "labels": { "customer": "abc" },
     # Remainder of Version entity excluded for brevity
   }
 ]
 </code></pre>
-<p>Note that in this case, the new &quot;label&quot; replaces all existing labels; it is
-not a &quot;merge&quot; operation because all attributes need to be specified in their
+<p>Note that in this case, the new "label" replaces all existing labels; it is
+not a "merge" operation because all attributes need to be specified in their
 entirety.</p>
 <h4 id="delete-groupsgidresourcesridversions"><code>DELETE /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;/versions</code> <a class="anchor" href="#delete-groupsgidresourcesridversions">🔗</a></h4>
 <p>A server MAY support clients deleting one or more
@@ -2274,8 +2269,8 @@ owning Resource's <a href="./spec.html#versions-collection"><code>versions</code
 <pre><code class="language-yaml">DELETE /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/versions
 
 {
-  &quot;&lt;KEY&gt;&quot;: {                            # versionid
-    &quot;epoch&quot;: &lt;UINTEGER&gt; ?
+  "&lt;KEY&gt;": {                            # versionid
+    "epoch": &lt;UINTEGER&gt; ?
   } *
 } ?
 </code></pre>
@@ -2289,10 +2284,10 @@ HTTP/1.1 204 No Content
 <pre><code class="language-yaml">DELETE /endpoints/ep1/messages/msg1/versions
 
 {
-  &quot;v1.0&quot;: {
-    &quot;epoch&quot;: 5
+  "v1.0": {
+    "epoch": 5
   },
-  &quot;v2.0&quot;: {}
+  "v2.0": {}
 }
 </code></pre>
 <pre><code>HTTP/1.1 204 No Content
@@ -2369,15 +2364,15 @@ the desired filename to use if the HTTP body were to be written to a file.</li>
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;schemaid&quot;: &quot;myschema&quot;,
-  &quot;versionid&quot;: &quot;1.0&quot;,
-  &quot;self&quot;: &quot;https://example.com/schemagroups/g1/schemas/myschema/versions/1.0&quot;,
-  &quot;xid&quot;: &quot;/endpoints/ep1/messages/msg1/versions/1.0&quot;,
-  &quot;epoch&quot;: 2,
-  &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;2024-04-30T12:00:00Z&quot;,
-  &quot;modifiedat&quot;: &quot;2024-04-30T12:00:01Z&quot;,
-  &quot;ancestorid&quot;: &quot;1.0&quot;
+  "schemaid": "myschema",
+  "versionid": "1.0",
+  "self": "https://example.com/schemagroups/g1/schemas/myschema/versions/1.0",
+  "xid": "/endpoints/ep1/messages/msg1/versions/1.0",
+  "epoch": 2,
+  "isdefault": true,
+  "createdat": "2024-04-30T12:00:00Z",
+  "modifiedat": "2024-04-30T12:00:01Z",
+  "ancestorid": "1.0"
 }
 </code></pre>
 <p>Retrieve the domain-specific document of the same schema Resource:</p>
@@ -2491,7 +2486,7 @@ Content-Disposition: &lt;STRING&gt; ?
 Content-Type: application/json; charset=utf-8
 xRegistry-name: Blob Created v2
 
-{ ... Definition of &quot;Blob Created&quot; event (document) excluded for brevity ... }
+{ ... Definition of "Blob Created" event (document) excluded for brevity ... }
 </code></pre>
 <pre><code class="language-yaml">HTTP/1.1 201 Created
 Content-Type: application/json; charset=utf-8
@@ -2507,17 +2502,17 @@ Location: https://example.com/endpoints/ep1/messages/msg1/versions/v2.0
 Content-Location: https://example.com/endpoints/ep1/messages/msg1/versions/v2.0
 Content-Disposition: msg1
 
-{ ... Definition of &quot;Blob Created&quot; event (document) excluded for brevity ... }
+{ ... Definition of "Blob Created" event (document) excluded for brevity ... }
 </code></pre>
 <p>Update a Version of a Resource as metadata:</p>
 <pre><code class="language-yaml">PUT /endpoints/ep1/messages/msg1/versions/v2.0$details/
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;name&quot;: &quot;Blob Created v2&quot;,
-  &quot;description&quot;: &quot;a cool event&quot;,
-  &quot;message&quot;: {
-    # Updated definition of a &quot;Blob Created&quot; event excluded for brevity
+  "name": "Blob Created v2",
+  "description": "a cool event",
+  "message": {
+    # Updated definition of a "Blob Created" event excluded for brevity
   },
 }
 </code></pre>
@@ -2526,20 +2521,20 @@ Content-Type: application/json; charset=utf-8
 Content-Location: https://example.com/endpoints/ep1/messages/msg1/versions/v2.0
 
 {
-  &quot;messageid&quot;: &quot;msg1&quot;,
-  &quot;versionid&quot;: &quot;1&quot;,
-  &quot;self&quot;: &quot;https://example.com/endpoints/ep1/messages/msg1/versions/v2.0&quot;,
-  &quot;xid&quot;: &quot;/endpoints/ep1/messages/msg1/versions/v2.0&quot;,
-  &quot;epoch&quot;: 2,
-  &quot;name&quot;: &quot;Blob Created v2&quot;,
-  &quot;isdefault&quot;: true,
-  &quot;description&quot;: &quot;a cool event&quot;,
-  &quot;createdat&quot;: &quot;2024-04-30T12:00:00Z&quot;,
-  &quot;modifiedat&quot;: &quot;2024-04-30T12:00:01Z&quot;,
-  &quot;ancestorid&quot;: &quot;v1.0&quot;,
+  "messageid": "msg1",
+  "versionid": "1",
+  "self": "https://example.com/endpoints/ep1/messages/msg1/versions/v2.0",
+  "xid": "/endpoints/ep1/messages/msg1/versions/v2.0",
+  "epoch": 2,
+  "name": "Blob Created v2",
+  "isdefault": true,
+  "description": "a cool event",
+  "createdat": "2024-04-30T12:00:00Z",
+  "modifiedat": "2024-04-30T12:00:01Z",
+  "ancestorid": "v1.0",
 
-  &quot;message&quot;: {
-    # Updated definition of a &quot;Blob Created&quot; event excluded for brevity
+  "message": {
+    # Updated definition of a "Blob Created" event excluded for brevity
   },
 }
 </code></pre>
@@ -2583,8 +2578,8 @@ sibling API to <code>/model</code>) via the <code>/.xregistry</code> API:</p>
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;registries&quot;: {
-    &quot;URL&quot;, *
+  "registries": {
+    "URL", *
   }
 }
 </code></pre>
@@ -2720,16 +2715,16 @@ but decoding MUST accept lowercase values.</p>
 <p>When performing percent-decoding, values that have been unnecessarily
 percent-encoded MUST be accepted, but encoded byte sequences which are invalid
 in UTF-8 MUST generate an error (<a href="#header_error">header_error</a>). For example,
-&quot;%C0%A0&quot; is an overlong encoding of U+0020, and would be rejected.</p>
-<p>Example: a header value of &quot;Euro € 😀&quot; SHOULD be encoded as
+"%C0%A0" is an overlong encoding of U+0020, and would be rejected.</p>
+<p>Example: a header value of "Euro € 😀" SHOULD be encoded as
 follows:</p>
 <ul>
 <li>The characters, 'E', 'u', 'r', 'o' do not require encoding.</li>
 <li>Space, the Euro symbol, and the grinning face emoji require encoding.
 They are characters U+0020, U+20AC and U+1F600 respectively.</li>
-<li>The encoded HTTP header value is therefore &quot;Euro%20%E2%82%AC%20%F0%9F%98%80&quot;
-where &quot;%20&quot; is the encoded form of space, &quot;%E2%82%AC&quot; is the encoded form
-of the Euro symbol, and &quot;%F0%9F%98%80&quot; is the encoded form of the
+<li>The encoded HTTP header value is therefore "Euro%20%E2%82%AC%20%F0%9F%98%80"
+where "%20" is the encoded form of space, "%E2%82%AC" is the encoded form
+of the Euro symbol, and "%F0%9F%98%80" is the encoded form of the
 grinning face emoji.</li>
 </ul>
 <h2 id="error-processing">Error Processing <a class="anchor" href="#error-processing">🔗</a></h2>
@@ -2741,15 +2736,15 @@ used, MUST be of the following form:</p>
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;type&quot;: &quot;&lt;URI&gt;&quot;,
-  &quot;title&quot;: &quot;&lt;STRING&gt;&quot;,
-  &quot;detail&quot;: &quot;&lt;STRING&gt;&quot;, ?
-  &quot;subject&quot;: &quot;&lt;STRING&gt;&quot;, ?
-  &quot;args&quot;: {
-    &quot;&lt;STRING&gt;&quot;: &quot;&lt;STRING&gt;&quot;, *    // arg name  -&gt; arg value
+  "type": "&lt;URI&gt;",
+  "title": "&lt;STRING&gt;",
+  "detail": "&lt;STRING&gt;", ?
+  "subject": "&lt;STRING&gt;", ?
+  "args": {
+    "&lt;STRING&gt;": "&lt;STRING&gt;", *    // arg name  -&gt; arg value
   }, ?
-  &quot;instance&quot;: &quot;&lt;URL&gt;&quot;, ?
-  &quot;source&quot;: &quot;&lt;STRING&gt;&quot;, ?
+  "instance": "&lt;URL&gt;", ?
+  "source": "&lt;STRING&gt;", ?
   ... extension error fields ...
 }
 </code></pre>
@@ -2764,8 +2759,8 @@ Content-Type: application/json; charset=utf-8
 <li>Title: <code>The specified API is not supported: &lt;subject&gt;.</code></li>
 <li>Subject: <code>&lt;request_path&gt;</code></li>
 </ul>
-<p><code>request_path</code> MUST be the &quot;Path&quot; portion of the incoming request URL,
-starting with <code>/</code>. E.g. <code>/export</code> if the &quot;export&quot; feature is not supported.</p>
+<p><code>request_path</code> MUST be the "Path" portion of the incoming request URL,
+starting with <code>/</code>. E.g. <code>/export</code> if the "export" feature is not supported.</p>
 <h4 id="details_required">details_required <a class="anchor" href="#details_required">🔗</a></h4>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/http.md#details_required</code></li>
@@ -2777,7 +2772,7 @@ starting with <code>/</code>. E.g. <code>/export</code> if the &quot;export&quot
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/http.md#extra_xregistry_header</code></li>
 <li>Code: <code>400 Bad Request</code></li>
-<li>Title: <code>For &quot;&lt;subject&gt;&quot;, xRegistry HTTP header &quot;&lt;name&gt;&quot; is not allowed on this request: &lt;error_detail&gt;.</code></li>
+<li>Title: <code>For "&lt;subject&gt;", xRegistry HTTP header "&lt;name&gt;" is not allowed on this request: &lt;error_detail&gt;.</code></li>
 <li>Subject: <code>&lt;request_path&gt;</code></li>
 <li>Args:
 <ul>
@@ -2790,7 +2785,7 @@ starting with <code>/</code>. E.g. <code>/export</code> if the &quot;export&quot
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/http.md#header_error</code></li>
 <li>Code: <code>400 Bad Request</code></li>
-<li>Title: <code>For &quot;&lt;subject&gt;&quot;, there was an error processing HTTP header &quot;&lt;name&gt;&quot;: &lt;error_detail&gt;.</code></li>
+<li>Title: <code>For "&lt;subject&gt;", there was an error processing HTTP header "&lt;name&gt;": &lt;error_detail&gt;.</code></li>
 <li>Subject: <code>&lt;request_path&gt;</code></li>
 <li>Args:
 <ul>
@@ -2802,16 +2797,19 @@ starting with <code>/</code>. E.g. <code>/export</code> if the &quot;export&quot
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/http.md#missing_body</code></li>
 <li>Code: <code>400 Bad Request</code></li>
-<li>Title: <code>For &quot;&lt;subject&gt;&quot;, the request is missing an HTTP body - try '{}'.</code></li>
+<li>Title: <code>For "&lt;subject&gt;", the request is missing an HTTP body - try '{}'.</code></li>
 <li>Subject: <code>&lt;request_path&gt;</code></li>
 </ul>
 <h4 id="missing_versions">missing_versions <a class="anchor" href="#missing_versions">🔗</a></h4>
 <ul>
 <li>Type: <code>https://github.com/xregistry/spec/blob/main/core/http.md#missing_versions</code></li>
 <li>Code: <code>400 Bad Request</code></li>
-<li>Title: <code>For &quot;&lt;subject&gt;&quot;, at least one Version needs to be included in the request.</code></li>
+<li>Title: <code>For "&lt;subject&gt;", at least one Version needs to be included in the request.</code></li>
 <li>Subject: <code>&lt;request_path&gt;</code></li>
 </ul>
 <!-- end-err-def -->
-
+</article>
+</main>
+<button aria-label="Back to top" class="back-to-top" title="Back to top" type="button"><i aria-hidden="true" class="fas fa-arrow-up"></i></button>
+</body>
 </html>

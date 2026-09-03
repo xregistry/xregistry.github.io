@@ -1,50 +1,45 @@
-<html>
+<!DOCTYPE html>
+
+<html lang="en-US">
 <head>
-<style>
-  .anchor {
-    font-size: 12px ;
-    vertical-align: middle ;
-    text-decoration: none ;
-  }
-  body {
-    font-family: sans-serif ;
-    font-size: 16px ;
-    line-height: 1.5 ;
-    padding: 5% 10% 5% 10% ;
-  }
-  pre {
-    font-size: 80% ;
-    background-color: #f2f2f2 ;
-    padding: 12px ;
-  }
-  code {
-    font-size: 85% ;
-    background-color: #f2f2f2 ;
-    padding: .2em .4em ;
-  }
-  pre code {
-    font-size: inherit ;
-    background-color: inherit ;
-    padding: 0px ;
-  }
-  table {
-    border: 1px solid lightgray ;
-    border-collapse: collapse ;
-    border-spacing: 0px ;
-    line-height: 24px ;
-  }
-  tr:nth-child(even) {
-    background-color: #f2f2f2 ;
-  }
-  td,th {
-    border: 1px solid lightgray ;
-    padding: 5px ;
-  }
-  td code, th code {
-    font-size: inherit ;
-  }
-</style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, maximum-scale=2" name="viewport"/>
+<title>xRegistry Primer | xRegistry</title>
+<link href="/assets/css/style.css" rel="stylesheet"/>
+<link href="/assets/css/xreg-reader.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<script defer="" src="/assets/js/xreg-reader.js"></script>
 </head>
+<body class="xreg-document xreg-reference-document">
+<header class="outer site-header" data-xregistry-shell="true" id="header_wrap">
+<div class="inner">
+<a href="https://github.com/xregistry/xregistry.github.io" id="forkme_banner">View on GitHub</a>
+<img alt="xRegistry logo" class="header-logo" src="https://github.com/cncf/artwork/raw/main/projects/xregistry/horizontal/color-whitetext/xregistry-horizontal-color-whitetext.svg"/>
+<h2 id="project_tagline">The Extensible Registry for Metadata Management</h2>
+<nav aria-label="Primary navigation" class="site-nav">
+<a href="/">Home</a>
+<a href="/blog/">Blog</a>
+<a href="/xreg/xregistryspecs/core-v1/docs/spec.html">Core Spec</a>
+<a href="/xreg/xregistryspecs/endpoint-v1/docs/spec.html">Endpoint Spec</a>
+<a href="/xreg/xregistryspecs/schema-v1/docs/spec.html">Schema Spec</a>
+<a href="/xreg/xregistryspecs/message-v1/docs/spec.html">Message Spec</a>
+<a href="https://github.com/xregistry/spec">GitHub</a>
+</nav>
+</div>
+</header>
+<div aria-label="xRegistry document path" class="registry-path">
+<div class="registry-path__inner"><i aria-hidden="true" class="fas fa-sitemap"></i><code>xreg/xregistryspecs/core-v1/docs/primer.html</code></div>
+</div>
+<main class="xreg-reader-layout">
+<aside aria-label="On this page" class="spec-toc">
+<div class="spec-toc__header">On this page</div>
+<nav class="spec-toc__body"></nav>
+</aside>
+<article class="xreg-reader-content" id="xregistry-content">
+
 <h1 id="xregistry-primer">xRegistry Primer <a class="anchor" href="#xregistry-primer">🔗</a></h1>
 <!-- words: validatecompatibility validateformat strickvalidation -->
 <!-- words: strictvalidation matchversions readme upserts -->
@@ -186,7 +181,7 @@ against any other one.</p>
 filesystem/drive.</li>
 <li><strong>Groups</strong> are like folders - they organize related things together.
 Example: <code>endpoints</code>.</li>
-<li><strong>Resources</strong> are like files - the actual &quot;things&quot; you care about.
+<li><strong>Resources</strong> are like files - the actual "things" you care about.
 Example: <code>messages</code> (inside an <code>endpoint</code>).</li>
 <li><strong>Versions</strong> are like a file's revision history - a Resource can have one
 or more Versions over time. If you don't care about versioning, just
@@ -257,12 +252,12 @@ defines (e.g. <code>endpoints</code>, <code>messages</code>) - they're not liter
 <pre><code>GET /endpoints/ep1
 
 {
-  &quot;endpointid&quot;: &quot;ep1&quot;,
-  &quot;self&quot;: &quot;https://example.com/endpoints/ep1&quot;,
-  &quot;epoch&quot;: 3,
-  &quot;name&quot;: &quot;My Endpoint&quot;,
-  &quot;messagesurl&quot;: &quot;https://example.com/endpoints/ep1/messages&quot;,
-  &quot;messagescount&quot;: 5
+  "endpointid": "ep1",
+  "self": "https://example.com/endpoints/ep1",
+  "epoch": 3,
+  "name": "My Endpoint",
+  "messagesurl": "https://example.com/endpoints/ep1/messages",
+  "messagescount": 5
 }
 </code></pre>
 <p>Notice collections aren't inlined by default - you get a <code>&lt;COLLECTION&gt;url</code>
@@ -287,22 +282,22 @@ deletes an attribute).</li>
 <pre><code>PUT /endpoints/ep1
 Content-Type: application/json
 
-{ &quot;name&quot;: &quot;My Endpoint&quot; }
+{ "name": "My Endpoint" }
 </code></pre>
 <pre><code>HTTP/1.1 201 Created
 
 {
-  &quot;endpointid&quot;: &quot;ep1&quot;,
-  &quot;self&quot;: &quot;https://example.com/endpoints/ep1&quot;,
-  &quot;epoch&quot;: 1,
-  &quot;name&quot;: &quot;My Endpoint&quot;,
-  &quot;createdat&quot;: &quot;...&quot;,
-  &quot;modifiedat&quot;: &quot;...&quot;
+  "endpointid": "ep1",
+  "self": "https://example.com/endpoints/ep1",
+  "epoch": 1,
+  "name": "My Endpoint",
+  "createdat": "...",
+  "modifiedat": "..."
 }
 </code></pre>
 <h4 id="323-resources-metadata-vs-the-actual-document">3.2.3. Resources: metadata vs. the actual document <a class="anchor" href="#323-resources-metadata-vs-the-actual-document">🔗</a></h4>
 <p>This is the one twist compared to a plain REST API. A Resource (e.g. a
-<code>message</code> or a <code>schema</code>) can have its own domain-specific &quot;document&quot; (its
+<code>message</code> or a <code>schema</code>) can have its own domain-specific "document" (its
 actual content) in addition to its xRegistry metadata (<code>epoch</code>, <code>name</code>,
 etc).</p>
 <ul>
@@ -319,11 +314,11 @@ the metadata.</p>
 then <code>$details</code> isn't needed - plain requests just return the metadata.</p>
 <h4 id="324-versions">3.2.4. Versions <a class="anchor" href="#324-versions">🔗</a></h4>
 <p>If you don't care about history, ignore <code>versions</code> entirely - just treat
-<code>/&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;</code> as &quot;the Resource&quot;, and every update just
+<code>/&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;</code> as "the Resource", and every update just
 changes its one Version in place.</p>
 <p>If you do want history, <code>POST</code> to the <code>versions</code> collection to add a new
 Version, and <code>GET .../versions</code> to list them all. The most recent (or
-explicitly-chosen &quot;default&quot;) Version is always what you get back when you
+explicitly-chosen "default") Version is always what you get back when you
 address the Resource directly, without a specific <code>versionid</code>.</p>
 <h4 id="325-deleting">3.2.5. Deleting <a class="anchor" href="#325-deleting">🔗</a></h4>
 <p><code>DELETE</code> on any entity or collection member removes it, cascading to
@@ -332,9 +327,9 @@ everything beneath it (delete a Group, its Resources go too).</p>
 <p>Errors come back as normal HTTP status codes with a JSON body describing
 what went wrong, e.g.:</p>
 <pre><code class="language-json">{
-  &quot;type&quot;: &quot;https://...#not_found&quot;,
-  &quot;title&quot;: &quot;Not found&quot;,
-  &quot;detail&quot;: &quot;...&quot;
+  "type": "https://...#not_found",
+  "title": "Not found",
+  "detail": "..."
 }
 </code></pre>
 <h3 id="33-defining-a-basic-model">3.3. Defining a Basic Model <a class="anchor" href="#33-defining-a-basic-model">🔗</a></h3>
@@ -342,20 +337,20 @@ what went wrong, e.g.:</p>
 telling it what types of Groups and Resources are allowed. At its simplest,
 this is just names:</p>
 <pre><code class="language-json">{
-  &quot;groups&quot;: {
-    &quot;endpoints&quot;: {
-      &quot;singular&quot;: &quot;endpoint&quot;,
-      &quot;resources&quot;: {
-        &quot;messages&quot;: {
-          &quot;singular&quot;: &quot;message&quot;
+  "groups": {
+    "endpoints": {
+      "singular": "endpoint",
+      "resources": {
+        "messages": {
+          "singular": "message"
         }
       }
     }
   }
 }
 </code></pre>
-<p>This says: &quot;there's a Group type called <code>endpoints</code> (singular <code>endpoint</code>),
-and each <code>endpoint</code> can contain <code>messages</code> (singular <code>message</code>).&quot; That's a
+<p>This says: "there's a Group type called <code>endpoints</code> (singular <code>endpoint</code>),
+and each <code>endpoint</code> can contain <code>messages</code> (singular <code>message</code>)." That's a
 complete, valid model - you can have as many Group types as you like, and
 each Group type can have as many Resource types as you like.</p>
 <p>You load this via:</p>
@@ -372,16 +367,16 @@ PUT /endpoints/ep1/messages/msg1
 <p>If you want Resources/Groups to carry extra domain-specific fields, add
 them under <code>attributes</code>:</p>
 <pre><code class="language-json">{
-  &quot;groups&quot;: {
-    &quot;endpoints&quot;: {
-      &quot;singular&quot;: &quot;endpoint&quot;,
-      &quot;resources&quot;: {
-        &quot;messages&quot;: {
-          &quot;singular&quot;: &quot;message&quot;,
-          &quot;attributes&quot;: {
-            &quot;format&quot;: {
-              &quot;type&quot;: &quot;string&quot;,
-              &quot;required&quot;: true
+  "groups": {
+    "endpoints": {
+      "singular": "endpoint",
+      "resources": {
+        "messages": {
+          "singular": "message",
+          "attributes": {
+            "format": {
+              "type": "string",
+              "required": true
             }
           }
         }
@@ -391,7 +386,7 @@ them under <code>attributes</code>:</p>
 }
 </code></pre>
 <p>Now every <code>message</code> Resource must include a <code>format</code> string attribute, e.g.:</p>
-<pre><code class="language-json">{ &quot;messageid&quot;: &quot;msg1&quot;, &quot;format&quot;: &quot;avro&quot; }
+<pre><code class="language-json">{ "messageid": "msg1", "format": "avro" }
 </code></pre>
 <p>Common <code>type</code> values you'll use most often: <code>string</code>, <code>boolean</code>, <code>integer</code>,
 <code>uinteger</code>, <code>decimal</code>, <code>timestamp</code>, <code>uri</code>, <code>array</code>, <code>map</code>, <code>object</code>. Useful
@@ -419,7 +414,7 @@ interoperable ecosystem for event-driven applications the next step was to
 create a metadata model for declaring CloudEvents, their payloads and
 associating those declarations with application endpoints. As a result, the
 xRegistry (extensible registry) specification was created.</p>
-<p>xRegistry was initially part of CloudEvents, called &quot;CloudEvents Discovery&quot; but
+<p>xRegistry was initially part of CloudEvents, called "CloudEvents Discovery" but
 later moved into its own repository.</p>
 <h2 id="5-value-proposition">5. Value proposition <a class="anchor" href="#5-value-proposition">🔗</a></h2>
 <p>xRegistry provides a specification to define metadata and extensions for
@@ -681,18 +676,18 @@ customized for the described kind of resource. You could fairly precisely
 catalog a fleet of vehicles using xRegistry, but the vehicles themselves would
 quite obviously not exist inside of it.</p>
 <p>However, when a model declares a resource to be of the
-<a href="./spec.html#document-resources-vs-metadata-only-resources">&quot;document&quot;</a> type,
+<a href="./spec.html#document-resources-vs-metadata-only-resources">"document"</a> type,
 xRegistry can indeed embed content, like schema documents. The shape of those
 documents is not declared by the model, but may be constrained by convention
 (and implementation choice) based on the <a href="./spec.html#format-attribute"><code>format</code></a> attribute.</p>
 <h3 id="91-formats-and-contentmedia-types">9.1. Formats and Content/Media-Types <a class="anchor" href="#91-formats-and-contentmedia-types">🔗</a></h3>
 <p><code>format</code> and the supported values are a convention chosen for this
-specification because the IANA &quot;media-types&quot; are not consistently available for
+specification because the IANA "media-types" are not consistently available for
 many document types that are in focus. There is additionally a
 <a href="./spec.html#contenttype-attribute">contenttype</a> attribute that should be set for
 each document, that provides the corresponding media-type. An example for this
 is that Apache Avro schema has no official media type, so that the content type
-might be &quot;application/json&quot;, but the <code>format</code> is &quot;Avro/1.12&quot;.</p>
+might be "application/json", but the <code>format</code> is "Avro/1.12".</p>
 <p>Some xRegistry implementations, including the reference server implementation,
 might choose to provide validation capabilities for well-known formats like
 Apache Avro schema, and even version-to-version compatibility checks. These
@@ -739,8 +734,8 @@ API, but provide passthrough access to the other registry's content.</p>
 <h3 id="93-federation">9.3. Federation <a class="anchor" href="#93-federation">🔗</a></h3>
 <p>xRegistry does not have a synchronization API, by intent. Since xRegistry is
 both a document format model and an API, the integration of multiple registries
-(&quot;federation&quot;) does not rely on making copies but is intended to work via
-cross-referencing and &quot;shadowing&quot; across the <a href="#8-representations">representations</a>
+("federation") does not rely on making copies but is intended to work via
+cross-referencing and "shadowing" across the <a href="#8-representations">representations</a>
 described earlier.</p>
 <h4 id="931-composing-registries-in-memory">9.3.1. Composing registries in memory <a class="anchor" href="#931-composing-registries-in-memory">🔗</a></h4>
 <p>A registry document, whether a single <a href="#81-file">file</a> or the root of a
@@ -760,7 +755,7 @@ the client fetches and caches just the branches it needs.</p>
 <h4 id="932-shadowing">9.3.2. Shadowing <a class="anchor" href="#932-shadowing">🔗</a></h4>
 <p>Federation in xRegistry is intended to be built on <em>shadowing</em>: an application's
 view is a layered combination of registries, where a local registry can override
-or extend entries from an underlying one without modifying it. We say &quot;intended&quot;
+or extend entries from an underlying one without modifying it. We say "intended"
 because the specification does not define any particular protocol for this, but
 the design of the registry model and API allows for it to be implemented in a
 very natural way.</p>
@@ -811,8 +806,8 @@ registry, and a proxying API server can do the same on behalf of its clients.</p
 <h2 id="10-possible-use-cases">10. Possible Use Cases <a class="anchor" href="#10-possible-use-cases">🔗</a></h2>
 <h3 id="101-cloudevents">10.1. CloudEvents <a class="anchor" href="#101-cloudevents">🔗</a></h3>
 <p>Since xRegistry emerged from the CloudEvents project and initially was called
-&quot;CloudEvents Discovery&quot; the obvious use case is to manage all the CloudEvents of
-your event-driven architecture inside xRegistry. The spec supports &quot;CloudEvents&quot;
+"CloudEvents Discovery" the obvious use case is to manage all the CloudEvents of
+your event-driven architecture inside xRegistry. The spec supports "CloudEvents"
 as a format and allows you to define further restrictions on how your
 CloudEvents look, what extensions they use or which fields are required for your
 specific use-case even though the original spec marks them as optional. In
@@ -839,7 +834,7 @@ are created), it's important for end-users to have a static URL reference to
 the default Version of the Resource.</p>
 <p>Versions of a Resource, on the other hand, might change quite often and the
 <code>id</code> isn't meant to convey the purpose of the underlying entity, rather it is
-meant to uniquely specify its &quot;version number&quot;. As such, the semantics
+meant to uniquely specify its "version number". As such, the semantics
 meaning and usage of the two <code>id</code> values are quite different. This means that
 there might be times when they are the same value. However, while this is
 allowable, it has no influence on any specification defined semantics of the
@@ -879,19 +874,19 @@ limiting the allowable characters.</p>
 <p>Note though, map key names allow more characters than well-define object
 attribute names because map key names are not usually mapped to well-defined
 variable or structure property names - they're usually just stored as
-&quot;strings&quot; a map data structure.</p>
+"strings" a map data structure.</p>
 <h3 id="113-extensions">11.3. Extensions <a class="anchor" href="#113-extensions">🔗</a></h3>
 <ul>
 <li>
 <p>it's RECOMMENDED that all extensions be defined in advance as part of the
-model. However, the spec does support an extension of &quot;*&quot; to allow for
+model. However, the spec does support an extension of "*" to allow for
 unknown/runtime-provided extensions. Since extensions can appear in case-
 insensitive situations (e.g. http header) we can't know the case of them
 when storing in the backend. As a result, all attributes and key names MUST
 be lowercase.</p>
 </li>
 <li>
-<p>&quot;default&quot; Resource is just a pointer, NOT a set of default values</p>
+<p>"default" Resource is just a pointer, NOT a set of default values</p>
 </li>
 <li>
 <p>we allow for implicit creation of a resource's tree rather than requiring
@@ -909,12 +904,12 @@ will match what was used in the request (either explicitly or implicitly).
 So GET resource?meta or GET group?inline both ask for metadata</p>
 </li>
 <li>
-<p>xRegistry- headers: first &quot;-&quot; separates xRegistry from attribute name,
-next &quot;.&quot; separates attribute name from key, any subsequent &quot;.&quot; is part
-of the key name. E.g. xRegistry-labels.abc.def:xxx =&gt; labels[&quot;abc.def&quot;]=xxx</p>
+<p>xRegistry- headers: first "-" separates xRegistry from attribute name,
+next "." separates attribute name from key, any subsequent "." is part
+of the key name. E.g. xRegistry-labels.abc.def:xxx =&gt; labels["abc.def"]=xxx</p>
 </li>
 <li>
-<p>impact of &quot;*required&quot; flags at multiple levels</p>
+<p>impact of "*required" flags at multiple levels</p>
 </li>
 <li>
 <p>why we don't use underscore in our property names, tho legal to do so</p>
@@ -962,7 +957,7 @@ filter examples in the core spec), which makes labels a powerful
 complement to the single Group dimension for cross-cutting discovery
 scenarios that a strict hierarchy could not express.</p>
 <h3 id="115-deleting-entities">11.5. Deleting entities <a class="anchor" href="#115-deleting-entities">🔗</a></h3>
-<p>The &quot;delete&quot; operation typically has two variants:</p>
+<p>The "delete" operation typically has two variants:</p>
 <ul>
 <li><code>DELETE .../&lt;ID&gt;[?setdefaultversionid=VID]</code></li>
 <li><code>DELETE .../&lt;COLLECTION&gt;[?setdefaultversionid=VID]</code></li>
@@ -985,29 +980,29 @@ Note, that this is different from <code>DELETE ../&lt;ID&gt;</code> case where i
 referenced entity can not be found then a <code>404</code> must be generated.</li>
 <li>when the <code>?setdefaultversionid</code> query parameter is specified (when
 deleting Version) then it will be applied after all requested items have
-been deleted successfully. It can be used even if the current &quot;default&quot;
+been deleted successfully. It can be used even if the current "default"
 Version isn't being deleted. Note that a <code>404</code> in the <code>DELETE .../&lt;ID&gt;</code> case
-is an error and no changes to the &quot;default&quot; Version will occur.</li>
+is an error and no changes to the "default" Version will occur.</li>
 </ul>
 <h3 id="116-detection-of-referenced-resources">11.6. Detection of Referenced Resources <a class="anchor" href="#116-detection-of-referenced-resources">🔗</a></h3>
 <p>The xRegistry specification allows for Resources to appear in multiple Groups
 via use of the <code>xref</code> feature. This could lead to situations where a user
 deletes a Resource without knowing that other Resources reference it -
-resulting in &quot;dangling pointers&quot;. The specification does not define any
+resulting in "dangling pointers". The specification does not define any
 mechanism by which a user can determine if a Resource is the target of an
 <code>xref</code>, or how many other Resources might reference it, in order to avoid
 this situation. However, implementations may choose to take some action to
-help users if they wish. For example, provide some kind of &quot;warning&quot; of the
-impending &quot;dangling pointer&quot; state prior to doing the delete, or providing
-some kind of &quot;xref counter&quot; extension on the target Resource. The specification
+help users if they wish. For example, provide some kind of "warning" of the
+impending "dangling pointer" state prior to doing the delete, or providing
+some kind of "xref counter" extension on the target Resource. The specification
 might consider adding some feature to address this in the future, but as of now
 it is left as an implementation choice.</p>
 <h3 id="117-sharedreferenced-resources">11.7. Shared/Referenced Resources <a class="anchor" href="#117-sharedreferenced-resources">🔗</a></h3>
 <p>As discussed above, Resource may appear in multiple Groups via use of the
 <code>xref</code> feature. Users of the Registry may wish to consider how best to manage
-these &quot;shared&quot; Resources within their associated Groups. For example, if a
+these "shared" Resources within their associated Groups. For example, if a
 Resource might be removed from any of the Groups it is a member of, then it
-might be best to create a dedicated &quot;shared resources&quot; type of Group so that
+might be best to create a dedicated "shared resources" type of Group so that
 it can have a lifecycle that is independent of its association of any other
 Group. Similarly, choosing an initial Group for the Resource could be a
 critical decision as it can not be changed later on, and that Group ID will
@@ -1019,21 +1014,21 @@ initial placement into a Group of a new Resource.</p>
 <p>Each Resource type can specify the maximum number of Versions that the
 server must save. Once that limit is reached then it must delete Versions
 to stay within the limit - by deleting oldest Versions first. However, since
-tagging a Version as &quot;default&quot; marks that Version as special, this pruning
-logic must skip the &quot;default&quot; Version. There is one exception to this rule.
+tagging a Version as "default" marks that Version as special, this pruning
+logic must skip the "default" Version. There is one exception to this rule.
 If the maximum Versions is set to 1 then when a new Version is created, that
-Version will become the &quot;default&quot; Version regardless of whether or not the
+Version will become the "default" Version regardless of whether or not the
 user asked for it to be.</p>
 <p>In general, during an operation that creates, updates or deletes the Versions
 of a Resource, the following logic is applied:</p>
 <ul>
 <li>Modify the Versions collection as requested</li>
-<li>Apply the &quot;default&quot; processing logic by setting (or not) which Version is the
-&quot;default&quot;</li>
+<li>Apply the "default" processing logic by setting (or not) which Version is the
+"default"</li>
 <li>If the number of Versions exceeds the maximum allowed Versions then, starting
 with the oldest, keep deleting until the collection is within the limit.
 Except if the limit is 1, in which case if a new Version is created then it
-it tagged as &quot;default&quot;</li>
+it tagged as "default"</li>
 </ul>
 <p>Let's walk through a complex example:</p>
 <ul>
@@ -1043,7 +1038,7 @@ it tagged as &quot;default&quot;</li>
 <li>New Versions are created in this order: v5 (default=true), v6, v7</li>
 <li>The resulting Versions are (newest to oldest): v7, v6, v5 (default), v4, v2</li>
 <li>The maximum allowed Version is now set to 1, this will cause pruning</li>
-<li>The result is: v5. Note that it is not v7 because v5 was tagged as &quot;default&quot;</li>
+<li>The result is: v5. Note that it is not v7 because v5 was tagged as "default"</li>
 <li>A new Version (v8) is created</li>
 <li>The result is: v8 regardless of whether v8 was created with isdefault=true or
 not</li>
@@ -1051,7 +1046,7 @@ not</li>
 <h3 id="119-potential-extensions">11.9. Potential Extensions <a class="anchor" href="#119-potential-extensions">🔗</a></h3>
 <ul>
 <li>
-<p><code>createdby</code>, <code>modifiedby</code><br>
+<p><code>createdby</code>, <code>modifiedby</code><br/>
 These are related to the <code>createdat</code> and <code>modifiedat</code> attributes in that
 they would normally be updated at the same time as their corresponding
 <code>*at</code> attribute, and are use to track the identity of the person or
@@ -1070,7 +1065,7 @@ header.</p>
 <p>When choosing a name for this attribute the most obvious choices revolved
 the word <code>version</code>. However, the potential overlapping naming and differing
 semantics conflicts with the Version entity of the model could lead to
-confusion. We decided to use <code>epoch</code> because &quot;epoch&quot; is about &quot;time&quot;,
+confusion. We decided to use <code>epoch</code> because "epoch" is about "time",
 which is indirectly related to what this attribute is meant to convey: has
 this entity's history changed?</p>
 <p>Additionally, the word is unique enough that the chances of people assuming
@@ -1113,7 +1108,7 @@ Entity identifiers (<code>id</code>s), never appear as attribute or HTTP header
 names. Meaning, they never appear in case-insensitive locations, so they
 do not have the same constraints that attributes, Groups or Resources do.
 For this reason, IDs are not restricted to using just lower case letters.
-This then also means that when there is a &quot;look-up&quot; done by an ID, it must
+This then also means that when there is a "look-up" done by an ID, it must
 be done in a case-sensitive way.</p>
 <p>However, there is another aspect of IDs that needs to be taken into account:
 the human factor. Despite them being case-sensitive, if the specification
@@ -1126,7 +1121,7 @@ within the scope of its parent entity.</p>
 <p>While it may have been more consistent to just require IDs to be lower case
 like many of the other names in the specification, it was deemed unnecessary
 from a technical perspective. Additionally, IDs are often exposed to end
-users as unique identifiers (almost as a &quot;name&quot;), allowing mixed case can
+users as unique identifiers (almost as a "name"), allowing mixed case can
 provider a better user experience.</p>
 <p>Additionally, treating them in a case-insensitive way could lead to
 inconsistencies and frustration for users. If a user purposely used a certain
@@ -1166,7 +1161,7 @@ can not mandate this because there may be times when the risk of breaking
 existing references becomes necessary.</p>
 <p>For example, perhaps a Registry needs to move to a new host, and the old
 one is no longer available, even to offer a redirect. Or, if the server
-needs to switch to a new &quot;URL shortener&quot; service and so all of the &quot;shortself&quot;
+needs to switch to a new "URL shortener" service and so all of the "shortself"
 values need to change.</p>
 <p>Obviously, situations like these should be rare but the specification needs
 to allow for them.</p>
@@ -1207,14 +1202,14 @@ decedents of the deleted Version.</p>
 <p>To signal that a Version represents a root of a hierarchy, the <code>ancestorid</code>
 attribute has its value set to the Version's <code>versionid</code> attribute. This
 makes the ancestor explicit, and the possible ambiguity of using another
-value such as null which, based on the scenario, could mean &quot;no ancestor&quot; or
-&quot;default to the newest&quot;.</p>
+value such as null which, based on the scenario, could mean "no ancestor" or
+"default to the newest".</p>
 <h3 id="1119-singleversionroot-policy-enforcement">11.19. <code>singleversionroot</code> Policy Enforcement <a class="anchor" href="#1119-singleversionroot-policy-enforcement">🔗</a></h3>
 <p>Related to the previous discussions concerning the <code>ancestorid</code> attribute,
 the <a href="./model.html#registry-model">Resource Model</a> <code>singleversionroot</code> attribute
-controls whether a Resource is allowed to have more than one &quot;root&quot; Version,
+controls whether a Resource is allowed to have more than one "root" Version,
 or whether all Versions of that Resource must be a descendant of the same
-&quot;root&quot; Version.</p>
+"root" Version.</p>
 <p>Whether <code>singleversionroot</code> is <code>true</code> or <code>false</code> will depend on the use case
 in which the Registry is being used. Some examples that might help pick the
 most appropriate value include:</p>
@@ -1234,8 +1229,8 @@ the proliferation of Resources, and a domain's users are comfortable if
 checking the Versions string for each Version of a Resource as a hint to the
 compatibility of the Versions, then setting <code>singleversionroot</code> to <code>false</code>
 might be appropriate. Additionally, a value of <code>false</code> might make sense if
-the version string is &quot;just another attribute&quot; of the Version and the
-Resource is acting more like a &quot;collection&quot; of Versions rather than an
+the version string is "just another attribute" of the Version and the
+Resource is acting more like a "collection" of Versions rather than an
 enforcer of a semantic versioning policy.</p>
 </li>
 </ul>
@@ -1298,8 +1293,8 @@ to their users.</p>
 <p>The specification mentions that the Version's <code>ancestorid</code> attribute should not
 be set in such a way as to cause a circular dependency list between Versions.
 However, when talking about the server generating an error in such conditions
-it says it is &quot;STRONGLY RECOMMENDED&quot; that an error is generated, not that it
-&quot;MUST&quot; be generated. This is not meant to be used by implementations as a way
+it says it is "STRONGLY RECOMMENDED" that an error is generated, not that it
+"MUST" be generated. This is not meant to be used by implementations as a way
 to avoid doing the check in general. However, it is recognized that there
 might be situations (such as when the number of Versions is very large) that
 performing this check upon every change could become a performance concern.</p>
@@ -1317,19 +1312,19 @@ object be fully self-describing, within reason. For example, this is why when
 objects appear within maps the map key is often replicated within the object
 itself. For example, when looking at a Versions collection it might look like
 this:</p>
-<pre><code class="language-yaml">&quot;version&quot;: {
-  &quot;v1&quot;: {
-    &quot;versionid&quot;: &quot;v1&quot;,
+<pre><code class="language-yaml">"version": {
+  "v1": {
+    "versionid": "v1",
     ...
   },
-  &quot;v2&quot;: {
-    &quot;versionid&quot;: &quot;v2&quot;,
+  "v2": {
+    "versionid": "v2",
     ...
   }
 }
 </code></pre>
 <p>Notice that the key is duplicated as the <code>versionid</code> in each case.</p>
-<p>However, when those attributes are defined as &quot;required&quot;, that does not
+<p>However, when those attributes are defined as "required", that does not
 necessarily mean that they are required to appear on all requests if the
 server can determine the proper value via some other means, such as the owning
 map key, or if the request URL includes the information.</p>
@@ -1385,53 +1380,53 @@ characters.</p>
 <p>which corresponds to the structure of the Resource object. In other words the
 Resource, serialized in JSON, appears like this:</p>
 <pre><code class="language-yaml">{
-  &quot;&lt;RESOURCE&gt;id&quot;: ...,
+  "&lt;RESOURCE&gt;id": ...,
   # Resource level attributes appear here
-  # Additionally the &quot;default&quot; Version's attributes would appear here
+  # Additionally the "default" Version's attributes would appear here
 
-  &quot;meta&quot;: {
-    &quot;&lt;RESOURCE&gt;id&quot;: ...,
+  "meta": {
+    "&lt;RESOURCE&gt;id": ...,
     # Resource meta level attributes appear here
   }
 
-  &quot;versions&quot;: {
-    &quot;&lt;KEY&gt;&quot;: {
-      &quot;&lt;RESOURCE&gt;id&quot;: ...,
-      &quot;versionid&quot;: ...
+  "versions": {
+    "&lt;KEY&gt;": {
+      "&lt;RESOURCE&gt;id": ...,
+      "versionid": ...
       # Resource Version level attributes appear here
     }
   }
 }
 </code></pre>
-<p>&quot;Resource level&quot; attributes consist of two types:
+<p>"Resource level" attributes consist of two types:
 1 - Attributes that makes sense when the Resource is viewed as an alias for
 the default Version of that Resource. So this would include all of the
 default Version's attributes with the exception that any URLs referencing
 the Version (e.g. <code>self</code>) would point to the Resource instead.
 2 - Attributes to help in the navigation of the Resource structure. This
-includes the &quot;meta&quot; sub-object, the &quot;metaurl&quot; and the &quot;versions&quot;
+includes the "meta" sub-object, the "metaurl" and the "versions"
 collection related attributes.</p>
 <p>This allows for clients to interact with the Resource and the Resource's
 default Version almost interchangeably. Most notable difference are the extra
 attributes from group 2 above.</p>
-<p>&quot;Resource Meta&quot; level attributes are attributes that are global, and apply
+<p>"Resource Meta" level attributes are attributes that are global, and apply
 to the Resource itself and potentially to all Versions of the Resource.
 Such as the creation date of the Resource, or whether the Resource and its
 Versions are read-only. Ideally, these would be present at the Resource level
 but to avoid potential collisions with Version attributes, it was moved into
-the &quot;meta&quot; sub-object. Additionally, it's expected that the &quot;meta&quot; level
+the "meta" sub-object. Additionally, it's expected that the "meta" level
 attribute are not normally the most significant data of the Resource - that
 would be the Version attributes - and they will probably not be examined or
 changed nearly as often as the Version attributes.</p>
-<p>&quot;Resource Version&quot; level attributes, as the name implies, are attributes
+<p>"Resource Version" level attributes, as the name implies, are attributes
 that can change on a per-Version basis. These are expected to be the main
 reason for the Resource to exist.</p>
-<p>The choice of when an attribute appears in the &quot;meta&quot; sub-object versus in the
+<p>The choice of when an attribute appears in the "meta" sub-object versus in the
 Version should be driven by whether the use cases being supported by the
 Resource type definition requires that attribute to be consistent across all
 Versions or have a Version-specific value.</p>
 <h2 id="15-why-are-some-conditional-read-only-attributes-not-ignored">15. Why are some (conditional) read-only attributes not ignored? <a class="anchor" href="#15-why-are-some-conditional-read-only-attributes-not-ignored">🔗</a></h2>
-<p>Attributes that are always defined as &quot;read-only&quot; normally have semantics such
+<p>Attributes that are always defined as "read-only" normally have semantics such
 that attempts to update them are silently ignored. This is especially useful
 for attributes that might change over time so that clients do not need to
 either ensure they have the latest value, or remove them from an update
@@ -1440,21 +1435,21 @@ request.</p>
 generate an error. This will happen when the attribute might be read-only based
 on the configuration of the owning entity, in which case it is important for
 clients to know that updating this particular instance of this
-&quot;sometimes read-only&quot; attribute failed. So, while it may seem inconsistent,
+"sometimes read-only" attribute failed. So, while it may seem inconsistent,
 the risk of clients assuming a non-error response meant the request was fully
 adhere to was considered more important.</p>
 <p>For example, if a Resource is defined with the <code>setdefaultversionsticky</code>
 aspect set to <code>false</code> then the <code>meta.defaultversionid</code> attribute of instances
-of that Resource becomes &quot;read-only&quot;. And any attempt to update it will result
+of that Resource becomes "read-only". And any attempt to update it will result
 in an error being generated.</p>
 <h2 id="16-why-isnt-put-idempotent">16. Why isn't <code>PUT</code> idempotent? <a class="anchor" href="#16-why-isnt-put-idempotent">🔗</a></h2>
 <p>As stated in the <a href="./spec.html">core</a> specification, the <code>PUT</code> operations are
 almost idempotent, per the HTTP specification. For the most part, multiple
 similar <code>PUT</code> requests will have the same effect as a single one, with the
 exception that <code>epoch</code> and <code>modifiedat</code> will be updated each time. This is
-due to the desire to avoid having server implementations perform a &quot;diff&quot; type
+due to the desire to avoid having server implementations perform a "diff" type
 of check on all attributes to determine if anything changed, and then only
-&quot;bumping&quot; those attributes' values if there was a change. This could be an
+"bumping" those attributes' values if there was a change. This could be an
 expensive or ambiguous check to perform, so it was determined it would be best
 to avoid it all together.</p>
 <h2 id="17-defining-extensions">17. Defining Extensions <a class="anchor" href="#17-defining-extensions">🔗</a></h2>
@@ -1470,7 +1465,7 @@ company, specific terms when naming things.</p>
 <code>validateformat</code> and <code>strictvalidation</code> aspects set to <code>true</code>, and the
 Registry's <code>capabilities</code> does not define any <code>format</code> values, then any
 attempt to create a Resource of that Resource type with a non-empty <code>format</code>
-value will always be rejected with an &quot;unknown format&quot; type of error.</p>
+value will always be rejected with an "unknown format" type of error.</p>
 <p>This is being called out because for light-weight server implementations that
 do not support validation checks, a user might define a Resource type with
 those aspects enabled without realizing they're defining a potentially
@@ -1482,5 +1477,8 @@ within maps, arrays, <code>ifvalues</code> clauses or <code>*</code> extensions,
 but the decision to limit it was made to ensure broad support across as many
 possible implementation choices as possible, while also keeping the code
 complexity burden to a minimum.</p>
-
+</article>
+</main>
+<button aria-label="Back to top" class="back-to-top" title="Back to top" type="button"><i aria-hidden="true" class="fas fa-arrow-up"></i></button>
+</body>
 </html>

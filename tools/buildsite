@@ -219,6 +219,9 @@ echo "# Twiddle hrefs, but just in html files to point to html, not md files"
 find ./$DIR -name \*html \
     -exec sed -i 's/\(href="[^h][^"]*\)\.md/\1.html/g' {} \;
 
+echo "# Wrapping generated HTML documents in the site reader"
+python3 tools/wrap_xreg_html.py ./$DIR
+
 echo "# Verify all hrefs in html files have been modified correctly"
 
 # Lines in the form of: FILE:href (one href per line)
@@ -229,6 +232,7 @@ echo "# Verify all hrefs in html files have been modified correctly"
 # Find href (tgt) relative to source (src)
 grep -roPH 'href="\K[^"]+' $DIR | \
     grep -v ":http" | \
+    grep -v ':/' | \
     grep -v 'URL$' | \
     grep -v ":#" | \
     sed 's/#.*//' | \

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 210" role="img" aria-labelledby="title desc">
+  <title id="title">Endpoint-to-schema discovery path</title>
+  <desc id="desc">A discovery client follows an Endpoint through usage and protocol, preferred address, message group, message definition, and payload schema.</desc>
+  <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0l8 4-8 4z" fill="#6f879c"/></marker><style>.node{fill:#fff;stroke:#9cb1c3;stroke-width:2}.first{fill:#18283a;stroke:#18283a}.last{fill:#e9f4fc;stroke:#2879d0}.label{font:600 14px Inter,sans-serif;fill:#26394d}.inverse{fill:#fff}.detail{font:500 10px 'JetBrains Mono',monospace;fill:#52677a}.line{stroke:#6f879c;stroke-width:2;marker-end:url(#arrow)}</style></defs>
+  <path class="line" d="M172 105h34M360 105h34M548 105h34M736 105h34M924 105h34"/>
+  <g><rect class="node first" x="16" y="62" width="156" height="86"/><text class="detail inverse" x="32" y="88">START</text><text class="label inverse" x="32" y="118">Endpoint</text></g>
+  <g><rect class="node" x="206" y="62" width="154" height="86"/><text class="detail" x="222" y="88">ROLE</text><text class="label" x="222" y="114">Usage and</text><text class="label" x="222" y="132">protocol</text></g>
+  <g><rect class="node" x="394" y="62" width="154" height="86"/><text class="detail" x="410" y="88">ADDRESS</text><text class="label" x="410" y="114">Preferred</text><text class="label" x="410" y="132">network target</text></g>
+  <g><rect class="node" x="582" y="62" width="154" height="86"/><text class="detail" x="598" y="88">REFERENCE</text><text class="label" x="598" y="118">Message group</text></g>
+  <g><rect class="node" x="770" y="62" width="154" height="86"/><text class="detail" x="786" y="88">CONTRACT</text><text class="label" x="786" y="118">Message definition</text></g>
+  <g><rect class="node last" x="958" y="62" width="146" height="86"/><text class="detail" x="974" y="88">PAYLOAD</text><text class="label" x="974" y="118">Schema</text></g>
+</svg>

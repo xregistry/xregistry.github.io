@@ -1,57 +1,55 @@
-<html>
+<!DOCTYPE html>
+
+<html lang="en-US">
 <head>
-<style>
-  .anchor {
-    font-size: 12px ;
-    vertical-align: middle ;
-    text-decoration: none ;
-  }
-  body {
-    font-family: sans-serif ;
-    font-size: 16px ;
-    line-height: 1.5 ;
-    padding: 5% 10% 5% 10% ;
-  }
-  pre {
-    font-size: 80% ;
-    background-color: #f2f2f2 ;
-    padding: 12px ;
-  }
-  code {
-    font-size: 85% ;
-    background-color: #f2f2f2 ;
-    padding: .2em .4em ;
-  }
-  pre code {
-    font-size: inherit ;
-    background-color: inherit ;
-    padding: 0px ;
-  }
-  table {
-    border: 1px solid lightgray ;
-    border-collapse: collapse ;
-    border-spacing: 0px ;
-    line-height: 24px ;
-  }
-  tr:nth-child(even) {
-    background-color: #f2f2f2 ;
-  }
-  td,th {
-    border: 1px solid lightgray ;
-    padding: 5px ;
-  }
-  td code, th code {
-    font-size: inherit ;
-  }
-</style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, maximum-scale=2" name="viewport"/>
+<title>Message Definitions Registry Service - Version 1.0-rc4 | xRegistry</title>
+<link href="/assets/css/style.css" rel="stylesheet"/>
+<link href="/assets/css/xreg-reader.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<script defer="" src="/assets/js/xreg-reader.js"></script>
 </head>
+<body class="xreg-document xreg-spec-document">
+<header class="outer site-header" data-xregistry-shell="true" id="header_wrap">
+<div class="inner">
+<a href="https://github.com/xregistry/xregistry.github.io" id="forkme_banner">View on GitHub</a>
+<img alt="xRegistry logo" class="header-logo" src="https://github.com/cncf/artwork/raw/main/projects/xregistry/horizontal/color-whitetext/xregistry-horizontal-color-whitetext.svg"/>
+<h2 id="project_tagline">The Extensible Registry for Metadata Management</h2>
+<nav aria-label="Primary navigation" class="site-nav">
+<a href="/">Home</a>
+<a href="/blog/">Blog</a>
+<a href="/xreg/xregistryspecs/core-v1/docs/spec.html">Core Spec</a>
+<a href="/xreg/xregistryspecs/endpoint-v1/docs/spec.html">Endpoint Spec</a>
+<a href="/xreg/xregistryspecs/schema-v1/docs/spec.html">Schema Spec</a>
+<a href="/xreg/xregistryspecs/message-v1/docs/spec.html">Message Spec</a>
+<a href="https://github.com/xregistry/spec">GitHub</a>
+</nav>
+</div>
+</header>
+<div aria-label="xRegistry document path" class="registry-path">
+<div class="registry-path__inner"><i aria-hidden="true" class="fas fa-sitemap"></i><code>xreg/xregistryspecs/message-v1/docs/spec.html</code></div>
+</div>
+<main class="xreg-reader-layout">
+<aside aria-label="On this page" class="spec-toc">
+<div class="spec-toc__header">On this page</div>
+<nav class="spec-toc__body"></nav>
+</aside>
+<article class="xreg-reader-content" id="xregistry-content"><nav aria-label="Specification views" class="spec-view-switch">
+<a aria-current="page" class="is-active" href="spec.html?reader=1"><i aria-hidden="true" class="fas fa-book-open"></i> Read</a>
+<a href="spec.lines.html?reader=1"><i aria-hidden="true" class="fas fa-code"></i> Source lines</a>
+</nav>
+
 <h1 id="message-definitions-registry-service---version-10-rc4">Message Definitions Registry Service - Version 1.0-rc4 <a class="anchor" href="#message-definitions-registry-service---version-10-rc4">🔗</a></h1>
 <!-- words: formatvalidated compatibilityvalidated -->
 <!-- words: formatvalidatedreason compatibilityvalidatedreason -->
 <h2 id="abstract">Abstract <a class="anchor" href="#abstract">🔗</a></h2>
 <p>This specification defines a message and event catalog extension to the
 xRegistry document format and API <a href="./../../core-v1/docs/spec.html">specification</a>. The
-message definitions registry service (or &quot;message catalog&quot;) allows for
+message definitions registry service (or "message catalog") allows for
 declaring the metadata (headers, properties, attributes) of messages and/or
 events and their relationships to schemas, and for grouping those declarations
 such that they can be associated with endpoints. With the help of this
@@ -124,8 +122,8 @@ to be received, and how these messages can be distinguished.</p>
 </li>
 <li><a href="#message-protocols">Message Protocols</a>
 <ul>
-<li><a href="#http11-http2-http3-protocols">&quot;HTTP/1.1&quot;, &quot;HTTP/2&quot;, &quot;HTTP/3&quot; protocols</a></li>
-<li><a href="#amqp10-protocol">&quot;AMQP/1.0&quot; protocol</a></li>
+<li><a href="#http11-http2-http3-protocols">"HTTP/1.1", "HTTP/2", "HTTP/3" protocols</a></li>
+<li><a href="#amqp10-protocol">"AMQP/1.0" protocol</a></li>
 <li><a href="#properties-amqp-10"><code>properties</code> (AMQP 1.0)</a></li>
 <li><a href="#application-properties-amqp-10"><code>application-properties</code> (AMQP 1.0)</a></li>
 <li><a href="#message-annotations-amqp-10"><code>message-annotations</code> (AMQP 1.0)</a></li>
@@ -135,9 +133,9 @@ to be received, and how these messages can be distinguished.</p>
 <li><a href="#footer-amqp-10"><code>footer</code> (AMQP 1.0)</a></li>
 </ul>
 </li>
-<li><a href="#mqtt311-and-mqtt50-protocols">&quot;MQTT/3.1.1&quot; and &quot;MQTT/5.0&quot; protocols</a></li>
-<li><a href="#kafka-protocol">&quot;KAFKA&quot; protocol</a></li>
-<li><a href="#nats-protocol">&quot;NATS&quot; protocol</a></li>
+<li><a href="#mqtt311-and-mqtt50-protocols">"MQTT/3.1.1" and "MQTT/5.0" protocols</a></li>
+<li><a href="#kafka-protocol">"KAFKA" protocol</a></li>
+<li><a href="#nats-protocol">"NATS" protocol</a></li>
 </ul>
 </li>
 </ul>
@@ -163,7 +161,7 @@ scope, but delegated to the <a href="./../../schema-v1/docs/spec.html">schema re
 xRegistry. Schemas are linked from messages and event declarations through a
 URI Reference.</p>
 <h3 id="message-definitions">Message Definitions <a class="anchor" href="#message-definitions">🔗</a></h3>
-<p>A Message Definition (&quot;message&quot;) describes constraints for the metadata of a
+<p>A Message Definition ("message") describes constraints for the metadata of a
 message or event. It declares, for instance, the concrete values or
 permissible value patterns for the <code>type</code>, <code>source</code>, and <code>subject</code> attributes
 of a CloudEvent.</p>
@@ -266,18 +264,18 @@ choose to accept protocol-native messages that are not CloudEvents and then
 use context attributes to map them to the CloudEvents model.</p>
 <p>For example, let there be this definition:</p>
 <pre><code class="language-json">{
-  &quot;protocol&quot;: &quot;MQTT/5.0&quot;,
-  &quot;protocoloptions&quot;: {
-    &quot;topic_name&quot;: &quot;/store/{storeid}/cashierdesk/{cdid}&quot;
-    &quot;user_properties&quot; : [
-      { &quot;name&quot;: &quot;eventType&quot;, &quot;type&quot;: &quot;uritemplate&quot;, &quot;value&quot;: &quot;{eventType}&quot; }
+  "protocol": "MQTT/5.0",
+  "protocoloptions": {
+    "topic_name": "/store/{storeid}/cashierdesk/{cdid}"
+    "user_properties" : [
+      { "name": "eventType", "type": "uritemplate", "value": "{eventType}" }
     ]
   },
-  &quot;envelope&quot;: &quot;CloudEvents/1.0&quot;,
-  &quot;envelopeoptions&quot;: {
-    &quot;type&quot;: { &quot;type&quot;: &quot;uritemplate&quot;, &quot;value&quot;: &quot;{eventType}&quot; },
-    &quot;source&quot;: { &quot;type&quot;: &quot;uritemplate&quot;, &quot;value&quot;: &quot;{storeid}&quot; },
-    &quot;subject&quot;: { &quot;type&quot;: &quot;uritemplate&quot;, &quot;value&quot;: &quot;{cdid}&quot; }
+  "envelope": "CloudEvents/1.0",
+  "envelopeoptions": {
+    "type": { "type": "uritemplate", "value": "{eventType}" },
+    "source": { "type": "uritemplate", "value": "{storeid}" },
+    "subject": { "type": "uritemplate", "value": "{cdid}" }
   }
 }
 </code></pre>
@@ -301,37 +299,37 @@ another message definition as its base, which effects a copy of the base
 message’s definitions into the message that defines it. The mechanism is
 transitive, which means that <code>basemessage</code> relationships MUST be resolved
 recursively as long as they do not result in circular references.</p>
-<p>All aspects of the collected base message are &quot;shadowed&quot; by the definitions of
-the message that references it. If the base message defines an &quot;envelope&quot; but
-no &quot;protocol&quot;, the new definition can add the aforementioned MQTT aspects with
-a new &quot;protocol&quot; selector and corresponding options.</p>
+<p>All aspects of the collected base message are "shadowed" by the definitions of
+the message that references it. If the base message defines an "envelope" but
+no "protocol", the new definition can add the aforementioned MQTT aspects with
+a new "protocol" selector and corresponding options.</p>
 <pre><code class="language-mermaid">flowchart TB
   %% Accessibility: Derived definitions (A', B', C') reference base definitions (A, B, C) via basemessage links.
-  subgraph DerivedMqtt[&quot;myEventsMqtt group&quot;]
+  subgraph DerivedMqtt["myEventsMqtt group"]
     direction TB
-    APrime[&quot;A' protocol: MQTT/5.0,
-    envelope: CloudEvents/1.0&quot;]
-    BPrime[&quot;B' protocol: MQTT/5.0,
-    envelope: CloudEvents/1.0&quot;]
+    APrime["A' protocol: MQTT/5.0,
+    envelope: CloudEvents/1.0"]
+    BPrime["B' protocol: MQTT/5.0,
+    envelope: CloudEvents/1.0"]
   end
 
-  subgraph Base[&quot;myEvents group&quot;]
+  subgraph Base["myEvents group"]
     direction TB
-    ABase[&quot;A
-    envelope: CloudEvents/1.0&quot;]
-    BBase[&quot;B
-    envelope: CloudEvents/1.0&quot;]
+    ABase["A
+    envelope: CloudEvents/1.0"]
+    BBase["B
+    envelope: CloudEvents/1.0"]
   end
 
-  APrime -- &quot;basemessage&quot; --&gt; ABase
-  BPrime -- &quot;basemessage&quot; --&gt; BBase
+  APrime -- "basemessage" --&gt; ABase
+  BPrime -- "basemessage" --&gt; BBase
 </code></pre>
 <h3 id="message-definition-matching">Message Definition Matching <a class="anchor" href="#message-definition-matching">🔗</a></h3>
 <p>One popular use of a Message Registry is to be a catalog of Message definitions
 that are used to validate incoming messages. In these scenarios, the receiver
-of a message might need to &quot;match&quot; it to the corresponding Message definition
+of a message might need to "match" it to the corresponding Message definition
 that the message is meant to adhere to. This specification does not mandate how
-this &quot;matching&quot; is done. For example, matching headers or schema of the
+this "matching" is done. For example, matching headers or schema of the
 incoming message to the Message definitions in the Registry is one option.</p>
 <p>A Registry with many Message definitions, each potentially having
 multiple Versions, results in a 2-dimensional collection of Message
@@ -349,7 +347,7 @@ its related Message definition.</li>
 <li>Message Resource types SHOULD be defined with a <code>maxversions</code> of <code>1</code>. This
 eliminates the need for each incoming Message to include some unique
 Version discriminator.</li>
-<li>Modifications to Message definitions SHOULD NOT result in &quot;on the wire&quot;
+<li>Modifications to Message definitions SHOULD NOT result in "on the wire"
 changes to the resulting messages as that could break existing systems.
 Rather, new Message definitions SHOULD be created, with new <code>type</code> and
 <code>messageid</code> values, and referenced through the use of the <code>deprecated</code>
@@ -366,33 +364,33 @@ boundary in many implementations of this specification even though none is
 mandated.</p>
 <p>In many cases, message groups will be a logical boundary around a set of
 related events that are commonly routed through the channel. A (primitive) air
-travel luggage handling system might have &quot;checkedin&quot;, &quot;loaded&quot;, &quot;unloaded&quot;,
-and &quot;delivered&quot; events related to items it moves. If those are reported to
+travel luggage handling system might have "checkedin", "loaded", "unloaded",
+and "delivered" events related to items it moves. If those are reported to
 external parties through the same channels, it likely makes sense to group
 them.</p>
-<p>A benefit of message groups is that they are very similar to &quot;interfaces&quot; in
+<p>A benefit of message groups is that they are very similar to "interfaces" in
 common programming languages. When a message group is associated with a
 channel, like a queue, the messages contained in the group form the permitted
 and expected message set. The association becomes a contract.</p>
 <p>This association is formalized in the <a href="./../../endpoint-v1/docs/spec.html">Endpoint Registry</a>,
 a related registry that allows associating one or more message definition
 groups with an endpoint, thus effectively defining a contract for the endpoint.
-An &quot;endpoint&quot; as defined in that specification is also a message definition
+An "endpoint" as defined in that specification is also a message definition
 group in itself, with the message definitions following the rules of this
 specification.</p>
 <p>When message definitions are to be recombined into different groups, the
 original message definitions can be referenced instead of copied. For
 instance, a pubsub topic might take 4 messages as input but a filtering
 subscription might only yield 1 of those messages as output. In this case, one
-would create a distinct message group for the subscription and &quot;xref&quot; the
+would create a distinct message group for the subscription and "xref" the
 message definition from the input group (sample to follow in the merged doc).</p>
 <p>Similarly, one could create a new message group to be associated with an MQTT
 endpoint if the messages annotate CloudEvent definitions with MQTT protocol
-options using the &quot;basemessage&quot; mechanism. (sample also to follow)</p>
+options using the "basemessage" mechanism. (sample also to follow)</p>
 <h2 id="notations-and-terminology">Notations and Terminology <a class="anchor" href="#notations-and-terminology">🔗</a></h2>
 <h3 id="notational-conventions">Notational Conventions <a class="anchor" href="#notational-conventions">🔗</a></h3>
-<p>The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;, &quot;SHOULD&quot;,
-&quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;, &quot;MAY&quot;, and &quot;OPTIONAL&quot; in this document are to be
+<p>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
+"SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be
 interpreted as described in <a href="https://tools.ietf.org/html/rfc2119">RFC 2119</a>.</p>
 <p>For clarity, OPTIONAL attributes (specification-defined and extensions) are
 OPTIONAL for clients to use, but the servers' responsibility will vary.
@@ -439,105 +437,105 @@ resides in the <a href="./model.json">model.json</a> file.</p>
 <p>For easy reference, the JSON serialization of a Message Registry adheres to
 this form:</p>
 <pre><code class="language-yaml">{
-  &quot;specversion&quot;: &quot;&lt;STRING&gt;&quot;,
-  &quot;registryid&quot;: &quot;&lt;STRING&gt;&quot;,
-  &quot;self&quot;: &quot;&lt;URL&gt;&quot;,
-  &quot;shortself&quot;: &quot;&lt;URL&gt;&quot;, ?
-  &quot;xid&quot;: &quot;&lt;XID&gt;&quot;,
-  &quot;epoch&quot;: &lt;UINTEGER&gt;,
-  &quot;name&quot;: &quot;&lt;STRING&gt;&quot;, ?
-  &quot;description&quot;: &quot;&lt;STRING&gt;&quot;, ?
-  &quot;documentation&quot;: &quot;&lt;URL&gt;&quot;, ?
-  &quot;labels&quot;: {
-    &quot;&lt;STRING&gt;&quot;: &quot;&lt;STRING&gt;&quot; *
+  "specversion": "&lt;STRING&gt;",
+  "registryid": "&lt;STRING&gt;",
+  "self": "&lt;URL&gt;",
+  "shortself": "&lt;URL&gt;", ?
+  "xid": "&lt;XID&gt;",
+  "epoch": &lt;UINTEGER&gt;,
+  "name": "&lt;STRING&gt;", ?
+  "description": "&lt;STRING&gt;", ?
+  "documentation": "&lt;URL&gt;", ?
+  "labels": {
+    "&lt;STRING&gt;": "&lt;STRING&gt;" *
   }, ?
-  &quot;createdat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
-  &quot;modifiedat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
+  "createdat": "&lt;TIMESTAMP&gt;",
+  "modifiedat": "&lt;TIMESTAMP&gt;",
 
-  &quot;capabilities&quot;: { ... }, ?
-  &quot;model&quot;: { ... }, ?
-  &quot;modelsource&quot;: { ... }, ?
+  "capabilities": { ... }, ?
+  "model": { ... }, ?
+  "modelsource": { ... }, ?
 
-  &quot;messagegroupsurl&quot;: &quot;&lt;URL&gt;&quot;,
-  &quot;messagegroupscount&quot;: &lt;UINTEGER&gt;,
-  &quot;messagegroups&quot;: {
-    &quot;&lt;KEY&gt;&quot;: {                                  # messagegroupid
-      &quot;messagegroupid&quot;: &quot;&lt;STRING&gt;&quot;,             # xRegistry core attributes
-      &quot;self&quot;: &quot;&lt;URL&gt;&quot;,
-      &quot;shortself&quot;: &quot;&lt;URL&gt;&quot;, ?
-      &quot;xid&quot;: &quot;&lt;XID&gt;&quot;,
-      &quot;epoch&quot;: &lt;UINTEGER&gt;,
-      &quot;name&quot;: &quot;&lt;STRING&gt;&quot;, ?
-      &quot;description&quot;: &quot;&lt;STRING&gt;&quot;, ?
-      &quot;documentation&quot;: &quot;&lt;URL&gt;&quot;, ?
-      &quot;labels&quot;: { &quot;&lt;STRING&gt;&quot;: &quot;&lt;STRING&gt;&quot; * }, ?
-      &quot;createdat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
-      &quot;modifiedat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
-      &quot;deprecated&quot;: { ... }, ?
+  "messagegroupsurl": "&lt;URL&gt;",
+  "messagegroupscount": &lt;UINTEGER&gt;,
+  "messagegroups": {
+    "&lt;KEY&gt;": {                                  # messagegroupid
+      "messagegroupid": "&lt;STRING&gt;",             # xRegistry core attributes
+      "self": "&lt;URL&gt;",
+      "shortself": "&lt;URL&gt;", ?
+      "xid": "&lt;XID&gt;",
+      "epoch": &lt;UINTEGER&gt;,
+      "name": "&lt;STRING&gt;", ?
+      "description": "&lt;STRING&gt;", ?
+      "documentation": "&lt;URL&gt;", ?
+      "labels": { "&lt;STRING&gt;": "&lt;STRING&gt;" * }, ?
+      "createdat": "&lt;TIMESTAMP&gt;",
+      "modifiedat": "&lt;TIMESTAMP&gt;",
+      "deprecated": { ... }, ?
 
       # MessageGroup extension attributes
-      &quot;envelope&quot;: &quot;&lt;STRING&gt;&quot;, ?                 # e.g. CloudEvents/1.0
-      &quot;protocol&quot;: &quot;&lt;STRING&gt;&quot;, ?                 # e.g. HTTP/1.1
+      "envelope": "&lt;STRING&gt;", ?                 # e.g. CloudEvents/1.0
+      "protocol": "&lt;STRING&gt;", ?                 # e.g. HTTP/1.1
 
-      &quot;messagesurl&quot;: &quot;&lt;URL&gt;&quot;,
-      &quot;messagescount&quot;: &lt;UINTEGER&gt;,
-      &quot;messages&quot; : {
-        &quot;&lt;KEY&gt;&quot;: {                              # messageid
-          &quot;messageid&quot;: &quot;&lt;STRING&gt;&quot;,              # xRegistry core attributes
-          &quot;versionid&quot;: &quot;&lt;STRING&gt;&quot;,
-          &quot;self&quot;: &quot;&lt;URL&gt;&quot;,
-          &quot;shortself&quot;: &quot;&lt;URL&gt;&quot;, ?
-          &quot;xid&quot;: &quot;&lt;XID&gt;&quot;,
+      "messagesurl": "&lt;URL&gt;",
+      "messagescount": &lt;UINTEGER&gt;,
+      "messages" : {
+        "&lt;KEY&gt;": {                              # messageid
+          "messageid": "&lt;STRING&gt;",              # xRegistry core attributes
+          "versionid": "&lt;STRING&gt;",
+          "self": "&lt;URL&gt;",
+          "shortself": "&lt;URL&gt;", ?
+          "xid": "&lt;XID&gt;",
 
           # Start of default Version's attributes
-          &quot;epoch&quot;: &lt;UINTEGER&gt;,
-          &quot;name&quot;: &quot;&lt;STRING&gt;&quot;, ?
-          &quot;description&quot;: &quot;&lt;STRING&gt;&quot;, ?
-          &quot;documentation&quot;: &quot;&lt;URL&gt;&quot;, ?
-          &quot;labels&quot;: { &quot;&lt;STRING&gt;&quot;: &quot;&lt;STRING&gt;&quot; * }, ?
-          &quot;createdat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
-          &quot;modifiedat&quot;: &quot;&lt;TIMESTAMP&gt;&quot;,
-          &quot;ancestorid&quot;: &quot;&lt;STRING&gt;&quot;,
-          &quot;contenttype&quot;: &quot;&lt;STRING&gt;&quot;, ?
-          &quot;format&quot;: &quot;&lt;STRING&gt;&quot;, ?
-          &quot;formatvalidated&quot;: &lt;BOOLEAN&gt;, ?
-          &quot;formatvalidatedreason&quot;: &quot;&lt;STRING&gt;&quot;, ?
-          &quot;compatibilityvalidated&quot;: &lt;BOOLEAN&gt;, ?
-          &quot;compatibilityvalidatedreason&quot;: &quot;&lt;STRING&gt;&quot;, ?
+          "epoch": &lt;UINTEGER&gt;,
+          "name": "&lt;STRING&gt;", ?
+          "description": "&lt;STRING&gt;", ?
+          "documentation": "&lt;URL&gt;", ?
+          "labels": { "&lt;STRING&gt;": "&lt;STRING&gt;" * }, ?
+          "createdat": "&lt;TIMESTAMP&gt;",
+          "modifiedat": "&lt;TIMESTAMP&gt;",
+          "ancestorid": "&lt;STRING&gt;",
+          "contenttype": "&lt;STRING&gt;", ?
+          "format": "&lt;STRING&gt;", ?
+          "formatvalidated": &lt;BOOLEAN&gt;, ?
+          "formatvalidatedreason": "&lt;STRING&gt;", ?
+          "compatibilityvalidated": &lt;BOOLEAN&gt;, ?
+          "compatibilityvalidatedreason": "&lt;STRING&gt;", ?
 
           # Start of Message extension attributes
-          &quot;basemessage&quot;: &quot;&lt;URI&gt;&quot;, ?            # Message being extended
+          "basemessage": "&lt;URI&gt;", ?            # Message being extended
 
-          &quot;envelope&quot;: &quot;&lt;STRING&gt;&quot;, ?            # e.g. CloudEvents/1.0
-          &quot;envelopemetadata&quot;: {
-            &quot;&lt;STRING&gt;&quot;: &lt;JSON-VALUE&gt; *
+          "envelope": "&lt;STRING&gt;", ?            # e.g. CloudEvents/1.0
+          "envelopemetadata": {
+            "&lt;STRING&gt;": &lt;JSON-VALUE&gt; *
 
-            # CloudEvents/1.0 &quot;envelope&quot; the &quot;envelopemetadata&quot; is of the form:
-            &quot;&lt;STRING&gt;&quot;: {
-              &quot;type&quot;: &quot;&lt;TYPE&gt;&quot;,                # Default=string
-              &quot;value&quot;: &lt;ANY&gt;, ?
-              &quot;required&quot;: &lt;BOOLEAN&gt;            # Default=false
+            # CloudEvents/1.0 "envelope" the "envelopemetadata" is of the form:
+            "&lt;STRING&gt;": {
+              "type": "&lt;TYPE&gt;",                # Default=string
+              "value": &lt;ANY&gt;, ?
+              "required": &lt;BOOLEAN&gt;            # Default=false
             } *
           }, ?
-          &quot;envelopeoptions&quot;: {
-            &quot;&lt;STRING&gt;&quot;: &lt;JSON-VALUE&gt; *
+          "envelopeoptions": {
+            "&lt;STRING&gt;": &lt;JSON-VALUE&gt; *
           }, ?
 
-          &quot;protocol&quot;: &quot;&lt;STRING&gt;&quot;, ?            # e.g. HTTP/1.1
-          &quot;protocoloptions&quot;: { ... }, ?
+          "protocol": "&lt;STRING&gt;", ?            # e.g. HTTP/1.1
+          "protocoloptions": { ... }, ?
 
-          &quot;dataschemaformat&quot;: &quot;&lt;STRING&gt;&quot;, ?
-          &quot;dataschema&quot;: &lt;ANY&gt;, ?
-          &quot;dataschemauri&quot;: &quot;&lt;URI&gt;&quot;, ?
-          &quot;dataschemaxid&quot;: &quot;&lt;XID&gt;&quot;, ?
-          &quot;datacontenttype&quot;: &quot;&lt;STRING&gt;&quot;, ?
+          "dataschemaformat": "&lt;STRING&gt;", ?
+          "dataschema": &lt;ANY&gt;, ?
+          "dataschemauri": "&lt;URI&gt;", ?
+          "dataschemaxid": "&lt;XID&gt;", ?
+          "datacontenttype": "&lt;STRING&gt;", ?
           # End of Message extensions and default Version's attributes
 
-          &quot;metaurl&quot;: &quot;&lt;URL&gt;&quot;,
-          &quot;meta&quot;: { ... }, ?
-          &quot;versionsurl&quot;: &quot;&lt;URL&gt;&quot;,
-          &quot;versionscount&quot;: &lt;UINTEGER&gt;,
-          &quot;versions&quot;: { ... } ?
+          "metaurl": "&lt;URL&gt;",
+          "meta": { ... }, ?
+          "versionsurl": "&lt;URL&gt;",
+          "versionscount": &lt;UINTEGER&gt;,
+          "versions": { ... } ?
       } ?
     } *
   } ?
@@ -637,11 +635,11 @@ the chain of messages MUST NOT be recursive.</p>
 <p>The process that a client SHOULD follow to materialize the message is
 to follow the <code>basemessage</code> references to the end of the chain of messages,
 get that message's attributes, and then walk back up the chain performing a
-&quot;merge&quot; operation of the next message's attributes. Note that if an
+"merge" operation of the next message's attributes. Note that if an
 inherited attribute is a complex type (e.g. map, object) and the overlaying
 attribute is scalar, then the entire inherited attribute (and nested
 values) are replaced by that scalar value. For complex types, the
-merge is &quot;deep&quot;, meaning each level of the complex type is merged
+merge is "deep", meaning each level of the complex type is merged
 appropriately rather than it being a complete replacement of the entire
 complex type.</p>
 <p>If the referenced message can not be found, whether due to a dangling
@@ -673,42 +671,42 @@ but the server MUST NOT validate the target.</li>
 <h4 id="envelope"><code>envelope</code> <a class="anchor" href="#envelope">🔗</a></h4>
 <p>Same as the <a href="#envelope-message-group"><code>envelope</code></a> attribute of the
 <code>messagegroup</code> object.</p>
-<p>Since messages MAY be cross-referenced (&quot;borrowed&quot;) across message group
+<p>Since messages MAY be cross-referenced ("borrowed") across message group
 boundaries, this attribute is also REQUIRED and MUST be the same as the
 <code>envelope</code> attribute of the <code>messagegroup</code> object into which the message is
 embedded or referenced.</p>
 <p>Illustrating example:</p>
-<pre><code class="language-yaml">&quot;messagegroupsurl&quot;: &quot;...&quot;,
-&quot;messagegroupscount&quot;: 2,
-&quot;messagegroups&quot;: {
-  &quot;com.example.abc&quot;: {
-    &quot;messagegroupid&quot;: &quot;com.example.abc&quot;,
-    &quot;envelope&quot;: &quot;CloudEvents/1.0&quot;,
+<pre><code class="language-yaml">"messagegroupsurl": "...",
+"messagegroupscount": 2,
+"messagegroups": {
+  "com.example.abc": {
+    "messagegroupid": "com.example.abc",
+    "envelope": "CloudEvents/1.0",
 
-    &quot;messagesurl&quot;: &quot;...&quot;,
-    &quot;messagescount&quot;: 2,
-    &quot;messages&quot;: {
-      &quot;com.example.abc.event1&quot;: {
-        &quot;messageid&quot;: &quot;com.example.abc.event1&quot;,
-        &quot;envelope&quot;: &quot;CloudEvents/1.0&quot;,
+    "messagesurl": "...",
+    "messagescount": 2,
+    "messages": {
+      "com.example.abc.event1": {
+        "messageid": "com.example.abc.event1",
+        "envelope": "CloudEvents/1.0",
          # details ...
         }
       },
-      &quot;com.example.abc.event2&quot;: {
-        &quot;messageid&quot;: &quot;com.example.abc.event1&quot;,
-        &quot;envelope&quot;: &quot;CloudEvents/1.0&quot;,
+      "com.example.abc.event2": {
+        "messageid": "com.example.abc.event1",
+        "envelope": "CloudEvents/1.0",
         # details ...
       }
   },
-  &quot;com.example.def&quot;: {
-    &quot;messagegroupid&quot;: &quot;com.example.def&quot;,
-    &quot;envelope&quot;: &quot;CloudEvents/1.0&quot;,
+  "com.example.def": {
+    "messagegroupid": "com.example.def",
+    "envelope": "CloudEvents/1.0",
 
-    &quot;messagesurl&quot;: &quot;...&quot;,
-    &quot;messagescount&quot;: 1,
-    &quot;messages&quot;: {
-      &quot;com.example.abc.event1&quot;: {
-        &quot;uri&quot;: &quot;#/messagegroups/com.example.abc/messages/com.example.abc.event1&quot;,
+    "messagesurl": "...",
+    "messagescount": 1,
+    "messages": {
+      "com.example.abc.event1": {
+        "uri": "#/messagegroups/com.example.abc/messages/com.example.abc.event1",
         # details ...
       }
     }
@@ -858,7 +856,7 @@ more than one location within the message metadata, all occurrences MUST
 have the same value.</p>
 <p>Note that when an <code>envelope</code> is defined for a message and the data of
 interest is serialized as being nested within the envelope (e.g.
-CloudEvents &quot;structured&quot; mode), then this attribute MUST be the content type
+CloudEvents "structured" mode), then this attribute MUST be the content type
 of the message envelope and not of the data nested within the envelope.</p>
 <p>As specified in <a href="https://tools.ietf.org/html/rfc2045">RFC 2045</a>, the media
 type part of the content type MUST be treated in a case-insensitive manner
@@ -886,14 +884,14 @@ protocol like AMQP, MQTT or Kafka.</p>
 <p>A message can use either a metadata <code>envelope</code>, a message <code>protocol</code>, or both.</p>
 <p>If a message only uses a metadata <code>envelope</code>, any implicit protocol bindings
 defined by the envelope apply. For instance, a message definition that uses the
-&quot;CloudEvents/1.0&quot; envelope but no explicit <code>protocol</code> implicitly applies to all
+"CloudEvents/1.0" envelope but no explicit <code>protocol</code> implicitly applies to all
 protocols for which CloudEvents bindings exist, using the respective protocol
 binding rules.</p>
 <p>If a message uses both a metadata <code>envelope</code> and a message <code>protocol</code>, the
 message binding rules take precedence over the metadata envelope rules. For
-instance, if a message definition uses the &quot;CloudEvents/1.0&quot; envelope and an
-&quot;AMQP/1.0&quot; protocol, then the implicit protocol bindings of the
-&quot;CloudEvents/1.0&quot; envelope are overridden by the &quot;AMQP/1.0&quot; protocol rules.</p>
+instance, if a message definition uses the "CloudEvents/1.0" envelope and an
+"AMQP/1.0" protocol, then the implicit protocol bindings of the
+"CloudEvents/1.0" envelope are overridden by the "AMQP/1.0" protocol rules.</p>
 <p>If a message uses only a message <code>protocol</code>, only the metadata constraints
 defined by the message <code>protocol</code> rules apply.</p>
 <h4 id="property-definitions">Property Definitions <a class="anchor" href="#property-definitions">🔗</a></h4>
@@ -941,20 +939,20 @@ the property.</li>
 <li>Constraints:
 <ul>
 <li>OPTIONAL.</li>
-<li>Default value MUST be &quot;string&quot;.</li>
+<li>Default value MUST be "string".</li>
 <li>The valid types are those defined in the <a href="https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/spec.md#type-system">CloudEvents</a>
 core specification, with some additions:
 <ul>
 <li><code>any</code>: Any type of value, including <code>null</code>.</li>
-<li><code>binary</code>: CloudEvents &quot;Binary&quot; type.</li>
-<li><code>boolean</code>: CloudEvents &quot;Boolean&quot; type.</li>
+<li><code>binary</code>: CloudEvents "Binary" type.</li>
+<li><code>boolean</code>: CloudEvents "Boolean" type.</li>
 <li><code>duration</code>: RFC3339 Duration.</li>
-<li><code>integer</code>: CloudEvents &quot;Integer&quot; type (RFC 7159, Section 6).</li>
+<li><code>integer</code>: CloudEvents "Integer" type (RFC 7159, Section 6).</li>
 <li><code>number</code>: IEEE754 Double.</li>
-<li><code>string</code>: CloudEvents &quot;String&quot; type.</li>
+<li><code>string</code>: CloudEvents "String" type.</li>
 <li><code>symbol</code>: A <code>string</code> that is restricted to alphanumerical characters and
 underscores.</li>
-<li><code>timestamp</code>: CloudEvents &quot;Timestamp&quot; type (RFC3339 DateTime)</li>
+<li><code>timestamp</code>: CloudEvents "Timestamp" type (RFC3339 DateTime)</li>
 <li><code>uri</code>: CloudEvents URI type (RFC3986 URI).</li>
 <li><code>uritemplate</code>: <a href="https://www.rfc-editor.org/rfc/rfc6570">RFC6570</a> Level 1 URI Template.</li>
 </ul>
@@ -991,9 +989,9 @@ message.</p>
 set to a value of <code>0000-01-01T00:00:00Z</code>, the value MUST be replaced with the
 current timestamp when creating a message.</p>
 <h4 id="metadata-envelopes">Metadata Envelopes <a class="anchor" href="#metadata-envelopes">🔗</a></h4>
-<p>This specification only defines one metadata envelope: &quot;CloudEvents/1.0&quot;.</p>
+<p>This specification only defines one metadata envelope: "CloudEvents/1.0".</p>
 <h5 id="cloudevents10">CloudEvents/1.0 <a class="anchor" href="#cloudevents10">🔗</a></h5>
-<p>For the &quot;CloudEvents/1.0&quot; envelope, the
+<p>For the "CloudEvents/1.0" envelope, the
 <a href="#envelopemetadata"><code>envelopemetadata</code></a> object contains a property
 <code>attributes</code>, which is an object whose properties correspond to the
 CloudEvents context attributes.</p>
@@ -1049,12 +1047,12 @@ to lower-case alphanumerical characters without separators.</p>
 definitions are implied by the CloudEvents specification.</li>
 <li>The <code>specversion</code> attribute is implied by the message envelope and is
 OPTIONAL. If present, it MUST be declared with a <code>string</code> type and set to the
-value &quot;1.0&quot;.</li>
+value "1.0".</li>
 <li>The <code>type</code>, <code>id</code>, and <code>source</code> attributes implicitly have the <code>required</code> flag
 set to <code>true</code> and MUST NOT be declared as <code>required: false</code>.</li>
 <li>The <code>id</code> attribute's <code>value</code> SHOULD NOT be defined.</li>
 <li>The <code>time</code> attribute's <code>value</code> MUST default to <code>0000-01-01T00:00:00Z</code>
-(&quot;current time&quot;) and SHOULD NOT be declared with a different value.</li>
+("current time") and SHOULD NOT be declared with a different value.</li>
 <li>The <code>datacontenttype</code> attribute's <code>value</code> is inferred from the
 <a href="#dataschemaformat"><code>dataschemaformat</code></a> attribute of the message definition
 if absent.</li>
@@ -1074,42 +1072,42 @@ definition exists, the default value MUST be <code>string</code>.</li>
 placeholders using the <a href="https://www.rfc-editor.org/rfc/rfc6570">RFC6570</a> Level 1 URI Template syntax. When the
 same placeholder is used in multiple properties, the value of the placeholder
 is assumed to be identical.</p>
-<p>The following shows the format of a CloudEvents &quot;envelopemetadata&quot; section for
+<p>The following shows the format of a CloudEvents "envelopemetadata" section for
 a message (see the <a href="./model.json">model file</a> for the complete definition):</p>
-<pre><code class="language-yaml">&quot;envelope&quot;: &quot;CloudEvents/1.0&quot;,
-&quot;envelopemetadata&quot; {
-  # &quot;CloudEvents/1.0&quot; envelope metadata
-  &quot;specversion&quot;: {
-    &quot;value&quot;: &quot;1.0&quot;,
-    &quot;type&quot;: &quot;string&quot;
+<pre><code class="language-yaml">"envelope": "CloudEvents/1.0",
+"envelopemetadata" {
+  # "CloudEvents/1.0" envelope metadata
+  "specversion": {
+    "value": "1.0",
+    "type": "string"
   },
-  &quot;id&quot;: {
-    &quot;value&quot;: &quot;&lt;STRING&gt;&quot;, ?
-    &quot;type&quot;: &quot;string&quot;
+  "id": {
+    "value": "&lt;STRING&gt;", ?
+    "type": "string"
   },
-  &quot;type&quot;: {
-    &quot;value&quot;: &quot;&lt;STRING&gt;&quot;, ?
-    &quot;type&quot;: &quot;string&quot;
+  "type": {
+    "value": "&lt;STRING&gt;", ?
+    "type": "string"
   },
-  &quot;source&quot;: {
-    &quot;value&quot;: &quot;&lt;STRING&gt;&quot;, ?
-    &quot;type&quot;: &quot;string&quot;
+  "source": {
+    "value": "&lt;STRING&gt;", ?
+    "type": "string"
   },
-  &quot;subject&quot;: {
-    &quot;value&quot;: &quot;&lt;STRING&gt;&quot;, ?
-    &quot;type&quot;: &quot;string&quot;
+  "subject": {
+    "value": "&lt;STRING&gt;", ?
+    "type": "string"
   },
-  &quot;time&quot;: {
-    &quot;value&quot;: &quot;&lt;TIMESTAMP&gt;&quot;, ?
-    &quot;type&quot;: &quot;timestamp&quot; ?
+  "time": {
+    "value": "&lt;TIMESTAMP&gt;", ?
+    "type": "timestamp" ?
   },
-  &quot;dataschema&quot;: {
-    &quot;value&quot;: &quot;&lt;URITEMPLATE&gt;&quot;, ?
-    &quot;type&quot;: &quot;uritemplate&quot; ?
+  "dataschema": {
+    "value": "&lt;URITEMPLATE&gt;", ?
+    "type": "uritemplate" ?
   },
-  &quot;*&quot;: {
-    &quot;value&quot;: &lt;ANY&gt;, ?
-    &quot;type&quot;: &quot;&lt;TYPE&gt;&quot;
+  "*": {
+    "value": &lt;ANY&gt;, ?
+    "type": "&lt;TYPE&gt;"
   }
 }
 </code></pre>
@@ -1122,31 +1120,31 @@ the CloudEvents base specification. The implied CloudEvents <code>datacontenttyp
 attribute value is <code>application/json</code> and the implied CloudEvents <code>dataschema</code>
 attribute value is <code>https://example.com/schemas/com.example.myevent.json</code>:</p>
 <pre><code class="language-yaml">{
-  &quot;envelope&quot;: &quot;CloudEvents/1.0&quot;,
-  &quot;envelopemetadata&quot;: {
-    &quot;type&quot;: {
-      &quot;value&quot;: &quot;com.example.myevent&quot;
+  "envelope": "CloudEvents/1.0",
+  "envelopemetadata": {
+    "type": {
+      "value": "com.example.myevent"
     },
-    &quot;source&quot;: {
-      &quot;value&quot;: &quot;https://{tenant}/{module}/myevent&quot;,
-      &quot;type&quot;: &quot;uritemplate&quot;
+    "source": {
+      "value": "https://{tenant}/{module}/myevent",
+      "type": "uritemplate"
     },
-    &quot;subject&quot;: {
-      &quot;type&quot;: &quot;uri&quot;
+    "subject": {
+      "type": "uri"
     },
-    &quot;time&quot;: {
-      &quot;required&quot;: true
+    "time": {
+      "required": true
     },
   },
-  &quot;dataschemaformat&quot;: &quot;JsonSchema/draft-07&quot;,
-  &quot;dataschemauri&quot;: &quot;https://example.com/schemas/com.example.myevent.json&quot;
+  "dataschemaformat": "JsonSchema/draft-07",
+  "dataschemauri": "https://example.com/schemas/com.example.myevent.json"
 }
 </code></pre>
 <p>For clarity of the definition, you MAY always declare all implied attribute
 properties explicitly, but they MUST conform with the rules above.</p>
 <h4 id="message-protocols">Message Protocols <a class="anchor" href="#message-protocols">🔗</a></h4>
-<h5 id="http11-http2-http3-protocols">&quot;HTTP/1.1&quot;, &quot;HTTP/2&quot;, &quot;HTTP/3&quot; protocols <a class="anchor" href="#http11-http2-http3-protocols">🔗</a></h5>
-<p>The &quot;HTTP&quot; protocol is used to define messages that are sent over an HTTP
+<h5 id="http11-http2-http3-protocols">"HTTP/1.1", "HTTP/2", "HTTP/3" protocols <a class="anchor" href="#http11-http2-http3-protocols">🔗</a></h5>
+<p>The "HTTP" protocol is used to define messages that are sent over an HTTP
 connection. The protocol is based on the
 <a href="https://www.rfc-editor.org/rfc/rfc9110#section-6">HTTP Message Format</a> and is common across all versions of
 HTTP.</p>
@@ -1203,29 +1201,29 @@ URI Template syntax. When the same placeholder is used in multiple properties,
 the value of the placeholder is assumed to be identical.</p>
 <p>The following example defines a message that is sent over HTTP/1.1:</p>
 <pre><code class="language-yaml">{
-  &quot;protocol&quot;: &quot;HTTP&quot;,
-  &quot;protocoloptions&quot;: {
-    &quot;headers&quot;: [
+  "protocol": "HTTP",
+  "protocoloptions": {
+    "headers": [
       {
-        &quot;name&quot;: &quot;Content-Type&quot;,
-        &quot;value&quot;: &quot;application/json&quot;
+        "name": "Content-Type",
+        "value": "application/json"
       }
     ],
-    &quot;query&quot;: [
+    "query": [
       {
-        &quot;name&quot;: &quot;foo&quot;,
-        &quot;value&quot;: &quot;bar&quot;
+        "name": "foo",
+        "value": "bar"
       }
     ],
-    &quot;path&quot;: &quot;/foo/{bar}&quot;,
-    &quot;method&quot;: &quot;POST&quot;
+    "path": "/foo/{bar}",
+    "method": "POST"
   },
-  &quot;dataschemaformat&quot;: &quot;JsonSchema/draft-07&quot;,
-  &quot;dataschemauri&quot;: &quot;https://example.com/schemas/com.example.myevent.json&quot;,
+  "dataschemaformat": "JsonSchema/draft-07",
+  "dataschemauri": "https://example.com/schemas/com.example.myevent.json",
 }
 </code></pre>
-<h5 id="amqp10-protocol">&quot;AMQP/1.0&quot; protocol <a class="anchor" href="#amqp10-protocol">🔗</a></h5>
-<p>The &quot;AMQP/1.0&quot; protocol is used to define messages that are sent over an
+<h5 id="amqp10-protocol">"AMQP/1.0" protocol <a class="anchor" href="#amqp10-protocol">🔗</a></h5>
+<p>The "AMQP/1.0" protocol is used to define messages that are sent over an
 <a href="https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-overview-v1.0-os.html">AMQP</a> connection. It is based on the default
 <a href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#section-message-format">AMQP 1.0 Message Format</a>.</p>
 <p>The <a href="#protocoloptions"><code>protocoloptions</code></a> object MAY contain several
@@ -1282,29 +1280,29 @@ to CloudEvents' <code>type</code>), a custom property, and a <code>content-type<
 <code>application/json</code> without declaring a schema reference in the message
 definition:</p>
 <pre><code class="language-yaml">{
-  &quot;protocol&quot;: &quot;AMQP/1.0&quot;,
-  &quot;protocoloptions&quot;: {
-    &quot;properties&quot;: {
-      &quot;message-id&quot;: {
-        &quot;required&quot;: true
+  "protocol": "AMQP/1.0",
+  "protocoloptions": {
+    "properties": {
+      "message-id": {
+        "required": true
       },
-      &quot;to&quot;: {
-        &quot;value&quot;: &quot;https://{host}/{queue}&quot;
+      "to": {
+        "value": "https://{host}/{queue}"
       },
-      &quot;subject&quot;: {
-        &quot;value&quot;: &quot;MyMessageType&quot;,
-        &quot;required&quot;: true
+      "subject": {
+        "value": "MyMessageType",
+        "required": true
       },
-      &quot;content-type&quot;: {
-        &quot;value&quot;: &quot;application/json&quot;
+      "content-type": {
+        "value": "application/json"
       },
-      &quot;content-encoding&quot;: {
-        &quot;value&quot;: &quot;gzip&quot;
+      "content-encoding": {
+        "value": "gzip"
       }
     },
-    &quot;application-properties&quot;: {
-      &quot;my-application-property&quot;: {
-        &quot;value&quot;: &quot;my-application-property-value&quot;
+    "application-properties": {
+      "my-application-property": {
+        "value": "my-application-property-value"
       }
     }
   }
@@ -1455,8 +1453,8 @@ following properties are defined, with type constraints:</p>
 <p>The names of the properties MUST be of type <code>symbol</code> and MUST be unique within
 the scope of the map. The values of the properties MAY be of any permitted
 type.</p>
-<h5 id="mqtt311-and-mqtt50-protocols">&quot;MQTT/3.1.1&quot; and &quot;MQTT/5.0&quot; protocols <a class="anchor" href="#mqtt311-and-mqtt50-protocols">🔗</a></h5>
-<p>The &quot;MQTT/3.1.1&quot; and &quot;MQTT/5.0&quot; protocols are used to define messages that are
+<h5 id="mqtt311-and-mqtt50-protocols">"MQTT/3.1.1" and "MQTT/5.0" protocols <a class="anchor" href="#mqtt311-and-mqtt50-protocols">🔗</a></h5>
+<p>The "MQTT/3.1.1" and "MQTT/5.0" protocols are used to define messages that are
 sent over <a href="https://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html">MQTT 3.1.1</a> or <a href="https://docs.oasis-open.org/mqtt/mqtt/v5.0/mqtt-v5.0.html">MQTT 5.0</a> connections. The
 format describes the <a href="https://docs.oasis-open.org/mqtt/mqtt/v5.0/mqtt-v5.0.html">MQTT PUBLISH packet</a> content.</p>
 <p>The <a href="#protocoloptions"><code>protocoloptions</code></a> object contains the elements of the
@@ -1547,26 +1545,26 @@ contains a single property name and value.</p>
 user properties MAY contain placeholders using the <a href="https://www.rfc-editor.org/rfc/rfc6570">RFC6570</a> Level 1
 URI Template syntax. When the same placeholder is used in multiple properties,
 the value of the placeholder is assumed to be identical.</p>
-<p>The following example shows a message with the &quot;MQTT/5.0&quot; protocol, asking for
-QoS 1 delivery, with a topic name of &quot;mytopic&quot;, and a user property of
-&quot;my-application-property&quot; with a value of &quot;my-application-property-value&quot;:</p>
+<p>The following example shows a message with the "MQTT/5.0" protocol, asking for
+QoS 1 delivery, with a topic name of "mytopic", and a user property of
+"my-application-property" with a value of "my-application-property-value":</p>
 <pre><code class="language-yaml">{
-  &quot;protocol&quot;: &quot;MQTT/5.0&quot;,
-  &quot;protocoloptions&quot;: {
-    &quot;qos&quot;: 1,
-    &quot;retain&quot;:  false,
-    &quot;topic_name&quot;: &quot;mytopic&quot;,
-    &quot;user_properties&quot;: [
+  "protocol": "MQTT/5.0",
+  "protocoloptions": {
+    "qos": 1,
+    "retain":  false,
+    "topic_name": "mytopic",
+    "user_properties": [
       {
-        &quot;name&quot;: &quot;My Application Property&quot;,
-        &quot;value&quot;: &quot;Value 1&quot;
+        "name": "My Application Property",
+        "value": "Value 1"
       }
     ]
   }
 }
 </code></pre>
-<h5 id="kafka-protocol">&quot;KAFKA&quot; protocol <a class="anchor" href="#kafka-protocol">🔗</a></h5>
-<p>The &quot;KAFKA&quot; protocol is used to define messages that are sent using the <a href="https://kafka.apache.org/protocol">Apache
+<h5 id="kafka-protocol">"KAFKA" protocol <a class="anchor" href="#kafka-protocol">🔗</a></h5>
+<p>The "KAFKA" protocol is used to define messages that are sent using the <a href="https://kafka.apache.org/protocol">Apache
 Kafka</a> RPC protocol.</p>
 <p>The <a href="#protocoloptions"><code>protocoloptions</code></a> object contains the common elements
 of the Kafka <a href="https://kafka.apache.org/31/javadoc/org/apache/kafka/clients/producer/ProducerRecord.html">producer</a> and
@@ -1620,15 +1618,15 @@ Template syntax. When the same placeholder is used in multiple properties,
 the value of the placeholder is assumed to be identical.</p>
 <p>Example:</p>
 <pre><code class="language-yaml">{
-  &quot;protocol&quot;: &quot;Kafka&quot;,
-  &quot;protocoloptions&quot;: {
-    &quot;topic&quot;: &quot;mytopic&quot;,
-    &quot;key&quot;: &quot;thisdevice&quot;
+  "protocol": "Kafka",
+  "protocoloptions": {
+    "topic": "mytopic",
+    "key": "thisdevice"
   }
 }
 </code></pre>
-<h5 id="nats-protocol">&quot;NATS&quot; protocol <a class="anchor" href="#nats-protocol">🔗</a></h5>
-<p>The &quot;NATS&quot; protocol is used to define messages that are sent using the
+<h5 id="nats-protocol">"NATS" protocol <a class="anchor" href="#nats-protocol">🔗</a></h5>
+<p>The "NATS" protocol is used to define messages that are sent using the
 <a href="https://docs.nats.io/reference/protocols/client/">NATS</a> protocol.</p>
 <p>The <a href="#protocoloptions"><code>protocoloptions</code></a> object contains the available
 elements of the NATS message for the <code>HPUB</code> operation.</p>
@@ -1665,12 +1663,15 @@ Template syntax. When the same placeholder is used in multiple properties,
 the value of the placeholder is assumed to be identical.</p>
 <p>Example:</p>
 <pre><code class="language-yaml">{
-  &quot;protocol&quot;: &quot;NATS&quot;,
-  &quot;protocoloptions&quot;: {
-    &quot;subject&quot;: &quot;mytopic&quot;,
-    &quot;reply-to&quot;: &quot;replytopic&quot;
+  "protocol": "NATS",
+  "protocoloptions": {
+    "subject": "mytopic",
+    "reply-to": "replytopic"
   }
 }
 </code></pre>
-
+</article>
+</main>
+<button aria-label="Back to top" class="back-to-top" title="Back to top" type="button"><i aria-hidden="true" class="fas fa-arrow-up"></i></button>
+</body>
 </html>
