@@ -1,0 +1,12 @@
+{
+  "createdat": "2000-01-01T12:00:00.00Z",
+  "defaultversionid": "v1.0-rc1",
+  "defaultversionsticky": false,
+  "defaultversionurl": "https://xregistry.io/xreg/xregistryspecs/message-v1/schemas/document-schema.struct.json/versions/v1.0-rc1",
+  "epoch": 1,
+  "modifiedat": "2000-01-01T12:00:00.00Z",
+  "readonly": false,
+  "schemaid": "document-schema.struct.json",
+  "self": "https://xregistry.io/xreg/xregistryspecs/message-v1/schemas/document-schema.struct.json/meta",
+  "xid": "/xregistryspecs/message-v1/schemas/document-schema.struct.json/meta"
+}
