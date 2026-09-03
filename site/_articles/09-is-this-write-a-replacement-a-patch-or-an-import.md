@@ -16,11 +16,7 @@ next_slug: versioning-is-five-separate-questions
 next_title: Versioning Is Five Separate Questions
 ---
 
-A registry write can add one description, replace an entity, create a Version, or copy a set of collections from another registry. Those operations may carry similar JSON, but they do not have the same meaning.
-
-The dangerous case is an omitted attribute. Does omission mean “leave it alone” or “remove it”? The answer depends on the HTTP method and target.
-
-Before sending a write, a client needs to decide whether it is describing a complete new state, a partial change, or a collection operation.
+An update that omits `description` may preserve it, remove it, or be invalid. The JSON alone does not answer that question; the HTTP method and target do. xRegistry distinguishes replacement, patching, Version creation, and collection import so clients can make changes without silently discarding metadata.
 
 ## PUT describes the replacement state
 

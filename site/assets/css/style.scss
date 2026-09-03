@@ -836,6 +836,43 @@ a:focus-visible {
   margin: 0;
 }
 
+.share-links {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.share-links > span {
+  color: #52677a;
+  font-size: 0.72rem;
+  font-weight: 700;
+  margin-right: 4px;
+  text-transform: uppercase;
+}
+
+.share-links a {
+  align-items: center;
+  background: #eef5fb;
+  border: 1px solid #c8d4df;
+  border-radius: 4px;
+  color: #1f5f9f;
+  display: inline-flex;
+  height: 36px;
+  justify-content: center;
+  text-decoration: none;
+  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+  width: 36px;
+}
+
+.share-links a:hover {
+  background: #2879d0;
+  border-color: #2879d0;
+  color: #ffffff;
+  text-decoration: none;
+}
+
 .evidence-note h2 {
   color: #18283a;
   font-size: 1rem;

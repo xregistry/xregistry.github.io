@@ -16,11 +16,7 @@ next_slug: what-survives-when-http-disappears
 next_title: What Survives When HTTP Disappears?
 ---
 
-A million-entry registry is not useful if every client must retrieve one enormous document before it can inspect a collection.
-
-xRegistry Core already separates owners from collections and rejects oversized inline responses instead of silently truncating entities. The separate pagination specification explores how clients can traverse large collections in bounded pages.
-
-That pagination work is currently version `0.1-wip`. This article examines the draft. It does not present pagination as settled Core 1.0 behavior or make a million-entry performance guarantee.
+A registry with a million schemas must still let a client inspect one page of results without first transferring the whole collection. Core xRegistry already separates collections from their owners; a separate `0.1-wip` pagination draft explores bounded traversal through continuation links. This article examines that draft, not a settled Core 1.0 feature or a performance guarantee.
 
 ## Retrieve the collection, not its owner
 
@@ -103,7 +99,7 @@ A generator can reject an unbounded run until the user selects a Group or provid
 
 These are client policies built around the specification. They do not change the server's obligation to return complete entities or explicit errors.
 
-## The honest answer is conditional
+## Traversal depends on the deployment
 
 Can a client traverse a million-entry registry? The architecture provides the right boundaries: independent collection endpoints, bounded retrieval, complete entities, and explicit oversized-response errors. The pagination draft adds opaque continuation links for iterative collection access.
 

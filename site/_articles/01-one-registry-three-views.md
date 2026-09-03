@@ -14,17 +14,7 @@ next_slug: where-a-schema-version-stops-being-the-same-schema
 next_title: Where a Schema Version Stops Being the Same Schema
 ---
 
-A registry does not need to live only behind a running service to be useful.
-The practical workflow is straightforward: developers build the metadata that
-goes with their modules as part of the codebase: schemas, event definitions,
-abstract endpoint definitions, and other contract data, all already organized
-in document-form registries. Local tooling works against those copies directly.
-
-When a module is deployed, that metadata is published into the registry so that
-other developers, coding agents, modules, and systems can find and use it.
-
-xRegistry is built for this workflow: the API, the document, and the file tree
-are projections of one registry model.
+Teams often keep schemas and event contracts in source control, then need the same information at runtime and in generated documentation. Rewriting that metadata for every tool creates drift. xRegistry treats an API, an exportable document, and a static file tree as different ways to work with one contract graph.
 
 That shared registry can be a service that implements the full
 xRegistry API, or a read-only static file server that is organized by the

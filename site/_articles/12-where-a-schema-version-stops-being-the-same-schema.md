@@ -16,11 +16,7 @@ next_slug: a-message-definition-is-both-a-template-and-a-filter
 next_title: A Message Definition Is Both a Template and a Filter
 ---
 
-A version number tells you which version came later. It does not tell a producer whether old consumers can read new data or whether both documents still describe the same contract.
-
-xRegistry records these facts in the entity hierarchy. A Schema Resource represents one logical schema. Its Versions are concrete schema documents linked by lineage and, when declared, a compatibility policy. A breaking change starts a new Resource instead of adding another Version.
-
-A Version revises an existing contract. A new Resource changes the contract's identity.
+A schema can add a field, change a field's meaning, or split into a new contract. A version label alone does not say which happened, and it does not establish an ordering. xRegistry records contract identity, declared compatibility, and ancestry separately: compatible revisions remain Versions of one Schema Resource, while a breaking change starts a new Resource.
 
 ## A Resource identifies the logical schema
 
@@ -43,12 +39,12 @@ The core `compatibility` attribute states the expected relationship among a Reso
 
 | Strategy | Relationship |
 | --- | --- |
-| `backward` | Compatible with the next-oldest Version |
-| `backward_transitive` | Compatible with all older Versions |
-| `forward` | Compatible with the next-newest Version |
-| `forward_transitive` | Compatible with all newer Versions |
-| `full` | Both directions with adjacent Versions |
-| `full_transitive` | Both directions across all Versions |
+| `backward` | Compatible with its direct ancestor |
+| `backward_transitive` | Compatible with every ancestor in its lineage |
+| `forward` | Its direct descendant is compatible with it |
+| `forward_transitive` | Every descendant in its lineage is compatible with it |
+| `full` | Both directions with its direct ancestor |
+| `full_transitive` | Both directions across its lineage |
 
 The core does not define compatibility for JSON Schema, Protobuf, Avro, XSD, or any other format. Rules for each format define it.
 

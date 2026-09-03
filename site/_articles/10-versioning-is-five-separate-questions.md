@@ -16,9 +16,7 @@ next_slug: which-schema-did-this-message-mean
 next_title: Which Schema Did This Message Mean?
 ---
 
-“Which version is this?” sounds precise until two systems answer with different numbers and both are correct. One names the xRegistry specification. Another names a contract family. A third identifies one document. A fourth means “current.” A fifth describes compatibility expectations.
-
-xRegistry gives each answer a different place in the model. A complete versioning policy answers all five questions.
+“Use version 2” is not enough instruction for a system that manages contracts. It could mean the xRegistry specification version, a logical contract family, one exact document, the currently selected default, or a compatibility promise. xRegistry keeps those answers separate, which lets a team change a contract without losing track of what actually changed.
 
 ## The five questions
 

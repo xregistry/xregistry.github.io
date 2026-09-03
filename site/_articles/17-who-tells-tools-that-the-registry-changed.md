@@ -16,11 +16,7 @@ next_slug: export-is-a-tooling-boundary
 next_title: Export Is a Tooling Boundary
 ---
 
-A code generator can export the registry every minute and compare the result with its previous copy. That works for a small registry, but it wastes bandwidth and hides which entity caused the change.
-
-xRegistry defines events that describe registry mutations. A tool can use them to invalidate a cache, rebuild affected output, or refresh a collection index.
-
-The event definition deliberately stops before transport. It says what a change event means. It does not define a standard broker, watch endpoint, subscription API, retention period, or replay service.
+A generator that repeatedly exports an entire registry just to discover one changed schema wastes work and cannot easily identify the cause. The xRegistry events working draft describes the meaning of registry-mutation events so a tool can invalidate a cache or rebuild affected output. It is a draft, and it deliberately does not define the broker, subscription API, retention, replay, or delivery guarantees.
 
 ## One interaction can change several entities
 
@@ -32,14 +28,16 @@ Suppose a client creates:
 /schemagroups/boilers/schemas/Temperature/versions/4
 ```
 
-The interaction can produce events for:
+The interaction produces a Version creation event and a Resource update event because the Resource's Version collection changed. Depending on the operation and event rules, it can also produce parent notifications. Consumers must not assume that every write produces Group and Registry events.
+
+The relevant events can include:
 
 - the Version creation;
 - the Resource update, because its Version collection changed;
-- the Group update, because a descendant changed;
+- a Group update, where the event rules call for a parent notification;
 - the Registry update, where the event rules call for the parent notification.
 
-This is useful for consumers at different levels. A generator interested in the exact Schema Version can react to the Version event. A registry browser caching Group summaries can refresh when it sees the Group event.
+This is useful for consumers at different levels. A generator interested in the exact Schema Version can react to the Version event. A registry browser caching Group summaries can refresh when it receives a Group event.
 
 Treating the entire interaction as only “one schema changed” would hide the collection and parent state that other tools expose.
 
@@ -61,7 +59,7 @@ A deletion event is different. Its subject can name an entity that no longer exi
 
 One write can emit several events. The optional `xregcorrelationid` attribute lets a producer mark events that came from the same initiating interaction.
 
-When used, all events from that interaction share the value. A consumer can group the Version, Resource, Group, and Registry notifications instead of treating them as unrelated changes.
+When used, all events from that interaction share the value. A consumer can group the notifications that the interaction produced instead of treating them as unrelated changes.
 
 Correlation does not provide global ordering. It also does not promise exactly-once delivery. Those properties depend on the delivery system and consumer design.
 
@@ -91,7 +89,7 @@ A deployment should document these operational choices next to its registry serv
 
 ## Build consumers for invalidation and reconciliation
 
-A robust generator can combine events with periodic reconciliation:
+A generator can combine events with periodic reconciliation:
 
 1. Take an initial export and record a checkpoint from the deployment's event system.
 2. Consume change events after that checkpoint.

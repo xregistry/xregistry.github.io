@@ -16,11 +16,7 @@ next_slug: what-does-cloudevents-leave-unsaid
 next_title: What Does CloudEvents Leave Unsaid?
 ---
 
-A schema can say that `orderId` is a string. It cannot, by itself, say that a payload represents an order-created event, that its CloudEvents `type` has a fixed value, or that an MQTT binding places it on a particular topic.
-
-Those are message-level concerns. xRegistry connects them in one message definition that can describe a transport-independent envelope, protocol metadata, and a payload schema. Producers use the definition to build messages. Consumers use the same rules to recognize them.
-
-A message definition joins message metadata with a payload contract.
+Knowing that a payload has an `orderId` does not tell a consumer that it is an order-created event, which CloudEvents `type` it carries, or which MQTT topic carries it. Those are message-contract questions. xRegistry puts the envelope, protocol metadata, and payload schema in one Message Definition so producers can build messages and consumers can recognize them.
 
 ## Templates for producers, filters for consumers
 

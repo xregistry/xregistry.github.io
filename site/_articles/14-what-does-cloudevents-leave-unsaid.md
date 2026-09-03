@@ -16,11 +16,7 @@ next_slug: from-protocol-address-to-operational-contract
 next_title: From Protocol Address to Operational Contract
 ---
 
-A CloudEvent can tell a consumer what happened, where it came from, and how to interpret its event context. It does not try to be a catalog of every broker, topic, payload policy, and deployed consumer involved in delivering that event.
-
-That is intentional layering, not a missing feature.
-
-xRegistry can describe the layers around a CloudEvent without changing the CloudEvents envelope. Message Definitions describe recognizable message contracts. Schema Resources describe payload shapes. Endpoint Resources connect those contracts to protocol addresses and roles.
+A CloudEvent tells a consumer what happened and where it came from. It deliberately does not try to catalog every broker, topic, payload policy, or deployed consumer involved in delivery. xRegistry fills in those surrounding contracts without changing the CloudEvents envelope: Message Definitions identify the message, Schema Resources describe its payload, and Endpoint Resources describe where clients use it.
 
 ## The envelope establishes portable event context
 

@@ -14,11 +14,7 @@ previous_slug: can-a-client-traverse-a-million-entry-registry
 previous_title: Can a Client Traverse a Million-Entry Registry?
 ---
 
-The first article in this series treated an API, a JSON document, and a static tree as projections of one registry graph. The same separation raises a larger question: what remains when HTTP is not the protocol at all?
-
-xRegistry Core defines Registry, Group, Resource, Meta, Version, model, XID, epoch, default-Version, and document semantics independently of HTTP. A protocol binding maps those concepts to its own addressing and operations.
-
-The repository's OPC UA binding and OpenUSD model are working drafts, not released xRegistry specifications. They are still useful for examining which concepts belong to the model and which belong only to the HTTP binding.
+HTTP is a useful starting point, but contracts often need to travel through systems that use other protocols. Which parts of an xRegistry contract still mean the same thing when URLs, headers, and status codes disappear? Core xRegistry keeps identity, hierarchy, Versions, models, and document semantics independent of HTTP; a binding maps them to another protocol. The OPC UA and OpenUSD materials discussed here are working drafts, not released specifications.
 
 ## Identity survives; URL shape does not
 
@@ -89,7 +85,7 @@ HTTP caching, conditional requests, redirects, media negotiation, and link heade
 
 Cross-protocol interoperability therefore comes from preserving model meaning, not from pretending that transports are interchangeable.
 
-## The graph is the durable part
+## Protocol-independent concepts
 
 When HTTP disappears, the following can remain:
 
@@ -103,7 +99,7 @@ When HTTP disappears, the following can remain:
 
 What changes is how a client locates, retrieves, updates, and streams those concepts.
 
-That is the architectural claim demonstrated by the drafts. It is not yet normative production guidance for OPC UA or OpenUSD. The durable center of xRegistry is the metadata graph; each binding gives that graph an operational form.
+That is the architectural claim demonstrated by the drafts. It is not yet normative production guidance for OPC UA or OpenUSD. The metadata graph defines xRegistry's protocol-independent concepts; each binding gives that graph an operational form.
 
 ## Primary sources
 

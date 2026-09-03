@@ -16,13 +16,7 @@ next_slug: how-does-a-client-find-a-registry
 next_title: How Does a Client Find a Registry?
 ---
 
-An xRegistry model can describe schemas, compatibility settings, and writable-looking attributes. That does not mean every server lets a client create schemas, run compatibility checks, or change the model.
-
-The model answers a data question: **what does this registry contain, and what makes that data valid?**
-
-Capabilities answer a deployment question: **which optional behavior is available here?**
-
-Clients need both answers. Otherwise, they may turn a valid model observation into an invalid operational assumption.
+Two registries can describe the same schema contract while offering very different operations. One may be read-only; another may validate compatibility or allow model changes. xRegistry separates the model, which says what the data means, from capabilities, which say what this deployment actually lets a client do.
 
 ## The same model can support different deployments
 
@@ -115,7 +109,7 @@ A registry browser can render known entities from the model even when filtering 
 
 This does not mean that clients should imitate every missing server feature. Large-scale filtering or compatibility validation may be too expensive or impossible without server support. The client should state the limitation instead of presenting a partial result as complete.
 
-The practical rule is simple: read the model to understand the data, read capabilities to choose operations, and treat successful authorization and execution as separate evidence.
+Read the model to understand the data, read capabilities to choose operations, and treat successful authorization and execution as separate evidence.
 
 ## Primary sources
 

@@ -16,11 +16,7 @@ next_slug: where-a-schema-version-stops-being-the-same-schema
 next_title: Where a Schema Version Stops Being the Same Schema
 ---
 
-A message definition that says “the payload uses JSON Schema” has not yet identified a schema.
-
-The schema may be embedded in the Message, stored at an external URL, represented by an xRegistry Schema Resource, pinned to one Version, or selected from a document that contains several named schema objects.
-
-Each form makes a different promise about portability and change.
+“This event uses JSON Schema” is not enough information for a validator, generator, or future maintainer. The schema could travel inside the message definition, live at a URL, follow the current revision of a registry resource, or pin one exact revision. xRegistry makes those reference choices visible because each one makes a different promise about portability and change.
 
 ## Inline content travels with the Message
 

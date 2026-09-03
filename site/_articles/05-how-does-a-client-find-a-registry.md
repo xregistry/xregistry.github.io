@@ -16,9 +16,7 @@ next_slug: what-exactly-does-an-http-get-return
 next_title: What Exactly Does an HTTP GET Return?
 ---
 
-A client often begins with a product page, service hostname, or API URL rather than a registry root. It knows where the workload lives, but not where its contracts live.
-
-xRegistry defines ways to move from that known web context to one or more candidate registries. It does not define a global search engine for registries. Discovery starts somewhere the client already has reason to trust.
+A developer can find a product page or service endpoint and still have no idea where its schemas and message contracts live. Guessing URLs is brittle, and a global registry search would not establish trust. xRegistry defines small discovery steps that lead from a known web context to candidate registries without pretending discovery proves authority or access.
 
 Consider a developer reading this product page:
 
@@ -112,7 +110,7 @@ The mechanisms are recommended or optional, so a client must handle their absenc
 
 The client should also avoid silently choosing the first candidate. When several registries fit, it can present their descriptions or require a configured selection rule. Quietly taking the first URL turns ordering in a discovery document into an accidental policy.
 
-Discovery gets a client to the front door. The registry model, capabilities, and caller policy determine what happens next.
+Discovery returns a registry location. The registry model, capabilities, and caller policy determine what happens next.
 
 ## Primary sources
 

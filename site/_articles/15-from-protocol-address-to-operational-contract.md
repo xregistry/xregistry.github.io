@@ -16,11 +16,7 @@ next_slug: following-the-water-boiler-contract-graph
 next_title: Following the Water Boiler Contract Graph
 ---
 
-A protocol address tells you where to point a client. It does not tell you what the client is meant to do there, which messages belong there, how those messages are encoded, or whether the address describes a running deployment or a reusable pattern.
-
-xRegistry's endpoint model adds that context. It links an address to the client's role, the protocol and its options, the accepted or offered message definitions, and the deployment intent. This metadata helps configure an interaction. It does not report monitoring results, guarantee delivery, or grant access.
-
-Endpoint metadata configures an interaction. It does not report runtime state or confer permission.
+An address such as `mqtt://broker.example.com/boiler` is only a place to connect. It does not tell a client which role to take, which messages belong there, how they are encoded, or whether the address is a live deployment or a reusable template. xRegistry Endpoint metadata supplies that contract context without claiming runtime health, delivery, or authorization.
 
 ## An Endpoint is a top-level contract
 
@@ -109,7 +105,7 @@ A link does not guarantee that its target exists, remains available, or is acces
 
 The [message lookup guidance](https://github.com/xregistry/spec/blob/d2433a8c726ab096303bd943a4fc6691925f7910/endpoint/spec.md#messages) strongly recommends aligning `messageid` with a runtime semantic identifier such as CloudEvents `type`. It also acknowledges cases where direct lookup is impossible, such as parallel JSON and XML serializations with the same semantic type. Resolving those cases is left to implementations.
 
-The pinned [Sparkplug B scenario](https://github.com/xregistry/spec/blob/d2433a8c726ab096303bd943a4fc6691925f7910/cloudevents/samples/mqtt-sparkplugB.xreg.json) uses Endpoint definitions to model an MQTT convention rather than one deployed broker address. Its roles, protocol settings, messages, and schemas are useful before deployment-specific values are supplied. This sample does not add requirements to the specification.
+The pinned [Sparkplug B scenario](https://github.com/xregistry/spec/blob/d2433a8c726ab096303bd943a4fc6691925f7910/cloudevents/samples/scenarios/mqtt-sparkplugB.xreg.json) uses Endpoint definitions to model an MQTT convention rather than one deployed broker address. Its roles, protocol settings, messages, and schemas are useful before deployment-specific values are supplied. This sample does not add requirements to the specification.
 
 ## Addresses carry protocol shape
 
@@ -138,4 +134,4 @@ Endpoint metadata answers “How do I interact with this endpoint?” Monitoring
 - **Normative:** [Endpoint Registry specification v1.0-rc4, `channel`](https://github.com/xregistry/spec/blob/d2433a8c726ab096303bd943a4fc6691925f7910/endpoint/spec.md#channel)
 - **Normative:** [Endpoint Registry specification v1.0-rc4, addresses and authorization](https://github.com/xregistry/spec/blob/d2433a8c726ab096303bd943a4fc6691925f7910/endpoint/spec.md#protocoloptionsendpoints)
 - **Normative:** [Endpoint Registry specification v1.0-rc4, message groups and messages](https://github.com/xregistry/spec/blob/d2433a8c726ab096303bd943a4fc6691925f7910/endpoint/spec.md#messagegroups)
-- **Observed:** [CloudEvents Sparkplug B scenario at `d2433a8c`](https://github.com/xregistry/spec/blob/d2433a8c726ab096303bd943a4fc6691925f7910/cloudevents/samples/mqtt-sparkplugB.xreg.json)
+- **Observed:** [CloudEvents Sparkplug B scenario at `d2433a8c`](https://github.com/xregistry/spec/blob/d2433a8c726ab096303bd943a4fc6691925f7910/cloudevents/samples/scenarios/mqtt-sparkplugB.xreg.json)

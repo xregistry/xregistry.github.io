@@ -16,11 +16,7 @@ next_slug: ids-name-xids-locate-epochs-protect
 next_title: IDs Name, XIDs Locate, Epochs Protect
 ---
 
-A registry is useful because its entities are connected. That does not mean every client should retrieve the whole registry before doing one job.
-
-A deployment tool may need one Endpoint, its Message Group, one Message Definition, and a payload schema. A documentation generator may need every contract in one product domain. An archive job may need the complete registry.
-
-Those are three different read policies. xRegistry gives clients collection URLs, filters, and inlining so they can request the context their task needs.
+A contract graph becomes expensive when every small task begins by downloading all of it. A deployment tool may need one Endpoint and its schema; an archive job may need everything. xRegistry gives clients collection URLs, filters, and inlining so they can ask for the context their job needs and set deliberate limits on traversal.
 
 ## Start from the narrowest useful entity
 
@@ -80,7 +76,7 @@ A count is a planning hint, not proof that one request can return everything. Do
 
 ## Put a budget around reference traversal
 
-Once a client follows references beyond containment, it owns more policy. A robust graph reader can set limits for:
+Once a client follows references beyond containment, it owns more policy. A graph reader can set limits for:
 
 - maximum entities;
 - maximum bytes;
@@ -104,7 +100,7 @@ The practical sequence is:
 5. Move large child reads to their collection endpoints.
 6. Treat `too_large` as a request to narrow the projection, not as permission to accept truncation.
 
-The graph is there to be traversed. Good clients decide how far before they begin.
+Clients should set traversal scope before they begin.
 
 ## Primary sources
 

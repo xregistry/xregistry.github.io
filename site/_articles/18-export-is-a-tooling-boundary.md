@@ -16,9 +16,7 @@ next_slug: can-a-client-traverse-a-million-entry-registry
 next_title: Can a Client Traverse a Million-Entry Registry?
 ---
 
-Registry clients discover metadata so they can use it. A tool can read a fixed document, resolve its references, and produce source types, validation bundles, endpoint inventories, documentation, or deployment settings. The xRegistry export operation provides that document.
-
-The specification defines how to retrieve a document view of the registry. `GET /export` does not generate an SDK, a web page, or a broker configuration. Other tools can generate those outputs from the document.
+A generator needs a stable input it can store with a build, review in a pull request, or hand to another tool. It does not need an API response shaped for interactive browsing. xRegistry's `GET /export` produces a document view of the registry; it is portable input for generators, not an SDK, web page, or broker configuration by itself.
 
 ## One graph, three acquisition modes
 
@@ -83,7 +81,7 @@ The xRegistry specification does not require any of these outputs. Its default e
 
 ## A reproducible generation pipeline
 
-A repeatable pipeline needs more than `curl | codegen`.
+A repeatable pipeline records its input document, selected versions, and generator configuration.
 
 Record an input manifest beside generated artifacts. At minimum, capture:
 

@@ -16,9 +16,7 @@ next_slug: how-much-of-the-graph-should-a-client-read
 next_title: How Much of the Graph Should a Client Read?
 ---
 
-An HTTP URL identifies a target. It does not, by itself, tell an xRegistry client what bytes will appear in the response.
-
-That is most visible for document-bearing Resources. A Schema Resource has xRegistry metadata and a schema document. Both are important, but most callers do not want both in the same form.
+When a client requests a schema URL, it may need the schema document for validation or the registry record that describes its Versions and lifecycle. Returning one when the caller expects the other is an integration bug waiting to happen. xRegistry's HTTP binding makes that choice explicit for document-bearing Resources.
 
 Suppose a boiler registry contains this Schema Resource:
 

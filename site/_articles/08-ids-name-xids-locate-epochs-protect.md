@@ -16,11 +16,7 @@ next_slug: is-this-write-a-replacement-a-patch-or-an-import
 next_title: Is This Write a Replacement, a Patch, or an Import?
 ---
 
-One identifier can end up doing three jobs in a distributed system. A friendly name becomes a database key, then a URL, then a revision token. A rename, move, or concurrent update then breaks an assumption that the design did not state.
-
-xRegistry does not use one value for all three jobs. An entity ID names the entity within its parent. An XID identifies its place across the Registry. An epoch says whether the entity is still in the state a writer previously observed.
-
-In JSON, these values may look similar. They answer three different questions: “which thing?”, “where in this registry?”, and “which state of that thing?”
+Distributed systems fail in ordinary ways: a name moves, a URL changes, or two users edit the same record. Those failures get worse when one identifier is expected to name, locate, and protect a resource at once. xRegistry assigns those jobs to separate values: an ID names an entity, an XID locates it in the Registry, and an epoch detects a stale update.
 
 ## Three values, three scopes
 

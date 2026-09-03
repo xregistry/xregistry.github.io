@@ -16,11 +16,7 @@ next_slug: a-message-definition-is-both-a-template-and-a-filter
 next_title: A Message Definition Is Both a Template and a Filter
 ---
 
-A registry model may look like documentation for readers. In xRegistry, it is also data for software. It defines which Groups and Resources exist, which attributes they have, and which rules apply to their values.
-
-That makes the model part of the program.
-
-The JSON does not execute arbitrary code. It gives generic software enough structured rules to discover the registry's shape, validate data, build navigation, and choose valid operations without compiling every domain type into the tool.
+A tool that only knows how to read JSON still needs to know which JSON it is looking at. Is this a schema, a message, an endpoint, or an allowed extension? xRegistry publishes that information as a machine-readable model, so browsers, validators, and generators can discover the registry's shape instead of carrying every domain type in their code.
 
 ## The registry describes its own shape
 

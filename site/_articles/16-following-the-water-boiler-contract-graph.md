@@ -16,9 +16,7 @@ next_slug: who-tells-tools-that-the-registry-changed
 next_title: Who Tells Tools That the Registry Changed?
 ---
 
-The Water Boiler scenario in the xRegistry repository shows how to follow references from an endpoint to its data contract. The small sample declares two MQTT endpoints, one message group, two messages, and two versioned JSON Schemas.
-
-It does not show a running water boiler. It contains contract metadata, not runtime results.
+When a team inherits an event integration, the useful first question is often not “which broker is running?” but “which contract does this endpoint use?” The Water Boiler sample shows how xRegistry references lead from MQTT endpoints through messages to versioned JSON Schemas. It is a map of declared contracts, not evidence that a boiler or broker ran.
 
 ## The graph at a glance
 

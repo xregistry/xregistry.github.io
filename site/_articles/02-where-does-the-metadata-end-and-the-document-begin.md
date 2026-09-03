@@ -16,16 +16,7 @@ next_slug: the-model-is-part-of-the-program
 next_title: The Model Is Part of the Program
 ---
 
-A registry entry often needs to answer two different questions:
-
-1. What is this object?
-2. What are its bytes right now?
-
-Those questions sound similar until the object changes. A schema can keep the same identity while its JSON document gains a property. A policy can be deprecated while an older revision remains available. A file can have an owner, description, and creation time that are not part of the file itself.
-
-xRegistry separates these concerns. A **Resource** gives the object a stable identity. Its **Meta** entity carries Resource-level state. Its **Versions** record concrete revisions. If the Resource type has `hasdocument: true`, each Version can also carry a domain document.
-
-The separation lets clients discuss an object without pretending that its latest bytes are the whole object.
+Someone asks for “the order schema,” but the answer could mean the current JSON file, a specific released revision, or the contract that survives all of its revisions. Those are different things, and a registry must not blur them. xRegistry separates stable identity, lifecycle metadata, concrete Versions, and document content so a tool can ask for exactly what it needs.
 
 ## Start with one logical file
 
