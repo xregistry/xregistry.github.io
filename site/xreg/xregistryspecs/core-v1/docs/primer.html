@@ -156,6 +156,7 @@ normative technical details.</p>
 <li><a href="#1123-detecting-circular-references-between-versions">11.23. Detecting circular references between Versions</a></li>
 <li><a href="#1124-optional-required-fields-in-requests">11.24. Optional required fields in requests</a></li>
 <li><a href="#1125-deprecation-of-entities-in-an-xregistry">11.25. Deprecation of entities in an xRegistry</a></li>
+<li><a href="#1126-relative-resource-urls-in-the-file-representation">11.26. Relative Resource URLs in the File representation</a></li>
 </ul>
 </li>
 <li><a href="#12-the-format-attribute-in-the-schema-spec">12. The <code>format</code> attribute in the Schema spec</a></li>
@@ -1353,6 +1354,47 @@ When doing so it is recommended to use the same attribute definition as
 defined in the core specification for consistency. It is worth noting that
 the Endpoint <a href="./../../endpoint-v1/docs/spec.html">specification</a> does exactly this to
 indicate when an Endpoint (i.e. a Group) is deprecated.</p>
+<h3 id="1126-relative-resource-urls-in-the-file-representation">11.26. Relative Resource URLs in the File representation <a class="anchor" href="#1126-relative-resource-urls-in-the-file-representation">🔗</a></h3>
+<p>As described <a href="#81-file">above</a>, xRegistry supports a file-based
+representation that can be used to maintain a registry side-by-side with a
+project in a source code repository. In this representation, it is desirable
+to use relative URLs pointing to the documents associated with each Resource,
+rather than absolute URLs. This allows the entire registry to be moved to a
+different location without rewriting the URLs, and it avoids replicating the
+documents into the registry file.</p>
+<p><strong>Example:</strong></p>
+<pre><code>Repository structure:
+    /project-root
+        ...
+        /registry
+            xreg.json
+        /schemas
+            schema1.json
+            schema2.json
+        ...
+</code></pre>
+<p>For a repository structured as shown above, a schema version in xRegistry
+could look like:</p>
+<pre><code class="language-yaml">&quot;schemagroups&quot;: {
+    &quot;MySchemaGroup&quot;: {
+        &quot;schemas&quot;: {
+            &quot;MySchema&quot;: {
+                &quot;versions&quot;: {
+                    &quot;1&quot;: {
+                        &quot;format&quot;: &quot;JsonStructure/draft-02&quot;,
+                        &quot;schemaurl&quot;: &quot;../schemas/schema1.json&quot;
+                    }
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<p>The specification requires resource URLs to be resolvable which, in the context
+of the files of the repository, is possible. When uploading registry content to
+a server, ensure that all relative URLs are resolved and that the referenced
+documents are included in the upload. Client-side tooling may be able to
+assist with this process.</p>
 <h2 id="12-the-format-attribute-in-the-schema-spec">12. The <code>format</code> attribute in the Schema spec <a class="anchor" href="#12-the-format-attribute-in-the-schema-spec">🔗</a></h2>
 <p>The <code>format</code> attribute in the Schema spec is required when the
 <code>compatibility</code> attribute is set to a value other than <code>none</code>. This may
