@@ -824,6 +824,11 @@ scope of its owning Group type.</li>
 that it MUST NOT exceed 57 characters (not 63).</li>
 <li>MUST be unique across all Resources (plural and singular names) within the
 scope of its owning Group type.</li>
+<li>When <code>hasdocument</code> is <code>true</code>, the derived <code>&lt;RESOURCE&gt;</code>, <code>&lt;RESOURCE&gt;base64</code>,
+and <code>&lt;RESOURCE&gt;url</code> Version attribute names MUST NOT collide with Version
+attributes defined by the Core specification or an extension specification.
+For example, a Schema Registry Resource named <code>format</code> would collide with
+the Schema specification's <code>format</code> Version attribute.</li>
 </ul>
 <h3 id="groupsstringresourcesstringdescription"><code>groups.&lt;STRING&gt;.resources.&lt;STRING&gt;.description</code> <a class="anchor" href="#groupsstringresourcesstringdescription">🔗</a></h3>
 <ul>

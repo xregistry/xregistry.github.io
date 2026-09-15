@@ -572,8 +572,10 @@ with the declared version.</p>
 <p>A URI, like the Message Registry's
 <a href="./../../message-v1/docs/spec.html#dataschemauri"><code>dataschemauri</code></a>, that points to a Protobuf
 Schema document MUST reference a Protobuf <code>message</code> declaration contained in the
-schema document using a URI fragment suffix <code>[:]{message-name}</code>. The ':'
-character is used as a separator when the URI already contains a fragment.</p>
+schema document. If the URI does not contain a fragment, the message name MUST
+be appended as a URI fragment using <code>#{message-name}</code>. If the URI already
+contains a fragment, the message name MUST be appended to the fragment using
+<code>:{message-name}</code>.</p>
 <p>Examples:</p>
 <ul>
 <li>If the Protobuf schema document is referenced using the URI
