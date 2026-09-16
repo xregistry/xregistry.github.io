@@ -2035,7 +2035,7 @@ Content-Location: https://example.com/endpoints/ep1/messages/msg1/versions/1
 
   &quot;message&quot;: {
     # Updated definition of a &quot;Blob Created&quot; event excluded for brevity
-  },
+  }
 }
 </code></pre>
 <h4 id="delete-groupsgidresourcesrid"><code>DELETE /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;</code> <a class="anchor" href="#delete-groupsgidresourcesrid">🔗</a></h4>
@@ -2229,13 +2229,13 @@ Content-Type: application/json; charset=utf-8
 
 {
   &quot;1&quot;: {
-    &quot;labels&quot;: { &quot;customer&quot;: &quot;abc&quot; },
+    &quot;labels&quot;: { &quot;customer&quot;: &quot;abc&quot; }
   },
   &quot;2&quot;: {
-    &quot;labels&quot;: { &quot;customer&quot;: &quot;abc&quot; },
+    &quot;labels&quot;: { &quot;customer&quot;: &quot;abc&quot; }
   },
   &quot;3&quot;: {
-    &quot;labels&quot;: { &quot;customer&quot;: &quot;abc&quot; },
+    &quot;labels&quot;: { &quot;customer&quot;: &quot;abc&quot; }
   }
 }
 </code></pre>
@@ -2522,7 +2522,7 @@ Content-Type: application/json; charset=utf-8
   &quot;description&quot;: &quot;a cool event&quot;,
   &quot;message&quot;: {
     # Updated definition of a &quot;Blob Created&quot; event excluded for brevity
-  },
+  }
 }
 </code></pre>
 <pre><code class="language-yaml">HTTP/1.1 200 OK
@@ -2544,7 +2544,7 @@ Content-Location: https://example.com/endpoints/ep1/messages/msg1/versions/v2.0
 
   &quot;message&quot;: {
     # Updated definition of a &quot;Blob Created&quot; event excluded for brevity
-  },
+  }
 }
 </code></pre>
 <h4 id="delete-groupsgidresourcesridversionsvid"><code>DELETE /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;/versions/&lt;VID&gt;</code> <a class="anchor" href="#delete-groupsgidresourcesridversionsvid">🔗</a></h4>
@@ -2587,9 +2587,9 @@ sibling API to <code>/model</code>) via the <code>/.xregistry</code> API:</p>
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;registries&quot;: {
+  &quot;registries&quot;: [
     &quot;URL&quot;, *
-  }
+  ]
 }
 </code></pre>
 <p>Note that unlike the <a href="./spec.html#host-based-discovery">Host-based Discovery</a>
@@ -2679,8 +2679,8 @@ and per <a href="https://tools.ietf.org/html/rfc7230#section-3">RFC7230, section
 printable characters from the US-ASCII character set, and are terminated by a
 CRLF sequence with OPTIONAL whitespace around the header value.</p>
 <p>When encoding an attribute's value as an HTTP header, it MUST be
-percent-encoded as described below. This is compatible with [RFC3986, section
-2.1][rfc3986-section-2-1] but is more specific about what needs
+percent-encoded as described below. This is compatible with <a href="https://tools.ietf.org/html/rfc3986#section-2.1">RFC3986, section
+2.1</a> but is more specific about what needs
 encoding. The resulting string SHOULD NOT be further encoded.
 (Rationale: quoted string escaping is unnecessary when every space
 and double-quote character is already percent-encoded.)</p>
@@ -2799,6 +2799,7 @@ starting with <code>/</code>. E.g. <code>/export</code> if the &quot;export&quot
 <li>Args:
 <ul>
 <li><code>name</code>: The HTTP header name.</li>
+<li><code>error_detail</code>: Specific details about the error.</li>
 </ul>
 </li>
 </ul>
