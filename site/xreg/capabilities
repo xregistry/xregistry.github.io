@@ -94,6 +94,8 @@
   ],
   "versionmodes": [
     "createdat",
-    "manual"
+    "manual",
+    "modifiedat",
+    "semver"
   ]
 }
