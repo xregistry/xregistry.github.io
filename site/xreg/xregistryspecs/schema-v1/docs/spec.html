@@ -252,8 +252,6 @@ this form:</p>
 
   &quot;model&quot;: { ... }, ?
 
-  &quot;schemagroupsurl&quot;: &quot;&lt;URL&gt;&quot;,                      # SchemaGroups collection
-  &quot;schemagroupscount&quot;: &lt;UINTEGER&gt;,
   &quot;schemagroups&quot;: {
     &quot;KEY&quot;: {                                       # schemagroupid
       &quot;schemagroupid&quot;: &quot;&lt;STRING&gt;&quot;,                 # xRegistry core attributes
@@ -269,8 +267,6 @@ this form:</p>
       &quot;deprecated&quot;: { ... }, ?
       &quot;format&quot;: &quot;&lt;STRING&gt;&quot;, ?
 
-      &quot;schemasurl&quot;: &quot;&lt;URL&gt;&quot;,                       # Schemas collection
-      &quot;schemascount&quot;: &lt;UINTEGER&gt;,
       &quot;schemas&quot;: {
         &quot;KEY&quot;: {                                   # schemaid
           &quot;schemaid&quot;: &quot;&lt;STRING&gt;&quot;,                  # xRegistry core attributes
@@ -302,13 +298,17 @@ this form:</p>
           &quot;metaurl&quot;: &quot;&lt;URL&gt;&quot;,                      # Resource level attrs
           &quot;meta&quot;: { ... }, ?
 
+          &quot;versions&quot;: { ... }, ?
           &quot;versionsurl&quot;: &quot;&lt;URL&gt;&quot;,
-          &quot;versionscount&quot;: &lt;UINTEGER&gt;,
-          &quot;versions&quot;: { ... } ?
+          &quot;versionscount&quot;: &lt;UINTEGER&gt;
         } *
-      } ?
+      }, ?
+      &quot;schemasurl&quot;: &quot;&lt;URL&gt;&quot;,                       # Schemas collection
+      &quot;schemascount&quot;: &lt;UINTEGER&gt;
     } *
-  } ?
+  }, ?
+  &quot;schemagroupsurl&quot;: &quot;&lt;URL&gt;&quot;,                      # SchemaGroups collection
+  &quot;schemagroupscount&quot;: &lt;UINTEGER&gt;
 }
 </code></pre>
 <h2 id="4-schema-registry">4. Schema Registry <a class="anchor" href="#4-schema-registry">🔗</a></h2>
@@ -335,8 +335,6 @@ containing 5 schemas.</p>
   &quot;specversion&quot;: &quot;1.0-rc4&quot;,
   # other xRegistry top-level attributes excluded for brevity
 
-  &quot;schemagroupsurl&quot;: &quot;http://example.com/schemagroups&quot;,
-  &quot;schemagroupscount&quot;: 1,
   &quot;schemagroups&quot;: {
     &quot;com.example.schemas&quot;: {
       &quot;schemagroupid&quot;: &quot;com.example.schemas&quot;,
@@ -345,7 +343,9 @@ containing 5 schemas.</p>
       &quot;schemasurl&quot;: &quot;https://example.com/schemagroups/com.example.schemas/schemas&quot;,
       &quot;schemascount&quot;: 5
     }
-  }
+  },
+  &quot;schemagroupsurl&quot;: &quot;http://example.com/schemagroups&quot;,
+  &quot;schemagroupscount&quot;: 1
 }
 </code></pre>
 <p>There might be cases where all schemas within a schemagroup need to have the
@@ -411,15 +411,11 @@ Versions for a schema named <code>com.example.telemetrydata</code>:</p>
   &quot;specversion&quot;: &quot;1.0-rc4&quot;,
   # other xRegistry top-level attributes excluded for brevity
 
-  &quot;schemagroupsurl&quot;: &quot;http://example.com/schemagroups&quot;,
-  &quot;schemagroupscount&quot;: 1,
   &quot;schemagroups&quot;: {
     &quot;com.example.telemetry&quot;: {
       &quot;schemagroupid&quot;: &quot;com.example.telemetry&quot;,
       # other xRegistry group-level attributes excluded for brevity
 
-      &quot;schemasurl&quot;: &quot;http://example.com/schemagroups/com.example.telemetry/schemas&quot;,
-      &quot;schemascount&quot;: 1,
       &quot;schemas&quot;: {
         &quot;com.example.telemetrydata&quot;: {
           &quot;schemaid&quot;: &quot;com.example.telemetrydata&quot;,
@@ -434,8 +430,6 @@ Versions for a schema named <code>com.example.telemetrydata</code>:</p>
 
           &quot;metaurl&quot;: &quot;http://example.com/schemagroups/com.example.telemetry/schemas/com.example.telemetrydata/meta&quot;,
 
-          &quot;versionsurl&quot;: &quot;http://example.com/schemagroups/com.example.telemetry/schemas/com.example.telemetrydata/versions&quot;,
-          &quot;versionscount&quot;: 3,
           &quot;versions&quot;: {
             &quot;1&quot;: {
               &quot;schemaid&quot;: &quot;com.example.telemetrydata&quot;,
@@ -470,11 +464,17 @@ Versions for a schema named <code>com.example.telemetrydata</code>:</p>
 
               &quot;schema&quot;: &quot;syntax = \&quot;proto3\&quot;; message Metrics { float metric = 1; string unit = 2; string description = 3; } }&quot;
             }
-          }
+          },
+          &quot;versionsurl&quot;: &quot;http://example.com/schemagroups/com.example.telemetry/schemas/com.example.telemetrydata/versions&quot;,
+          &quot;versionscount&quot;: 3
         }
-      }
+      },
+      &quot;schemasurl&quot;: &quot;http://example.com/schemagroups/com.example.telemetry/schemas&quot;,
+      &quot;schemascount&quot;: 1
     }
-  }
+  },
+  &quot;schemagroupsurl&quot;: &quot;http://example.com/schemagroups&quot;,
+  &quot;schemagroupscount&quot;: 1
 }
 </code></pre>
 <h4 id="431-json-schema">4.3.1. JSON Schema <a class="anchor" href="#431-json-schema">🔗</a></h4>

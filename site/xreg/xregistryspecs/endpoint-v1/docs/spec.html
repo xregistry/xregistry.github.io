@@ -240,8 +240,6 @@ this form:</p>
 
   &quot;model&quot;: { ... }, ?
 
-  &quot;endpointsurl&quot;: &quot;&lt;URL&gt;&quot;,
-  &quot;endpointscount&quot;: &lt;UINTEGER&gt;,
   &quot;endpoints&quot;: {
     &quot;&lt;KEY&gt;&quot;: {
       &quot;endpointid&quot;: &quot;&lt;STRING&gt;&quot;,                   # xRegistry core attributes
@@ -362,15 +360,17 @@ this form:</p>
       &quot;messagegroups&quot;: [ &quot;&lt;URI&gt;&quot; * ], ?
       # End of Endpoint extensions
 
-      &quot;messagesurl&quot;: &quot;&lt;URL&gt;&quot;, ?
-      &quot;messagescount&quot;: &lt;UINTEGER&gt;, ?
       &quot;messages&quot;: {
         &quot;&lt;KEY&gt;&quot;: {                                # messageid
           # See Message Definition spec for details
         } *
-      } ?
+      }, ?
+      &quot;messagesurl&quot;: &quot;&lt;URL&gt;&quot;, ?
+      &quot;messagescount&quot;: &lt;UINTEGER&gt; ?
     } *
-  } ?
+  }, ?
+  &quot;endpointsurl&quot;: &quot;&lt;URL&gt;&quot;,
+  &quot;endpointscount&quot;: &lt;UINTEGER&gt;
 }
 </code></pre>
 <h3 id="endpoints-groups">Endpoints Groups <a class="anchor" href="#endpoints-groups">🔗</a></h3>
@@ -901,8 +901,6 @@ MAY contain inlined messages. See
     &quot;method&quot;: &quot;POST&quot;
   },
 
-  &quot;messagesurl&quot;: &quot;...&quot;,
-  &quot;messagescount&quot;: 1,
   &quot;messages&quot;: {
     &quot;myevent&quot;: {
       &quot;envelope&quot;: &quot;CloudEvents/1.0&quot;,
@@ -914,7 +912,9 @@ MAY contain inlined messages. See
         }
       }
     }
-  }
+  },
+  &quot;messagesurl&quot;: &quot;...&quot;,
+  &quot;messagescount&quot;: 1
 }
 </code></pre>
 <p>When this specification, and the <a href="./../../message-v1/docs/spec.html">message specification</a>,

@@ -452,12 +452,14 @@ Alternative serialization formats MAY be defined.</p>
     &quot;attributes&quot;: {                     # Registry-level attributes/extensions
       &quot;&lt;STRING&gt;&quot;: {                     # Attribute name (case-sensitive)
         &quot;name&quot;: &quot;&lt;STRING&gt;&quot;,             # Same as attribute's key
+        &quot;description&quot;: &quot;&lt;STRING&gt;&quot;, ?
         &quot;type&quot;: &quot;&lt;TYPE&gt;&quot;,               # string, decimal, array, object, ...
+
+        &quot;enum&quot;: [ &lt;VALUE&gt; * ], ?        # Array of scalars of type `&quot;type&quot;`
+        &quot;strict&quot;: &lt;BOOLEAN&gt;, ?          # Just value in &quot;enum&quot;? Default=true
         &quot;target&quot;: &quot;&lt;XIDTYPE&gt;&quot;, ?        # If &quot;type&quot; is &quot;xid&quot; or &quot;url&quot;
         &quot;namecharset&quot;: &quot;&lt;STRING&gt;&quot;, ?    # If &quot;type&quot; is &quot;object&quot;
-        &quot;description&quot;: &quot;&lt;STRING&gt;&quot;, ?
-        &quot;enum&quot;: [ &lt;VALUE&gt; * ], ?        # Array of scalars of type `&quot;type&quot;`
-        &quot;strict&quot;: &lt;BOOLEAN&gt;, ?          # Just &quot;enum&quot; values? Default=true
+
         &quot;matchversions&quot;: &lt;BOOLEAN&gt;, ?   # Same for all Versions? Def=false
         &quot;readonly&quot;: &lt;BOOLEAN&gt;, ?        # From client's POV. Default=false
         &quot;immutable&quot;: &lt;BOOLEAN&gt;, ?       # Once set, can't change. Default=false
@@ -467,8 +469,12 @@ Alternative serialization formats MAY be defined.</p>
         &quot;attributes&quot;: { ... }, ?        # If &quot;type&quot; above is object
         &quot;item&quot;: {                       # If &quot;type&quot; above is map,array
           &quot;type&quot;: &quot;&lt;TYPE&gt;&quot;, ?           # map value type, or array type
+
+          &quot;enum&quot;: [ &lt;VALUE&gt; * ], ?      # Array of scalars of this item `&quot;type&quot;`
+          &quot;strict&quot;: &lt;BOOLEAN&gt;, ?        # Just value in &quot;enum&quot;? Default=true
           &quot;target&quot;: &quot;&lt;XIDTYPE&gt;&quot;, ?      # If this item &quot;type&quot; is xid/url
           &quot;namecharset&quot;: &quot;&lt;STRING&gt;&quot;, ?  # If this item &quot;type&quot; is object
+
           &quot;attributes&quot;: { ... }, ?      # If this item &quot;type&quot; is object
           &quot;item&quot;: { ... } ?             # If this item &quot;type&quot; is map,array
         } ?
@@ -524,8 +530,6 @@ Alternative serialization formats MAY be defined.</p>
   &quot;modelsource&quot;: { ... }, ?                        # Input model, if inlined
 
   # Repeat for each Group type
-  &quot;&lt;GROUPS&gt;url&quot;: &quot;&lt;URL&gt;&quot;,                          # e.g. &quot;endpointsurl&quot;
-  &quot;&lt;GROUPS&gt;count&quot;: &lt;UINTEGER&gt;,                     # e.g. &quot;endpointscount&quot;
   &quot;&lt;GROUPS&gt;&quot;: {                                    # Only if inlined
     &quot;&lt;KEY&gt;&quot;: {                                     # Key=the Group ID
       &quot;&lt;GROUP&gt;id&quot;: &quot;&lt;STRING&gt;&quot;,                     # The Group ID
@@ -555,8 +559,6 @@ Alternative serialization formats MAY be defined.</p>
       }, ?
 
       # Repeat for each Resource type in the Group
-      &quot;&lt;RESOURCES&gt;url&quot;: &quot;&lt;URL&gt;&quot;,                   # e.g. &quot;messagesurl&quot;
-      &quot;&lt;RESOURCES&gt;count&quot;: &lt;UINTEGER&gt;,              # e.g. &quot;messagescount&quot;
       &quot;&lt;RESOURCES&gt;&quot;: {                             # Only if inlined
         &quot;&lt;KEY&gt;&quot;: {                                 # The Resource ID
           &quot;&lt;RESOURCE&gt;id&quot;: &quot;&lt;STRING&gt;&quot;,
@@ -611,8 +613,6 @@ Alternative serialization formats MAY be defined.</p>
             &quot;defaultversionsticky&quot;: &lt;BOOLEAN&gt; ?    # Default=false
           }, ?
 
-          &quot;versionsurl&quot;: &quot;&lt;URL&gt;&quot;,
-          &quot;versionscount&quot;: &lt;UINTEGER&gt;,
           &quot;versions&quot;: {                            # Only if inlined
             &quot;&lt;KEY&gt;&quot;: {                             # The Version's versionid
               &quot;&lt;RESOURCE&gt;id&quot;: &quot;&lt;STRING&gt;&quot;,          # The Resource's ID
@@ -641,11 +641,17 @@ Alternative serialization formats MAY be defined.</p>
               &quot;&lt;RESOURCE&gt;&quot;: ... Resource document ..., ? # If inlined &amp; JSON
               &quot;&lt;RESOURCE&gt;base64&quot;: &quot;&lt;STRING&gt;&quot; ?           # If inlined &amp; ~JSON
             } *
-          } ?
+          }, ?
+          &quot;versionsurl&quot;: &quot;&lt;URL&gt;&quot;,
+          &quot;versionscount&quot;: &lt;UINTEGER&gt;
         } *
-      } ?
+      }, ?
+      &quot;&lt;RESOURCES&gt;url&quot;: &quot;&lt;URL&gt;&quot;,                   # e.g. &quot;messagesurl&quot;
+      &quot;&lt;RESOURCES&gt;count&quot;: &lt;UINTEGER&gt;               # e.g. &quot;messagescount&quot;
     } *
-  } ?
+  }, ?
+  &quot;&lt;GROUPS&gt;url&quot;: &quot;&lt;URL&gt;&quot;,                          # e.g. &quot;endpointsurl&quot;
+  &quot;&lt;GROUPS&gt;count&quot;: &lt;UINTEGER&gt;                      # e.g. &quot;endpointscount&quot;
 }
 </code></pre>
 <p>If there is an issue with reading or parsing the data provided to the
@@ -1600,11 +1606,11 @@ defined by the <a href="./model.html#registry-model">Registry Model</a> MUST be 
 according to the rules defined in this section.</p>
 <p>The serialization of a collection is done as 3 attributes and they MUST adhere
 to their respective forms as follows:</p>
-<pre><code class="language-yaml">&quot;&lt;COLLECTION&gt;url&quot;: &quot;&lt;URL&gt;&quot;,
-&quot;&lt;COLLECTION&gt;count&quot;: &lt;UINTEGER&gt;,
-&quot;&lt;COLLECTION&gt;&quot;: {
+<pre><code class="language-yaml">&quot;&lt;COLLECTION&gt;&quot;: {
   # Map of entities in the collection, key is the &quot;&lt;SINGULAR&gt;id&quot; of the entity
-}
+},
+&quot;&lt;COLLECTION&gt;url&quot;: &quot;&lt;URL&gt;&quot;,
+&quot;&lt;COLLECTION&gt;count&quot;: &lt;UINTEGER&gt;
 </code></pre>
 <p>Where:</p>
 <ul>
@@ -1639,9 +1645,7 @@ statement as to whether a subsequent query that is missing previously returned
 entities is an indication of those entities being deleted or not.</p>
 <p><strong>Examples:</strong></p>
 <p>Sample <code>schemagroups</code> collection attributes, with <code>schemagroups</code> inlined.</p>
-<pre><code class="language-yaml">&quot;schemagroupsurl&quot;: &quot;http://registry.example.com/schemagroups&quot;,
-&quot;schemagroupscount&quot;: 8
-&quot;schemagroups&quot;: {
+<pre><code class="language-yaml">&quot;schemagroups&quot;: {
   &quot;Contoso.ERP&quot;: {...},
   &quot;Fabrikam.InkJetPrinter&quot;: {...},
   &quot;Fabrikam.Lumen&quot;: {...},
@@ -1651,6 +1655,8 @@ entities is an indication of those entities being deleted or not.</p>
   &quot;WaterBoiler&quot;: {...},
   &quot;WindGenerator&quot;: {...}
 },
+&quot;schemagroupsurl&quot;: &quot;http://registry.example.com/schemagroups&quot;,
+&quot;schemagroupscount&quot;: 8
 </code></pre>
 <p>The requirements on the presence of the 3 <code>&lt;COLLECTION&gt;*</code> attributes varies
 between document and API views, and is defined below:</p>
@@ -1775,9 +1781,9 @@ entry-point for traversal and discovery.</p>
   &quot;modelsource&quot;: { Registry model }, ?           # Only if inlined
 
   # Repeat for each Group type
+  &quot;&lt;GROUPS&gt;&quot;: { Groups collection }, ?           # Only if inlined
   &quot;&lt;GROUPS&gt;url&quot;: &quot;&lt;URL&gt;&quot;,                        # e.g. &quot;endpointsurl&quot;
-  &quot;&lt;GROUPS&gt;count&quot;: &lt;UINTEGER&gt;,                   # e.g. &quot;endpointscount&quot;
-  &quot;&lt;GROUPS&gt;&quot;: { Groups collection } ?            # Only if inlined
+  &quot;&lt;GROUPS&gt;count&quot;: &lt;UINTEGER&gt;                    # e.g. &quot;endpointscount&quot;
 }
 </code></pre>
 <p>This entity behaves like all other entities in the Registry with respect to
@@ -2434,9 +2440,9 @@ Group type are related to each other.</p>
   }, ?
 
   # Repeat for each Resource type in the Group
+  &quot;&lt;RESOURCES&gt;&quot;: { Resources collection }, ?  # If inlined
   &quot;&lt;RESOURCES&gt;url&quot;: &quot;&lt;URL&gt;&quot;,                  # e.g. &quot;messagesurl&quot;
-  &quot;&lt;RESOURCES&gt;count&quot;: &lt;UINTEGER&gt;,             # e.g. &quot;messagescount&quot;
-  &quot;&lt;RESOURCES&gt;&quot;: { Resources collection } ?   # If inlined
+  &quot;&lt;RESOURCES&gt;count&quot;: &lt;UINTEGER&gt;              # e.g. &quot;messagescount&quot;
 }
 </code></pre>
 <p>Group extension attributes would also appear as additional top-level JSON
@@ -2536,9 +2542,9 @@ it MUST adhere to the following:</p>
   &quot;metaurl&quot;: &quot;&lt;URL&gt;&quot;,                        # URL to 'meta' entity
   &quot;meta&quot;: { meta entity }, ?                 # Only if inlined
 
+  &quot;versions&quot;: { map of Versions },           # Only if inlined
   &quot;versionsurl&quot;: &quot;&lt;URL&gt;&quot;,                    # Absolute URL to versions
-  &quot;versionscount&quot;: &lt;UINTEGER&gt;,               # Size of versions collection
-  &quot;versions&quot;: { map of Versions }            # Only if inlined
+  &quot;versionscount&quot;: &lt;UINTEGER&gt;                # Size of versions collection
 }
 </code></pre>
 <p>When the default Version attributes do appear in the xRegistry metadata
@@ -2569,9 +2575,9 @@ it MUST adhere to the following:</p>
   &quot;metaurl&quot;: &quot;&lt;URL&gt;&quot;,
   &quot;meta&quot;: { meta entity }, ?                 # Only if inlined
 
+  &quot;versions&quot;: { map of Versions }, ?         # Only if inlined
   &quot;versionsurl&quot;: &quot;&lt;URL&gt;&quot;,
-  &quot;versionscount&quot;: &lt;UINTEGER&gt;,
-  &quot;versions&quot;: { map of Versions } ?          # Only if inlined
+  &quot;versionscount&quot;: &lt;UINTEGER&gt;
 }
 </code></pre>
 <p>Note that the Version attributes that conflict with the Resource
@@ -2833,6 +2839,19 @@ specified in the
 <a href="#cross-referencing-resources">Cross Referencing Resources</a> section.</li>
 </ul>
 </li>
+<li>
+<p>Step 4 - Process the <code>meta</code> sub-object:</p>
+<ul>
+<li>If the operation isn't replacing the entire <code>meta</code> sub-object, but instead
+is doing a &quot;patch&quot; type of operation, and it is changing the Resource's
+<code>defaultversionsticky</code> flag from <code>false</code> to <code>true</code>, then the current
+default Version (as defined prior to the start of the operation) is to be
+made sticky. This aligns with the first sub-bullet of &quot;Step 2&quot; above,
+to ensure that the same &quot;default&quot; Version is used for both updating
+the &quot;default Version attributes&quot; as well as &quot;making the default Version
+sticky&quot;.</li>
+</ul>
+</li>
 </ul>
 <p>See <a href="./resource.html">Resource Update Samples</a> for examples.</p>
 <h5 id="resource-attribute-processing"><code>&lt;RESOURCE&gt;*</code> Attribute Processing <a class="anchor" href="#resource-attribute-processing">🔗</a></h5>
@@ -2899,8 +2918,8 @@ locally defined.</p>
 
   &quot;metaurl&quot;: &quot;http://example.com/schemagroups/group2/schemas/sharedSchema/meta&quot;,
 
-  &quot;versionscount&quot;: 1,
-  &quot;versionsurl&quot;: &quot;http://example.com/schemagroups/group2/schemas/sharedSchema/versions&quot;
+  &quot;versionsurl&quot;: &quot;http://example.com/schemagroups/group2/schemas/sharedSchema/versions&quot;,
+  &quot;versionscount&quot;: 1
 }
 </code></pre>
 <p>then the resulting serialization of the source Resource would be:</p>
@@ -2929,8 +2948,8 @@ locally defined.</p>
     &quot;defaultversionsticky&quot;: false
   },
 
-  &quot;versionscount&quot;: 1,
-  &quot;versionsurl&quot;: &quot;http://example.com/schemagroups/group1/schemas/mySchema/versions&quot;
+  &quot;versionsurl&quot;: &quot;http://example.com/schemagroups/group1/schemas/mySchema/versions&quot;,
+  &quot;versionscount&quot;: 1
 }
 </code></pre>
 <p>Note:</p>
@@ -3241,8 +3260,11 @@ of the Resource in any of the following situations:</p>
 <code>defaultversionsticky</code> with a value of <code>true</code>, but no <code>defaultversionid</code> was
 provided.</li>
 <li>The processing patched the <code>meta</code> sub-object and the request modified
-<code>defaultversionsticky</code> from <code>false</code> to <code>true</code>, but no <code>defaultversionid</code>
-was provided.</li>
+<code>defaultversionsticky</code> from <code>false</code> to <code>true</code>, and a <code>defaultversionid</code>
+value of <code>null</code> was provided for this attribute. Note that a patch request
+with <code>defaultversionsticky</code> set to <code>true</code> but no <code>defaultversionid</code> specified
+will make the default Version as defined prior to the start of the operation
+sticky.</li>
 </ul>
 <p>Regardless of the reason for <code>defaultversionid</code> or <code>defaultversionsticky</code>
 being modified, those changes alone MUST NOT change any attributes in any
@@ -4550,8 +4572,6 @@ contents of all specified inlineable attributes. Inlineable attributes include:<
 <li>The <code>&lt;RESOURCE&gt;</code> attribute in a Resource or Version.</li>
 <li>The <code>meta</code> attribute in a Resource.</li>
 </ul>
-<p>Specifying the name of a non-inlineable attribute MUST generate an error
-(<a href="#inline_noninlineable">inline_noninlineable</a>).</p>
 <p>While the <code>&lt;RESOURCE&gt;</code> and <code>&lt;RESOURCE&gt;base64</code> attributes are defined as two
 separate attributes, they are technically two separate &quot;views&quot; of the same
 underlying data. As such, the usage of each will be based on the content type
@@ -5533,18 +5553,6 @@ field is just a substitution value and MUST NOT be empty.</p>
 <li>Args:
 <ul>
 <li><code>plural</code>: The &quot;plural&quot; type name of the Resource being processed.</li>
-</ul>
-</li>
-</ul>
-<h3 id="inline_noninlineable">inline_noninlineable <a class="anchor" href="#inline_noninlineable">🔗</a></h3>
-<ul>
-<li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#inline_noninlineable</code></li>
-<li>Code: <code>400 Bad Request</code></li>
-<li>Title: <code>Attempting to inline a non-inlineable attribute (&lt;name&gt;) on: &lt;subject&gt;.</code></li>
-<li>Subject: <code>&lt;request_path&gt;</code></li>
-<li>Args:
-<ul>
-<li><code>name</code>: The name of the attribute in question.</li>
 </ul>
 </li>
 </ul>

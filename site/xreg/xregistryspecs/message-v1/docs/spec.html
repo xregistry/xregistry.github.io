@@ -459,8 +459,6 @@ this form:</p>
   &quot;model&quot;: { ... }, ?
   &quot;modelsource&quot;: { ... }, ?
 
-  &quot;messagegroupsurl&quot;: &quot;&lt;URL&gt;&quot;,
-  &quot;messagegroupscount&quot;: &lt;UINTEGER&gt;,
   &quot;messagegroups&quot;: {
     &quot;&lt;KEY&gt;&quot;: {                                  # messagegroupid
       &quot;messagegroupid&quot;: &quot;&lt;STRING&gt;&quot;,             # xRegistry core attributes
@@ -480,8 +478,6 @@ this form:</p>
       &quot;envelope&quot;: &quot;&lt;STRING&gt;&quot;, ?                 # e.g. CloudEvents/1.0
       &quot;protocol&quot;: &quot;&lt;STRING&gt;&quot;, ?                 # e.g. HTTP/1.1
 
-      &quot;messagesurl&quot;: &quot;&lt;URL&gt;&quot;,
-      &quot;messagescount&quot;: &lt;UINTEGER&gt;,
       &quot;messages&quot; : {
         &quot;&lt;KEY&gt;&quot;: {                              # messageid
           &quot;messageid&quot;: &quot;&lt;STRING&gt;&quot;,              # xRegistry core attributes
@@ -537,12 +533,17 @@ this form:</p>
           &quot;metaurl&quot;: &quot;&lt;URL&gt;&quot;,
           &quot;meta&quot;: { ... }, ?
 
+          &quot;versions&quot;: { ... }, ?
           &quot;versionsurl&quot;: &quot;&lt;URL&gt;&quot;,
-          &quot;versionscount&quot;: &lt;UINTEGER&gt;,
-          &quot;versions&quot;: { ... } ?
-      } ?
+          &quot;versionscount&quot;: &lt;UINTEGER&gt;
+        }
+      }, ?
+      &quot;messagesurl&quot;: &quot;&lt;URL&gt;&quot;,
+      &quot;messagescount&quot;: &lt;UINTEGER&gt;
     } *
-  } ?
+  }, ?
+  &quot;messagegroupsurl&quot;: &quot;&lt;URL&gt;&quot;,
+  &quot;messagegroupscount&quot;: &lt;UINTEGER&gt;,
 }
 </code></pre>
 <h3 id="message-definition-groups">Message Definition Groups <a class="anchor" href="#message-definition-groups">🔗</a></h3>
@@ -680,9 +681,7 @@ boundaries, this attribute is also REQUIRED and MUST be the same as the
 <code>envelope</code> attribute of the <code>messagegroup</code> object into which the message is
 embedded or referenced.</p>
 <p>Illustrating example:</p>
-<pre><code class="language-yaml">&quot;messagegroupsurl&quot;: &quot;...&quot;,
-&quot;messagegroupscount&quot;: 2,
-&quot;messagegroups&quot;: {
+<pre><code class="language-yaml">&quot;messagegroups&quot;: {
   &quot;com.example.abc&quot;: {
     &quot;messagegroupid&quot;: &quot;com.example.abc&quot;,
     &quot;envelope&quot;: &quot;CloudEvents/1.0&quot;,
@@ -715,7 +714,9 @@ embedded or referenced.</p>
       }
     }
   }
-}
+},
+&quot;messagegroupsurl&quot;: &quot;...&quot;,
+&quot;messagegroupscount&quot;: 2
 </code></pre>
 <h4 id="envelopemetadata"><code>envelopemetadata</code> <a class="anchor" href="#envelopemetadata">🔗</a></h4>
 <ul>
