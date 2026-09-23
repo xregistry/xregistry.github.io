@@ -222,8 +222,9 @@ Link MUST NOT be included in the response.</li>
 <code>next</code> Link MUST be included in the response.</li>
 <li>The response MAY include the <code>last</code> Link in any response.</li>
 <li>The response MAY include the <code>expires</code> attribute in any response as an
-HTTP &quot;Expires&quot; header. If present, it MUST adhere to the format specified in
-<a href="https://tools.ietf.org/html/rfc7234#section-5.3">RFC3339</a>.</li>
+HTTP &quot;Expires&quot; header. If present, it MUST adhere to the HTTP-date format
+specified for
+<a href="https://www.rfc-editor.org/rfc/rfc9111.html#section-5.3">Expires in RFC9111</a>.</li>
 <li>It is STRONGLY RECOMMENDED that all responses include the <code>count</code> attribute.</li>
 </ul>
 <p>Additionally, Links MUST appear in the HTTP response as HTTP headers using
@@ -234,7 +235,7 @@ Link: &lt;http://example.com?limit=100&amp;offset=1&gt;;rel=prev
 </code></pre>
 <p>Example 2:</p>
 <pre><code>Link: &lt;http://example.com?resultset=83d71&gt;;rel=next
-Expires: Thu, 01 Dec 2021 16:00:00 GMT
+Expires: Wed, 01 Dec 2021 16:00:00 GMT
 </code></pre>
 <p>Example 3:</p>
 <pre><code>Link: &lt;http://example.com?id=1001&gt;;rel=next;count=3000

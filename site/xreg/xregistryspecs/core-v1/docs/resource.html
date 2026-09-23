@@ -266,7 +266,7 @@ Resource.* attributes are ignored.</li>
 alphabetically by their <code>versionid</code> values in order to set their <code>ancestorid</code>
 attributes.</li>
 <li>Which means <code>v2</code> becomes the newest and therefore the default Version.</li>
-<li>Ancestor order: <code>1</code> &lt;- <code>v1</code> &lt;- <code>v2</code>.</li>
+<li>Ancestor order: <code>v1</code> &lt;- <code>v2</code>.</li>
 <li>Using <code>PATCH</code> would yield the exact same results.</li>
 </ul>
 <hr>
@@ -492,7 +492,7 @@ attributes will be applied.</li>
   &quot;versions&quot;: {
     &quot;v0&quot;: {
       &quot;epoch&quot;: 1,
-      &quot;name&quot;: &quot;foo&quot;
+      &quot;name&quot;: &quot;foo&quot;,
       &quot;createdat&quot;: &quot;now&quot;,
       &quot;modifiedat&quot;: &quot;now&quot;,
       &quot;ancestorid&quot;: &quot;v1&quot;
@@ -520,7 +520,7 @@ attributes will be applied.</li>
 <pre><code>{
   &quot;fileid&quot;: &quot;f1&quot;,
   &quot;versionid&quot;: &quot;v0&quot;,
-  &quot;epoch&quot;: 1
+  &quot;epoch&quot;: 1,
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;2021&quot;,
   &quot;modifiedat&quot;: &quot;2021&quot;,
@@ -583,7 +583,7 @@ attributes will be applied.</li>
       &quot;ancestorid&quot;: &quot;v1&quot;
     },
     &quot;v1&quot;: { see Resource.* attrs },
-    &quot;v2&quot;: { see Resource.* attrs }
+    &quot;v2&quot;: {
       &quot;epoch&quot;: 1,
       &quot;createdat&quot;: &quot;now&quot;,
       &quot;modifiedat&quot;: &quot;now&quot;,
@@ -655,7 +655,7 @@ Version due to <code>defaultversionsticky</code> being <code>true</code>.</li>
       &quot;modifiedat&quot;: &quot;now&quot;,
       &quot;ancestorid&quot;: &quot;v1&quot;
     },
-    &quot;v1&quot;: { see Resource.* attrs }
+    &quot;v1&quot;: { see Resource.* attrs },
     &quot;v2&quot;: {
       &quot;epoch&quot;: 1,
       &quot;createdat&quot;: &quot;now&quot;,
@@ -676,7 +676,7 @@ Version when processing the Resource.* attributes, but then assign <code>v1</cod
 the resulting default Version. This means that in the previous example
 <code>versionid</code> was not needed, but in this example it is to yield the correct
 (same) net result.</li>
-<li>Ancestor order: <code>v1</code> (2020) &lt;- <code>v0</code> (now) &lt;- <code>v2</code> (now).</li>
+<li>Ancestor order: <code>v1</code> (2020) &lt;- <code>v0</code> (2021) &lt;- <code>v2</code> (now).</li>
 </ul>
 <hr>
 <h3 id="create-resource-with-versionid-and-defaultversionid">Create Resource with versionid and defaultversionid <a class="anchor" href="#create-resource-with-versionid-and-defaultversionid">🔗</a></h3>
@@ -1005,7 +1005,6 @@ the next example we'll see how <code>PATCH</code> changes this semantics.</li>
       &quot;ancestorid&quot;: &quot;v1&quot;
     },
     &quot;v2&quot;: { see Resource.* attrs }
-    }
   }
 }
 </code></pre>
@@ -1351,7 +1350,7 @@ current default Version.</li>
 <pre><code>PUT /dirs/d1/files/f1
 
 {
-  &quot;meta: {
+  &quot;meta&quot;: {
     &quot;defaultversionsticky&quot;: true
   }
 }
@@ -1417,7 +1416,7 @@ Version the calculated default Version remains <code>1</code>.</li>
 <pre><code>PATCH /dirs/d1/files/f1
 
 {
-  &quot;meta: {
+  &quot;meta&quot;: {
     &quot;defaultversionsticky&quot;: true
   }
 }
@@ -1564,7 +1563,7 @@ sticky.</li>
 <pre><code>PATCH /dirs/d1/files/f1
 
 {
-  &quot;meta: {
+  &quot;meta&quot;: {
     &quot;defaultversionid&quot;: &quot;foo&quot;
   }
 }
@@ -1612,7 +1611,7 @@ would have been ignored.</li>
 <pre><code>PUT /dirs/d1/files/f1
 
 {
-  &quot;meta: {
+  &quot;meta&quot;: {
     &quot;defaultversionid&quot;: &quot;foo&quot;,
     &quot;defaultversionsticky&quot;: true
   }
@@ -1659,7 +1658,7 @@ value of <code>true</code> then <code>defaultversionid</code> would have been ig
 
 {
   &quot;name&quot;: &quot;foo&quot;,
-  &quot;createdat&quot;: &quot;1999&quot;
+  &quot;createdat&quot;: &quot;1999&quot;,
   &quot;meta&quot;: {
     &quot;defaultversionsticky&quot;: true
   },

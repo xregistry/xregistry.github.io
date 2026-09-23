@@ -1556,11 +1556,11 @@ Content-Type: application/json; charset=utf-8
 
 {
   &quot;msg1&quot;: {
-    &quot;endpointid&quot;: &quot;msg1&quot;,
+    &quot;messageid&quot;: &quot;msg1&quot;,
     ... remainder of msg1 definition excluded for brevity ...
   },
   &quot;msg2&quot;: {
-    &quot;endpointid&quot;: &quot;msg2&quot;,
+    &quot;messageid&quot;: &quot;msg2&quot;,
     ... remainder of msg2 definition excluded for brevity ...
   }
 }
@@ -1570,11 +1570,11 @@ Content-Type: application/json; charset=utf-8
 
 {
   &quot;msg1&quot;: {
-    &quot;endpointid&quot;: &quot;msg1&quot;,
+    &quot;messageid&quot;: &quot;msg1&quot;,
     ... remainder of msg1 definition excluded for brevity ...
   },
   &quot;msg2&quot;: {
-    &quot;endpointid&quot;: &quot;msg2&quot;,
+    &quot;messageid&quot;: &quot;msg2&quot;,
     ... remainder of msg2 definition excluded for brevity ...
   }
 }
@@ -1708,7 +1708,7 @@ Content-Location: https://example.com/endpoints/ep1/messages/msg1/versions/1
 {
   &quot;messageid&quot;: &quot;msg1&quot;,
   &quot;versionid&quot;: &quot;1&quot;,
-  &quot;self&quot;: &quot;https://example.com/endpoints/ep1/messages/msg1&quot;,&quot;
+  &quot;self&quot;: &quot;https://example.com/endpoints/ep1/messages/msg1&quot;,
   &quot;xid&quot;: &quot;/endpoints/ep1/messages/msg1&quot;,
   &quot;epoch&quot;: 1,
   &quot;name&quot;: &quot;Blob Created&quot;,
@@ -2024,7 +2024,7 @@ Content-Location: https://example.com/endpoints/ep1/messages/msg1/versions/1
   &quot;messageid&quot;: &quot;msg1&quot;,
   &quot;versionid&quot;: &quot;1&quot;,
   &quot;self&quot;: &quot;https://example.com/endpoints/ep1/messages/msg1/versions/1&quot;,
-  &quot;xid&quot;: &quot;/endpoints/ep1/messages/msg1&quot;,
+  &quot;xid&quot;: &quot;/endpoints/ep1/messages/msg1/versions/1&quot;,
   &quot;epoch&quot;: 2,
   &quot;name&quot;: &quot;Blob Created&quot;,
   &quot;isdefault&quot;: true,
@@ -2179,8 +2179,8 @@ Link: &lt;https://example.com/endpoints/ep1/messages/msg1/versions&amp;page=2&gt
   &quot;1.0&quot;: {
     &quot;messageid&quot;: &quot;msg1&quot;,
     &quot;versionid&quot;: &quot;1.0&quot;,
-    &quot;self&quot;: &quot;https://example.com/endpoints/ep1/messages/msg1&quot;,
-    &quot;xid&quot;: &quot;/endpoints/ep1/messages/msg1&quot;,
+    &quot;self&quot;: &quot;https://example.com/endpoints/ep1/messages/msg1/versions/1.0&quot;,
+    &quot;xid&quot;: &quot;/endpoints/ep1/messages/msg1/versions/1.0&quot;,
     &quot;epoch&quot;: 1,
     &quot;name&quot;: &quot;Blob Created&quot;,
     &quot;isdefault&quot;: true,
@@ -2207,7 +2207,7 @@ POST /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;/versions
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;&lt;KEY&gt;&quot;: {                                      # &lt;GROUP&gt;id
+  &quot;&lt;KEY&gt;&quot;: {                                      # versionid
      ... Version entity excluded for brevity ...
   } *
 }
@@ -2217,7 +2217,7 @@ Content-Type: application/json; charset=utf-8
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;&lt;KEY&gt;&quot;: {                                      # &lt;GROUP&gt;id
+  &quot;&lt;KEY&gt;&quot;: {                                      # versionid
      ... Version entity excluded for brevity ...
   } *
 }
@@ -2261,7 +2261,7 @@ Content-Type: application/json; charset=utf-8
     &quot;labels&quot;: { &quot;customer&quot;: &quot;abc&quot; },
     # Remainder of Version entity excluded for brevity
   }
-]
+}
 </code></pre>
 <p>Note that in this case, the new &quot;label&quot; replaces all existing labels; it is
 not a &quot;merge&quot; operation because all attributes need to be specified in their
@@ -2275,7 +2275,7 @@ owning Resource's <a href="./spec.html#versions-collection"><code>versions</code
 <a href="./spec.html#deleting-entities">Deleting Entities</a> section of the
 <a href="./spec.html">core specification</a>.</p>
 <p>The request MUST be of the form:</p>
-<pre><code class="language-yaml">DELETE /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/versions
+<pre><code class="language-yaml">DELETE /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;/versions
 
 {
   &quot;&lt;KEY&gt;&quot;: {                            # versionid
@@ -2376,7 +2376,7 @@ Content-Type: application/json; charset=utf-8
   &quot;schemaid&quot;: &quot;myschema&quot;,
   &quot;versionid&quot;: &quot;1.0&quot;,
   &quot;self&quot;: &quot;https://example.com/schemagroups/g1/schemas/myschema/versions/1.0&quot;,
-  &quot;xid&quot;: &quot;/endpoints/ep1/messages/msg1/versions/1.0&quot;,
+  &quot;xid&quot;: &quot;/schemagroups/g1/schemas/myschema/versions/1.0&quot;,
   &quot;epoch&quot;: 2,
   &quot;isdefault&quot;: true,
   &quot;createdat&quot;: &quot;2024-04-30T12:00:00Z&quot;,
@@ -2514,7 +2514,7 @@ Content-Disposition: msg1
 { ... Definition of &quot;Blob Created&quot; event (document) excluded for brevity ... }
 </code></pre>
 <p>Update a Version of a Resource as metadata:</p>
-<pre><code class="language-yaml">PUT /endpoints/ep1/messages/msg1/versions/v2.0$details/
+<pre><code class="language-yaml">PUT /endpoints/ep1/messages/msg1/versions/v2.0$details
 Content-Type: application/json; charset=utf-8
 
 {
@@ -2531,7 +2531,7 @@ Content-Location: https://example.com/endpoints/ep1/messages/msg1/versions/v2.0
 
 {
   &quot;messageid&quot;: &quot;msg1&quot;,
-  &quot;versionid&quot;: &quot;1&quot;,
+  &quot;versionid&quot;: &quot;v2.0&quot;,
   &quot;self&quot;: &quot;https://example.com/endpoints/ep1/messages/msg1/versions/v2.0&quot;,
   &quot;xid&quot;: &quot;/endpoints/ep1/messages/msg1/versions/v2.0&quot;,
   &quot;epoch&quot;: 2,
@@ -2569,8 +2569,8 @@ HTTP/1.1 204 No Content
 </code></pre>
 <pre><code>HTTP/1.1 204 No Content
 </code></pre>
-<p>Delete a Resource, verifying its <code>epoch</code> value:</p>
-<pre><code class="language-yaml">DELETE /endpoints/ep1/messages/msg1/versions?epoch=5
+<p>Delete a Version, verifying its <code>epoch</code> value:</p>
+<pre><code class="language-yaml">DELETE /endpoints/ep1/messages/msg1/versions/1.0?epoch=5
 </code></pre>
 <pre><code>HTTP/1.1 204 No Content
 </code></pre>

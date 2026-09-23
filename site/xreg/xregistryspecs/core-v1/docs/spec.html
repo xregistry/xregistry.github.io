@@ -2906,14 +2906,14 @@ Resource's attributes (except its <code>&lt;RESOURCE&gt;id</code>) will appear a
 locally defined.</p>
 <p>So, if the target Resource (<code>sharedSchema</code>) is defined as:</p>
 <pre><code class="language-yaml">{
-  &quot;resourceid&quot;: &quot;sharedSchema&quot;,
+  &quot;schemaid&quot;: &quot;sharedSchema&quot;,
   &quot;versionid&quot;: &quot;v1&quot;,
   &quot;self&quot;: &quot;http://example.com/schemagroups/group2/schemas/sharedSchema&quot;,
   &quot;xid&quot;: &quot;/schemagroups/group2/schemas/sharedSchema&quot;,
   &quot;epoch&quot;: 2,
   &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;2024-01-01-T12:00:00Z&quot;,
-  &quot;modifiedat&quot;: &quot;2024-01-01-T12:01:00Z&quot;,
+  &quot;createdat&quot;: &quot;2024-01-01T12:00:00Z&quot;,
+  &quot;modifiedat&quot;: &quot;2024-01-01T12:01:00Z&quot;,
   &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;metaurl&quot;: &quot;http://example.com/schemagroups/group2/schemas/sharedSchema/meta&quot;,
@@ -2924,24 +2924,24 @@ locally defined.</p>
 </code></pre>
 <p>then the resulting serialization of the source Resource would be:</p>
 <pre><code class="language-yaml">{
-  &quot;resourceid&quot;: &quot;mySchema&quot;,
+  &quot;schemaid&quot;: &quot;mySchema&quot;,
   &quot;versionid&quot;: &quot;v1&quot;,
   &quot;self&quot;: &quot;http://example.com/schemagroups/group1/schemas/mySchema&quot;,
   &quot;xid&quot;: &quot;/schemagroups/group1/schemas/mySchema&quot;,
   &quot;epoch&quot;: 2,
   &quot;isdefault&quot;: true,
-  &quot;createdat&quot;: &quot;2024-01-01-T12:00:00Z&quot;,
-  &quot;modifiedat&quot;: &quot;2024-01-01-T12:01:00Z&quot;,
+  &quot;createdat&quot;: &quot;2024-01-01T12:00:00Z&quot;,
+  &quot;modifiedat&quot;: &quot;2024-01-01T12:01:00Z&quot;,
   &quot;ancestorid&quot;: &quot;v1&quot;,
 
   &quot;metaurl&quot;: &quot;http://example.com/schemagroups/group1/schemas/mySchema/meta&quot;,
   &quot;meta&quot;: {
-    &quot;resourceid&quot;: &quot;mySchema&quot;,
+    &quot;schemaid&quot;: &quot;mySchema&quot;,
     &quot;self&quot;: &quot;http://example.com/schemagroups/group1/schemas/mySchema/meta&quot;,
     &quot;xid&quot;: &quot;/schemagroups/group1/schemas/mySchema/meta&quot;,
     &quot;xref&quot;: &quot;/schemagroups/group2/schemas/sharedSchema&quot;,
-    &quot;createdat&quot;: &quot;2024-01-01-T12:00:00Z&quot;,
-    &quot;modifiedat&quot;: &quot;2024-01-01-T12:01:00Z&quot;,
+    &quot;createdat&quot;: &quot;2024-01-01T12:00:00Z&quot;,
+    &quot;modifiedat&quot;: &quot;2024-01-01T12:01:00Z&quot;,
     &quot;readonly&quot;: false,
     &quot;defaultversionid&quot;: &quot;v1&quot;,
     &quot;defaultversionurl&quot;: &quot;http://example.com/schemagroups/group1/schemas/mySchema/versions/v1&quot;,
@@ -3725,7 +3725,7 @@ absent or has a value of <code>true</code>.</li>
 <p>Type: Boolean</p>
 </li>
 <li>
-<p>Description: When <a href="./model.html#groupsstringresourcesstringvalidateformat"><code>compatibility</code>
+<p>Description: When <a href="./model.html#groupsstringresourcesstringvalidatecompatibility"><code>compatibility</code>
 validation</a>
 is enabled, this attribute will indicate whether or not the server has
 performed validation to ensure the Version conforms to the rules defined by
@@ -3786,7 +3786,7 @@ Resource's <code>meta.compatibility</code> attribute is absent.</li>
 <p>Description: When
 <a href="#compatibilityvalidated-attribute"><code>compatibilityvalidated</code></a> has a
 value of <code>false</code>, this attribute MUST provide information as to why the
-format validation check was not performed.</p>
+compatibility validation check was not performed.</p>
 </li>
 <li>
 <p>Constraints:</p>

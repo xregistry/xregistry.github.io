@@ -269,7 +269,7 @@ use context attributes to map them to the CloudEvents model.</p>
 <pre><code class="language-json">{
   &quot;protocol&quot;: &quot;MQTT/5.0&quot;,
   &quot;protocoloptions&quot;: {
-    &quot;topic_name&quot;: &quot;/store/{storeid}/cashierdesk/{cdid}&quot;
+    &quot;topic_name&quot;: &quot;/store/{storeid}/cashierdesk/{cdid}&quot;,
     &quot;user_properties&quot; : [
       { &quot;name&quot;: &quot;eventType&quot;, &quot;type&quot;: &quot;uritemplate&quot;, &quot;value&quot;: &quot;{eventType}&quot; }
     ]
@@ -691,15 +691,15 @@ embedded or referenced.</p>
     &quot;messages&quot;: {
       &quot;com.example.abc.event1&quot;: {
         &quot;messageid&quot;: &quot;com.example.abc.event1&quot;,
-        &quot;envelope&quot;: &quot;CloudEvents/1.0&quot;,
-         # details ...
-        }
+        &quot;envelope&quot;: &quot;CloudEvents/1.0&quot;
+        # details ...
       },
       &quot;com.example.abc.event2&quot;: {
-        &quot;messageid&quot;: &quot;com.example.abc.event1&quot;,
-        &quot;envelope&quot;: &quot;CloudEvents/1.0&quot;,
+        &quot;messageid&quot;: &quot;com.example.abc.event2&quot;,
+        &quot;envelope&quot;: &quot;CloudEvents/1.0&quot;
         # details ...
       }
+    }
   },
   &quot;com.example.def&quot;: {
     &quot;messagegroupid&quot;: &quot;com.example.def&quot;,
@@ -1080,7 +1080,7 @@ is assumed to be identical.</p>
 <p>The following shows the format of a CloudEvents &quot;envelopemetadata&quot; section for
 a message (see the <a href="./model.json">model file</a> for the complete definition):</p>
 <pre><code class="language-yaml">&quot;envelope&quot;: &quot;CloudEvents/1.0&quot;,
-&quot;envelopemetadata&quot; {
+&quot;envelopemetadata&quot;: {
   # &quot;CloudEvents/1.0&quot; envelope metadata
   &quot;specversion&quot;: {
     &quot;value&quot;: &quot;1.0&quot;,

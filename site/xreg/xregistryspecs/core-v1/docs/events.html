@@ -496,7 +496,7 @@ and <code>&lt;RESOURCES&gt;count</code> attributes names.</p>
 <li>
 <p>A Resource's attribute (from the default Version entity) is updated,
 where <code>changed</code>, if present, MUST include each modified attribute. Note
-that a <code>io.xregistry.version.update</code> event MUST also be generated.</p>
+that a <code>io.xregistry.version.updated</code> event MUST also be generated.</p>
 </li>
 <li>
 <p>A Version is created or deleted, where <code>changed</code>, if present, MUST
@@ -512,7 +512,7 @@ would need to be examined.</p>
 MUST include the changed top-level <code>meta</code> attribute names prefixes with
 <code>meta.</code>. For example, <code>meta.defaultversionid</code>.</p>
 <p>This MUST include any updates to the <code>deprecated</code> sub-object, even though
-a <code>io.xregistry.deprecated</code> event is also generated. And in that
+a <code>io.xregistry.resource.deprecated</code> event is also generated. And in that
 situation <code>meta.deprecated</code> MUST be included in the
 <code>io.xregistry.resource.updated</code> event's <code>changed</code> list, if present.</p>
 <p>In the case of changing a Resource's <code>meta.defaultversionid</code> attribute,
@@ -1054,7 +1054,7 @@ Resources, Versions</li>
 </ul>
 <h3 id="creating-a-group-with-a-complete-client-http-message-exchange">Creating a Group with a complete client HTTP message exchange <a class="anchor" href="#creating-a-group-with-a-complete-client-http-message-exchange">🔗</a></h3>
 <p>Client Request:</p>
-<pre><code class="language-yaml">PUT /dirs/d1
+<pre><code class="language-yaml">PUT /dirs/d1 HTTP/1.1
 Host: example.com
 Content-Type: application/json
 
@@ -1100,7 +1100,7 @@ xRegistry-xregcorrelationid: B9282-129301
   &quot;subject&quot;: &quot;/dirs/d1&quot;,
   &quot;id&quot;: &quot;A432-4321-4321&quot;,
   &quot;time&quot;: &quot;2025-07-02T12:00:01Z&quot;,
-  &quot;xregcorrelationid&quot;: &quot;B9282-129301&quot;
+  &quot;xregcorrelationid&quot;: &quot;B9282-129301&quot;,
   &quot;data&quot;: {
     &quot;epoch&quot;: 1
   }
