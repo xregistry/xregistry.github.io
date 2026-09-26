@@ -168,6 +168,8 @@
       "filter",
       "ignore",
       "inline",
+      "limit",
+      "offset",
       "setdefaultversionid",
       "sort",
       "specversion"
@@ -206,10 +208,7 @@
     }
   },
   "pagination": {
-    "type": "boolean",
-    "enum": [
-      false
-    ]
+    "type": "boolean"
   },
   "shortself": {
     "type": "boolean"
