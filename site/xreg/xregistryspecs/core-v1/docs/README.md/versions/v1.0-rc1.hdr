@@ -1,4 +1,4 @@
-content-disposition:README.md
+content-disposition:inline; filename="README.md"
 content-length:93
 content-location:https://xregistry.io/xreg/xregistryspecs/core-v1/docs/README.md/versions/v1.0-rc1
 xregistry-ancestorid:v1.0-rc1

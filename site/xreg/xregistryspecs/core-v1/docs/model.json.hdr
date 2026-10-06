@@ -1,4 +1,4 @@
-content-disposition:model.json
+content-disposition:inline; filename="model.json"
 content-length:1623
 content-location:https://xregistry.io/xreg/xregistryspecs/core-v1/docs/model.json/versions/v1.0-rc1
 xregistry-ancestorid:v1.0-rc1

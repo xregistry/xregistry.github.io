@@ -1,4 +1,4 @@
-content-disposition:document-schema.avsc
+content-disposition:inline; filename="document-schema.avsc"
 content-location:https://xregistry.io/xreg/xregistryspecs/schema-v1/schemas/document-schema.avsc/versions/v1.0-rc1
 xregistry-ancestorid:v1.0-rc1
 xregistry-createdat:2000-01-01T12:00:00.00Z

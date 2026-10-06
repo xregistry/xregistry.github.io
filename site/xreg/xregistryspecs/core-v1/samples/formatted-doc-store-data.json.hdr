@@ -1,4 +1,4 @@
-content-disposition:formatted-doc-store-data.json
+content-disposition:inline; filename="formatted-doc-store-data.json"
 content-length:982
 content-location:https://xregistry.io/xreg/xregistryspecs/core-v1/samples/formatted-doc-store-data.json/versions/v1.0-rc1
 xregistry-ancestorid:v1.0-rc1

@@ -1,4 +1,4 @@
-content-disposition:model.json
+content-disposition:inline; filename="model.json"
 content-length:246
 content-location:https://xregistry.io/xreg/xregistryspecs/cloudevents-v1/docs/model.json/versions/v1.0-rc1
 xregistry-ancestorid:v1.0-rc1

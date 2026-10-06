@@ -1,4 +1,4 @@
-content-disposition:doc-store-model.json
+content-disposition:inline; filename="doc-store-model.json"
 content-length:155
 content-location:https://xregistry.io/xreg/xregistryspecs/core-v1/samples/doc-store-model.json/versions/v1.0-rc1
 xregistry-ancestorid:v1.0-rc1

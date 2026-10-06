@@ -1,4 +1,4 @@
-content-disposition:xregsample.png
+content-disposition:inline; filename="xregsample.png"
 content-location:https://xregistry.io/xreg/xregistryspecs/core-v1/docs/xregsample.png/versions/v1.0-rc1
 xregistry-ancestorid:v1.0-rc1
 xregistry-createdat:2000-01-01T12:00:00.00Z
