@@ -46,7 +46,7 @@
 </style>
 
 </head>
-<h1 id="pagination---version-01-wip">Pagination - Version 0.1-wip <a class="anchor" href="#pagination---version-01-wip">🔗</a></h1>
+<h1 id="pagination---version-10-rc4">Pagination - Version 1.0-rc4 <a class="anchor" href="#pagination---version-10-rc4">🔗</a></h1>
 <p>This document describes a mechanism by which a server can return a set of
 records to a client in an incremental fashion. Often this will be used when
 a client is doing a query for a set of records and the result set is too large
@@ -64,27 +64,40 @@ fit within one response message.</p>
 <h3 id="client-attributes">Client Attributes <a class="anchor" href="#client-attributes">🔗</a></h3>
 <p>The following list of attributes MAY be included in a client's request for
 a set of records from a server. The client MUST only specify these on
-the initial request for the set. If the results can not fit within one
-response then these attributes MUST NOT be added to subsequent requests
-by the client. Note that the server MAY include these attributes within
-the URI-reference returned in a response message, but the client MUST NOT
-modify those values.</p>
+the initial request for the set and their presence (and values) in any
+subsequent request to the server to retrieve additional records for the same
+pagination sequence is dictated by the server - the client MUST NOT add or
+modify them.</p>
+<p>While this specification defines a mechanism by which clients can initiate the
+pagination of a result set, servers MAY automatically initiate it themselves,
+typically if the result set is very large. How the server knows that the
+client supports pagination, or how clients are made aware of this possibility,
+is out of scope for this specification.</p>
+<p>The location and syntax of how these attribute appear in request messages will
+be defined by the protocol binding being used.</p>
 <h4 id="limit">limit <a class="anchor" href="#limit">🔗</a></h4>
 <ul>
-<li>Type: <code>Unsigned 64-bit Integer</code></li>
-<li>Description: Indicates the maximum number of records per message
-that the client is willing to accept. If the server is unable to
-meet this criterion then it MUST generate an error.
-There is no default value for this attribute.
-If this attribute is not specified, then the server MAY choose to send back
-as many or as few records per response message.</li>
-<li>Constraints:
+<li>
+<p>Type: <code>Unsigned 64-bit Integer</code></p>
+</li>
+<li>
+<p>Description: Indicates the maximum number of records per message that the
+client is willing to accept. If the server is unable to meet this criterion
+then it MUST generate an error.</p>
+<p>There is no default value for this attribute.</p>
+<p>If this attribute is not specified on a request message, and the server
+chooses to not enable pagination on its own, then the server's response is
+not constrained by this specification.</p>
+</li>
+<li>
+<p>Constraints:</p>
 <ul>
 <li>OPTIONAL.</li>
 <li>MUST be an unsigned 64-bit integer with a value greater than 0.</li>
 </ul>
 </li>
-<li>Examples:
+<li>
+<p>Examples:</p>
 <ul>
 <li><code>100</code></li>
 </ul>
@@ -92,52 +105,53 @@ as many or as few records per response message.</li>
 </ul>
 <h2 id="server-response">Server Response <a class="anchor" href="#server-response">🔗</a></h2>
 <p>When a server returns a subset of records, it MAY include additional attributes
-to help the client retrieve the next subset of records.</p>
+to help the client retrieve the additional subsets of records.</p>
 <h3 id="server-attributes">Server Attributes <a class="anchor" href="#server-attributes">🔗</a></h3>
 <p>The following list of attributes MAY be included in a server's response to
-a client's request for a set of records.</p>
+a client's request for a set of records. The location and syntax of how these
+attribute appear in response messages will be defined by the protocol binding
+being used.</p>
 <p>Note: in the examples listed below, the use of certain query parameters
-in the response messages from the server, such as <code>offset</code> and <code>limit</code>,
-are an implementation detail of the server. How the server encodes the
-information it needs to retrieve a certain subset of records is not mandated by
-this specification.</p>
+in the sample response message's <code>Link</code> URL, such as <code>pos</code>, is an
+implementation detail of the server. How the server encodes the information it
+needs to retrieve a certain subset of records is not mandated by this
+specification.</p>
 <h4 id="link">link <a class="anchor" href="#link">🔗</a></h4>
 <ul>
 <li>Type: <code>URI-Reference</code></li>
 <li>Description: A URI-Reference to another subset of records. The relationship
-of the next subset to the current subset MUST be specified by the <code>rel</code>
-attribute. This value is meant to be treated as an opaque value by the
-client. If a client uses this value in a subsequent request then it
-MUST use it as it was provided by the server. Any attempt to modify its
-value, or attributes (such as query parameters), is not defined by this
+of the subset to the current subset MUST be specified by the
+<a href="#rel"><code>rel</code> attribute</a>. This value is meant to be treated as an opaque
+value by the client. If a client uses this value in a subsequent request
+then it MUST use it as it was provided by the server. Any attempt to modify
+its value, or attributes (such as query parameters), is not defined by this
 specification and the results from the server are undefined.</li>
 <li>Constraints:
 <ul>
-<li>MUST NOT be present if there are no more records for the <code>rel</code> type of
-relationship.</li>
-<li>MUST be present if there are more records for the <code>rel</code> type of
-relationship.</li>
+<li>REQUIRED if any pagination metadata is included in a response message.</li>
 <li>MUST be a URI-Reference as defined in
 <a href="https://tools.ietf.org/html/rfc3986">RFC3986</a>.</li>
 </ul>
 </li>
 <li>Examples:
 <ul>
-<li><code>http://example.com/people?offset=3&amp;limit=100</code></li>
 <li><code>http://example.com/people?id=1234</code></li>
 <li><code>http://example.com/people?resultset=7a835</code></li>
+<li><code>http://example.com/people?pos=3</code></li>
 </ul>
 </li>
 </ul>
 <h4 id="rel">rel <a class="anchor" href="#rel">🔗</a></h4>
 <ul>
-<li>Type: <code>String</code></li>
-<li>Description: A string representing the relationship between the records
+<li>
+<p>Type: <code>String</code></p>
+</li>
+<li>
+<p>Description: A string representing the relationship between the records
 available via the <code>link</code> URI-Reference and the current subset of records.
-This attribute adheres to the Relation Type as defined in section 5.3
-of <a href="https://tools.ietf.org/html/rfc5988">RFC5988</a>.
-This specification uses the following values as defined by section 6.2.2
-in <a href="https://tools.ietf.org/html/rfc5988">RFC5988</a>:
+This specification uses the following values as defined by
+<a href="https://www.iana.org/assignments/link-relations">Link Relations Registry</a>:
+in <a href="https://tools.ietf.org/html/rfc5988">RFC5988</a>:</p>
 <ul>
 <li><code>next</code> - indicates the next subset of records in the sequence of records
 being returned.</li>
@@ -146,29 +160,51 @@ records being returned.</li>
 <li><code>first</code> - indicates the first subset of records in the sequence of records
 being returned.</li>
 <li><code>last</code> - indicates the last subset of records in the sequence of records
-being returned.
-Unless otherwise constrained by a specification leveraging this
-specification, additional values MAY be defined.</li>
+being returned.</li>
 </ul>
+<p>and the following additional value:</p>
+<ul>
+<li><code>self</code> - indicates the current set of records in the sequence of records
+being returned. This is mainly used to carry the metadata (e.g.
+<a href="#offset"><code>offset</code></a>) about the pagination sequence.</li>
+</ul>
+<p>Unless otherwise constrained by a specification leveraging this
+specification, additional values MAY be defined.</p>
 </li>
-<li>Constraints:
+<li>
+<p>Constraints:</p>
 <ul>
 <li>REQUIRED if the <code>link</code> attribute is present.</li>
-<li>MUST be a string as defined by <code>relation-types</code> in
-<a href="https://tools.ietf.org/html/rfc5988">RFC5988</a>.</li>
+<li>If present, MUST be a non-empty string conformant with:
+<a href="https://www.iana.org/assignments/link-relations">Link Relations Registry</a>.</li>
+<li>If the current subset of records is not the last set of records for the
+pagination sequence, then a <code>next</code> Link attribute MUST be included in the
+response message.</li>
+<li>A <code>self</code> Link attribute is STRONGLY RECOMMENDED to be included in all
+responses from the server so that clients have a consistent location to
+find metadata about the current pagination sequence.</li>
+<li>If the size of the entire result set can fit in one response message then
+the <code>self</code> Link attribute SHOULD still be included, however no other
+Link attribute SHOULD be present.</li>
 </ul>
 </li>
 </ul>
 <h4 id="expires">expires <a class="anchor" href="#expires">🔗</a></h4>
 <ul>
-<li>Type: <code>Timestamp</code></li>
-<li>Description: Indicates when the complete set of records referenced by the
-<code>link</code> will no longer be available. When not specified, the availability
-of the data is undefined by this specification. However, it is RECOMMENDED
-that this attribute only be excluded when the data being iterated over
-is not expected to change very often and therefore the server will
-typically not need to save any state related to this client's requests.</li>
-<li>Constraints:
+<li>
+<p>Type: <code>Timestamp</code></p>
+</li>
+<li>
+<p>Description: Indicates when the complete set of records referenced by the
+<code>link</code> will no longer be available. When not specified the availability,
+and consistency, of the result set is undefined.</p>
+<p>It is RECOMMENDED that this attribute only be used when the underlying
+result set is guaranteed to not change before the date specified. For
+example, it might be used if the result set is cached to ensure that
+subsequent write operations to the server will not modify the result set.</p>
+</li>
+<li>
+<p>Constraints:</p>
 <ul>
 <li>OPTIONAL.</li>
 </ul>
@@ -178,15 +214,60 @@ typically not need to save any state related to this client's requests.</li>
 <ul>
 <li>Type: <code>Unsigned 64-bit Integer</code></li>
 <li>Description: Indicates the total number of records in the complete set
-referenced by the <code>link</code>. Note that this is not the number of records in any one
-message, but instead it is the aggregate count of records across all
+in the pagination sequence. Note that this is not the number of records in
+any one message, but instead it is the aggregate count of records across all
 messages in the set.</li>
 <li>Constraints:
 <ul>
-<li>STRONGLY RECOMMENDED.</li>
-<li>MUST be an unsigned integer.</li>
-<li>MUST be consistent across all <code>link</code> attributes and messages for a
-particular set of records.</li>
+<li>OPTIONAL.</li>
+<li>If present, MUST be an unsigned integer.</li>
+<li>STRONGLY RECOMMENDED to appear on the <code>self</code> Link attribute.</li>
+<li>MAY be present for other Link attributes, and if so, it MUST be the same
+value for all Link attributes within the same message.</li>
+<li>When the complete record set does not change for the lifetime of the
+pagination requests, then this value MUST be consistent across all <code>link</code>
+attributes and messages in which it appears.</li>
+</ul>
+</li>
+</ul>
+<h4 id="offset">offset <a class="anchor" href="#offset">🔗</a></h4>
+<ul>
+<li>Type: <code>Unsigned 64-bit Integer</code></li>
+<li>Description: Indicates the offset of the first item in the referenced record
+set.</li>
+<li>Constraints:
+<ul>
+<li>OPTIONAL.</li>
+<li>If present, MUST be an unsigned integer and MUST be 0-based; meaning, the
+first record of the first result set is <code>0</code> (zero) not <code>1</code>.</li>
+<li>If the current set of records does not contain any records then this
+attribute MUST NOT be present.</li>
+<li>STRONGLY RECOMMENDED to appear on the <code>self</code> Link attribute.</li>
+<li>MAY be present for other Link attributes, and if so, it MUST have the
+appropriate value for the referenced set of records. For example, in
+the simple case the <code>next</code> Link attribute, its <code>offset</code> value would be
+the current <code>self</code> link's <code>offset</code> value plus the number of records in the
+current response message.</li>
+</ul>
+</li>
+</ul>
+<h4 id="limit-1">limit <a class="anchor" href="#limit-1">🔗</a></h4>
+<ul>
+<li>Type: <code>Unsigned 64-bit Integer</code></li>
+<li>Description: Indicates the maximum number of records per message that the
+server will send. This MUST be the same value that was specified in the
+client's <code>limit</code> attribute when it initiated the pagination sequence. It
+is included in response messages as a convenience for clients.</li>
+<li>Constraints:
+<ul>
+<li>OPTIONAL.</li>
+<li>If present, MUST be an unsigned integer and MUST be the same value that
+was specified during the creation of the pagination sequence, if the
+sequence was initiated by the client. For server-initiated sequences,
+the value specified for this attribute, regardless of where it appears,
+MUST NOT change.</li>
+<li>STRONGLY RECOMMENDED to appear on the <code>self</code> Link attribute.</li>
+<li>MAY be present for other Link attributes.</li>
 </ul>
 </li>
 </ul>
@@ -194,52 +275,79 @@ particular set of records.</li>
 <p>The following describes how the attributes defined above would appear in a
 flow of HTTP messages during the retrieval of a set of records.</p>
 <h3 id="request-for-a-record-set">Request for a record set <a class="anchor" href="#request-for-a-record-set">🔗</a></h3>
-<p>To request a set of records from a server, a client will send an HTTP GET
+<p>To request a set of records from a server, a client will send an HTTP <code>GET</code>
 request to the server. How this URL is determined is out of scope of this
 specification.</p>
 <p>The client MAY include the <code>limit</code> attribute as part of this request. Unless
 there is some out-of-band negotiation to determine a different mechanism,
 the server MUST accept the <code>limit</code> attribute as a query parameter (named
 <code>limit</code>, case sensitive) in the URL.</p>
-<p>For example:</p>
+<p>Example:</p>
 <pre><code>http://example.com/people?limit=100
 </code></pre>
 <h3 id="response-for-a-record-set">Response for a record set <a class="anchor" href="#response-for-a-record-set">🔗</a></h3>
 <p>Each successful response from the server MUST adhere to the following:</p>
 <ul>
-<li>MUST respond with an HTTP 200.</li>
+<li>MUST respond with an HTTP response code in the <code>2xx</code> range.</li>
 <li>MUST include zero or more records.</li>
+<li>If the <code>limit</code> attribute was specified as part of the initial request
+for the result set, all responses for the result set MUST NOT include more
+records than what the <code>limit</code> attribute indicated.</li>
 <li>If the response refers to the start of the set of records, then the <code>prev</code>
 Link MUST NOT be included in the response.</li>
 <li>If the response does not include the start of the set of records, then the
 <code>prev</code> Link MAY be included in the response.</li>
-<li>The response MAY include the <code>first</code> Link in any response.</li>
-<li>If the <code>limit</code> attribute was specified as part of the flow, the response MUST
-NOT include more records than what the <code>limit</code> attribute has indicated.</li>
+<li>The <code>first</code> Link MAY appear in any response.</li>
 <li>If the response refers to the end of the set of records, then the <code>next</code>
 Link MUST NOT be included in the response.</li>
 <li>If the response does not refer to the end of the set of records, then the
 <code>next</code> Link MUST be included in the response.</li>
-<li>The response MAY include the <code>last</code> Link in any response.</li>
+<li>The <code>last</code> Link MAY appear in any response.</li>
 <li>The response MAY include the <code>expires</code> attribute in any response as an
 HTTP &quot;Expires&quot; header. If present, it MUST adhere to the HTTP-date format
 specified for
 <a href="https://www.rfc-editor.org/rfc/rfc9111.html#section-5.3">Expires in RFC9111</a>.</li>
-<li>It is STRONGLY RECOMMENDED that all responses include the <code>count</code> attribute.</li>
+<li>It is STRONGLY RECOMMENDED that all responses include the <code>self</code> Link with
+the <code>offset</code>, <code>limit</code> and <code>count</code> attributes.</li>
 </ul>
-<p>Additionally, Links MUST appear in the HTTP response as HTTP headers using
-the format described in <a href="https://tools.ietf.org/html/rfc5988">RFC5988</a>.</p>
-<p>Example 1:</p>
-<pre><code>Link: &lt;http://example.com?limit=100&amp;offset=3&gt;;rel=next
-Link: &lt;http://example.com?limit=100&amp;offset=1&gt;;rel=prev
+<p>Links in server response messages MUST appear as HTTP headers using the format
+described in <a href="https://tools.ietf.org/html/rfc8288">RFC8288</a>, and adhere to
+the following form:</p>
+<pre><code>Link: &lt;URL&gt;;rel=STRING;offset=UINT;limit=UINT;count=UINT
 </code></pre>
-<p>Example 2:</p>
-<pre><code>Link: &lt;http://example.com?resultset=83d71&gt;;rel=next
+<p>Where:</p>
+<ul>
+<li><code>offset</code>, <code>limit</code> and <code>count</code> are OPTIONAL HTTP parameters as defined above.</li>
+</ul>
+<p>Example:</p>
+<p>Initiate a pagination request, asking for only 10 records per response:</p>
+<pre><code>GET http://example.com/?limit=10
+</code></pre>
+<p>The first response in the sequence of 100 items might look like:</p>
+<pre><code>HTTP/1.1 200 OK
+Link: &lt;http://example.com?seq=29182&gt;;rel=first
+Link: &lt;http://example.com?seq=29182s&gt;;rel=self;offset=0;limit=10;count=100
+Link: &lt;http://example.com?seq=29182n&gt;;rel=next
 Expires: Wed, 01 Dec 2021 16:00:00 GMT
+
+... first 10 records ...
 </code></pre>
-<p>Example 3:</p>
-<pre><code>Link: &lt;http://example.com?id=1001&gt;;rel=next;count=3000
-Link: &lt;http://example.com?id=0&gt;;rel=prev;count=3000
+<p>and the 2nd request might look like:</p>
+<pre><code>GET http://example.com?seq=29182n
+</code></pre>
+<p>The response might look like:</p>
+<pre><code>HTTP/1.1 200 OK
+Link: &lt;http://example.com?seq=29182&gt;;rel=first
+Link: &lt;http://example.com?seq=29182&gt;;rel=prev
+Link: &lt;http://example.com?seq=29182s&gt;;rel=self;offset=10;limit=10;count=100
+Link: &lt;http://example.com?seq=29182n&gt;;rel=next
+Expires: Wed, 01 Dec 2021 16:00:00 GMT
+
+... second 10 records ...
+</code></pre>
+<p>If the complete result set was only 5 records, then only the <code>self</code> Link header
+might included in the first response:</p>
+<pre><code>Link: &lt;http://example.com?seq=29182&gt;;rel=self;offset=0;limit=10;count=5
 </code></pre>
 <h3 id="iterating-over-the-record-set">Iterating over the record set <a class="anchor" href="#iterating-over-the-record-set">🔗</a></h3>
 <p>Once the record set retrieval has started, the client MAY use the Links
@@ -247,6 +355,11 @@ returned from the server to iterate through the full set of records.
 Typically, the client will use the <code>next</code> Link from each response to retrieve
 the next subset of records until a response is returned without a <code>next</code> Link -
 indicating that it has reached the end.</p>
+<p>For each record set returned, typically, the client will use the <code>self</code> Link's
+metadata in any end-user facing interfaces to indicate which page they are
+viewing. For example, using the above example's 2nd response's metadata:</p>
+<pre><code>Showing: 11-20 of 100 records
+</code></pre>
 <p>However, if other Links are provided by the server, then the client MAY
 use those Links instead to follow a different traversal path through the
 records.</p>
