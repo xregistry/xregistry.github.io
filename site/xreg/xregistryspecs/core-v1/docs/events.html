@@ -655,7 +655,7 @@ the following model definition:</p>
 <li>Empty Registry</li>
 <li>Interaction:
 <ul>
-<li><code>PUT /dirs/d1/files/f1/versions/v1</code></li>
+<li><code>PUT /dirs/d1/files/f1/versions/v1$details</code></li>
 <li>Body: <code>{}</code></li>
 </ul>
 </li>
@@ -695,7 +695,7 @@ the following model definition:</p>
 <li>Current default Version is <code>v1</code></li>
 <li>Interaction:
 <ul>
-<li><code>PATCH /dirs/d1/files/f1</code></li>
+<li><code>PATCH /dirs/d1/files/f1$details</code></li>
 <li>Body: <code>{ &quot;name&quot;: &quot;foo&quot; }</code></li>
 </ul>
 </li>
@@ -829,7 +829,7 @@ Resources, Versions</li>
 <li>Current default Version (v1) is not &quot;sticky&quot;</li>
 <li>Interaction:
 <ul>
-<li><code>PUT /dirs/d1/files/f1/versions/v2</code></li>
+<li><code>PUT /dirs/d1/files/f1/versions/v2$details</code></li>
 <li>Body: <code>{}</code></li>
 </ul>
 </li>
@@ -859,7 +859,7 @@ Resources, Versions</li>
 <li>Current default Version (v1) is &quot;sticky&quot;</li>
 <li>Interaction:
 <ul>
-<li><code>PUT /dirs/d1/files/f1/versions/v2</code></li>
+<li><code>PUT /dirs/d1/files/f1/versions/v2$details</code></li>
 <li>Body: <code>{}</code></li>
 </ul>
 </li>
@@ -915,7 +915,7 @@ Resources, Versions</li>
 <li>Current default Version is <code>v1</code></li>
 <li>Interaction:
 <ul>
-<li><code>PATCH /dirs/d1/files/f1/versions/v1</code></li>
+<li><code>PATCH /dirs/d1/files/f1/versions/v1$details</code></li>
 <li>Body: <code>{ &quot;name&quot;: &quot;foo&quot; }</code></li>
 </ul>
 </li>
@@ -944,7 +944,7 @@ Resources, Versions</li>
 <li>Current default Version is <code>v1</code></li>
 <li>Interaction:
 <ul>
-<li><code>PATCH /dirs/d1/files/f1/versions/v2</code></li>
+<li><code>PATCH /dirs/d1/files/f1/versions/v2$details</code></li>
 <li>Body: <code>{ &quot;name&quot;: &quot;foo&quot; }</code></li>
 </ul>
 </li>
@@ -965,7 +965,7 @@ Resources, Versions</li>
 <li>Current default Version (v1) is not &quot;sticky&quot;</li>
 <li>Interaction:
 <ul>
-<li><code>POST /dirs/d1/files/f1</code></li>
+<li><code>POST /dirs/d1/files/f1$details</code></li>
 <li>Body: <code>{}</code></li>
 </ul>
 </li>
@@ -995,7 +995,7 @@ Resources, Versions</li>
 <li>Current default Version (v1) is &quot;sticky&quot;</li>
 <li>Interaction:
 <ul>
-<li><code>POST /dirs/d1/files/f1</code></li>
+<li><code>POST /dirs/d1/files/f1$details</code></li>
 <li>Body: <code>{}</code></li>
 </ul>
 </li>
@@ -1061,20 +1061,21 @@ Content-Type: application/json
 {}
 </code></pre>
 <p>xRegistry Response:</p>
-<pre><code class="language-yaml">HTTP/1.1 200 OK
+<pre><code class="language-yaml">HTTP/1.1 201 Created
+Location: https://example.com/dirs/d1
 Content-Type: application/json
 Date: Wed, 02 Jul 2025 12:00:01 GMT
 xRegistry-xregcorrelationid: B9282-129301
 
 {
   &quot;dirid&quot;: &quot;d1&quot;,
-  &quot;self&quot;: &quot;http://example.com/dirs/d1&quot;,
+  &quot;self&quot;: &quot;https://example.com/dirs/d1&quot;,
   &quot;xid&quot;: &quot;/dirs/d1&quot;,
   &quot;epoch&quot;: 1,
   &quot;createdat&quot;: &quot;2025-07-02T12:00:01Z&quot;,
   &quot;modifiedat&quot;: &quot;2025-07-02T12:00:01Z&quot;,
 
-  &quot;filesurl&quot;: &quot;http://example.com/dirs/d1/files&quot;,
+  &quot;filesurl&quot;: &quot;https://example.com/dirs/d1/files&quot;,
   &quot;filescount&quot;: 0
 }
 </code></pre>
