@@ -1236,7 +1236,8 @@ server MAY choose to modify the formatting of the document (e.g. to
 <p>A value of <code>string</code> indicates that the Resource's document is to be treated
 as a string and serialized using the default string serialization rules
 for the format being used to serialize the Resource's metadata. For
-example, when using JSON, this means escaping all non-printable characters.</p>
+example, when using JSON, this means quoting the string and escaping
+quotation marks, backslashes and control characters (U+0000 through U+001F).</p>
 <p>Specifying an unknown (or unsupported) value MUST generate an error
 (<a href="./spec.html#model_error">model_error</a>) during the update of the xRegistry
 model.</p>
