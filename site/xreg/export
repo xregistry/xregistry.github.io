@@ -1,7 +1,7 @@
 {
   "specversion": "1.0-rc4",
   "registryid": "xRegistry.io",
-  "self": "#/",
+  "self": "#",
   "xid": "/",
   "epoch": 1,
   "createdat": "2000-01-01T12:00:00.00Z",
