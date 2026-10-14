@@ -50,7 +50,7 @@
 <!-- words: apikeyname apikeyin plainscheme plainusernamefield plainpasswordfield sasl oauthbearer -->
 <!-- words: cleanstart sessionexpiryinterval topicfilter retainhandling retainaspublished nolocal -->
 <!-- words: sharedsubscriptiongroup keyserializer valueserializer enableautocommit autooffsetreset -->
-<!-- words: serializer subjectfilter queuegroup usernames tenantid -->
+<!-- words: serializer subjectfilter queuegroup usernames tenantid configs -->
 <h2 id="abstract">Abstract <a class="anchor" href="#abstract">🔗</a></h2>
 <p>This specification defines an endpoint registry extension to the xRegistry
 document format and API <a href="./../../core-v1/docs/spec.html">specification</a>. An endpoint registry
@@ -1400,10 +1400,16 @@ of those two options.</li>
 the subscribing client. They are not endpoint metadata and are therefore not
 defined as protocol options by this specification.</p>
 <h5 id="kafka-options">KAFKA options <a class="anchor" href="#kafka-options">🔗</a></h5>
-<p>The <a href="#protocoloptionsendpoints">endpoint URIs</a> for &quot;Kafka&quot; endpoints MUST be
-valid Kafka bootstrap server addresses. The scheme follows Kafka configuration
-usage as described in <a href="https://kafka.apache.org/protocol">Apache Kafka</a>, e.g. <code>SSL://&lt;HOST&gt;:&lt;PORT&gt;</code> or
-<code>PLAINTEXT://&lt;HOST&gt;:&lt;PORT&gt;</code>.</p>
+<p>Kafka uses different address formats for broker listeners and clients.
+A listener-style <code>uri</code> includes a scheme, such as <code>SSL://broker1:9092</code> or
+<code>PLAINTEXT://broker1:9092</code>. The client <code>bootstrap.servers</code> configuration uses
+plain <code>host:port</code> addresses, such as <code>broker1:9092</code>, without a scheme, as
+specified in <a href="https://kafka.apache.org/41/configuration/producer-configs#producerconfigs_bootstrap.servers">Kafka client configuration</a>.</p>
+<p>For <code>KAFKA</code> endpoints, the <a href="#protocoloptionsendpoints">endpoint addresses</a>
+MUST be carried in <code>bootstrap.servers</code> as an array of client bootstrap
+addresses. Each entry MUST use the <code>host:port</code> format without a scheme.
+The listener-style <code>uri</code> format is not an alternative addressing field
+for a <code>KAFKA</code> endpoint.</p>
 <p>The following options are defined for Kafka endpoints.</p>
 <table>
 <thead>
