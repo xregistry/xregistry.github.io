@@ -228,8 +228,8 @@ The <a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html#dep
 appropriate new schema to use following a breaking change.</p>
 <h3 id="23-schema-group">2.3. Schema Group <a class="anchor" href="#23-schema-group">🔗</a></h3>
 <p>A Schema Group is a container for schemas that are related to each other in
-some application-defined way. This specification does not impose any
-restrictions on what schemas can be contained in a Schema Group.</p>
+some application-defined way. Its OPTIONAL <code>format</code> attribute can constrain
+the formats of its schemas, as described in <a href="#41-schema-groups">Schema Groups</a>.</p>
 <h2 id="3-schema-registry-model">3. Schema Registry Model <a class="anchor" href="#3-schema-registry-model">🔗</a></h2>
 <p>The authoritative xRegistry extension model of the Schema Registry resides in
 the <a href="./model.json">model.json</a> file.</p>
@@ -322,11 +322,10 @@ Resource Version objects are inherited from there.</p>
 <h3 id="41-schema-groups">4.1. Schema Groups <a class="anchor" href="#41-schema-groups">🔗</a></h3>
 <p>The Group (<code>&lt;GROUP&gt;</code>) name for the Schema Registry is <code>schemagroup</code> (singular).
 The plural, used as the collection name, is <code>schemagroups</code>. The Schema Group
-does not have any specific extension attributes.</p>
+defines an OPTIONAL <code>format</code> extension attribute of type <code>string</code>.</p>
 <p>A schema group is a collection of schemas that are related to each other in
-some application-defined way. A Schema Group does not impose any restrictions
-on the contained schemas, meaning that a Schema Group MAY contain schemas of
-different formats.</p>
+some application-defined way. Without a value for the Group's <code>format</code>, a Schema
+Group MAY contain schemas of different formats.</p>
 <p>Every schema (i.e. the schema Resource) MUST reside inside a Schema Group.</p>
 <p>Example:</p>
 <p>The following abbreviated Schema Registry content shows a single Schema Group
