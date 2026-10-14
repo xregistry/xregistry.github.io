@@ -212,7 +212,7 @@ intermediaries (like publish/subscribe routers) without them having to
 understand the particular payload format or having to read the payload. The
 only predefined envelope model in this specification is CNCF CloudEvents
 1.0. Once the <code>envelope</code> selector is set, constraints for the attributes
-of the CloudEvents envelope can be defined in the <code>envelopeoptions</code>.</p>
+of the CloudEvents envelope can be defined in the <code>envelopemetadata</code>.</p>
 </li>
 <li>
 <p>Protocol: The <code>protocol</code> selector picks a specific application protocol to
@@ -239,7 +239,7 @@ messages are sent through varying protocols without a fixed envelope model and
 are distinguished by content-type (including parameters) or even only through
 whether payload schema definitions match an incoming message.</p>
 <p>Where attributes (or properties or headers; depending on protocol nomenclature)
-can be defined in the <code>envelopeoptions</code> and <code>protocoloptions</code>, the general
+can be defined in the <code>envelopemetadata</code> and <code>protocoloptions</code>, the general
 pattern used in this model is that the attribute can have a name, a
 description, a type and a value. Setting a value makes that value constant for
 all instances of that message, which is useful for discriminators like AMQP’s
@@ -253,7 +253,7 @@ context values into named variables.</p>
 <p>The embedded placeholders in values of the <code>uritemplate</code> type can refer to
 context attributes provided by the application environment in which the metadata
 is evaluated. For instance, a message definition might declare a <code>source</code>
-attribute in the <code>envelopeoptions</code> of a CloudEvent, with a <code>uritemplate</code> type
+attribute in the <code>envelopemetadata</code> of a CloudEvent, with a <code>uritemplate</code> type
 and a <code>value</code> definition <code>/vehicles/{vin}/systems/{system}/sensor/{sensor}</code>.</p>
 <p>If the application environment from which the message is published provides values
 for the <code>vin</code>, <code>system</code>, and <code>sensor</code> context attributes, those values can be
@@ -275,7 +275,7 @@ use context attributes to map them to the CloudEvents model.</p>
     ]
   },
   &quot;envelope&quot;: &quot;CloudEvents/1.0&quot;,
-  &quot;envelopeoptions&quot;: {
+  &quot;envelopemetadata&quot;: {
     &quot;type&quot;: { &quot;type&quot;: &quot;uritemplate&quot;, &quot;value&quot;: &quot;{eventType}&quot; },
     &quot;source&quot;: { &quot;type&quot;: &quot;uritemplate&quot;, &quot;value&quot;: &quot;{storeid}&quot; },
     &quot;subject&quot;: { &quot;type&quot;: &quot;uritemplate&quot;, &quot;value&quot;: &quot;{cdid}&quot; }
@@ -285,7 +285,7 @@ use context attributes to map them to the CloudEvents model.</p>
 <p>An application might use this definition to match incoming MQTT messages only
 against the <code>protocol</code>/<code>protocoloptions</code> part of the definition. If an incoming
 message matches this part, the application can then use the <code>envelope</code> and
-<code>envelopeoptions</code> definitions to transform the message into a CloudEvent, with
+<code>envelopemetadata</code> definitions to transform the message into a CloudEvent, with
 the context attributes carrying the values.</p>
 <p>Context attributes and their handling are not covered by the following normative
 part of this specification.</p>
@@ -709,7 +709,10 @@ embedded or referenced.</p>
     &quot;messagescount&quot;: 1,
     &quot;messages&quot;: {
       &quot;com.example.abc.event1&quot;: {
-        &quot;uri&quot;: &quot;#/messagegroups/com.example.abc/messages/com.example.abc.event1&quot;,
+        &quot;messageid&quot;: &quot;com.example.abc.event1&quot;,
+        &quot;meta&quot;: {
+          &quot;xref&quot;: &quot;/messagegroups/com.example.abc/messages/com.example.abc.event1&quot;
+        }
         # details ...
       }
     }
@@ -997,9 +1000,8 @@ current timestamp when creating a message.</p>
 <p>This specification only defines one metadata envelope: &quot;CloudEvents/1.0&quot;.</p>
 <h5 id="cloudevents10">CloudEvents/1.0 <a class="anchor" href="#cloudevents10">🔗</a></h5>
 <p>For the &quot;CloudEvents/1.0&quot; envelope, the
-<a href="#envelopemetadata"><code>envelopemetadata</code></a> object contains a property
-<code>attributes</code>, which is an object whose properties correspond to the
-CloudEvents context attributes.</p>
+<a href="#envelopemetadata"><code>envelopemetadata</code></a> object contains properties that
+correspond directly to the CloudEvents context attributes.</p>
 <p>As with the <a href="https://github.com/cloudevents/spec/blob/main/cloudevents/spec.md">CloudEvents specification</a>, the attributes form a
 flat list and extension attributes are allowed. Attribute names are restricted
 to lower-case alphanumerical characters without separators.</p>
@@ -1463,7 +1465,7 @@ type.</p>
 sent over <a href="https://docs.oasis-open.org/mqtt/mqtt/v3.1.1/mqtt-v3.1.1.html">MQTT 3.1.1</a> or <a href="https://docs.oasis-open.org/mqtt/mqtt/v5.0/mqtt-v5.0.html">MQTT 5.0</a> connections. The
 format describes the <a href="https://docs.oasis-open.org/mqtt/mqtt/v5.0/mqtt-v5.0.html">MQTT PUBLISH packet</a> content.</p>
 <p>The <a href="#protocoloptions"><code>protocoloptions</code></a> object contains the elements of the
-MQTT PUBLISH packet directly, with the <code>user-properties</code> element corresponding
+MQTT PUBLISH packet directly, with the <code>user_properties</code> element corresponding
 to the application properties collection of other protocols.</p>
 <p>The following properties are defined. The MQTT 3.1.1 and MQTT 5.0 columns
 indicate whether the property is supported for the respective MQTT version.</p>
@@ -1500,7 +1502,7 @@ indicate whether the property is supported for the respective MQTT version.</p>
 <td>Topic name</td>
 </tr>
 <tr>
-<td><code>payload_format</code></td>
+<td><code>payload_format_indicator</code></td>
 <td><code>integer</code></td>
 <td>no</td>
 <td>yes</td>

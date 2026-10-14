@@ -1144,9 +1144,10 @@ in case insensitively.</p>
 Group and Resource names limited to less? Because when they appear as part of
 attribute names and they can be appended with phrases like <code>url</code>, <code>count</code>
 or <code>base64</code>, and they still have to fit within the 63-character limit, and so
-we need to take into account the length of those phrases. As a result, both
-Group and Resource type names (both singular and plural) are limited to
-57 characters.</p>
+we need to take into account the length of those phrases. As a result, Group
+type singular names are limited to 61 characters.
+Group type plural names and Resource type singular and plural names are
+limited to 57 characters.</p>
 <h3 id="1113-why-must-group-type-and-resource-type-names-be-valid-attribute-names">11.13. Why must Group type and Resource type names be valid attribute names? <a class="anchor" href="#1113-why-must-group-type-and-resource-type-names-be-valid-attribute-names">🔗</a></h3>
 <p>Since Group type and Resource type names will appear as attribute names (e.g.
 <code>&lt;GROUPS&gt;count</code> and <code>&lt;RESOURCE&gt;url</code>), the character set (and length) of their
