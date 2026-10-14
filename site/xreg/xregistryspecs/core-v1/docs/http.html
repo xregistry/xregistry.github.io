@@ -225,6 +225,8 @@ MUST be used instead to add entities to the collection, and a
 <code>DELETE</code> MUST then be used to delete unwanted entities.</li>
 <li>Unknown query parameters SHOULD be silently ignored by servers. This
 includes specification-defined but unsupported query parameters.</li>
+<li>The choice of disposition type in a <code>Content-Disposition</code> response header,
+such as <code>inline</code> or <code>attachment</code>, is left to the application.</li>
 <li>Despite the
 <a href="https://datatracker.ietf.org/doc/html/rfc9110#name-idempotent-methods">HTTP specification</a>
 saying that the <code>PUT</code> method is idempotent, this specification does not
@@ -1437,7 +1439,7 @@ xRegistry-versionsurl: &lt;URL&gt;
 xRegistry-versionscount: &lt;UINTEGER&gt;
 Location: &lt;URL&gt; ?
 Content-Location: &lt;URL&gt; ?
-Content-Disposition: &lt;STRING&gt; ?
+Content-Disposition: &lt;DISPOSITION-TYPE&gt;; filename=&quot;&lt;RID&gt;&quot; ?
 
 ... Resource document excluded for brevity ... ?
 </code></pre>
@@ -1453,8 +1455,9 @@ but not the <code>versions</code> collection itself.</li>
 MUST be the same as the <code>self</code> URL.</li>
 <li>The <code>Content-Location</code> header MAY appear, and if present, MUST reference
 the &quot;default&quot; Version.</li>
-<li><code>Content-Disposition</code> SHOULD be present and if so, MUST be the <code>&lt;RESOURCE&gt;id</code>
-value. This allows for HTTP tooling that is not aware of xRegistry to know
+<li><code>Content-Disposition</code> SHOULD be present and if so, its <code>filename</code> parameter
+MUST be the <code>&lt;RESOURCE&gt;id</code> value. This allows for HTTP tooling that is not
+aware of xRegistry to know
 the desired filename to use if the HTTP body were to be written to a file.</li>
 </ul>
 <p>Version serialization will look similar, but without the Resource-level
@@ -1482,17 +1485,18 @@ xRegistry-compatibilityvalidatedreason: &lt;STRING&gt; ?
 xRegistry-&lt;RESOURCE&gt;url: &lt;URL&gt; ?           # End of requested Version attributes
 Location: &lt;URL&gt; ?
 Content-Location: &lt;URL&gt; ?
-Content-Disposition: &lt;STRING&gt; ?
+Content-Disposition: &lt;DISPOSITION-TYPE&gt;; filename=&quot;&lt;RID&gt;&quot; ?
 
 ... Version document excluded for brevity ... ?
 </code></pre>
 <p>Where:</p>
 <ul>
-<li><code>Content-Disposition</code> SHOULD be present and if so, MUST be the <code>&lt;RESOURCE&gt;id</code>
-value. This allows for HTTP tooling that is not aware of xRegistry to know
+<li><code>Content-Disposition</code> SHOULD be present and if so, its <code>filename</code> parameter
+MUST be the <code>&lt;RESOURCE&gt;id</code> value. This allows for HTTP tooling that is not
+aware of xRegistry to know
 the desired filename to use if the HTTP body were to be written to a file.</li>
 </ul>
-<p>Scalar default Version extension attributes MUST also appear as
+<p>Scalar requested Version extension attributes MUST also appear as
 <code>xRegistry-</code> HTTP headers.</p>
 <p>Notice that for Resources, the <code>meta</code> and <code>versions</code> attributes are not
 included since they are complex data types.</p>
@@ -1619,7 +1623,9 @@ Group's <code>&lt;RESOURCE&gt;</code> collection URL.</p>
 
 {
   &quot;&lt;KEY&gt;&quot;: {                            # &lt;RESOURCE&gt;id
-    &quot;epoch&quot;: &lt;UINTEGER&gt; ?
+    &quot;meta&quot;: {
+      &quot;epoch&quot;: &lt;UINTEGER&gt; ?
+    } ?
   } *
 } ?
 </code></pre>
@@ -1713,7 +1719,7 @@ xRegistry-versionsurl: &lt;URL&gt;
 xRegistry-versionscount: &lt;UINTEGER&gt;
 Location: &lt;URL&gt; ?                      # If 303 is returned
 Content-Location: &lt;URL&gt; ?
-Content-Disposition: &lt;STRING&gt; ?
+Content-Disposition: &lt;DISPOSITION-TYPE&gt;; filename=&quot;&lt;RID&gt;&quot; ?
 
 ... Resource document ...              # If &lt;RESOURCE&gt;url is not set
 </code></pre>
@@ -1722,8 +1728,9 @@ Content-Disposition: &lt;STRING&gt; ?
 <li>If <code>&lt;RESOURCE&gt;url</code> is present then it MUST have the same value as <code>Location</code>.</li>
 <li>If <code>Content-Location</code> is present then it MUST be a URL to the Version of the
 Resource in the <code>versions</code> collection - same as <code>meta.defaultversionurl</code>.</li>
-<li><code>Content-Disposition</code> SHOULD be present and if so, MUST be the <code>&lt;RESOURCE&gt;id</code>
-value. This allows for HTTP tooling that is not aware of xRegistry to know
+<li><code>Content-Disposition</code> SHOULD be present and if so, its <code>filename</code> parameter
+MUST be the <code>&lt;RESOURCE&gt;id</code> value. This allows for HTTP tooling that is not
+aware of xRegistry to know
 the desired filename to use if the HTTP body were to be written to a file.</li>
 </ul>
 <p><strong>Examples:</strong></p>
@@ -1837,14 +1844,15 @@ xRegistry-versionsurl: &lt;URL&gt;
 xRegistry-versionscount: &lt;UINTEGER&gt;
 Location: &lt;URL&gt; ?                      # If 201 or 303 is returned
 Content-Location: &lt;URL&gt; ?
-Content-Disposition: &lt;STRING&gt; ?
+Content-Disposition: &lt;DISPOSITION-TYPE&gt;; filename=&quot;&lt;RID&gt;&quot; ?
 
 ... Resource document ...              # If &lt;RESOURCE&gt;url is not set
 </code></pre>
 <p>Where:</p>
 <ul>
-<li><code>Content-Disposition</code> SHOULD be present and if so, MUST be the <code>&lt;RESOURCE&gt;id</code>
-value. This allows for HTTP tooling that is not aware of xRegistry to know
+<li><code>Content-Disposition</code> SHOULD be present and if so, its <code>filename</code> parameter
+MUST be the <code>&lt;RESOURCE&gt;id</code> value. This allows for HTTP tooling that is not
+aware of xRegistry to know
 the desired filename to use if the HTTP body were to be written to a file.</li>
 </ul>
 <p><strong>Examples:</strong></p>
@@ -1988,14 +1996,15 @@ xRegistry-compatibilityvalidatedreason: &lt;STRING&gt; ?
 xRegistry-&lt;RESOURCE&gt;url: &lt;URL&gt; ?       # If Resource is not in body
 Location: &lt;URL&gt; ?                      # If 201 or 303 is returned
 Content-Location: &lt;URL&gt; ?
-Content-Disposition: &lt;STRING&gt; ?
+Content-Disposition: &lt;DISPOSITION-TYPE&gt;; filename=&quot;&lt;RID&gt;&quot; ?
 
 ... Version document excluded for brevity ...  # If &lt;RESOURCE&gt;url is not set
 </code></pre>
 <p>Where:</p>
 <ul>
-<li><code>Content-Disposition</code> SHOULD be present and if so, MUST be the <code>&lt;RESOURCE&gt;id</code>
-value. This allows for HTTP tooling that is not aware of xRegistry to know
+<li><code>Content-Disposition</code> SHOULD be present and if so, its <code>filename</code> parameter
+MUST be the <code>&lt;RESOURCE&gt;id</code> value. This allows for HTTP tooling that is not
+aware of xRegistry to know
 the desired filename to use if the HTTP body were to be written to a file.</li>
 </ul>
 <p><strong>Examples:</strong></p>
@@ -2369,14 +2378,15 @@ xRegistry-formatvalidatedreason: &lt;STRING&gt; ?
 xRegistry-compatibilityvalidated: &lt;BOOLEAN&gt; ?
 xRegistry-compatibilityvalidatedreason: &lt;STRING&gt; ?
 Location: &lt;URL&gt; ?                        # If 303 is returned
-Content-Disposition: &lt;STRING&gt; ?
+Content-Disposition: &lt;DISPOSITION-TYPE&gt;; filename=&quot;&lt;RID&gt;&quot; ?
 
 ... Version document ...                 # If &lt;RESOURCE&gt;url is not set
 </code></pre>
 <p>Where:</p>
 <ul>
-<li><code>Content-Disposition</code> SHOULD be present and if so, MUST be the <code>&lt;RESOURCE&gt;id</code>
-value. This allows for HTTP tooling that is not aware of xRegistry to know
+<li><code>Content-Disposition</code> SHOULD be present and if so, its <code>filename</code> parameter
+MUST be the <code>&lt;RESOURCE&gt;id</code> value. This allows for HTTP tooling that is not
+aware of xRegistry to know
 the desired filename to use if the HTTP body were to be written to a file.</li>
 <li><code>Location</code>, if present, and <code>&lt;RESOURCE&gt;url</code> MUST have the same value.</li>
 </ul>
@@ -2500,7 +2510,7 @@ xRegistry-compatibilityvalidatedreason: &lt;STRING&gt; ?
 xRegistry-&lt;RESOURCE&gt;url: &lt;URL&gt; ?       # If Resource is not in body
 Location: &lt;URL&gt; ?                      # If 201 or 303 is returned
 Content-Location: &lt;URL&gt; ?
-Content-Disposition: &lt;STRING&gt; ?
+Content-Disposition: &lt;DISPOSITION-TYPE&gt;; filename=&quot;&lt;RID&gt;&quot; ?
 
 ... Version document ...               # If &lt;RESOURCE&gt;url is not set
 </code></pre>
@@ -2686,13 +2696,15 @@ a collection of Groups, Resources or Versions.</p>
 and per <a href="https://tools.ietf.org/html/rfc7230#section-3">RFC7230, section 3</a>, HTTP headers MUST only use
 printable characters from the US-ASCII character set, and are terminated by a
 CRLF sequence with OPTIONAL whitespace around the header value.</p>
-<p>When encoding an attribute's value as an HTTP header, it MUST be
+<p>Native HTTP headers, such as <code>Content-Type</code>, retain their native syntax and
+encoding. The attribute-value rules below apply to <code>xRegistry-</code> headers.</p>
+<p>When encoding an attribute's value as an <code>xRegistry-</code> HTTP header, it MUST be
 percent-encoded as described below. This is compatible with <a href="https://tools.ietf.org/html/rfc3986#section-2.1">RFC3986, section
 2.1</a> but is more specific about what needs
 encoding. The resulting string SHOULD NOT be further encoded.
 (Rationale: quoted string escaping is unnecessary when every space
 and double-quote character is already percent-encoded.)</p>
-<p>When decoding an HTTP header into an attribute's value, any HTTP header
+<p>When decoding an <code>xRegistry-</code> HTTP header into an attribute's value, the header
 value MUST first be unescaped with respect to double-quoted strings,
 as described in <a href="https://tools.ietf.org/html/rfc7230#section-3.2.6">RFC7230, section 3.2.6</a>. A single
 round of percent-decoding MUST then be performed as described
