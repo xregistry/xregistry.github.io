@@ -784,9 +784,11 @@ Content-Type: application/json; charset=utf-8
 Content-Type: application/json; charset=utf-8
 
 {
-  &quot;available&quot;: [
-    &quot;/capabilities&quot;, &quot;/export&quot;, &quot;/model&quot;, &quot;/modelsource&quot;
-  ],
+  &quot;available&quot;: {
+    &quot;capabilities&quot;: { &quot;mutable&quot;: true },
+    &quot;entities&quot;: { &quot;mutable&quot;: true },
+    &quot;model&quot;: { &quot;mutable&quot;: false }
+  },
   &quot;flags&quot;: [
     &quot;binary&quot;, &quot;collections&quot;, &quot;doc&quot;, &quot;epoch&quot;, &quot;filter&quot;, &quot;ignore&quot;, &quot;inline&quot;,
     &quot;setdefaultversionid&quot;, &quot;sort&quot;, &quot;specversion&quot;
@@ -823,12 +825,27 @@ Content-Type: application/json; charset=utf-8
 
 {
   &quot;available&quot;: {
-    &quot;type&quot;: &quot;array&quot;,
-    &quot;item&quot;: {
-      &quot;type&quot;: &quot;string&quot;
-    },
-    &quot;enum&quot;: [ &quot;/capabilities&quot;, &quot;/capabilitiesoffered&quot;, &quot;/export&quot;, &quot;/model&quot;,
-       &quot;/modelsource&quot; ]
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;attributes&quot;: {
+      &quot;capabilities&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;attributes&quot;: {
+          &quot;mutable&quot;: { &quot;type&quot;: &quot;boolean&quot;, &quot;enum&quot;: [ false, true ] }
+        }
+      },
+      &quot;entities&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;attributes&quot;: {
+          &quot;mutable&quot;: { &quot;type&quot;: &quot;boolean&quot;, &quot;enum&quot;: [ false, true ] }
+        }
+      },
+      &quot;model&quot;: {
+        &quot;type&quot;: &quot;object&quot;,
+        &quot;attributes&quot;: {
+          &quot;mutable&quot;: { &quot;type&quot;: &quot;boolean&quot;, &quot;enum&quot;: [ false ] }
+        }
+      }
+    }
   },
   &quot;flags&quot;: {
     &quot;type&quot;: &quot;array&quot;,
@@ -919,9 +936,11 @@ requested changes.</p>
 }
 </code></pre>
 <pre><code class="language-yaml">{
-  &quot;available&quot;: [
-    &quot;/capabilities&quot;, &quot;/export&quot;, &quot;/model&quot;, &quot;/modelsource&quot;
-  ],
+  &quot;available&quot;: {
+    &quot;capabilities&quot;: { &quot;mutable&quot;: true },
+    &quot;entities&quot;: { &quot;mutable&quot;: true },
+    &quot;model&quot;: { &quot;mutable&quot;: false }
+  },
   &quot;flags&quot;: [
     &quot;binary&quot;, &quot;collections&quot;, &quot;doc&quot;, &quot;epoch&quot;, &quot;filter&quot;, &quot;ignore&quot;, &quot;inline&quot;,
     &quot;setdefaultversionid&quot;, &quot;sort&quot;, &quot;specversion&quot;
@@ -1257,12 +1276,16 @@ Content-Type: application/json; charset=utf-8
 
 {
   &quot;messages&quot;: {
-    &quot;messageid&quot;: &quot;msg1&quot;,
-    ... remainder of msg1 definition excluded for brevity ...
+    &quot;msg1&quot;: {
+      &quot;messageid&quot;: &quot;msg1&quot;,
+      ... remainder of msg1 definition excluded for brevity ...
+    }
   },
   &quot;schemas&quot;: {
-    &quot;schemaid&quot;: &quot;schema1&quot;,
-    ... remainder of schema1 definition excluded for brevity ...
+    &quot;schema1&quot;: {
+      &quot;schemaid&quot;: &quot;schema1&quot;,
+      ... remainder of schema1 definition excluded for brevity ...
+    }
   }
 }
 </code></pre>
@@ -1271,12 +1294,16 @@ Content-Type: application/json; charset=utf-8
 
 {
   &quot;messages&quot;: {
-    &quot;messageid&quot;: &quot;msg1&quot;,
-    ... remainder of msg1 definition excluded for brevity ...
+    &quot;msg1&quot;: {
+      &quot;messageid&quot;: &quot;msg1&quot;,
+      ... remainder of msg1 definition excluded for brevity ...
+    }
   },
   &quot;schemas&quot;: {
-    &quot;schemaid&quot;: &quot;schema1&quot;,
-    ... remainder of schema1 definition excluded for brevity ...
+    &quot;schema1&quot;: {
+      &quot;schemaid&quot;: &quot;schema1&quot;,
+      ... remainder of schema1 definition excluded for brevity ...
+    }
   }
 }
 </code></pre>
@@ -1434,7 +1461,7 @@ the desired filename to use if the HTTP body were to be written to a file.</li>
 attributes, and MUST be of the form:</p>
 <pre><code class="language-yaml">Content-Type: &lt;STRING&gt; ?
 xRegistry-&lt;RESOURCE&gt;id: &lt;STRING&gt;           # ID of Resource, not default Version
-xRegistry-versionid: &lt;STRING&gt;              # ID of the default Version
+xRegistry-versionid: &lt;STRING&gt;              # ID of the requested Version
 xRegistry-self: &lt;URL&gt;                      # Version URL
 xRegistry-xid: &lt;URI&gt;                       # Relative Version URI
 xRegistry-epoch: &lt;UINTEGER&gt;
@@ -1452,7 +1479,7 @@ xRegistry-formatvalidated: &lt;BOOLEAN&gt; ?
 xRegistry-formatvalidatedreason: &lt;STRING&gt; ?
 xRegistry-compatibilityvalidated: &lt;BOOLEAN&gt; ?
 xRegistry-compatibilityvalidatedreason: &lt;STRING&gt; ?
-xRegistry-&lt;RESOURCE&gt;url: &lt;URL&gt; ?           # End of default Version attributes
+xRegistry-&lt;RESOURCE&gt;url: &lt;URL&gt; ?           # End of requested Version attributes
 Location: &lt;URL&gt; ?
 Content-Location: &lt;URL&gt; ?
 Content-Disposition: &lt;STRING&gt; ?
@@ -1607,14 +1634,16 @@ HTTP/1.1 204 No Content
 
 {
   &quot;msg1&quot;: {
-    &quot;epoch&quot;: 5
+    &quot;meta&quot;: {
+      &quot;epoch&quot;: 5
+    }
   },
   &quot;msg2&quot;: {}
 }
 </code></pre>
 <pre><code>HTTP/1.1 204 No Content
 </code></pre>
-<p>Notice that the <code>epoch</code> value for <code>msg1</code> will be verified prior to the
+<p>Notice that the <code>meta.epoch</code> value for <code>msg1</code> will be verified prior to the
 delete, but no such check will happen for <code>msg2</code>.</p>
 <h4 id="get-groupsgidresourcesrid"><code>GET /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;</code> <a class="anchor" href="#get-groupsgidresourcesrid">🔗</a></h4>
 <p>A server MAY support clients retrieving a
@@ -1852,11 +1881,7 @@ Content-Type: application/json; charset=utf-8
 {
   &quot;epoch&quot;: 1,
   &quot;name&quot;: &quot;Blob Created&quot;,
-  &quot;description&quot;: &quot;a cool event&quot;,
-
-  &quot;message&quot;: {
-    # Updated definition of a &quot;Blob Created&quot; event excluded for brevity
-  }
+  &quot;description&quot;: &quot;a cool event&quot;
 }
 </code></pre>
 <pre><code class="language-yaml">HTTP/1.1 200 OK
@@ -1875,10 +1900,6 @@ Content-Location: https://example.com/endpoints/ep1/messages/msg1/versions/1
   &quot;createdat&quot;: &quot;2024-04-30T12:00:00Z&quot;,
   &quot;modifiedat&quot;: &quot;2024-04-30T12:00:01Z&quot;,
   &quot;ancestorid&quot;: &quot;1&quot;,
-
-  &quot;message&quot;: {
-    # Updated definition of a &quot;Blob Created&quot; event excluded for brevity
-  },
 
   &quot;metaurl&quot;: &quot;https://example.com/endpoints/ep1/messages/msg1/meta&quot;,
 
@@ -2009,11 +2030,7 @@ Content-Type: application/json; charset=utf-8
   &quot;versionid&quot;: &quot;1&quot;,
   &quot;epoch&quot;: 1,
   &quot;name&quot;: &quot;Blob Created&quot;,
-  &quot;description&quot;: &quot;a cool event&quot;,
-
-  &quot;message&quot;: {
-    # Updated definition of a &quot;Blob Created&quot; event excluded for brevity
-  }
+  &quot;description&quot;: &quot;a cool event&quot;
 }
 </code></pre>
 <pre><code class="language-yaml">HTTP/1.1 200 OK
@@ -2031,11 +2048,7 @@ Content-Location: https://example.com/endpoints/ep1/messages/msg1/versions/1
   &quot;description&quot;: &quot;a cool event&quot;,
   &quot;createdat&quot;: &quot;2024-04-30T12:00:00Z&quot;,
   &quot;modifiedat&quot;: &quot;2024-04-30T12:00:01Z&quot;,
-  &quot;ancestorid&quot;: &quot;1&quot;,
-
-  &quot;message&quot;: {
-    # Updated definition of a &quot;Blob Created&quot; event excluded for brevity
-  }
+  &quot;ancestorid&quot;: &quot;1&quot;
 }
 </code></pre>
 <h4 id="delete-groupsgidresourcesrid"><code>DELETE /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;</code> <a class="anchor" href="#delete-groupsgidresourcesrid">🔗</a></h4>
@@ -2092,6 +2105,7 @@ Content-Type: application/json; charset=utf-8
   &quot;epoch&quot;: 2,
   &quot;createdat&quot;: &quot;2024-04-30T12:00:00Z&quot;,
   &quot;modifiedat&quot;: &quot;2024-04-30T12:00:01Z&quot;,
+  &quot;readonly&quot;: false,
   &quot;compatibility&quot;: &quot;none&quot;,
   &quot;defaultversionid&quot;: &quot;v2.0&quot;,
   &quot;defaultversionurl&quot;: &quot;https://example.com/endpoints/ep1/messages/msg1/versions/v2.0&quot;,
@@ -2138,6 +2152,7 @@ Content-Type: application/json; charset=utf-8
   &quot;epoch&quot;: 2,
   &quot;createdat&quot;: &quot;2024-04-30T12:00:00Z&quot;,
   &quot;modifiedat&quot;: &quot;2024-04-30T12:00:01Z&quot;,
+  &quot;readonly&quot;: false,
   &quot;compatibility&quot;: &quot;none&quot;,
   &quot;defaultversionid&quot;: &quot;v1.0&quot;,
   &quot;defaultversionurl&quot;: &quot;https://example.com/endpoints/ep1/messages/msg1/versions/v1.0&quot;,
@@ -2375,7 +2390,7 @@ Content-Type: application/json; charset=utf-8
 {
   &quot;schemaid&quot;: &quot;myschema&quot;,
   &quot;versionid&quot;: &quot;1.0&quot;,
-  &quot;self&quot;: &quot;https://example.com/schemagroups/g1/schemas/myschema/versions/1.0&quot;,
+  &quot;self&quot;: &quot;https://example.com/schemagroups/g1/schemas/myschema/versions/1.0$details&quot;,
   &quot;xid&quot;: &quot;/schemagroups/g1/schemas/myschema/versions/1.0&quot;,
   &quot;epoch&quot;: 2,
   &quot;isdefault&quot;: true,
@@ -2398,7 +2413,7 @@ xRegistry-isdefault: true
 xRegistry-createdat: 2024-04-30T12:00:00Z
 xRegistry-modifiedat: 2024-04-30T12:00:01Z
 xRegistry-ancestorid: 1.0
-Content-Disposition: myschema
+Content-Disposition: attachment; filename=&quot;myschema&quot;
 
 { ... Contents of a schema doc excluded for brevity ...  }
 </code></pre>
@@ -2519,10 +2534,7 @@ Content-Type: application/json; charset=utf-8
 
 {
   &quot;name&quot;: &quot;Blob Created v2&quot;,
-  &quot;description&quot;: &quot;a cool event&quot;,
-  &quot;message&quot;: {
-    # Updated definition of a &quot;Blob Created&quot; event excluded for brevity
-  }
+  &quot;description&quot;: &quot;a cool event&quot;
 }
 </code></pre>
 <pre><code class="language-yaml">HTTP/1.1 200 OK
@@ -2540,11 +2552,7 @@ Content-Location: https://example.com/endpoints/ep1/messages/msg1/versions/v2.0
   &quot;description&quot;: &quot;a cool event&quot;,
   &quot;createdat&quot;: &quot;2024-04-30T12:00:00Z&quot;,
   &quot;modifiedat&quot;: &quot;2024-04-30T12:00:01Z&quot;,
-  &quot;ancestorid&quot;: &quot;v1.0&quot;,
-
-  &quot;message&quot;: {
-    # Updated definition of a &quot;Blob Created&quot; event excluded for brevity
-  }
+  &quot;ancestorid&quot;: &quot;v1.0&quot;
 }
 </code></pre>
 <h4 id="delete-groupsgidresourcesridversionsvid"><code>DELETE /&lt;GROUPS&gt;/&lt;GID&gt;/&lt;RESOURCES&gt;/&lt;RID&gt;/versions/&lt;VID&gt;</code> <a class="anchor" href="#delete-groupsgidresourcesridversionsvid">🔗</a></h4>
