@@ -2918,7 +2918,7 @@ locally defined.</p>
 <pre><code class="language-yaml">{
   &quot;schemaid&quot;: &quot;sharedSchema&quot;,
   &quot;versionid&quot;: &quot;v1&quot;,
-  &quot;self&quot;: &quot;http://example.com/schemagroups/group2/schemas/sharedSchema&quot;,
+  &quot;self&quot;: &quot;http://example.com/schemagroups/group2/schemas/sharedSchema$details&quot;,
   &quot;xid&quot;: &quot;/schemagroups/group2/schemas/sharedSchema&quot;,
   &quot;epoch&quot;: 2,
   &quot;isdefault&quot;: true,
@@ -2936,7 +2936,7 @@ locally defined.</p>
 <pre><code class="language-yaml">{
   &quot;schemaid&quot;: &quot;mySchema&quot;,
   &quot;versionid&quot;: &quot;v1&quot;,
-  &quot;self&quot;: &quot;http://example.com/schemagroups/group1/schemas/mySchema&quot;,
+  &quot;self&quot;: &quot;http://example.com/schemagroups/group1/schemas/mySchema$details&quot;,
   &quot;xid&quot;: &quot;/schemagroups/group1/schemas/mySchema&quot;,
   &quot;epoch&quot;: 2,
   &quot;isdefault&quot;: true,
@@ -2954,7 +2954,7 @@ locally defined.</p>
     &quot;modifiedat&quot;: &quot;2024-01-01T12:01:00Z&quot;,
     &quot;readonly&quot;: false,
     &quot;defaultversionid&quot;: &quot;v1&quot;,
-    &quot;defaultversionurl&quot;: &quot;http://example.com/schemagroups/group1/schemas/mySchema/versions/v1&quot;,
+    &quot;defaultversionurl&quot;: &quot;http://example.com/schemagroups/group1/schemas/mySchema/versions/v1$details&quot;,
     &quot;defaultversionsticky&quot;: false
   },
 
@@ -3055,7 +3055,7 @@ make the determination as to whether this is something to investigate or not.</p
 Resource (<code>missingSchema</code>) would look like:</p>
 <pre><code class="language-yaml">{
   &quot;schemaid&quot;: &quot;mySchema&quot;,
-  &quot;self&quot;: &quot;http://example.com/schemagroups/group1/schemas/mySchema&quot;,
+  &quot;self&quot;: &quot;http://example.com/schemagroups/group1/schemas/mySchema$details&quot;,
   &quot;xid&quot;: &quot;/schemagroups/group1/schemas/mySchema&quot;,
   &quot;metaurl&quot;: &quot;https://example.com/schemagroups/group1/schemas/mySchema/meta&quot;,
   &quot;meta&quot;: {
@@ -4145,6 +4145,9 @@ relative to the root of the Registry. Additionally, when those URLs are
 relative and reference a Resource or Version, any protocol-specific
 modifications to the URLs (e.g. the HTTP <code>$details</code> suffix) MUST NOT be
 present despite the semantics of the suffix being applied (as noted below).</p>
+<p>When a relative URL references the root of the response, it MUST be <code>#</code>,
+which represents an empty JSON Pointer selecting the whole document, not
+<code>#/</code>, which selects an object member with an empty name.</p>
 <p>For clarity, if a Registry has a Schema Resource at
 <code>/schemagroups/g1/schemas/s1</code>, then this entity's <code>self</code> URL (when serialized
 in document view) would change based on the path specified on the <code>GET</code>
@@ -4175,7 +4178,7 @@ request:</p>
 </tr>
 <tr>
 <td><code>http://example.com/myreg/schemagroups/g1/schemas/s1</code></td>
-<td><code>#/</code></td>
+<td><code>#</code></td>
 </tr>
 </tbody>
 </table>
