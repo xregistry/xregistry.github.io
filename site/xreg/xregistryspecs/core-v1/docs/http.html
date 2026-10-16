@@ -50,6 +50,7 @@
 <!-- words: validatecompatibility validateformat -->
 <!-- words: compat formatvalidated compatibilityvalidated -->
 <!-- words: compat formatvalidatedreason compatibilityvalidatedreason -->
+<!-- words: mymap myheader spacey -->
 <h2 id="abstract">Abstract <a class="anchor" href="#abstract">🔗</a></h2>
 <p>This specification defines an HTTP protocol binding for the
 <a href="./spec.html">xRegistry specification</a>. This document will include just the
@@ -139,7 +140,7 @@ model and semantics that apply to all protocols.</p>
 </ul>
 </li>
 <li><a href="#request-flags--query-parameters">Request Flags / Query Parameters</a></li>
-<li><a href="#http-header-values">HTTP Header Values</a></li>
+<li><a href="#http-header-processing">HTTP Header Processing</a></li>
 <li><a href="#error-processing">Error Processing</a></li>
 </ul>
 <h2 id="notations-and-terminology">Notations and Terminology <a class="anchor" href="#notations-and-terminology">🔗</a></h2>
@@ -1390,8 +1391,8 @@ HTTP headers (each key having its own HTTP header) and in those cases the
 HTTP header names will be of the form: <code>xRegistry-&lt;MAPNAME&gt;.&lt;KEYNAME&gt;</code>.
 Note that map keys MAY contain the <code>.</code> character, so any <code>.</code> after the
 <code>&lt;MAPNAME&gt;.</code> is part of the key name. See
-<a href="#http-header-values">HTTP Header Values</a> for additional information and
-<a href="#labels-attribute"><code>labels</code></a> for an example of one such attribute.</p>
+<a href="#http-header-processing">HTTP Header Processing</a> for additional information
+and <a href="#labels-attribute"><code>labels</code></a> for an example of one such attribute.</p>
 <p>Certain attributes do not follow this rule if a standard HTTP header name
 is defined for that semantic purpose. See the
 <a href="#http-specific-attribute-processing-rules">HTTP-Specific Attribute Processing Rules</a>
@@ -2691,70 +2692,85 @@ a collection of Groups, Resources or Versions.</p>
 <p>This query parameter MUST be serialized as:</p>
 <pre><code class="language-yaml">?sort=&lt;ATTRIBUTE&gt;[=asc|desc]
 </code></pre>
-<h2 id="http-header-values">HTTP Header Values <a class="anchor" href="#http-header-values">🔗</a></h2>
-<p>Some attributes can contain arbitrary UTF-8 string content,
-and per <a href="https://tools.ietf.org/html/rfc7230#section-3">RFC7230, section 3</a>, HTTP headers MUST only use
-printable characters from the US-ASCII character set, and are terminated by a
-CRLF sequence with OPTIONAL whitespace around the header value.</p>
+<h2 id="http-header-processing">HTTP Header Processing <a class="anchor" href="#http-header-processing">🔗</a></h2>
+<h3 id="http-header-names">HTTP Header Names <a class="anchor" href="#http-header-names">🔗</a></h3>
 <p>Native HTTP headers, such as <code>Content-Type</code>, retain their native syntax and
 encoding. The attribute-value rules below apply to <code>xRegistry-</code> headers.</p>
-<p>When encoding an attribute's value as an <code>xRegistry-</code> HTTP header, it MUST be
-percent-encoded as described below. This is compatible with <a href="https://tools.ietf.org/html/rfc3986#section-2.1">RFC3986, section
-2.1</a> but is more specific about what needs
-encoding. The resulting string SHOULD NOT be further encoded.
-(Rationale: quoted string escaping is unnecessary when every space
-and double-quote character is already percent-encoded.)</p>
-<p>When decoding an <code>xRegistry-</code> HTTP header into an attribute's value, the header
-value MUST first be unescaped with respect to double-quoted strings,
-as described in <a href="https://tools.ietf.org/html/rfc7230#section-3.2.6">RFC7230, section 3.2.6</a>. A single
-round of percent-decoding MUST then be performed as described
-below. HTTP headers for attribute values do not support
-parenthetical comments, so the initial unescaping only needs to handle
-double-quoted values, including processing backslash escapes within
-double-quoted values. Header values produced via the
-percent-encoding described here will never include double-quoted
-values, but they MUST be supported when receiving events, for
-compatibility with older versions of this specification which did
-not require double-quote and space characters to be percent-encoded.</p>
-<p>Percent encoding is performed by considering each Unicode character
-within the attribute's canonical string representation. Any
-character represented in memory as a [Unicode surrogate
-pair][surrogate-pair] MUST be treated as a single Unicode character.
-The following characters MUST be percent-encoded:</p>
+<p>The allowable characters for HTTP header name differs from that of what
+xRegistry allows for map-key names. Therefore, any map-key name that appears
+as an HTTP header MUST have those non-HTTP compliant characters percent
+encoded.</p>
+<p>HTTP allowable characters: <code>0-9 a-z a-Z ! # $ % &amp; ' * + - . ^ _ ` | ~</code></p>
+<p>xRegistry allowable map-key names: <code>a-z 0-9 : - _ .</code></p>
+<p>Therefore colons (<code>:</code>) will need to be represented as: <code>%3A</code>.</p>
+<p>Example:</p>
+<p>A map (<code>mymap</code>) with a key name of: <code>org:team</code> would appear as:</p>
+<pre><code>xRegistry-mymap-org%3Ateam: hr:dept1
+</code></pre>
+<h3 id="http-header-values">HTTP Header Values <a class="anchor" href="#http-header-values">🔗</a></h3>
+<p>When data appears in HTTP headers care needs to be taken to ensure that
+only printable characters from the US-ASCII character (U+0021-U+007E range)
+set are used.</p>
+<p>The following rules MUST be followed when encoding values as HTTP headers:</p>
 <ul>
-<li>Space (U+0020).</li>
-<li>Double-quote (U+0022).</li>
-<li>Percent (U+0025).</li>
-<li>Any characters outside the printable ASCII range of U+0021-U+007E
-inclusive.</li>
+<li>Double-quotes (<code>&quot;</code>) around a set of characters MAY be used to denote a
+&quot;group&quot;. Whitespace within groups are excluded from whitespace trimming
+and commas (<code>,</code>), normally interpreted as header value separators, are
+treated as normal characters.</li>
+<li>Any non-US-ASCII characters, percent (<code>%</code>) and double-quotes within values,
+MUST be percent encoded.</li>
+<li>Header values that support lists MAY be expressed as separate HTTP headers
+or multiple values MAY be grouped into one HTTP header separated by a
+an unescaped comma.</li>
 </ul>
-<p>Space and double-quote are encoded to avoid requiring any further
-quoting. Percent is encoded to avoid ambiguity with percent-encoding
-itself.</p>
-<p>Steps to encode a Unicode character:</p>
+<p>The following rules MUST be followed when decoding HTTP header values:</p>
 <ul>
-<li>Encode the character using UTF-8, to obtain a byte sequence.</li>
-<li>Encode each byte within the sequence as <code>%xy</code> where <code>x</code> is a
-hexadecimal representation of the most significant 4 bits of the byte,
-and <code>y</code> is a hexadecimal representation of the least significant 4
-bits of the byte.</li>
+<li>Commas that appear outside of groups (non-escaped double-quoted ranges of
+characters) MUST be treated as separators between a list of values.</li>
+<li>Leading and trailing (non-percent encoded) whitespace around individual
+values MUST be removed. All non-leading/trailing whitespace MUST remain
+as-is.</li>
+<li>Group's double-quotes MUST be removed prior to passing the values on to the
+receiving application.</li>
+<li>Percent decoding MUST be performed on all character ranges, both in and out
+of groups.</li>
 </ul>
-<p>Percent-encoding SHOULD be performed using upper-case for values A-F,
-but decoding MUST accept lowercase values.</p>
-<p>When performing percent-decoding, values that have been unnecessarily
-percent-encoded MUST be accepted, but encoded byte sequences which are invalid
-in UTF-8 MUST generate an error (<a href="#header_error">header_error</a>). For example,
-&quot;%C0%A0&quot; is an overlong encoding of U+0020, and would be rejected.</p>
-<p>Example: a header value of &quot;Euro € 😀&quot; SHOULD be encoded as
-follows:</p>
+<p>If there is an error during processing of HTTP header values then an
+error (<a href="#header_error">header_error</a>) MUST be generated.</p>
+<p>Example 1:</p>
 <ul>
-<li>The characters, 'E', 'u', 'r', 'o' do not require encoding.</li>
-<li>Space, the Euro symbol, and the grinning face emoji require encoding.
-They are characters U+0020, U+20AC and U+1F600 respectively.</li>
-<li>The encoded HTTP header value is therefore &quot;Euro%20%E2%82%AC%20%F0%9F%98%80&quot;
-where &quot;%20&quot; is the encoded form of space, &quot;%E2%82%AC&quot; is the encoded form
-of the Euro symbol, and &quot;%F0%9F%98%80&quot; is the encoded form of the
-grinning face emoji.</li>
+<li>Value as seen by the application:
+<ul>
+<li>Euro €   😀</li>
+</ul>
+</li>
+<li>Resulting Header:
+<ul>
+<li><code>MyHeader: Euro %E2%82%AC   %F0%9F%98%80</code></li>
+</ul>
+</li>
+</ul>
+<p>Example 2:</p>
+<ul>
+<li>Value(s) as seen by the application:
+<ul>
+<li><code>  A   spacey,  &quot;string&quot;  </code></li>
+<li><code>a-word</code></li>
+<li><code>% is cool</code></li>
+</ul>
+</li>
+<li>Resulting Single Header - option 1:
+<ul>
+<li><code>MyHeader: &quot;  A   spacey,  %22string%22  &quot;, a-word, %25 is cool</code></li>
+</ul>
+</li>
+<li>Resulting Multiple Headers - option 2:
+<ul>
+<li><code>MyHeader: &quot;  A   spacey,  %22string%22  &quot;</code></li>
+<li><code>MyHeader: a-word</code></li>
+<li><code>MyHeader: %25 is cool</code></li>
+</ul>
+</li>
 </ul>
 <h2 id="error-processing">Error Processing <a class="anchor" href="#error-processing">🔗</a></h2>
 <p>When an error is transmitted back to clients, it SHOULD adhere to the format
