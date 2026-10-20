@@ -2206,6 +2206,8 @@ related flags SHOULD NOT appear in the <code>flags</code> capability.</li>
 capabilities are inconsistent, then the <code>pagination</code> capability value
 SHOULD result in changing the <code>flags</code> capability as needed to make them
 consistent.</li>
+<li>Use of a pagination type of feature on a non-collection result MUST generate
+an error (<a href="#pagination_noncollection">pagination_noncollection</a>).</li>
 </ul>
 <h4 id="shortself-capability"><code>shortself</code> Capability <a class="anchor" href="#shortself-capability">🔗</a></h4>
 <ul>
@@ -5751,6 +5753,13 @@ error SHOULD be used instead.</p>
 <li><code>list</code>: Comma separated list of <code>&lt;RESOURCE&gt;*</code> attributes allowed.</li>
 </ul>
 </li>
+</ul>
+<h3 id="pagination_noncollection">pagination_noncollection <a class="anchor" href="#pagination_noncollection">🔗</a></h3>
+<ul>
+<li>Type: <code>https://github.com/xregistry/spec/blob/main/core/spec.md#pagination_noncollection</code></li>
+<li>Code: <code>400 Bad Request</code></li>
+<li>Title: <code>Can't use pagination on a non-collection result set. Query path: &lt;subject&gt;.</code></li>
+<li>Subject: <code>&lt;request_path&gt;</code></li>
 </ul>
 <h3 id="parsing_data">parsing_data <a class="anchor" href="#parsing_data">🔗</a></h3>
 <p>This is a fairly generic error, so if a more focused one (e.g.
