@@ -327,8 +327,8 @@ other scenarios:</p>
             }
           },
 
-          &quot;dataschemaformat&quot;: &quot;Protobuf/3.0&quot;,
-          &quot;dataschemauri&quot;: &quot;#/schemagroups/com.example.telemetry/schemas/com.example.telemetrydata/versions/1.0&quot;,
+          &quot;dataschemaformat&quot;: &quot;Protobuf/3&quot;,
+          &quot;dataschemauri&quot;: &quot;/schemagroups/com.example.telemetry/schemas/com.example.telemetrydata/versions/1.0#Metrics&quot;,
           &quot;datacontenttype&quot;: &quot;application/x-protobuf&quot;,
 
           &quot;metaurl&quot;: &quot;https://example.com/messagegroups/com.example.telemetryEvents/messages/com.example.telemetry/meta&quot;,
@@ -366,7 +366,7 @@ other scenarios:</p>
           &quot;modifiedat&quot;: &quot;2024-05-01T12:00:00Z&quot;,
           &quot;ancestorid&quot;: &quot;1.0&quot;,
 
-          &quot;format&quot;: &quot;Protobuf/3.0&quot;,
+          &quot;format&quot;: &quot;Protobuf/3&quot;,
           &quot;schema&quot;: &quot;syntax = \&quot;proto3\&quot;; message Metrics { float metric = 1;}&quot;,
 
           &quot;metaurl&quot;: &quot;https://example.com/schemagroups/com.example.telemetry/schemas/com.example.telemetrydata/meta&quot;,
@@ -381,6 +381,11 @@ other scenarios:</p>
   &quot;schemagroupscount&quot;: 1
 }
 </code></pre>
+<p>The example's <code>dataschemauri</code> uses a path relative to the Registry root to
+identify the Schema Version. Its <code>#Metrics</code> fragment selects the Protobuf
+message declaration and is interpreted by the client, not sent to the server.
+See <a href="./../../schema-v1/docs/spec.html#434-protobuf-schema">Protobuf Schema</a> for the selector
+rules.</p>
 <p>If we assume the message definitions and schemas to reside at an API endpoint,
 an endpoint definition might just reference the associated message definition
 group with a deep link to the respective object in the service:</p>
@@ -444,8 +449,11 @@ link will first reference the file and then the object within the file, using
   &quot;endpointscount&quot;: 1
 }
 </code></pre>
-<p>All other references to other objects in the registry can be expressed in the
-same way.</p>
+<p>JSON Pointer fragments can identify metadata entities within a registry file.
+To select a type within a schema reached through such a fragment, follow the
+format-specific compound-fragment rules in
+<a href="./../../schema-v1/docs/spec.html#43-schema-formats">Schema Formats</a>. The direct Protobuf
+reference above instead uses a Registry-root-relative path and <code>#Metrics</code>.</p>
 <p>While the CloudEvents Registry is primarily motivated by enabling development
 of CloudEvents-based event flows, the registry is not limited to CloudEvents.
 It can be used to describe any asynchronous messaging or eventing endpoint and

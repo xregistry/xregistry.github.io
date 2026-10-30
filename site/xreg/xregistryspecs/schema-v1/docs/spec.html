@@ -479,6 +479,11 @@ Versions for a schema named <code>com.example.telemetrydata</code>:</p>
   &quot;schemagroupscount&quot;: 1
 }
 </code></pre>
+<p>In the following sections, a Schema Registry reference beginning with <code>/</code> is
+resolved relative to the root of the Registry. It identifies a schema Resource
+or Version, not an object within the Registry's metadata representation. The
+format-specific rules below describe how URI fragments select schema objects,
+including when the schema document is itself embedded in a registry document.</p>
 <h4 id="431-json-schema">4.3.1. JSON Schema <a class="anchor" href="#431-json-schema">🔗</a></h4>
 <p>The <a href="./../../core-v1/docs/spec.html#format-attribute"><code>format</code></a> identifier for JSON Schema is
 <code>JsonSchema</code>.</p>
@@ -544,21 +549,28 @@ with the declared version.</p>
 </ul>
 <p>When a URI, like the Message Registry's
 <a href="./../../message-v1/docs/spec.html#dataschemauri"><code>dataschemauri</code></a>, points to an Avro Schema
-document, it MAY use a URI fragment suffix <code>[:]{record-name}</code> to deep link into
-the schema document to reference a particular type definition. Otherwise the
-top-level object definition of the schema is used. The ':' character is used as
-a separator when the URI already contains a fragment.</p>
+document directly, it MAY use a URI fragment <code>#{record-name}</code> to reference a
+particular record declaration. Otherwise the top-level object definition of the
+schema is used.</p>
+<p>If the schema document is itself selected by a URI fragment, such as a JSON
+Pointer into an xRegistry document, a record selector MAY be appended to that
+fragment using <code>:{record-name}</code>. In this compound fragment, the part before the
+record selector locates the schema document, and the record name selects a
+declaration within that schema. The colon is used only for this two-stage
+selection, not when the URI identifies the schema document directly.</p>
 <p>Examples:</p>
 <ul>
 <li>If the Avro schema document is referenced using the URI
 <code>https://example.com/avro/telemetry.avsc#TelemetryEvent</code>, the URI fragment
 <code>#TelemetryEvent</code> references the record declaration of the <code>TelemetryEvent</code>
 record.</li>
-<li>If the Avro schema document is a local Schema Registry reference like
-<code>#/schemagroups/com.example.telemetry/schemas/com.example.telemetrydata</code>, in
-which the reference is already in the form of a URI fragment, the suffix is
-appended, separated by a colon, for instance
-<code>.../com.example.telemetrydata:TelemetryEvent</code>.</li>
+<li>If the Avro schema document is referenced relative to the Registry root,
+<code>/schemagroups/com.example.telemetry/schemas/com.example.telemetrydata#TelemetryEvent</code>
+references the <code>TelemetryEvent</code> record in that schema document.</li>
+<li>If the Avro schema document is embedded in a registry document,
+<code>https://example.com/registry.json#/schemagroups/g1/schemas/s1/versions/1/schema:TelemetryEvent</code>
+uses the JSON Pointer before <code>:TelemetryEvent</code> to locate the schema document,
+then selects the <code>TelemetryEvent</code> record within it.</li>
 </ul>
 <h4 id="434-protobuf-schema">4.3.4. Protobuf Schema <a class="anchor" href="#434-protobuf-schema">🔗</a></h4>
 <p>The <a href="./../../core-v1/docs/spec.html#format-attribute"><code>format</code></a> identifier for Protobuf Schema
@@ -574,21 +586,27 @@ with the declared version.</p>
 <p>A URI, like the Message Registry's
 <a href="./../../message-v1/docs/spec.html#dataschemauri"><code>dataschemauri</code></a>, that points to a Protobuf
 Schema document MUST reference a Protobuf <code>message</code> declaration contained in the
-schema document. If the URI does not contain a fragment, the message name MUST
-be appended as a URI fragment using <code>#{message-name}</code>. If the URI already
-contains a fragment, the message name MUST be appended to the fragment using
-<code>:{message-name}</code>.</p>
+schema document. When the URI identifies the schema document directly, the
+message name MUST be specified as a URI fragment using <code>#{message-name}</code>.</p>
+<p>If the schema document is itself selected by a URI fragment, such as a JSON
+Pointer into an xRegistry document, the message name MUST be appended to that
+fragment using <code>:{message-name}</code>. In this compound fragment, the part before
+the message selector locates the schema document, and the message name selects
+a declaration within that schema. The colon is used only for this two-stage
+selection, not when the URI identifies the schema document directly.</p>
 <p>Examples:</p>
 <ul>
 <li>If the Protobuf schema document is referenced using the URI
 <code>https://example.com/protobuf/telemetry.proto</code>, the URI fragment
 <code>#TelemetryEvent</code> references the message declaration of the <code>TelemetryEvent</code>
 message.</li>
-<li>If the Protobuf schema document is a local Schema Registry reference like
-<code>#/schemagroups/com.example.telemetry/schemas/com.example.telemetrydata</code>, in
-which the reference is already in the form of a URI fragment, the suffix
-is appended, separated by a colon, for instance
-<code>.../com.example.telemetrydata:TelemetryEvent</code>.</li>
+<li>If the Protobuf schema document is referenced relative to the Registry root,
+<code>/schemagroups/com.example.telemetry/schemas/com.example.telemetrydata#TelemetryEvent</code>
+references the <code>TelemetryEvent</code> message in that schema document.</li>
+<li>If the Protobuf schema document is embedded in a registry document,
+<code>https://example.com/registry.json#/schemagroups/g1/schemas/s1/versions/1/schema:TelemetryEvent</code>
+uses the JSON Pointer before <code>:TelemetryEvent</code> to locate the schema document,
+then selects the <code>TelemetryEvent</code> message within it.</li>
 </ul>
 <h4 id="435-json-structure-schema">4.3.5. JSON Structure Schema <a class="anchor" href="#435-json-structure-schema">🔗</a></h4>
 <p>The <a href="./../../core-v1/docs/spec.html#format-attribute"><code>format</code></a> identifier for JSON Structure
@@ -612,8 +630,9 @@ typically used to reference type definitions within the <code>definitions</code>
 <li><code>https://example.com/schemas/person.json#/definitions/Employee</code> uses the
 <code>#/definitions/Employee</code> fragment to reference the <code>Employee</code> type definition.</li>
 <li>For local Schema Registry references like
-<code>#/schemagroups/com.example.schemas/schemas/com.example.person/versions/1/definitions/Employee</code>,
-append the JSON Pointer fragment to reference a specific type within that schema.</li>
+<code>/schemagroups/com.example.schemas/schemas/com.example.person/versions/1#/definitions/Employee</code>,
+the path identifies the schema Version and the JSON Pointer fragment
+<code>#/definitions/Employee</code> identifies the type within that schema document.</li>
 </ul>
 <p>Like the <a href="https://xregistry.io/xreg/xregistryspecs/core-v1/docs/spec.html">xRegistry Core</a> specification, this specification does
 not explicitly address authentication or authorization levels of users, nor how
