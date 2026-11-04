@@ -1189,7 +1189,7 @@ properties as defined below:</p>
 <tr>
 <td><code>status</code></td>
 <td><code>string</code></td>
-<td>The HTTP status code</td>
+<td>The HTTP status code (e.g., &quot;200&quot;)</td>
 </tr>
 </tbody>
 </table>
@@ -1199,9 +1199,11 @@ property is a string that MUST be a valid HTTP header name.</p>
 <p>The <code>query</code> property is a map of string keys to string values.</p>
 <p>The <code>path</code> property is a URI template.</p>
 <p>The <code>method</code> property is a string that MUST be a valid HTTP method.</p>
-<p>The <code>status</code> property is a string that MUST be a valid HTTP response
-code. The <code>status</code> and <code>method</code> properties are mutually exclusive and
-MUST NOT be present at the same time.</p>
+<p>The <code>status</code> property is a string containing the numeric HTTP response status
+code, such as <code>200</code>; it MUST NOT contain the reason phrase. After any
+placeholder substitution, it MUST be a valid HTTP response code. The <code>status</code>
+and <code>method</code> properties are mutually exclusive and MUST NOT be present at the
+same time.</p>
 <p>The values of all <code>string</code> and <code>uritemplate</code>-typed properties and headers and
 query elements MAY contain placeholders using the <a href="https://www.rfc-editor.org/rfc/rfc6570">RFC6570</a> Level 1
 URI Template syntax. When the same placeholder is used in multiple properties,
