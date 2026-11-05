@@ -95,6 +95,7 @@
       "modelsource",
       "readonly"
     ],
+    "maxversionslimit": 0,
     "pagination": false,
     "shortself": false,
     "specversions": [

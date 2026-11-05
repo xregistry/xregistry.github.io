@@ -207,6 +207,10 @@
       "type": "string"
     }
   },
+  "maxversionslimit": {
+    "type": "uinteger",
+    "min": 0
+  },
   "pagination": {
     "type": "boolean"
   },
