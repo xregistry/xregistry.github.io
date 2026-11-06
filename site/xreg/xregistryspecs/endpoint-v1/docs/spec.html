@@ -267,7 +267,7 @@ this form:</p>
         &quot;format&quot;: &quot;&lt;STRING&gt;&quot; ?                    # e.g. application/json
       },
 
-      &quot;protocol&quot;: &quot;&lt;STRING&gt;&quot;, ?                   # e.g. HTTP/1.1
+      &quot;protocol&quot;: &quot;&lt;STRING&gt;&quot;, ?                   # e.g. HTTP
       &quot;protocoloptions&quot;: {
         &quot;&lt;STRING&gt;&quot;: &lt;JSON-VALUE&gt; *
 
@@ -883,7 +883,7 @@ server stores absolute URIs as-is without resolving them.</p>
 that are not inlined in the endpoint definition.</p>
 <p>Example:</p>
 <pre><code class="language-yaml">{
-  &quot;protocol&quot;: &quot;HTTP/1.1&quot;,
+  &quot;protocol&quot;: &quot;HTTP&quot;,
   &quot;protocoloptions&quot;: {
     &quot;method&quot;: &quot;POST&quot;
   },
@@ -900,7 +900,7 @@ MAY contain inlined messages. See
 <a href="./../../message-v1/docs/spec.html#message-definitions">Message Definitions</a>.</p>
 <p>Example:</p>
 <pre><code class="language-yaml">{
-  &quot;protocol&quot;: &quot;HTTP/1.1&quot;,
+  &quot;protocol&quot;: &quot;HTTP&quot;,
   &quot;protocoloptions&quot;: {
     &quot;method&quot;: &quot;POST&quot;
   },
