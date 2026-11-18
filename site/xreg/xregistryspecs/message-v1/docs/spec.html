@@ -1173,7 +1173,7 @@ properties as defined below:</p>
 </tr>
 <tr>
 <td><code>query</code></td>
-<td>Map</td>
+<td><code>array</code></td>
 <td>The HTTP query parameters</td>
 </tr>
 <tr>
@@ -1196,7 +1196,8 @@ properties as defined below:</p>
 <p>HTTP allows for multiple headers with the same name. The <code>headers</code> property is
 therefore an array of objects with <code>name</code> and <code>value</code> properties. The <code>name</code>
 property is a string that MUST be a valid HTTP header name.</p>
-<p>The <code>query</code> property is a map of string keys to string values.</p>
+<p>The <code>query</code> property is an array of objects with string <code>name</code> and <code>value</code>
+properties. The <code>name</code> property MUST be a valid HTTP query parameter name.</p>
 <p>The <code>path</code> property is a URI template.</p>
 <p>The <code>method</code> property is a string that MUST be a valid HTTP method.</p>
 <p>The <code>status</code> property is a string containing the numeric HTTP response status
@@ -1204,8 +1205,8 @@ code, such as <code>200</code>; it MUST NOT contain the reason phrase. After any
 placeholder substitution, it MUST be a valid HTTP response code. The <code>status</code>
 and <code>method</code> properties are mutually exclusive and MUST NOT be present at the
 same time.</p>
-<p>The values of all <code>string</code> and <code>uritemplate</code>-typed properties and headers and
-query elements MAY contain placeholders using the <a href="https://www.rfc-editor.org/rfc/rfc6570">RFC6570</a> Level 1
+<p>The values of all <code>string</code> and <code>uritemplate</code>-typed properties, HTTP headers, and
+query parameters MAY contain placeholders using the <a href="https://www.rfc-editor.org/rfc/rfc6570">RFC6570</a> Level 1
 URI Template syntax. When the same placeholder is used in multiple properties,
 the value of the placeholder is assumed to be identical.</p>
 <p>The following example defines a message that is sent over HTTP:</p>
@@ -1228,7 +1229,7 @@ the value of the placeholder is assumed to be identical.</p>
     &quot;method&quot;: &quot;POST&quot;
   },
   &quot;dataschemaformat&quot;: &quot;JsonSchema/draft-07&quot;,
-  &quot;dataschemauri&quot;: &quot;https://example.com/schemas/com.example.myevent.json&quot;,
+  &quot;dataschemauri&quot;: &quot;https://example.com/schemas/com.example.myevent.json&quot;
 }
 </code></pre>
 <h5 id="amqp10-protocol">&quot;AMQP/1.0&quot; protocol <a class="anchor" href="#amqp10-protocol">🔗</a></h5>
