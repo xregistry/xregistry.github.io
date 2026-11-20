@@ -128,7 +128,7 @@ docker ps | grep sitexreg > /dev/null 2>&1 || (
     docker rm -f sitexreg > /dev/null 2>&1 || true
     docker run -dti --name sitexreg -p 8383:8080 $IMAGE -r "xRegistry.io" \
         --backend=memory --rootapp=xreg > /dev/null
-    while ! curl --silent --fail http://$XR_SERVER > /dev/null;do sleep 1;done
+    while ! curl --silent --fail http://$XR_SERVER > /dev/null;do sleep .2;done
 )
 
 echo "# Deleting any old 'xregistryspecs' that might be there"
