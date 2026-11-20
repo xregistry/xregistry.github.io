@@ -948,32 +948,30 @@ the property.</li>
 <ul>
 <li>OPTIONAL.</li>
 <li>Default value MUST be &quot;string&quot;.</li>
-<li>The valid types are those defined in the <a href="https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/spec.md#type-system">CloudEvents</a>
-core specification, with some additions:
-<ul>
-<li><code>any</code>: Any type of value, including <code>null</code>.</li>
-<li><code>binary</code>: CloudEvents &quot;Binary&quot; type.</li>
-<li><code>boolean</code>: CloudEvents &quot;Boolean&quot; type.</li>
-<li><code>duration</code>: ISO 8601 Duration.</li>
-<li><code>integer</code>: CloudEvents &quot;Integer&quot; type (RFC 7159, Section 6).</li>
-<li><code>number</code>: IEEE754 Double.</li>
-<li><code>string</code>: CloudEvents &quot;String&quot; type.</li>
-<li><code>symbol</code>: A <code>string</code> that is restricted to alphanumerical characters and
-underscores.</li>
-<li><code>timestamp</code>: CloudEvents &quot;Timestamp&quot; type (RFC3339 DateTime)</li>
-<li><code>uri</code>: CloudEvents URI type (RFC3986 URI).</li>
-<li><code>uritemplate</code>: <a href="https://www.rfc-editor.org/rfc/rfc6570">RFC6570</a> Level 1 URI Template.</li>
+<li>If present, MUST be a data type name defined by
+<a href="./../../core-v1/docs/spec.html#data-types">xRegistry Core</a>. Protocol definitions MAY
+further constrain the permitted types and values for a property.</li>
 </ul>
 </li>
 </ul>
-</li>
-</ul>
+<p>For AMQP <code>application-properties</code>, <code>message-annotations</code>,
+<code>delivery-annotations</code>, and <code>footer</code> declarations, <code>number</code> is retained as an
+alias for Core <code>decimal</code>. Implementations MUST treat both names as the same
+value type.</p>
+<p>The protocol tables in the <a href="#message-protocols">Message Protocols</a> section use
+Core declaration types. Native wire encodings and protocol-specific value
+constraints remain unchanged. UUID values and duration expressions use
+<code>string</code> with the syntax defined by the applicable protocol.</p>
+<p>Binary data uses the Core <code>binary</code> type in xRegistry declarations. When encoded
+as JSON, a binary value MUST use the Base64 representation defined in
+<a href="https://www.rfc-editor.org/rfc/rfc4648#section-4">RFC 4648, Section 4</a>.</p>
 <h5 id="value"><code>value</code> <a class="anchor" href="#value">🔗</a></h5>
 <ul>
 <li>Type: Any</li>
-<li>Description: The value of the property. With a few exceptions, see below,
-this is the value that MUST be literally present in the message for the
-message to be considered conformant with the message definition.</li>
+<li>Description: The value of the property. Except for the encodings and
+substitutions defined in this section, this is the value that MUST be
+literally present in the message for the message to be considered conformant
+with the message definition.</li>
 <li>Constraints:
 <ul>
 <li>OPTIONAL.</li>
@@ -983,7 +981,8 @@ message to be considered conformant with the message definition.</li>
 </ul>
 <p>If the <code>type</code> property has the value <code>uritemplate</code>, <code>value</code> MAY contain
 placeholders. As defined in <a href="https://www.rfc-editor.org/rfc/rfc6570">RFC6570</a> (Level 1), the placeholders MUST
-be enclosed in curly braces (<code>{</code> and <code>}</code>) and each MUST be a valid <code>symbol</code>.
+be enclosed in curly braces (<code>{</code> and <code>}</code>), and each placeholder name MUST be a
+non-empty string containing only alphanumeric characters and underscores.
 Placeholders that are used multiple times in the same message definition MUST
 represent identical values.</p>
 <p>When validating a message property against this value, the placeholders act as
@@ -1068,12 +1067,12 @@ if absent.</li>
 <a href="#dataschema"><code>dataschema</code></a> attribute of the message definition if
 absent. If present, the value MUST match the <code>dataschemauri</code> attribute of the
 message definition.</li>
-<li>The <code>type</code> of the property definition defaults to the CloudEvents type
-definition for the attribute, if any. The <code>type</code> of an attribute MAY be
-modified to be further constrained. For instance, the <code>source</code> type
-<code>uri</code> MAY be changed to <code>uritemplate</code> or the <code>subject</code> type <code>string</code> MAY be
-constrained to a <code>uri</code> or <code>stringified integer</code>. If no CloudEvents type
-definition exists, the default value MUST be <code>string</code>.</li>
+<li>The <code>type</code> of the property definition defaults to the Core type
+corresponding to the <a href="https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/spec.md#type-system">CloudEvents type</a> for the attribute,
+if any. The <code>type</code> MAY be changed to further constrain the attribute using
+a Core data type. For instance, the <code>source</code> type <code>uri</code> MAY be changed to
+<code>uritemplate</code>, or the <code>subject</code> type <code>string</code> MAY be constrained to a <code>uri</code>.
+If no CloudEvents type definition exists, the default value MUST be <code>string</code>.</li>
 </ul>
 <p>The values of all <code>string</code> and <code>uritemplate</code>-typed attributes MAY contain
 placeholders using the <a href="https://www.rfc-editor.org/rfc/rfc6570">RFC6570</a> Level 1 URI Template syntax. When the
@@ -1168,7 +1167,7 @@ properties as defined below:</p>
 <tbody>
 <tr>
 <td><code>headers</code></td>
-<td>Array</td>
+<td><code>array</code></td>
 <td>The HTTP headers. See below</td>
 </tr>
 <tr>
@@ -1250,38 +1249,38 @@ as defined below:</p>
 <tbody>
 <tr>
 <td><code>properties</code></td>
-<td>Map</td>
+<td><code>object</code></td>
 <td>The AMQP 1.0 <a href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-properties">Message Properties</a> section</td>
 </tr>
 <tr>
 <td><code>application-properties</code></td>
-<td>Map</td>
+<td><code>map</code></td>
 <td>The AMQP 1.0 <a href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-application-properties">Application Properties</a> section.</td>
 </tr>
 <tr>
 <td><code>message-annotations</code></td>
-<td>Map</td>
+<td><code>map</code></td>
 <td>The AMQP 1.0 <a href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-message-annotations">Message Annotations</a> section</td>
 </tr>
 <tr>
 <td><code>delivery-annotations</code></td>
-<td>Map</td>
+<td><code>map</code></td>
 <td>The AMQP 1.0 <a href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-delivery-annotations">Delivery Annotations</a> section</td>
 </tr>
 <tr>
 <td><code>header</code></td>
-<td>Map</td>
+<td><code>object</code></td>
 <td>The AMQP 1.0 <a href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-header">Message Header</a> section</td>
 </tr>
 <tr>
 <td><code>footer</code></td>
-<td>Map</td>
+<td><code>map</code></td>
 <td>The AMQP 1.0 <a href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-footer">Message Footer</a> section</td>
 </tr>
 </tbody>
 </table>
 <p>As in AMQP, all sections and properties are OPTIONAL.</p>
-<p>The values of all <code>string</code>, <code>symbol</code>, <code>uri</code>, and <code>uritemplate</code>-typed properties
+<p>The values of all <code>string</code>, <code>uri</code>, and <code>uritemplate</code>-typed properties
 MAY contain placeholders using the <a href="https://www.rfc-editor.org/rfc/rfc6570">RFC6570</a> Level 1 URI Template
 syntax. When the same placeholder is used in multiple properties, the value of
 the placeholder is assumed to be identical.</p>
@@ -1338,7 +1337,7 @@ following properties are defined, with type constraints:</p>
 </tr>
 <tr>
 <td><code>user-id</code></td>
-<td><code>binary</code></td>
+<td>(see note below)</td>
 <td>identity of the user responsible for producing the message</td>
 </tr>
 <tr>
@@ -1358,17 +1357,17 @@ following properties are defined, with type constraints:</p>
 </tr>
 <tr>
 <td><code>correlation-id</code></td>
-<td><code>string</code></td>
+<td>(see note below)</td>
 <td>client-specific id that can be used to mark or identify messages between clients</td>
 </tr>
 <tr>
 <td><code>content-type</code></td>
-<td><code>symbol</code></td>
+<td><code>string</code></td>
 <td>MIME content type for the message</td>
 </tr>
 <tr>
 <td><code>content-encoding</code></td>
-<td><code>symbol</code></td>
+<td><code>string</code></td>
 <td>MIME content encoding for the message</td>
 </tr>
 <tr>
@@ -1393,28 +1392,39 @@ following properties are defined, with type constraints:</p>
 </tr>
 </tbody>
 </table>
-<p>The <code>message-id</code> permits the types <code>ulong</code>, <code>uuid</code>, <code>binary</code>, <code>string</code>, and
-<code>uritemplate</code>. A <code>value</code> constraint for the <code>message-id</code> property SHOULD NOT be
-defined in the message definition except for the case where the <code>message-id</code>
-is a <code>uritemplate</code>.</p>
+<p>The <code>message-id</code> declaration's <code>type</code> specifies the AMQP type to which the
+xRegistry value is projected. It permits <code>ulong</code>, <code>uuid</code>, <code>binary</code>, <code>string</code>,
+and <code>uritemplate</code>; <code>uritemplate</code> is a template for an AMQP <code>string</code>. A <code>value</code>
+constraint for the <code>message-id</code> property SHOULD NOT be defined in the message
+definition except for the case where the <code>message-id</code> is a <code>uritemplate</code>.</p>
+<p>The <code>user-id</code> declaration permits the <code>binary</code>, <code>string</code>, and <code>uritemplate</code>
+types. Its native AMQP type remains <code>binary</code>. For both properties, a binary
+<code>value</code> encoded as JSON MUST use the Base64 encoding defined in
+<a href="https://www.rfc-editor.org/rfc/rfc4648#section-4">RFC 4648, Section 4</a>.</p>
+<p>The <code>correlation-id</code> declaration permits the <code>binary</code>, <code>string</code>, and
+<code>uritemplate</code> types. A binary <code>value</code> encoded as JSON MUST use the Base64
+encoding defined in <a href="https://www.rfc-editor.org/rfc/rfc4648#section-4">RFC 4648, Section 4</a>.</p>
+<p>The xRegistry <code>content-type</code> declaration uses <code>string</code> for MIME values such
+as <code>application/json</code>. Its native AMQP encoding remains as defined by
+<a href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-properties">AMQP Message Properties</a>.</p>
 <h5 id="application-properties-amqp-10"><code>application-properties</code> (AMQP 1.0) <a class="anchor" href="#application-properties-amqp-10">🔗</a></h5>
 <p>The <code>application-properties</code> property is a map that contains the custom
 properties of the AMQP 1.0 <a href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-application-properties">Application Properties</a> section.</p>
-<p>The names of the properties MUST be of type <code>symbol</code> and MUST be unique within
+<p>The names of the properties MUST be of type <code>string</code> and MUST be unique within
 the scope of the map. The values of the properties MAY be of any permitted
 type.</p>
 <h5 id="message-annotations-amqp-10"><code>message-annotations</code> (AMQP 1.0) <a class="anchor" href="#message-annotations-amqp-10">🔗</a></h5>
 <p>The <code>message-annotations</code> property is a map that contains the custom
 properties of the AMQP 1.0 <a href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-message-annotations">Message Annotations</a>
 section.</p>
-<p>The names of the properties MUST be of type <code>symbol</code> and MUST be unique within
+<p>The names of the properties MUST be of type <code>string</code> and MUST be unique within
 the scope of the map. The values of the properties MAY be of any permitted
 type.</p>
 <h5 id="delivery-annotations-amqp-10"><code>delivery-annotations</code> (AMQP 1.0) <a class="anchor" href="#delivery-annotations-amqp-10">🔗</a></h5>
 <p>The <code>delivery-annotations</code> property is a map that contains the custom
 properties of the AMQP 1.0
 <a href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-delivery-annotations">Delivery Annotations</a> section.</p>
-<p>The names of the properties MUST be of type <code>symbol</code> and MUST be unique within
+<p>The names of the properties MUST be of type <code>string</code> and MUST be unique within
 the scope of the map. The values of the properties MAY be of any permitted
 type.</p>
 <h6 id="header-amqp-10"><code>header</code> (AMQP 1.0) <a class="anchor" href="#header-amqp-10">🔗</a></h6>
@@ -1460,7 +1470,7 @@ following properties are defined, with type constraints:</p>
 <h6 id="footer-amqp-10"><code>footer</code> (AMQP 1.0) <a class="anchor" href="#footer-amqp-10">🔗</a></h6>
 <p>The <code>footer</code> property is a map that contains the custom properties of the AMQP
 1.0 <a href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-footer">Message Footer</a> section.</p>
-<p>The names of the properties MUST be of type <code>symbol</code> and MUST be unique within
+<p>The names of the properties MUST be of type <code>string</code> and MUST be unique within
 the scope of the map. The values of the properties MAY be of any permitted
 type.</p>
 <h5 id="mqtt311-and-mqtt50-protocols">&quot;MQTT/3.1.1&quot; and &quot;MQTT/5.0&quot; protocols <a class="anchor" href="#mqtt311-and-mqtt50-protocols">🔗</a></h5>
@@ -1527,10 +1537,17 @@ indicate whether the property is supported for the respective MQTT version.</p>
 </tr>
 <tr>
 <td><code>correlation_data</code></td>
-<td><code>binary</code></td>
+<td><code>uritemplate</code></td>
 <td>no</td>
 <td>yes</td>
 <td>Correlation data</td>
+</tr>
+<tr>
+<td><code>correlation_data_binary</code></td>
+<td><code>binary</code></td>
+<td>no</td>
+<td>yes</td>
+<td>Binary correlation data</td>
 </tr>
 <tr>
 <td><code>content_type</code></td>
@@ -1541,17 +1558,19 @@ indicate whether the property is supported for the respective MQTT version.</p>
 </tr>
 <tr>
 <td><code>user_properties</code></td>
-<td>Array</td>
+<td><code>array</code></td>
 <td>no</td>
 <td>yes</td>
 <td>User properties</td>
 </tr>
 </tbody>
 </table>
+<p>The <code>correlation_data</code> and <code>correlation_data_binary</code> properties are mutually
+exclusive and MUST NOT be present at the same time.</p>
 <p>Like HTTP, MQTT allows for multiple user properties with the same name,
 so the <code>user_properties</code> property is an array of objects, each of which
 contains a single property name and value.</p>
-<p>The values of all <code>string</code>, <code>symbol</code>, and <code>uritemplate</code>-typed properties and
+<p>The values of all <code>string</code> and <code>uritemplate</code>-typed properties and
 user properties MAY contain placeholders using the <a href="https://www.rfc-editor.org/rfc/rfc6570">RFC6570</a> Level 1
 URI Template syntax. When the same placeholder is used in multiple properties,
 the value of the placeholder is assumed to be identical.</p>
@@ -1592,7 +1611,7 @@ corresponding to the application properties collection of other protocols.</p>
 <tbody>
 <tr>
 <td><code>topic</code></td>
-<td><code>string</code></td>
+<td><code>uritemplate</code></td>
 <td>The topic the record will be appended to</td>
 </tr>
 <tr>
@@ -1602,27 +1621,27 @@ corresponding to the application properties collection of other protocols.</p>
 </tr>
 <tr>
 <td><code>key</code></td>
-<td><code>string</code></td>
+<td><code>uritemplate</code></td>
 <td>The key that is associated with the record, UTF-8 encoded</td>
 </tr>
 <tr>
-<td><code>key_base64</code></td>
+<td><code>key_binary</code></td>
 <td><code>binary</code></td>
 <td>The key that is associated with the record as a base64 encoded string</td>
 </tr>
 <tr>
 <td><code>headers</code></td>
-<td>Map</td>
-<td>A map of headers to set on the record</td>
+<td><code>array</code></td>
+<td>An array of headers to set on the record</td>
 </tr>
 </tbody>
 </table>
-<p>The <code>key</code> and <code>key_base64</code> properties are mutually exclusive and MUST NOT be
+<p>The <code>key</code> and <code>key_binary</code> properties are mutually exclusive and MUST NOT be
 present at the same time.</p>
 <p>The <code>partition</code> property is included because there are cases where applications
 use partitions explicitly for addressing and routing messages within the scope
 of a topic.</p>
-<p>The values of all <code>string</code>-, <code>symbol</code>-, and <code>uritemplate</code>-typed properties
+<p>The values of all <code>string</code>- and <code>uritemplate</code>-typed properties
 and headers MAY contain placeholders using the <a href="https://www.rfc-editor.org/rfc/rfc6570">RFC6570</a> Level 1 URI
 Template syntax. When the same placeholder is used in multiple properties,
 the value of the placeholder is assumed to be identical.</p>
@@ -1662,12 +1681,12 @@ elements of the NATS message for the <code>HPUB</code> operation.</p>
 </tr>
 <tr>
 <td><code>headers</code></td>
-<td>Array</td>
+<td><code>array</code></td>
 <td>A list of headers to set on the message</td>
 </tr>
 </tbody>
 </table>
-<p>The values of all <code>string</code>-, <code>symbol</code>-, and <code>uritemplate</code>-typed properties
+<p>The values of all <code>string</code>- and <code>uritemplate</code>-typed properties
 and headers MAY contain placeholders using the <a href="https://www.rfc-editor.org/rfc/rfc6570">RFC6570</a> Level 1 URI
 Template syntax. When the same placeholder is used in multiple properties,
 the value of the placeholder is assumed to be identical.</p>

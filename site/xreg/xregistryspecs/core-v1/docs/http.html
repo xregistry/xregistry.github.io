@@ -1383,6 +1383,10 @@ attribute prefixed with <code>xRegistry-</code>. Note, the optionality of this r
 is not to allow for servers to decide whether or not to do so, rather it is to
 allow for <a href="#no-code-servers">No-Code Servers</a> that might not be
 able to control the HTTP response headers.</p>
+<p>When a <code>binary</code> attribute is serialized as an HTTP header, its value MUST be
+Base64 encoded.
+As with other scalar attributes, the string serialization of the attribute name
+and encoded value MUST NOT exceed the 4096-byte limit defined in Core.</p>
 <p>The <code>&lt;RESOURCE&gt;</code> and <code>&lt;RESOURCEbase64&gt;</code> attributes MUST NOT be serialized as
 HTTP headers, even if their values can be considered &quot;scalar&quot;, because their
 values will appear in the HTTP body.</p>

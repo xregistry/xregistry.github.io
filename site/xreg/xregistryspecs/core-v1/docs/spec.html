@@ -819,6 +819,9 @@ accepted and MUST generate an error
 (<a href="#invalid_attribute">invalid_attribute</a>).</li>
 </ul>
 </li>
+<li><code>binary</code> - a sequence of octets. When serialized as JSON, a binary value MUST
+be represented as a Base64-encoded string using
+<a href="https://www.rfc-editor.org/rfc/rfc4648#section-4">RFC 4648 Section 4</a>.</li>
 <li><code>boolean</code> - case-sensitive <code>true</code> or <code>false</code>.</li>
 <li><code>decimal</code> - number (integer or floating point).</li>
 <li><code>integer</code> - signed integer.</li>
@@ -884,6 +887,7 @@ are relative to and any constraints on their values, if any. How, or where,
 this is specified is out of scope of this specification.</p>
 <p>The &quot;scalar&quot; data types are:</p>
 <ul>
+<li><code>binary</code></li>
 <li><code>boolean</code></li>
 <li><code>decimal</code></li>
 <li><code>integer</code></li>
