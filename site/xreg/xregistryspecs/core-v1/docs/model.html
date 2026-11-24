@@ -412,6 +412,7 @@ value for this attribute (or MUST be missing from all Versions). If an
 inconsistency is found then an error
 (<a href="./spec.html#mismatched_version_attribute">mismatched_version_attribute</a>) MUST
 be generated.</li>
+<li>For string attributes, values MUST be compared in a case-insensitive manner.</li>
 <li>This aspect MUST only be <code>true</code> for attribute definitions that:
 <ul>
 <li>Are within a <a href="#groupsstringresourcesstringattributes">Resource type's versioned
